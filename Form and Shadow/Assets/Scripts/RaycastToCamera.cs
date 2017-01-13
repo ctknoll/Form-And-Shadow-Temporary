@@ -1,0 +1,18 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class RaycastToCamera : MonoBehaviour {
+	public static float distance = 5f;
+	public Transform target;
+	
+	void Update () 
+	{
+		transform.LookAt(target);
+
+		RaycastHit hit;
+		if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit))
+		{
+			distance = hit.distance;
+		}
+	}
+}
