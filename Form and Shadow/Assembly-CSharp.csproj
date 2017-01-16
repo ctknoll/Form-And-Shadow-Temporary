@@ -45,11 +45,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\MouseOrbitImproved.cs" />
-     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
-     <Compile Include="Assets\Scripts\RaycastToCamera.cs" />
-     <Compile Include="Assets\Scripts\ShadowFinder.cs" />
-     <Compile Include="Assets\Scripts\WallShadowBehavior.cs" />
+     <Compile Include="Assets\Scripts\Camera\CameraControl.cs" />
+     <Compile Include="Assets\Scripts\Camera\RaycastToCamera.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
+     <Compile Include="Assets\Scripts\Shadow Interaction\ShadowFinder.cs" />
+     <Compile Include="Assets\Scripts\Shadow Interaction\WallShadowBehavior.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>E:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
