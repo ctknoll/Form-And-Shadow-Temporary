@@ -24,37 +24,38 @@ public class PlayerMovement : MonoBehaviour
 	}
 	void Update() 
 	{
-        if (shiftTimer != 0)
-            shiftTimer--;
         if (Input.GetButton("Jump") && jumpHeldTime < jumpTime)
 		{
 			controller.Move(new Vector3(0, jumpSpeed * Time.deltaTime));
 			jumpHeldTime += Time.deltaTime;
 		}
-        if(Input.GetButton("Fire3") && shiftTimer == 0)
+
+        if(Input.GetButtonDown("Fire3"))
         {
             Debug.Log("Recieved");
             if (CameraControl.in3DSpace)
             {
                 Debug.Log("Not In Wall");
-                CameraControl.in3DSpace = !CastToWall.castToWall(gameObject);
-                shiftTimer += 10;
+				CameraControl.in3DSpace = !CastToWall.castToWall(gameObject);
             }
-            else if(shiftTimer == 0)
+            else
             {
                 Debug.Log("Not In Wall");
-                CameraControl.in3DSpace = CastToWall.removeFromWall(gameObject);
-                shiftTimer += 10;
+				CameraControl.in3DSpace = CastToWall.removeFromWall(gameObject);
             }
         }
+
 		if(Input.GetButtonUp("Jump"))
 			jumpHeldTime = 0;
 
         if (!CameraControl.in3DSpace)
         {
-            Vector3 dir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
-            Debug.Log(dir);
+			Vector3 dir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
+
             Vector3 movement = (shiftedPlane.GetComponent<Transform>().right * dir.x) + (shiftedPlane.GetComponent<Transform>().forward * dir.y);
+
+			controller.Move(new Vector3(0, -gravity * Time.deltaTime, 0));
+
             controller.Move(movement * Time.deltaTime * movementSpeed);
         }
 

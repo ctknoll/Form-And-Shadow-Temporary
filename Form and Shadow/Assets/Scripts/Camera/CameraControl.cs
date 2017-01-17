@@ -74,7 +74,7 @@ public class CameraControl : MonoBehaviour
 
 		else if(target && !in3DSpace)
 		{
-			transform.rotation = Quaternion.LookRotation(Vector3.forward, Vector3.up);
+			transform.rotation = Quaternion.LookRotation(LightSourceControl.lightSourceDirection, Vector3.up);
 			Vector3 desiredPosition = target.transform.position + new Vector3(0, 1, -distanceToPlayer);
 			if(smooth)
 				transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
