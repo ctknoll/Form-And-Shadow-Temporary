@@ -9,7 +9,10 @@ public class PlayerMovement : MonoBehaviour
 	public float jumpTime;
 	public float gravity;
 
-	private Vector3 moveDirection = Vector3.zero;
+    public GameObject shiftedPlane = null;
+    public int shiftTimer = 0;
+
+    private Vector3 moveDirection = Vector3.zero;
 	private Vector3 rotationDirection;
 	private float jumpHeldTime;
 
@@ -21,36 +24,62 @@ public class PlayerMovement : MonoBehaviour
 	}
 	void Update() 
 	{
-		if(Input.GetKeyDown(KeyCode.X))
-			CameraControl.in3DSpace = !CameraControl.in3DSpace;
-		if (Input.GetButton("Jump") && jumpHeldTime < jumpTime)
+        if (shiftTimer != 0)
+            shiftTimer--;
+        if (Input.GetButton("Jump") && jumpHeldTime < jumpTime)
 		{
 			controller.Move(new Vector3(0, jumpSpeed * Time.deltaTime));
 			jumpHeldTime += Time.deltaTime;
 		}
+        if(Input.GetButton("Fire3") && shiftTimer == 0)
+        {
+            Debug.Log("Recieved");
+            if (CameraControl.in3DSpace)
+            {
+                Debug.Log("Not In Wall");
+                CameraControl.in3DSpace = !CastToWall.castToWall(gameObject);
+                shiftTimer += 10;
+            }
+            else if(shiftTimer == 0)
+            {
+                Debug.Log("Not In Wall");
+                CameraControl.in3DSpace = CastToWall.removeFromWall(gameObject);
+                shiftTimer += 10;
+            }
+        }
 		if(Input.GetButtonUp("Jump"))
 			jumpHeldTime = 0;
 
-		rotationDirection = new Vector3(cameraTransform.forward.x, 0, cameraTransform.forward.z);
-		transform.rotation = Quaternion.LookRotation(rotationDirection, Vector3.up);
+        if (!CameraControl.in3DSpace)
+        {
+            Vector3 dir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
+            Debug.Log(dir);
+            Vector3 movement = (shiftedPlane.GetComponent<Transform>().right * dir.x) + (shiftedPlane.GetComponent<Transform>().forward * dir.y);
+            controller.Move(movement * Time.deltaTime * movementSpeed);
+        }
 
-		controller.Move(new Vector3(0, -gravity * Time.deltaTime, 0));
+        else
+        {
+            controller.Move(new Vector3(0, -gravity * Time.deltaTime, 0));
+            rotationDirection = new Vector3(cameraTransform.forward.x, 0, cameraTransform.forward.z);
+            transform.rotation = Quaternion.LookRotation(rotationDirection, Vector3.up);
 
-		if(Input.GetAxis("Horizontal") >= 0)
-		{
-			controller.Move(transform.right * Time.deltaTime * movementSpeed);
-		}
-		if(Input.GetAxis("Horizontal") <= 0)
-		{
-			controller.Move(-transform.right * Time.deltaTime * movementSpeed);
-		}
-		if(Input.GetAxis("Vertical") >= 0)
-		{
-			controller.Move(transform.forward * Time.deltaTime * movementSpeed);
-		}
-		if(Input.GetAxis("Vertical") <= 0)
-		{
-			controller.Move(-transform.forward * Time.deltaTime * movementSpeed);
-		}
+            if (Input.GetAxis("Horizontal") >= 0)
+            {
+                controller.Move(transform.right * Time.deltaTime * movementSpeed);
+            }
+            if (Input.GetAxis("Horizontal") <= 0)
+            {
+                controller.Move(-transform.right * Time.deltaTime * movementSpeed);
+            }
+            if (Input.GetAxis("Vertical") >= 0)
+            {
+                controller.Move(transform.forward * Time.deltaTime * movementSpeed);
+            }
+            if (Input.GetAxis("Vertical") <= 0)
+            {
+                controller.Move(-transform.forward * Time.deltaTime * movementSpeed);
+            }
+        }
 	}
 }

@@ -35,7 +35,7 @@ public class ShadowFinder
         int index = obj.GetComponent<Renderer>().lightmapIndex;
 		Debug.Log(index);
         LightmapData lightmapData = LightmapSettings.lightmaps[index];
-		Texture2D lightmapTex = lightmapData.lightmapNear;
+		Texture2D lightmapTex = lightmapData.lightmapDir;
 
         //sample every "sample"th pixel of the texture map, and discriminate based on luma value
         for (int i = 0; i < lightmapTex.width; i += sample)
