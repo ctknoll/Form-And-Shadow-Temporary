@@ -38,12 +38,15 @@ public class CameraControl : MonoBehaviour
 
 	void Update()
 	{
-		distance = RaycastToCamera.distance;
+        if (Input.GetButtonDown("Cancel"))
+            Application.Quit();
+
+        distance = RaycastToCamera.distance;
 
 		if(in3DSpace && GetComponent<Camera>().orthographic)
 			GetComponent<Camera>().orthographic = false;
-		if(!in3DSpace && !GetComponent<Camera>().orthographic)
-			GetComponent<Camera>().orthographic = true;
+//		if(!in3DSpace && !GetComponent<Camera>().orthographic)
+//			GetComponent<Camera>().orthographic = true;
 		
 		if(distance > 5)
 		{
