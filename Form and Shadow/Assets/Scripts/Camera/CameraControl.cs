@@ -23,6 +23,7 @@ public class CameraControl : MonoBehaviour
 	public bool smooth;
 	public float smoothSpeed = 0.125f;
 	public float distanceToPlayer2D;
+	public Vector3 normalToWall = new Vector3();
 
     void Start()
     {
@@ -70,7 +71,7 @@ public class CameraControl : MonoBehaviour
 		else if(target && !in3DSpace)
 		{
 			transform.rotation = Quaternion.LookRotation(LightSourceControl.lightSourceDirection, Vector3.up);
-			Vector3 desiredPosition = target.transform.position + new Vector3(0, 1, -distanceToPlayer2D);
+			Vector3 desiredPosition = target.transform.position + normalToWall * distanceToPlayer2D;
 			if(smooth)
 				transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
 			else
