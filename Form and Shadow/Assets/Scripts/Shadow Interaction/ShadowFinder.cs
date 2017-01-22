@@ -32,24 +32,26 @@ public class ShadowFinder
     {
 
         //get the lightmap texture for the game object
-        int index = obj.GetComponent<Renderer>().lightmapIndex;
-		Debug.Log(index);
-        LightmapData lightmapData = LightmapSettings.lightmaps[index];
-		Texture2D lightmapTex = lightmapData.lightmapDir;
+		Texture renderTexture = obj.GetComponent<Renderer>().material.mainTexture;
+
+		Texture2D renderTexture2D = new Texture2D(renderTexture.width, renderTexture.height);
+
+		renderTexture2D.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
+		renderTexture2D.Apply();
 
         //sample every "sample"th pixel of the texture map, and discriminate based on luma value
-        for (int i = 0; i < lightmapTex.width; i += sample)
+		for (int i = 0; i < renderTexture2D.width; i += sample)
         {
-            for (int j = 0; j < lightmapTex.height; j += sample)
+			for (int j = 0; j < renderTexture2D.height; j += sample)
             {
                 if (visited.Contains(new Vector2(i, j)))
                     continue;
                 visited.Add(new Vector2(i, j));
-                if(isShadow(lightmapTex, i, j))
+				if(isShadow(renderTexture2D, i, j))
                 {
                     shadows.Add(new List<Vector2>());
-                    generateShadowEdges(lightmapTex, i, j);
-                    fill(lightmapTex, i, j);
+					generateShadowEdges(renderTexture2D, i, j);
+					fill(renderTexture2D, i, j);
                 }
             }
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WallShadowBehavior : MonoBehaviour {
 
-    List<GameObject> shadowColliders;
+    public List<GameObject> shadowColliders;
 
 	void Start ()
     {

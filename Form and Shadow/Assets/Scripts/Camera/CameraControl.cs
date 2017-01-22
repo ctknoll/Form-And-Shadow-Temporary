@@ -9,15 +9,12 @@ public class CameraControl : MonoBehaviour
     public Transform target;
 
 	[Header("3D Camera Variables")]
-    public float distance;
-    public float xSpeed = 120.0f;
-    public float ySpeed = 120.0f;
+	public float distanceToPlayer3D;
+    public float xSpeed;
+    public float ySpeed;
 
-    public float yMinLimit = -20f;
-    public float yMaxLimit = 80f;
-
-    public float distanceMin = .5f;
-    public float distanceMax = 15f;
+    public float yMinLimit;
+    public float yMaxLimit;
 
     float x = 0.0f;
     float y = 0.0f;
@@ -25,7 +22,7 @@ public class CameraControl : MonoBehaviour
 	[Header("2D Camera Variables")]
 	public bool smooth;
 	public float smoothSpeed = 0.125f;
-	public float distanceToPlayer;
+	public float distanceToPlayer2D;
 
     void Start()
     {
@@ -41,16 +38,14 @@ public class CameraControl : MonoBehaviour
         if (Input.GetButtonDown("Cancel"))
             Application.Quit();
 
-        distance = RaycastToCamera.distance;
+        distanceToPlayer3D = RaycastToCamera.distance;
 
 		if(in3DSpace && GetComponent<Camera>().orthographic)
 			GetComponent<Camera>().orthographic = false;
-//		if(!in3DSpace && !GetComponent<Camera>().orthographic)
-//			GetComponent<Camera>().orthographic = true;
 		
-		if(distance > 5)
+		if(distanceToPlayer3D > 8)
 		{
-			distance = 5;
+			distanceToPlayer3D = 8;
 		}
 	}
 
@@ -58,14 +53,14 @@ public class CameraControl : MonoBehaviour
     {
 		if (target && in3DSpace)
         {
-            x += Input.GetAxis("Mouse X") * xSpeed * distance * 0.02f;
+            x += Input.GetAxis("Mouse X") * xSpeed * distanceToPlayer3D * 0.02f;
             y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
 
             y = ClampAngle(y, yMinLimit, yMaxLimit);
 
             Quaternion rotation = Quaternion.Euler(y, x, 0);
 
-            Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
+            Vector3 negDistance = new Vector3(0.0f, 0.0f, -distanceToPlayer3D);
             Vector3 position = rotation * negDistance + target.position;
 
             transform.rotation = rotation;
@@ -75,7 +70,7 @@ public class CameraControl : MonoBehaviour
 		else if(target && !in3DSpace)
 		{
 			transform.rotation = Quaternion.LookRotation(LightSourceControl.lightSourceDirection, Vector3.up);
-			Vector3 desiredPosition = target.transform.position + new Vector3(0, 1, -distanceToPlayer);
+			Vector3 desiredPosition = target.transform.position + new Vector3(0, 1, -distanceToPlayer2D);
 			if(smooth)
 				transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
 			else
