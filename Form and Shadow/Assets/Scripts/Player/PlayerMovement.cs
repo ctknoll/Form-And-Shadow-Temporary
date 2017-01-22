@@ -16,7 +16,8 @@ public class PlayerMovement : MonoBehaviour
 	private Vector3 rotationDirection;
 	private float jumpHeldTime;
 
-	private CharacterController controller;
+    [SerializeField]
+    private CharacterController controller;
 
 	void Start()
 	{
@@ -37,25 +38,29 @@ public class PlayerMovement : MonoBehaviour
             {
                 Debug.Log("Not In Wall");
 				CameraControl.in3DSpace = !CastToWall.castToWall(gameObject);
+                if (!CameraControl.in3DSpace) return;
             }
             else
             {
                 Debug.Log("Not In Wall");
 				CameraControl.in3DSpace = CastToWall.removeFromWall(gameObject);
+                if (CameraControl.in3DSpace) return;
             }
         }
 
 		if(Input.GetButtonUp("Jump"))
 			jumpHeldTime = 0;
 
+        Debug.Log("Check if moving");
         if (!CameraControl.in3DSpace)
         {
+            Debug.Log("Trying to move");
 			Vector3 dir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
-
+            //Debug.Log(dir);
             Vector3 movement = (shiftedPlane.GetComponent<Transform>().right * dir.x) + (shiftedPlane.GetComponent<Transform>().forward * dir.y);
-
-			controller.Move(new Vector3(0, -gravity * Time.deltaTime, 0));
-
+            Vector3 gravity2D = -1 * gravity * Time.deltaTime * shiftedPlane.GetComponent<Transform>().up;
+            Debug.Log(shiftedPlane.GetComponent<Transform>().right);
+            controller.Move(gravity2D);
             controller.Move(movement * Time.deltaTime * movementSpeed);
         }
 
