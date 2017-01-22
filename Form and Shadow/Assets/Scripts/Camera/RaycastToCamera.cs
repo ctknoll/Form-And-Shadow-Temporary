@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class RaycastToCamera : MonoBehaviour {
-	public static float distance = 8f;
+	public float distance = 8f;
 	public Transform target;
 	
 	void Update () 
