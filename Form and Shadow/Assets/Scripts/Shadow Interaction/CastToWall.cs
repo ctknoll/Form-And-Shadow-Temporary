@@ -11,11 +11,20 @@ public class CastToWall
         //should cast a ray from the player away from the camera, and return true if there is a plane within 50 units
 		if (Physics.Raycast(player.transform.position, LightSourceControl.lightSourceDirection, out hitInfo, 50))
         {
-			player.GetComponent<PlayerMovement>().shiftedPlane = hitInfo.collider.gameObject;
-            //this doesn't check for planes; unity primitives are arbitrary meshes. We should label our meldable walls somehow!
-            //remove this object from the camera
-            player.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-            player.layer = 9;
+            player.GetComponent<CharacterController>().Move((hitInfo.point - player.transform.position) * (hitInfo.distance + 5));
+            Sprite twoDimSprite = Resources.Load<Sprite>("sprite");
+            GameObject twoDim = new GameObject();
+            twoDim.transform.position = hitInfo.point + hitInfo.normal;
+            twoDim.transform.rotation = Quaternion.LookRotation(hitInfo.collider.gameObject.transform.up);
+            twoDim.AddComponent<SpriteRenderer>();
+            twoDim.GetComponent<SpriteRenderer>().sprite = twoDimSprite;
+            twoDim.AddComponent<CharacterController>();
+            twoDim.AddComponent<PlayerMovement>();
+            twoDim.GetComponent<PlayerMovement>().shiftedPlane = hitInfo.collider.gameObject;
+            twoDim.GetComponent<PlayerMovement>().movementSpeed = player.GetComponent<PlayerMovement>().movementSpeed;
+            GameObject.Find("Main Camera").GetComponent<CameraControl>().target = twoDim.transform;
+            GameObject.Find("Main Camera").GetComponent<CameraControl>().normalToWall = hitInfo.normal;
+            player.SetActive(false);
             return true;
          }
 		return false;
