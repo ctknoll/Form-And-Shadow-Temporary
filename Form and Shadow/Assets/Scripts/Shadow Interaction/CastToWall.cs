@@ -21,7 +21,11 @@ public class CastToWall
             twoDim.AddComponent<CharacterController>();
             twoDim.AddComponent<PlayerMovement>();
             twoDim.GetComponent<PlayerMovement>().shiftedPlane = hitInfo.collider.gameObject;
+			twoDim.GetComponent<PlayerMovement> ().jumpTime = .25f;
+			twoDim.GetComponent<PlayerMovement> ().jumpSpeed = 10;	
+			twoDim.GetComponent<PlayerMovement> ().gravity = 5;
             twoDim.GetComponent<PlayerMovement>().movementSpeed = player.GetComponent<PlayerMovement>().movementSpeed;
+			twoDim.name = "Player_Shadow";
             GameObject.Find("Main Camera").GetComponent<CameraControl>().target = twoDim.transform;
             GameObject.Find("Main Camera").GetComponent<CameraControl>().normalToWall = hitInfo.normal;
             player.SetActive(false);
@@ -31,11 +35,11 @@ public class CastToWall
 	}
 			
     //this is real hacky shit, and actually wont work for what we want tbh
-    public static bool removeFromWall(GameObject player)
+    public static bool removeFromWall(GameObject player, GameObject sprite)
     {
-        player.GetComponent<PlayerMovement>().shiftedPlane = null;
-        player.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-        player.layer = 0;
+		player.transform.position = sprite.transform.position + GameObject.Find("Main Camera").GetComponent<CameraControl> ().normalToWall * 5;
+		GameObject.Find("Main Camera").GetComponent<CameraControl>().target = player.transform;
+		Object.Destroy(sprite);
         return true;
     }
 }

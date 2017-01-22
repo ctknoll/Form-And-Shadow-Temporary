@@ -25,12 +25,6 @@ public class PlayerMovement : MonoBehaviour
 	}
 	void Update() 
 	{
-        if (Input.GetButton("Jump") && jumpHeldTime < jumpTime)
-		{
-			controller.Move(new Vector3(0, jumpSpeed * Time.deltaTime));
-			jumpHeldTime += Time.deltaTime;
-		}
-
         if(Input.GetButtonDown("Fire3"))
         {
             Debug.Log("Recieved");
@@ -42,30 +36,49 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                Debug.Log("Not In Wall");
-				CameraControl.in3DSpace = CastToWall.removeFromWall(gameObject);
+                Debug.Log("In Wall");
+				GameObject parent = GameObject.Find("Player_Parent");
+				foreach (Transform child in parent.transform)
+					child.transform.gameObject.SetActive(true);
+				CameraControl.in3DSpace = CastToWall.removeFromWall(GameObject.Find("Player"), this.gameObject);
                 if (CameraControl.in3DSpace) return;
+				else transform.Find("Player").gameObject.SetActive(false);
             }
         }
+			
 
-		if(Input.GetButtonUp("Jump"))
-			jumpHeldTime = 0;
-
-        Debug.Log("Check if moving");
+        //Debug.Log("Check if moving");
         if (!CameraControl.in3DSpace)
         {
             Debug.Log("Trying to move");
 			Vector3 dir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
             //Debug.Log(dir);
-            Vector3 movement = (shiftedPlane.GetComponent<Transform>().right * dir.x) + (shiftedPlane.GetComponent<Transform>().forward * dir.y);
-            Vector3 gravity2D = -1 * gravity * Time.deltaTime * shiftedPlane.GetComponent<Transform>().up;
-            Debug.Log(shiftedPlane.GetComponent<Transform>().right);
-            controller.Move(gravity2D);
+
+			if (Input.GetButton("Jump") && jumpHeldTime < jumpTime)
+			{
+				Debug.Log ("2D JUMP");
+				controller.Move(shiftedPlane.GetComponent<Transform>().forward * jumpSpeed * Time.deltaTime);
+				jumpHeldTime += Time.deltaTime;
+			}
+			if(Input.GetButtonUp("Jump"))
+				jumpHeldTime = 0;
+
+			controller.Move(-1 * shiftedPlane.GetComponent<Transform>().forward * gravity * Time.deltaTime);
+
+			Vector3 movement = (shiftedPlane.GetComponent<Transform>().right * dir.x) + (shiftedPlane.GetComponent<Transform>().forward * dir.y);
             controller.Move(movement * Time.deltaTime * movementSpeed);
         }
 
         else
         {
+			if (Input.GetButton("Jump") && jumpHeldTime < jumpTime)
+			{
+				controller.Move(new Vector3(0, jumpSpeed * Time.deltaTime, 0));
+				jumpHeldTime += Time.deltaTime;
+			}
+			if(Input.GetButtonUp("Jump"))
+				jumpHeldTime = 0;
+			
             controller.Move(new Vector3(0, -gravity * Time.deltaTime, 0));
             rotationDirection = new Vector3(cameraTransform.forward.x, 0, cameraTransform.forward.z);
             transform.rotation = Quaternion.LookRotation(rotationDirection, Vector3.up);

@@ -1,10 +1,13 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Shadow Interaction\ShadowColliderCast.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Player\PlayerMovement.cs">
     <Files>
-      <File FileName="Assets\Scripts\Shadow Interaction\WallShadowBehavior.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Shadow Interaction\ShadowFinder.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Shadow Interaction\ShadowColliderCast.cs" Line="21" Column="48" />
+      <File FileName="Assets\Scripts\Shadow Interaction\CastToWall.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Camera\CameraControl.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Player\PlayerMovement.cs" Line="45" Column="24" />
+      <File FileName="Assets\Scripts\Camera\RaycastToCamera.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Shadow Interaction\LightSourceControl.cs" Line="1" Column="1" />
+      <File FileName="Assets\TwoDimensionalObject.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
