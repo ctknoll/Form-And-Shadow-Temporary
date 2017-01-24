@@ -3,6 +3,13 @@
 public class PlayerShadowCollider : MonoBehaviour {
 	public GameObject player;
 
+	ShadowCast shadowCast;
+
+	void Start()
+	{
+		shadowCast = GetComponentInParent<ShadowCast>();
+	}
+
 	void Update()
 	{
 		// If the player is moving in the 3D space, force the shadow collider to follow the main player character
@@ -13,7 +20,7 @@ public class PlayerShadowCollider : MonoBehaviour {
 	void LateUpdate () 
 	{
 		// Prevent the player shadow collider from moving on the Z axis
-		LockZPosition();
+		//LockZPosition();
 	}
 
 	public void FollowPlayer()
@@ -21,10 +28,9 @@ public class PlayerShadowCollider : MonoBehaviour {
 		transform.position = player.transform.position;
 	}
 
-	public void LockZPosition()
-	{
-		Vector3 pos = transform.position;
-		pos.z = player.GetComponent<PlayerShadowCast>().zOffset - 0.1f;
-		transform.position = pos;
-	}
+	//public void LockZPosition()
+	//{
+	//	Vector3 pos = transform.position + shadowCast.zOffset;
+	//	transform.position = pos;
+	//}
 }

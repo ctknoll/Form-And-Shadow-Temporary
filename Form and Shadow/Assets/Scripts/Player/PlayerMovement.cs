@@ -101,6 +101,7 @@ public class PlayerMovement : MonoBehaviour
 	{
 		transform.position = new Vector3(playerShadow.transform.position.x, playerShadow.transform.position.y, transform.position.z);
 	}
+
 	public void CheckShadowShift()
 	{
 		RaycastHit hit;
@@ -115,6 +116,7 @@ public class PlayerMovement : MonoBehaviour
 					GetComponent<CharacterController>().enabled = false;
 					playerShadow.GetComponent<CharacterController>().enabled = true;
 					controller = playerShadow.GetComponent<CharacterController>();
+					GetComponent<PlayerShadowCast>().CastShadow();
 					Debug.Log("In Wall");
 				}
 				else
