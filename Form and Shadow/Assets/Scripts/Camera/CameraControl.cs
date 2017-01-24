@@ -4,9 +4,9 @@ using System.Collections;
 [AddComponentMenu("Camera-Control/Mouse Orbit with zoom")]
 public class CameraControl : MonoBehaviour
 {
-	public static bool in3DSpace;
 	[Header("Player Target")]
-    public Transform target;
+    public Transform target2D;
+	public Transform target3D;
 
 	[Header("3D Camera Variables")]
 	public float distanceToPlayer3D;
@@ -20,15 +20,11 @@ public class CameraControl : MonoBehaviour
     float y = 0.0f;
 
 	[Header("2D Camera Variables")]
-	public bool smooth;
 	public float smoothSpeed = 0.125f;
 	public float distanceToPlayer2D;
-	public Vector3 normalToWall = new Vector3();
 
     void Start()
     {
-		in3DSpace = true;
-
         Vector3 angles = transform.eulerAngles;
         x = angles.y;
         y = angles.x;
@@ -50,7 +46,7 @@ public class CameraControl : MonoBehaviour
 
     void LateUpdate()
     {
-		if (target && in3DSpace)
+		if (PlayerMovement.in3DSpace)
         {
             x += Input.GetAxis("Mouse X") * xSpeed * distanceToPlayer3D * 0.02f;
             y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
@@ -60,20 +56,18 @@ public class CameraControl : MonoBehaviour
             Quaternion rotation = Quaternion.Euler(y, x, 0);
 
             Vector3 negDistance = new Vector3(0.0f, 0.0f, -distanceToPlayer3D);
-            Vector3 position = rotation * negDistance + target.position;
+            Vector3 position = rotation * negDistance + target3D.position;
 
             transform.rotation = rotation;
             transform.position = position;
         }
 
-		else if(target && !in3DSpace)
+		else if(!PlayerMovement.in3DSpace)
 		{
 			transform.rotation = Quaternion.LookRotation(LightSourceControl.lightSourceDirection, Vector3.up);
-			Vector3 desiredPosition = target.transform.position + normalToWall * distanceToPlayer2D;
-			if(smooth)
-				transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
-			else
-				transform.position = desiredPosition;
+			Vector3 desiredPosition = target2D.transform.position + -transform.forward * distanceToPlayer2D;
+
+			transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
 		}
     }
 
