@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Basic Test Scene/Basic Test Scene.unity
+- path: Assets/Scenes/Whitebox 1.unity
   isLoaded: 1
   isActive: 1
