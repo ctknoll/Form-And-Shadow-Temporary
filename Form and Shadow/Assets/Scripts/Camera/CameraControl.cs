@@ -34,14 +34,6 @@ public class CameraControl : MonoBehaviour
 	{
         if (Input.GetButtonDown("Cancel"))
             Application.Quit();
-
-		distanceToPlayer3D = 8f;
-//        distanceToPlayer3D = RaycastToCamera.distance;
-//		
-//		if(distanceToPlayer3D > 8)
-//		{
-//			distanceToPlayer3D = 8;
-//		}
 	}
 
     void LateUpdate()

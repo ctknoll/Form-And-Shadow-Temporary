@@ -6,12 +6,21 @@ public class PlayerMovement : MonoBehaviour
 	public static bool in3DSpace;
 	public static bool shadowMelded;
 
+	[Header("Object References")]
 	public GameObject playerShadow;
 	public Transform cameraTransform;
+
+	[Header("Movement Variables")]
 	public float movementSpeed;
+	public float grabMovementSpeed;
 	public float jumpSpeed;
 	public float jumpTime;
 	public float gravity;
+
+	[Header("Interaction Variables")]
+	public static bool isGrabbing;
+	public GameObject grabbedObject;
+
 
 	private Vector3 rotationDirection;
 	private float jumpHeldTime;
@@ -45,22 +54,23 @@ public class PlayerMovement : MonoBehaviour
 		// Shadow shift Methods
 		if(Input.GetButtonDown("Fire3"))
 			CheckShadowShift();
-		if(Input.GetButtonDown("Fire1"))
-			CheckShadowMeld();
+//		if(Input.GetButtonDown("Fire1"))
+//			CheckShadowMeld();
 	}
 
 	public void PlayerJumpandGravity()
 	{
-		if (Input.GetButton("Jump") && jumpHeldTime < jumpTime)
+		if(!isGrabbing)
 		{
-			controller.Move(new Vector3(0, jumpSpeed * Time.deltaTime, 0));
-			jumpHeldTime += Time.deltaTime;
+			if (Input.GetButton("Jump") && jumpHeldTime < jumpTime)
+			{
+				controller.Move(new Vector3(0, jumpSpeed * Time.deltaTime, 0));
+				jumpHeldTime += Time.deltaTime;
+			}
+			if(Input.GetButtonUp("Jump"))
+				jumpHeldTime = 0;
 		}
-		if(Input.GetButtonUp("Jump"))
-			jumpHeldTime = 0;
-
 		controller.Move(new Vector3(0, -gravity * Time.deltaTime, 0));
-
 	}
 
 	public void PlayerMovement2D()
@@ -77,23 +87,45 @@ public class PlayerMovement : MonoBehaviour
 	}
 	public void PlayerMovement3D()
 	{
-		rotationDirection = new Vector3(cameraTransform.forward.x, 0, cameraTransform.forward.z);
-		transform.rotation = Quaternion.LookRotation(rotationDirection, Vector3.up);
-		if (Input.GetAxis("Horizontal") > 0)
+		if(!isGrabbing)
 		{
-			controller.Move(cameraTransform.right * Time.deltaTime * movementSpeed);
+			rotationDirection = new Vector3(cameraTransform.forward.x, 0, cameraTransform.forward.z);
+			transform.rotation = Quaternion.LookRotation(rotationDirection, Vector3.up);
+			if (Input.GetAxis("Horizontal") > 0)
+			{
+				controller.Move(cameraTransform.right * Time.deltaTime * movementSpeed);
+			}
+			if (Input.GetAxis("Horizontal") < 0)
+			{
+				controller.Move(-cameraTransform.right * Time.deltaTime * movementSpeed);
+			}
+			if (Input.GetAxis("Vertical") > 0)
+			{
+				controller.Move(cameraTransform.forward * Time.deltaTime * movementSpeed);
+			}
+			if (Input.GetAxis("Vertical") < 0)
+			{
+				controller.Move(-cameraTransform.forward * Time.deltaTime * movementSpeed);
+			}
 		}
-		if (Input.GetAxis("Horizontal") < 0)
+		else
 		{
-			controller.Move(-cameraTransform.right * Time.deltaTime * movementSpeed);
-		}
-		if (Input.GetAxis("Vertical") > 0)
-		{
-			controller.Move(cameraTransform.forward * Time.deltaTime * movementSpeed);
-		}
-		if (Input.GetAxis("Vertical") < 0)
-		{
-			controller.Move(-cameraTransform.forward * Time.deltaTime * movementSpeed);
+			if (Input.GetAxis("Horizontal") > 0)
+			{
+				controller.Move(cameraTransform.right * Time.deltaTime * grabMovementSpeed);
+			}
+			if (Input.GetAxis("Horizontal") < 0)
+			{
+				controller.Move(-cameraTransform.right * Time.deltaTime * grabMovementSpeed);
+			}
+			if (Input.GetAxis("Vertical") > 0)
+			{
+				controller.Move(cameraTransform.forward * Time.deltaTime * grabMovementSpeed);
+			}
+			if (Input.GetAxis("Vertical") < 0)
+			{
+				controller.Move(-cameraTransform.forward * Time.deltaTime * grabMovementSpeed);
+			}
 		}
 	}
 
@@ -101,6 +133,7 @@ public class PlayerMovement : MonoBehaviour
 	{
 		transform.position = new Vector3(playerShadow.transform.position.x, playerShadow.transform.position.y, transform.position.z);
 	}
+
 	public void CheckShadowShift()
 	{
 		RaycastHit hit;
