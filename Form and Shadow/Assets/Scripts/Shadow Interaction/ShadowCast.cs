@@ -28,8 +28,29 @@ public class ShadowCast : MonoBehaviour {
 	public void Check2DInvisibility()
 	{
 		if(!PlayerMovement.in3DSpace)
-			GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+		{
+			if(GetComponent<MeshRenderer>())
+				GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+			else
+			{
+				MeshRenderer [] meshRenderers = GetComponentsInChildren<MeshRenderer>();
+				foreach (MeshRenderer meshRend in meshRenderers)
+				{
+					meshRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;	
+				}
+			}
+				
+		}
 		else
-			GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+			if(GetComponent<MeshRenderer>())
+				GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+			else
+			{
+				MeshRenderer [] meshRenderers = GetComponentsInChildren<MeshRenderer>();
+				foreach (MeshRenderer meshRend in meshRenderers)
+				{
+					meshRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;	
+				}
+			}
 	}
 }

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Shadow Wall
   - canGrab
+  - Move Platform
+  - Spikes
   layers:
   - Default
   - TransparentFX
