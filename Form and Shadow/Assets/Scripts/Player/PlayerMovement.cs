@@ -148,6 +148,7 @@ public class PlayerMovement : MonoBehaviour
 					GetComponent<CharacterController>().enabled = false;
 					playerShadow.GetComponent<CharacterController>().enabled = true;
 					controller = playerShadow.GetComponent<CharacterController>();
+					GetComponent<PlayerShadowCast>().CastShadow();
 					Debug.Log("In Wall");
 				}
 				else
