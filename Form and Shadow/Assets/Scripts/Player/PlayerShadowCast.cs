@@ -4,12 +4,13 @@ public class PlayerShadowCast : MonoBehaviour {
 	public GameObject playerShadowCollider;
 
 	[HideInInspector]
-	public float zOffset;
+	public Vector3 zOffset;
+	[SerializeField]
+	public Transform wallTransform = null;
 
 	void Update () 
 	{
-		zOffset = -(transform.lossyScale.z / 2f);
-		CastShadow();
+		zOffset = ((transform.lossyScale.z / 2f + .1f) * LightSourceControl.lightSourceDirection);
 		Check2DInvisibility();
 	}
 
@@ -19,8 +20,12 @@ public class PlayerShadowCast : MonoBehaviour {
 		RaycastHit hit;
 		if(Physics.Raycast(transform.position, LightSourceControl.lightSourceDirection, out hit, Mathf.Infinity))
 		{
-			if(hit.collider.gameObject.tag == "Shadow Wall")
+			if (hit.collider.gameObject.tag == "Shadow Wall") 
+			{
 				playerShadowCollider.SetActive(true);
+				wallTransform = hit.collider.transform;
+				GetComponent<PlayerMovement>().playerShadow.transform.position = hit.point + zOffset;
+			}
 			else
 				playerShadowCollider.SetActive(false);
 		}
