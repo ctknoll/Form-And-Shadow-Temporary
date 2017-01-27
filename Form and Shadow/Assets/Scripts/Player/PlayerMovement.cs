@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
 	private Vector3 rotationDirection;
 	private float jumpHeldTime;
+    public Vector3 distanceFromShadow;
 
     [SerializeField]
     private CharacterController controller;
@@ -112,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
 
 	public void FollowShadow()
 	{
-		transform.position = new Vector3(playerShadow.transform.position.x, playerShadow.transform.position.y, transform.position.z);
+		transform.position = playerShadow.transform.position + distanceFromShadow;
 	}
 
 	public void CheckShadowShift()
@@ -130,6 +131,7 @@ public class PlayerMovement : MonoBehaviour
 					playerShadow.GetComponent<CharacterController>().enabled = true;
 					controller = playerShadow.GetComponent<CharacterController>();
 					GetComponent<PlayerShadowCast>().CastShadow();
+                    distanceFromShadow = transform.position - playerShadow.transform.position;
 					Debug.Log("In Wall");
 				}
 				else
