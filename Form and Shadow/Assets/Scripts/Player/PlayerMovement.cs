@@ -28,8 +28,8 @@ public class PlayerMovement : MonoBehaviour
 
 	void Update() 
 	{
-		// Movement Methods
-		PlayerJumpandGravity();
+        // Movement Methods
+        PlayerJumpandGravity();
 
 		// In the case that the player is controlling their shadow, force the base player character
 		// to follow the shadow in the wall
@@ -49,17 +49,30 @@ public class PlayerMovement : MonoBehaviour
 			CheckShadowMeld();
 	}
 
-	public void PlayerJumpandGravity()
-	{
-		if (Input.GetButton("Jump") && jumpHeldTime < jumpTime)
-		{
-			controller.Move(new Vector3(0, jumpSpeed * Time.deltaTime, 0));
-			jumpHeldTime += Time.deltaTime;
-		}
-		if(Input.GetButtonUp("Jump"))
-			jumpHeldTime = 0;
+    public void PlayerJumpandGravity()
+    {
 
-		controller.Move(new Vector3(0, -gravity * Time.deltaTime, 0));
+        Debug.Log(in3DSpace);
+        if (Input.GetButton("Jump") && jumpHeldTime < jumpTime)
+        {
+            controller.Move(new Vector3(0, jumpSpeed * Time.deltaTime, 0));
+            jumpHeldTime += Time.deltaTime;
+        }
+
+        RaycastHit hit;
+        if (in3DSpace)
+        {
+            if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - (transform.lossyScale.y), transform.position.z), -Vector3.up, out hit, .1f))
+                jumpHeldTime = 0;
+        }
+        else
+        {
+            Debug.Log( playerShadow.transform.lossyScale.y);
+            Debug.DrawLine(playerShadow.transform.position + Vector3.down * transform.lossyScale.y, playerShadow.transform.position + Vector3.down * (transform.lossyScale.y+.1f), Color.red, .25f);
+            if (Physics.Raycast(new Vector3(playerShadow.transform.position.x, playerShadow.transform.position.y - (playerShadow.transform.lossyScale.y), playerShadow.transform.position.z), -Vector3.up, out hit, .1f))
+                jumpHeldTime = 0;
+        }
+        controller.Move(new Vector3(0, -gravity * Time.deltaTime, 0));
 
 	}
 
