@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3731199, g: 0.38074008, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311926, g: 0.38073996, b: 0.35872686, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 204563993}
   - component: {fileID: 204563992}
   - component: {fileID: 204563991}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShadowWall
   m_TagString: Shadow Wall
   m_Icon: {fileID: 0}
@@ -535,7 +535,7 @@ GameObject:
   - component: {fileID: 276871821}
   - component: {fileID: 276871820}
   - component: {fileID: 276871819}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShadowWall
   m_TagString: Shadow Wall
   m_Icon: {fileID: 0}
@@ -840,7 +840,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 535477961}
   m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -23.17, y: -18.23, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1124,6 +1124,87 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e7ce52453481f414a90ee3a1949e92d2, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &922155029
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 922155033}
+  - component: {fileID: 922155032}
+  - component: {fileID: 922155031}
+  - component: {fileID: 922155030}
+  m_Layer: 0
+  m_Name: Light Reference
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!23 &922155030
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 922155029}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!135 &922155031
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 922155029}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &922155032
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 922155029}
+  m_Mesh: {fileID: 0}
+--- !u!4 &922155033
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 922155029}
+  m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
+  m_LocalPosition: {x: 1.5023233, y: 4.460882, z: 5.270563}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 28
+  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
 --- !u!1001 &1017899637
 Prefab:
   m_ObjectHideFlags: 0
@@ -1736,7 +1817,7 @@ GameObject:
   - component: {fileID: 1302878739}
   - component: {fileID: 1302878738}
   - component: {fileID: 1302878737}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShadowWall
   m_TagString: Shadow Wall
   m_Icon: {fileID: 0}
@@ -1869,7 +1950,7 @@ GameObject:
   - component: {fileID: 1320587519}
   - component: {fileID: 1320587518}
   - component: {fileID: 1320587517}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShadowWall (1)
   m_TagString: Shadow Wall
   m_Icon: {fileID: 0}
@@ -2257,9 +2338,9 @@ GameObject:
   - component: {fileID: 1453708517}
   - component: {fileID: 1453708516}
   - component: {fileID: 1453708515}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wall (6)
-  m_TagString: Untagged
+  m_TagString: Shadow Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2399,7 +2480,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerShadowCollider: {fileID: 1168302945}
-  zOffset: 0
+  zOffset: {x: 0, y: 0, z: 0}
+  wallTransform: {fileID: 0}
 --- !u!143 &1487259425
 CharacterController:
   m_ObjectHideFlags: 0

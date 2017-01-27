@@ -8,13 +8,13 @@ public class ShadowCollider : MonoBehaviour {
 	{
 		shadowCast = GetComponentInParent<ShadowCast>();
 		gameObject.AddComponent<BoxCollider>();
-	}
+        Vector3 pos = transform.position + shadowCast.zOffset;
+        transform.position = pos;
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate () 
 	{
-		Vector3 pos = transform.position;
-		pos.z = shadowCast.zOffset - 0.1f;
-		transform.position = pos;
+		
 	}
 }
