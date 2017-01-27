@@ -2,10 +2,12 @@
 
 public class ShadowCollider : MonoBehaviour {
 	private ShadowCast shadowCast;
+	private float errorMargin;
 
 	// Use this for initialization
 	void Start () 
 	{
+		errorMargin = 0.1f;
 		shadowCast = GetComponentInParent<ShadowCast>();
 
 		if(gameObject.transform.parent.gameObject.tag == "Move Platform")
@@ -21,17 +23,32 @@ public class ShadowCollider : MonoBehaviour {
 		else
 		{
 			gameObject.name = "Basic Collider";
-			gameObject.AddComponent<BoxCollider>();
+			CreateBasicCollider();
 		}
-		Vector3 pos = transform.position + shadowCast.zOffset;
-		transform.position = pos;
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () 
 	{
-		
+		LockMovementAxis();
 	}
+
+	public void LockMovementAxis()
+	{
+		if(shadowCast.transformOffset.x > 0 + errorMargin || shadowCast.transformOffset.x < 0 - errorMargin)
+		{
+			transform.position = new Vector3(gameObject.transform.parent.GetComponent<ShadowCast>().wallTransform.position.x + shadowCast.transformOffset.x, transform.position.y, transform.position.z);
+		}
+		if(shadowCast.transformOffset.y > 0 + errorMargin || shadowCast.transformOffset.y < 0 - errorMargin)
+		{
+			transform.position = new Vector3(transform.position.x, gameObject.transform.parent.GetComponent<ShadowCast>().wallTransform.position.y + shadowCast.transformOffset.y, transform.position.z);
+		}
+		if(shadowCast.transformOffset.z > 0 + errorMargin || shadowCast.transformOffset.z < 0 - errorMargin)
+		{
+			transform.position = new Vector3(transform.position.x, transform.position.y, gameObject.transform.parent.GetComponent<ShadowCast>().wallTransform.position.z + shadowCast.transformOffset.z);
+		}
+	}
+
 	public void CreatePlatformShadowCollider()
 	{
 		// First, add a box collider to the base shadow-casting object that mimics the size and scale of its
@@ -56,6 +73,12 @@ public class ShadowCollider : MonoBehaviour {
 		// Creates a spike deathzone the player can fall into
 		gameObject.AddComponent<BoxCollider>();
 		gameObject.AddComponent<Killzone>();
+		gameObject.GetComponent<BoxCollider>().size = gameObject.transform.parent.GetComponent<BoxCollider>().size;
 		gameObject.GetComponent<BoxCollider>().isTrigger = true;
+	}
+
+	public void CreateBasicCollider()
+	{
+		gameObject.AddComponent<BoxCollider>();
 	}
 }

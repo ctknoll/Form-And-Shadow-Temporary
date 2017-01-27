@@ -20,14 +20,14 @@ GameObject:
   m_Component:
   - component: {fileID: 4938686204538132}
   - component: {fileID: 114069511538800200}
-  - component: {fileID: 114773569831030584}
+  - component: {fileID: 114203260837791562}
   - component: {fileID: 65577230660684306}
-  - component: {fileID: 65591481353215428}
+  - component: {fileID: 65437453367954032}
   - component: {fileID: 33593846497685586}
   - component: {fileID: 23710831500296552}
   m_Layer: 8
   m_Name: Move Cube
-  m_TagString: canGrab
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1992499532377428}
   m_LocalRotation: {x: -0, y: 0.000000014901161, z: -0, w: 1}
-  m_LocalPosition: {x: 3.5, y: 0.5, z: 6.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -83,19 +83,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1992499532377428}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &65577230660684306
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1992499532377428}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.6, y: 1, z: 1.6}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65591481353215428
+--- !u!65 &65437453367954032
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -106,6 +94,18 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65577230660684306
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1992499532377428}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.75, y: 1, z: 1.75}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114069511538800200
 MonoBehaviour:
@@ -121,8 +121,9 @@ MonoBehaviour:
   shadowPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
     type: 2}
   shadowCollider: {fileID: 0}
-  zOffset: 0
---- !u!114 &114773569831030584
+  transformOffset: {x: 0, y: 0, z: 0}
+  wallTransform: {fileID: 0}
+--- !u!114 &114203260837791562
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -133,5 +134,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58dab322eed86bc4699b61147a773547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canInteract: 0
   grabbed: 0
-  playerMovement: {fileID: 0}

@@ -55,7 +55,7 @@ Transform:
   m_GameObject: {fileID: 1793766845158978}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 0.5, z: 1}
+  m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 4988682997179216}
   m_RootOrder: 0
@@ -67,7 +67,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1439985451363458}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 3, z: 3}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4752003125930508}
@@ -122,7 +122,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3, y: 1, z: 1}
+  m_Size: {x: 0, y: 1, z: 0}
   m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!65 &65318106315746406
 BoxCollider:
@@ -150,7 +150,8 @@ MonoBehaviour:
   shadowPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
     type: 2}
   shadowCollider: {fileID: 0}
-  zOffset: 0
+  transformOffset: {x: 0, y: 0, z: 0}
+  wallTransform: {fileID: 0}
 --- !u!114 &114958400841393434
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -162,6 +163,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d8bea517e44ba1438ef950285685a7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDirection: 0
+  moveDirection: 2
   moveDistance: 4
   moveSpeed: 3
