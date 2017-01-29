@@ -25,7 +25,7 @@ public class PlayerShadowCollider : MonoBehaviour {
 
 	public void FollowPlayer()
 	{
-		transform.position = player.transform.position;
+		transform.position = player.transform.position + Vector3.up * 10;
 	}
 
 	//public void LockZPosition()

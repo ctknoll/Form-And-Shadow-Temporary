@@ -25,6 +25,10 @@ public class ShadowCollider : MonoBehaviour {
 			gameObject.name = "Basic Collider";
 			CreateBasicCollider();
 		}
+
+		gameObject.AddComponent<BoxCollider>();
+		Vector3 pos = transform.position + shadowCast.transformOffset;
+        transform.position = pos;
 	}
 	
 	// Update is called once per frame

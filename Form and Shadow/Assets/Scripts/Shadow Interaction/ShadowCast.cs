@@ -38,8 +38,12 @@ public class ShadowCast : MonoBehaviour {
 	public void CastShadow()
 	{
 		RaycastHit hit;
-		if(Physics.Raycast(transform.position, LightSourceControl.lightSourceDirection, out hit, Mathf.Infinity, 1 << 10))
+        Debug.DrawLine(transform.position, transform.position + LightSourceControl.lightSourceDirection * 10, Color.red, 1);
+        if (Physics.Raycast(transform.position, LightSourceControl.lightSourceDirection, out hit, Mathf.Infinity, 1 << 10))
 		{
+            Debug.Log(Physics.Raycast(transform.position, LightSourceControl.lightSourceDirection, out hit, Mathf.Infinity, 1 << 10));
+            Debug.Log(hit.collider);
+         
 			if (hit.collider.gameObject.tag == "Shadow Wall") 
 			{
 				shadowCollider = Instantiate (shadowPrefab, hit.point, Quaternion.identity, gameObject.transform) as GameObject;
