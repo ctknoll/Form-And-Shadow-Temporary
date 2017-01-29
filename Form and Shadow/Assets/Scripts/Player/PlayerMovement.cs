@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
 	public Transform cameraTransform;
 	public float movementSpeed;
 	public float jumpSpeed;
+	private float jumpSpeedCurrent;
 	public float jumpTime;
 	public float gravity;
 
@@ -25,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 		in3DSpace = true;
 		shadowMelded = false;
 		controller = GetComponent<CharacterController>();
+		jumpSpeedCurrent = jumpSpeed;
 	}
 
 	void Update() 
@@ -56,24 +58,35 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log(in3DSpace);
         if (Input.GetButton("Jump") && jumpHeldTime < jumpTime)
         {
-            controller.Move(new Vector3(0, jumpSpeed * Time.deltaTime, 0));
+			if (jumpSpeedCurrent <= ((jumpSpeed - gravity) / jumpTime) * Time.deltaTime)
+				jumpSpeedCurrent = 0;
+			else jumpSpeedCurrent -= ((jumpSpeed - gravity) / jumpTime) * Time.deltaTime;
+			controller.Move(new Vector3(0, jumpSpeedCurrent * Time.deltaTime, 0));
             jumpHeldTime += Time.deltaTime;
         }
+
+		controller.Move(new Vector3(0, -gravity * Time.deltaTime, 0));
 
         RaycastHit hit;
         if (in3DSpace)
         {
-            if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - (transform.lossyScale.y), transform.position.z), -Vector3.up, out hit, .1f))
-                jumpHeldTime = 0;
+			if (Physics.Raycast (new Vector3 (transform.position.x, transform.position.y - (transform.lossyScale.y), transform.position.z), -Vector3.up, out hit, .1f)) 
+			{
+				jumpHeldTime = 0;
+				jumpSpeedCurrent = jumpSpeed;
+			}
+
         }
         else
         {
             Debug.Log( playerShadow.transform.lossyScale.y);
             Debug.DrawLine(playerShadow.transform.position + Vector3.down * transform.lossyScale.y, playerShadow.transform.position + Vector3.down * (transform.lossyScale.y+.1f), Color.red, .25f);
             if (Physics.Raycast(new Vector3(playerShadow.transform.position.x, playerShadow.transform.position.y - (playerShadow.transform.lossyScale.y), playerShadow.transform.position.z), -Vector3.up, out hit, .1f))
-                jumpHeldTime = 0;
+			{
+				jumpHeldTime = 0;
+				jumpSpeedCurrent = jumpSpeed;
+			}
         }
-        controller.Move(new Vector3(0, -gravity * Time.deltaTime, 0));
 
 	}
 
