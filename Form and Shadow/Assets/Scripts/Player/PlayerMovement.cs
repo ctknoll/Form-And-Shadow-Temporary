@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
 	public float movementSpeed;
 	public float grabMovementSpeed;
 	public float jumpSpeed;
+	private float jumpSpeedCurrent;
 	public float jumpTime;
 	public float gravity;
 
@@ -24,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
 
 	private Vector3 rotationDirection;
 	private float jumpHeldTime;
+    public Vector3 distanceFromShadow;
 
     [SerializeField]
     private CharacterController controller;
@@ -33,12 +35,13 @@ public class PlayerMovement : MonoBehaviour
 		in3DSpace = true;
 		shadowMelded = false;
 		controller = GetComponent<CharacterController>();
+		jumpSpeedCurrent = jumpSpeed;
 	}
 
 	void Update() 
 	{
-		// Movement Methods
-		PlayerJumpandGravity();
+        // Movement Methods
+        PlayerJumpandGravity();
 
 		// In the case that the player is controlling their shadow, force the base player character
 		// to follow the shadow in the wall
@@ -58,19 +61,41 @@ public class PlayerMovement : MonoBehaviour
 //			CheckShadowMeld();
 	}
 
-	public void PlayerJumpandGravity()
-	{
-		if(!isGrabbing)
-		{
-			if (Input.GetButton("Jump") && jumpHeldTime < jumpTime)
-			{
-				controller.Move(new Vector3(0, jumpSpeed * Time.deltaTime, 0));
-				jumpHeldTime += Time.deltaTime;
-			}
-			if(Input.GetButtonUp("Jump"))
-				jumpHeldTime = 0;
-		}
+    public void PlayerJumpandGravity()
+    {
+
+        Debug.Log(in3DSpace);
+        if (Input.GetButton("Jump") && jumpHeldTime < jumpTime)
+        {
+			if (jumpSpeedCurrent <= ((jumpSpeed - gravity) / jumpTime) * Time.deltaTime)
+				jumpSpeedCurrent = 0;
+			else jumpSpeedCurrent -= ((jumpSpeed - gravity) / jumpTime) * Time.deltaTime;
+			controller.Move(new Vector3(0, jumpSpeedCurrent * Time.deltaTime, 0));
+            jumpHeldTime += Time.deltaTime;
+        }
+
 		controller.Move(new Vector3(0, -gravity * Time.deltaTime, 0));
+
+        RaycastHit hit;
+        if (in3DSpace)
+        {
+			if (Physics.Raycast (new Vector3 (transform.position.x, transform.position.y - (transform.lossyScale.y), transform.position.z), -Vector3.up, out hit, .1f)) 
+			{
+				jumpHeldTime = 0;
+				jumpSpeedCurrent = jumpSpeed;
+			}
+
+        }
+        else
+        {
+            Debug.Log( playerShadow.transform.lossyScale.y);
+            Debug.DrawLine(playerShadow.transform.position + Vector3.down * transform.lossyScale.y, playerShadow.transform.position + Vector3.down * (transform.lossyScale.y+.1f), Color.red, .25f);
+            if (Physics.Raycast(new Vector3(playerShadow.transform.position.x, playerShadow.transform.position.y - (playerShadow.transform.lossyScale.y), playerShadow.transform.position.z), -Vector3.up, out hit, .1f))
+			{
+				jumpHeldTime = 0;
+				jumpSpeedCurrent = jumpSpeed;
+			}
+        }
 	}
 
 	public void PlayerMovement2D()
@@ -131,7 +156,7 @@ public class PlayerMovement : MonoBehaviour
 
 	public void FollowShadow()
 	{
-		transform.position = new Vector3(playerShadow.transform.position.x, playerShadow.transform.position.y, transform.position.z);
+		transform.position = playerShadow.transform.position + distanceFromShadow;
 	}
 
 	public void CheckShadowShift()
@@ -149,6 +174,8 @@ public class PlayerMovement : MonoBehaviour
 					playerShadow.GetComponent<CharacterController>().enabled = true;
 					controller = playerShadow.GetComponent<CharacterController>();
 					GetComponent<PlayerShadowCast>().CastShadow();
+                    distanceFromShadow = transform.position - playerShadow.transform.position;
+
 					Debug.Log("In Wall");
 				}
 				else
