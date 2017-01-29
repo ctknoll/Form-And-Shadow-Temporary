@@ -1,14 +1,14 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\World Interaction\LevelFinish.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Player\PlayerMovement.cs">
     <Files>
-      <File FileName="Assets\Scripts\Player\PlayerShadowCast.cs" Line="31" Column="22" />
-      <File FileName="Assets\Scripts\Player\PlayerMovement.cs" Line="116" Column="70" />
-      <File FileName="Assets\Scripts\Player\PlayerShadowCollider.cs" Line="9" Column="33" />
-      <File FileName="Assets\Scripts\Camera\CameraControl.cs" Line="65" Column="27" />
-      <File FileName="Assets\Scripts\Shadow Interaction\ShadowCast.cs" Line="30" Column="32" />
-      <File FileName="Assets\Scripts\World Interaction\Killzone.cs" Line="5" Column="2" />
-      <File FileName="Assets\Scripts\World Interaction\LevelFinish.cs" Line="7" Column="22" />
+      <File FileName="Assets\Scripts\Player\PlayerShadowCast.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Player\PlayerMovement.cs" Line="146" Column="52" />
+      <File FileName="Assets\Scripts\Player\PlayerShadowCollider.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Camera\CameraControl.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Shadow Interaction\ShadowCast.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\World Interaction\Killzone.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\World Interaction\LevelFinish.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

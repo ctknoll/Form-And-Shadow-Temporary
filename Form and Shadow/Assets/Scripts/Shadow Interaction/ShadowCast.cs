@@ -15,6 +15,8 @@ public class ShadowCast : MonoBehaviour {
 			CastShadow();
 		if (wallTransform != null) 
 		{
+	if (wallTransform != null) 
+			{
 				if (LightSourceControl.lightSourceDirection == GameObject.Find("Light Reference").transform.forward || -1 * LightSourceControl.lightSourceDirection == GameObject.Find("Light Reference").transform.forward) 
 				{
 					zOffset = ((transform.lossyScale.z / 2f) * LightSourceControl.lightSourceDirection);
@@ -28,7 +30,7 @@ public class ShadowCast : MonoBehaviour {
 					zOffset = ((transform.lossyScale.y / 2f) * LightSourceControl.lightSourceDirection);
 				}
 			}
-
+		}
 		else {zOffset = new Vector3 (0, 0, -1);}
 		Check2DInvisibility();
 	}
@@ -41,12 +43,13 @@ public class ShadowCast : MonoBehaviour {
 		{
             Debug.Log(Physics.Raycast(transform.position, LightSourceControl.lightSourceDirection, out hit, Mathf.Infinity, 1 << 10));
             Debug.Log(hit.collider);
-            if (hit.collider.gameObject.tag == "Shadow Wall") 
+         
+			if (hit.collider.gameObject.tag == "Shadow Wall") 
 			{
-                
 				shadowCollider = Instantiate (shadowPrefab, hit.point, Quaternion.identity, gameObject.transform) as GameObject;
 				wallTransform = hit.collider.transform;
 			}
+				
 		}
 	}
 

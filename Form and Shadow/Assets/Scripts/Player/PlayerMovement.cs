@@ -145,6 +145,7 @@ public class PlayerMovement : MonoBehaviour
 					controller = playerShadow.GetComponent<CharacterController>();
 					GetComponent<PlayerShadowCast>().CastShadow();
                     distanceFromShadow = transform.position - playerShadow.transform.position;
+
 					Debug.Log("In Wall");
 				}
 				else

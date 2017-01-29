@@ -10,7 +10,7 @@ public class ShadowCollider : MonoBehaviour {
 		gameObject.AddComponent<BoxCollider>();
         Vector3 pos = transform.position + shadowCast.zOffset;
         transform.position = pos;
-    }
+	}
 	
 	// Update is called once per frame
 	void FixedUpdate () 

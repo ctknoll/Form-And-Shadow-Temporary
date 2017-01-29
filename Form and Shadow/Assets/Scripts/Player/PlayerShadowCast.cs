@@ -11,6 +11,9 @@ public class PlayerShadowCast : MonoBehaviour {
 	void Update () 
 	{
 		zOffset = ((transform.lossyScale.z / 2f + .1f) * LightSourceControl.lightSourceDirection);
+		if (wallTransform != null)
+			zOffset = .5f * wallTransform.forward;
+		else {zOffset = new Vector3 (0, 0, -1);}
 		Check2DInvisibility();
 	}
 
@@ -26,8 +29,8 @@ public class PlayerShadowCast : MonoBehaviour {
 				wallTransform = hit.collider.transform;
 				GetComponent<PlayerMovement>().playerShadow.transform.position = hit.point + zOffset;
                 GetComponent<PlayerMovement>().playerShadow.transform.rotation = Quaternion.LookRotation(hit.normal);
-
-            }
+				GameObject.Find("Player_Shadow").transform.position = hit.point + zOffset;
+			}
 			else
 				playerShadowCollider.SetActive(false);
 		}
