@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour 
 {
+	public static Vector3 playerStartPosition;
 	public static bool in3DSpace;
 	public static bool shadowMelded;
 
@@ -27,11 +28,11 @@ public class PlayerMovement : MonoBehaviour
 	private float jumpHeldTime;
     public Vector3 distanceFromShadow;
 
-    [SerializeField]
-    private CharacterController controller;
+	public CharacterController controller;
 
 	void Start()
 	{
+		playerStartPosition = transform.position;
 		in3DSpace = true;
 		shadowMelded = false;
 		controller = GetComponent<CharacterController>();
@@ -57,14 +58,10 @@ public class PlayerMovement : MonoBehaviour
 		// Shadow shift Methods
 		if(Input.GetButtonDown("Fire3"))
 			CheckShadowShift();
-//		if(Input.GetButtonDown("Fire1"))
-//			CheckShadowMeld();
 	}
 
     public void PlayerJumpandGravity()
     {
-
-        Debug.Log(in3DSpace);
         if (Input.GetButton("Jump") && jumpHeldTime < jumpTime)
         {
 			if (jumpSpeedCurrent <= ((jumpSpeed - gravity) / jumpTime) * Time.deltaTime)
@@ -88,7 +85,6 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            Debug.Log( playerShadow.transform.lossyScale.y);
             Debug.DrawLine(playerShadow.transform.position + Vector3.down * transform.lossyScale.y, playerShadow.transform.position + Vector3.down * (transform.lossyScale.y+.1f), Color.red, .25f);
             if (Physics.Raycast(new Vector3(playerShadow.transform.position.x, playerShadow.transform.position.y - (playerShadow.transform.lossyScale.y), playerShadow.transform.position.z), -Vector3.up, out hit, .1f))
 			{
@@ -196,38 +192,6 @@ public class PlayerMovement : MonoBehaviour
 			}
 			else
 				Debug.Log("You can't transfer! You've hit " + hit.collider.gameObject);
-		}
-	}
-
-	public void CheckShadowMeld()
-	{
-		RaycastHit hit;
-
-		if(!shadowMelded)
-		{
-			if (Physics.SphereCast(transform.position, 1f, LightSourceControl.lightSourceDirection, out hit, Mathf.Infinity))
-			{
-				if(hit.collider.gameObject.tag == "Shadow Wall")
-				{
-					shadowMelded = true;
-					GetComponent<CharacterController>().enabled = false;
-					playerShadow.GetComponent<CharacterController>().enabled = true;
-					controller = playerShadow.GetComponent<CharacterController>();
-					Debug.Log("You are shadowmelded");
-				}
-				else
-					Debug.Log("You can't shadowmeld here!");
-			}
-			else
-				Debug.Log("You can't shadowmeld here!");
-		}
-		else
-		{
-			shadowMelded = false;
-			playerShadow.GetComponent<CharacterController>().enabled = false;
-			GetComponent<CharacterController>().enabled = true;
-			controller = GetComponent<CharacterController>();
-			Debug.Log("You are no longer shadowmelded");
 		}
 	}
 }

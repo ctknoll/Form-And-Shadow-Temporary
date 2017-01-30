@@ -1,28 +1,11 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Player\PlayerMovement.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Player\PlayerShadowCollider.cs">
     <Files>
-<<<<<<< HEAD
       <File FileName="Assets\Scripts\Player\PlayerMovement.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\World Interaction\MovingPlatform.cs" Line="46" Column="1" />
-      <File FileName="Assets\Scripts\World Interaction\MovingShadowPlatform.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\World Interaction\MoveCube.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Shadow Interaction\ShadowCast.cs" Line="22" Column="41" />
-      <File FileName="Assets\Scripts\Shadow Interaction\ShadowCollider.cs" Line="33" Column="3" />
-      <File FileName="Assets\Scripts\Player\PlayerShadowCollider.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Camera\CameraControl.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\World Interaction\Killzone.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\World Interaction\LevelFinish.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Shadow Interaction\LightSourceControl.cs" Line="1" Column="1" />
-=======
       <File FileName="Assets\Scripts\Player\PlayerShadowCast.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Player\PlayerMovement.cs" Line="146" Column="52" />
-      <File FileName="Assets\Scripts\Player\PlayerShadowCollider.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Camera\CameraControl.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Shadow Interaction\ShadowCast.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\World Interaction\Killzone.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\World Interaction\LevelFinish.cs" Line="1" Column="1" />
->>>>>>> refs/remotes/origin/master
+      <File FileName="Assets\Scripts\Shadow Interaction\ShadowCast.cs" Line="93" Column="17" />
+      <File FileName="Assets\Scripts\Player\PlayerShadowCollider.cs" Line="29" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
