@@ -8,12 +8,34 @@ public class ShadowCast : MonoBehaviour {
 	public Vector3 transformOffset;
 	[SerializeField]
 	public Transform wallTransform = null;
+	private bool singleMesh;
+	private UnityEngine.Rendering.ShadowCastingMode shadowCastMode;
+
+	void Start()
+	{
+		singleMesh = GetComponent<MeshRenderer>();
+		if(singleMesh)
+			shadowCastMode = GetComponent<MeshRenderer>().shadowCastingMode;
+		else
+			shadowCastMode = GetComponentInChildren<MeshRenderer>().shadowCastingMode;
+	}
 
 	void Update () 
 	{
 		if(!shadowCollider)
-			CastShadow();
-		
+		{
+			if(singleMesh)
+			{
+				if(shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.On || shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly)
+					CastShadow();
+			}
+			else
+			{
+				if(shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.On || shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly)
+					CastShadow();
+			}
+		}
+
 		if (wallTransform != null) 
 		{
 			{
@@ -32,7 +54,9 @@ public class ShadowCast : MonoBehaviour {
 			}
 		}
 		else {transformOffset = new Vector3 (0, 0, -1);}
-		Check2DInvisibility();
+
+		if(shadowCastMode != UnityEngine.Rendering.ShadowCastingMode.Off)
+			Check2DInvisibility();
 	}
 
 	public void CastShadow()
@@ -40,10 +64,7 @@ public class ShadowCast : MonoBehaviour {
 		RaycastHit hit;
         Debug.DrawLine(transform.position, transform.position + LightSourceControl.lightSourceDirection * 10, Color.red, 1);
         if (Physics.Raycast(transform.position, LightSourceControl.lightSourceDirection, out hit, Mathf.Infinity, 1 << 10))
-		{
-            Debug.Log(Physics.Raycast(transform.position, LightSourceControl.lightSourceDirection, out hit, Mathf.Infinity, 1 << 10));
-            Debug.Log(hit.collider);
-         
+		{         
 			if (hit.collider.gameObject.tag == "Shadow Wall") 
 			{
 				shadowCollider = Instantiate (shadowPrefab, hit.point, Quaternion.identity, gameObject.transform) as GameObject;
@@ -56,7 +77,7 @@ public class ShadowCast : MonoBehaviour {
 	{
 		if(!PlayerMovement.in3DSpace)
 		{
-			if(GetComponent<MeshRenderer>())
+			if(singleMesh)
 				GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
 			else
 			{
@@ -69,7 +90,7 @@ public class ShadowCast : MonoBehaviour {
 				
 		}
 		else
-			if(GetComponent<MeshRenderer>())
+			if(singleMesh)
 				GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
 			else
 			{

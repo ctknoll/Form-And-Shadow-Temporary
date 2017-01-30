@@ -27,10 +27,4 @@ public class PlayerShadowCollider : MonoBehaviour {
 	{
 		transform.position = player.transform.position + Vector3.up * 10;
 	}
-
-	//public void LockZPosition()
-	//{
-	//	Vector3 pos = transform.position + shadowCast.zOffset;
-	//	transform.position = pos;
-	//}
 }

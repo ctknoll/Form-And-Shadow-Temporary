@@ -4,19 +4,14 @@ public class PlayerShadowCast : MonoBehaviour {
 	public GameObject playerShadowCollider;
 
 	[HideInInspector]
-	public Vector3 zOffset;
+	public Vector3 transformOffset;
 	[SerializeField]
-	public Transform wallTransform = null;
+	public Transform wallTransform;
 
 	void Update () 
 	{
-		zOffset = ((transform.lossyScale.z / 2f + .1f) * LightSourceControl.lightSourceDirection);
-		if (wallTransform != null)
-			zOffset = .5f * wallTransform.forward;
-		else {zOffset = new Vector3 (0, 0, -1);}
 		Check2DInvisibility();
 	}
-
 
 	public void CastShadow()
 	{
@@ -25,11 +20,25 @@ public class PlayerShadowCast : MonoBehaviour {
 		{
 			if (hit.collider.gameObject.tag == "Shadow Wall") 
 			{
-				playerShadowCollider.SetActive(true);
+				if (LightSourceControl.lightSourceDirection == GameObject.Find("Light Reference").transform.forward || 
+					-1 * LightSourceControl.lightSourceDirection == GameObject.Find("Light Reference").transform.forward) 
+				{
+					transformOffset = ((transform.lossyScale.z / 1.9f) * LightSourceControl.lightSourceDirection);
+				}
+				else if (LightSourceControl.lightSourceDirection == GameObject.Find("Light Reference").transform.right || 
+					-1 * LightSourceControl.lightSourceDirection == GameObject.Find("Light Reference").transform.right) 
+				{
+					transformOffset = ((transform.lossyScale.x / 1.9f) * LightSourceControl.lightSourceDirection);
+				}
+				else 
+				{
+					transformOffset = ((transform.lossyScale.y / 1.9f) * LightSourceControl.lightSourceDirection);
+				}
+
 				wallTransform = hit.collider.transform;
-				GetComponent<PlayerMovement>().playerShadow.transform.position = hit.point + zOffset;
+				playerShadowCollider.SetActive(true);
+				GetComponent<PlayerMovement>().playerShadow.transform.position = hit.point + transformOffset;
                 GetComponent<PlayerMovement>().playerShadow.transform.rotation = Quaternion.LookRotation(hit.normal);
-				GameObject.Find("Player_Shadow").transform.position = hit.point + zOffset;
 			}
 			else
 				playerShadowCollider.SetActive(false);
