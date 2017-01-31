@@ -56,7 +56,8 @@ public class PlayerMovement : MonoBehaviour
 		}
 		// Shadow shift Methods
 		if(Input.GetButtonDown("Fire3"))
-			CheckShadowShift();
+			if(!isGrabbing)
+				CheckShadowShift();
 	}
 
     public void PlayerJumpandGravity()
