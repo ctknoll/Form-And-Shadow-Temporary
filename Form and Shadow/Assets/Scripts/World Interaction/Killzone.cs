@@ -15,7 +15,9 @@ public class Killzone : MonoBehaviour
 		if(other.gameObject.tag == "Player")
 		{
 			if(PlayerMovement.in3DSpace)
+			{
 				other.gameObject.transform.position = PlayerMovement.playerStartPosition;
+			}
 			else
 			{
 				PlayerMovement.in3DSpace = true;

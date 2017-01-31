@@ -9,6 +9,7 @@ public class ShadowCollider : MonoBehaviour {
 	{
 		errorMargin = 0.1f;
 		shadowCast = GetComponentInParent<ShadowCast>();
+		gameObject.layer = LayerMask.NameToLayer("Shadow Collider");
 
 		if(gameObject.transform.parent.gameObject.tag == "Move Platform")
 		{

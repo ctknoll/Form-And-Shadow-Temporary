@@ -1,11 +1,14 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Player\PlayerShadowCollider.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Player\PlayerShadowCast.cs">
     <Files>
-      <File FileName="Assets\Scripts\Player\PlayerMovement.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Player\PlayerShadowCast.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Shadow Interaction\ShadowCast.cs" Line="93" Column="17" />
-      <File FileName="Assets\Scripts\Player\PlayerShadowCollider.cs" Line="29" Column="3" />
+      <File FileName="Assets\Scripts\Player\PlayerMovement.cs" Line="50" Column="16" />
+      <File FileName="Assets\Scripts\Player\PlayerShadowCollider.cs" Line="18" Column="30" />
+      <File FileName="Assets\Scripts\Player\PlayerShadowCast.cs" Line="32" Column="28" />
+      <File FileName="Assets\Scripts\Shadow Interaction\ShadowCast.cs" Line="64" Column="59" />
+      <File FileName="Assets\Scripts\Shadow Interaction\ShadowCollider.cs" Line="12" Column="62" />
+      <File FileName="Assets\Scripts\World Interaction\Killzone.cs" Line="20" Column="5" />
+      <File FileName="Assets\Scripts\World Interaction\MoveCube.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
