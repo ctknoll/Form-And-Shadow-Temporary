@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\Shadow Interaction\LightSourceControl.cs" />
      <Compile Include="Assets\Scripts\Shadow Interaction\ShadowCast.cs" />
      <Compile Include="Assets\Scripts\Shadow Interaction\ShadowCollider.cs" />
+     <Compile Include="Assets\Scripts\World Interaction\GameController.cs" />
      <Compile Include="Assets\Scripts\World Interaction\Killzone.cs" />
      <Compile Include="Assets\Scripts\World Interaction\LevelFinish.cs" />
      <Compile Include="Assets\Scripts\World Interaction\MoveCube.cs" />

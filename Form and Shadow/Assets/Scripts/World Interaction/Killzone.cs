@@ -1,31 +1,22 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class Killzone : MonoBehaviour 
 {
-	public GameObject player;
+	private GameObject player;
+	private GameController gameController;
 
 	void Start()
 	{
 		player = GameObject.Find("Player_Character");
+		gameController = GameObject.Find("Game_Controller").GetComponent<GameController>();
 	}
 
 	void OnTriggerEnter(Collider other)
 	{
 		if(other.gameObject.tag == "Player")
 		{
-			if(PlayerMovement.in3DSpace)
-			{
-				other.gameObject.transform.position = PlayerMovement.playerStartPosition;
-			}
-			else
-			{
-				PlayerMovement.in3DSpace = true;
-				other.gameObject.GetComponent<CharacterController>().enabled = false;
-				player.GetComponent<CharacterController>().enabled = true;
-				player.GetComponent<PlayerMovement>().controller = player.GetComponent<CharacterController>();
-				player.transform.position = PlayerMovement.playerStartPosition;
-			}
+			StartCoroutine(gameController.ResetLevel());
 		}
 	}
 }
