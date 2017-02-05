@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Shadow Wall
+  - canGrab
+  - Move Platform
+  - Spikes
   layers:
   - Default
   - TransparentFX
@@ -17,7 +20,7 @@ TagManager:
   - 3D Objects
   - Main Camera Clip
   - Shadow Wall
-  - 
+  - Shadow Collider
   - 
   - 
   - 

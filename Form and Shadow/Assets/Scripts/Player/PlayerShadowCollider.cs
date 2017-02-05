@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerShadowCollider : MonoBehaviour {
 	public GameObject player;
@@ -13,14 +15,8 @@ public class PlayerShadowCollider : MonoBehaviour {
 	void Update()
 	{
 		// If the player is moving in the 3D space, force the shadow collider to follow the main player character
-		if(PlayerMovement.in3DSpace && !PlayerMovement.shadowMelded)
+		if(PlayerMovement.in3DSpace)
 			FollowPlayer();
-	}
-
-	void LateUpdate () 
-	{
-		// Prevent the player shadow collider from moving on the Z axis
-		//LockZPosition();
 	}
 
 	public void FollowPlayer()
@@ -28,9 +24,22 @@ public class PlayerShadowCollider : MonoBehaviour {
 		transform.position = player.transform.position + Vector3.up * 10;
 	}
 
-	//public void LockZPosition()
-	//{
-	//	Vector3 pos = transform.position + shadowCast.zOffset;
-	//	transform.position = pos;
-	//}
+	public List<GameObject> GetTransferPlatforms()
+	{
+        //transform.position = player.transform.position + Vector3.up * 10;
+
+		// Cast a ray down from the player shadow and store all colliders hit in an array of RaycastHits
+		RaycastHit [] hits;
+		hits = Physics.RaycastAll(transform.position, Vector3.down, Vector3.Distance(transform.position, new Vector3(transform.position.x, 0, transform.position.z)), 1 << 11);
+
+		// Then, create a list of gameobjects and for each RaycastHit in hits, add the hit collider's gameobject to the list of transferPlatforms
+		List <GameObject> transferPlatforms = new List<GameObject>();
+		foreach (RaycastHit hit in hits)
+		{
+			transferPlatforms.Add(hit.collider.gameObject.transform.parent.gameObject);
+		}
+
+		// Then, return a list of gameobjects equal to all the shadow colliders below the player when called
+		return transferPlatforms;
+	}
 }
