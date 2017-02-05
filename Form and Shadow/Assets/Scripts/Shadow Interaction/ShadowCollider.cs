@@ -16,6 +16,11 @@ public class ShadowCollider : MonoBehaviour {
 			gameObject.name = "Platform Collider";
 			CreatePlatformShadowCollider();
 		}
+		else if(gameObject.transform.parent.gameObject.tag == "Propellor Platform")
+		{
+			gameObject.name = "Propellor Collider";
+			CreatePropellorShadowCollider();
+		}
 		else if(gameObject.transform.parent.gameObject.tag == "Spikes")
 		{
 			gameObject.name = "Spike Collider";
@@ -40,15 +45,15 @@ public class ShadowCollider : MonoBehaviour {
 	{
 		if(shadowCast.transformOffset.x > 0 + errorMargin || shadowCast.transformOffset.x < 0 - errorMargin)
 		{
-			transform.position = new Vector3(gameObject.transform.parent.GetComponent<ShadowCast>().wallTransform.position.x + shadowCast.transformOffset.x, transform.position.y, transform.position.z);
+			transform.position = new Vector3(shadowCast.wallTransform.position.x + shadowCast.transformOffset.x, transform.position.y, transform.position.z);
 		}
 		if(shadowCast.transformOffset.y > 0 + errorMargin || shadowCast.transformOffset.y < 0 - errorMargin)
 		{
-			transform.position = new Vector3(transform.position.x, gameObject.transform.parent.GetComponent<ShadowCast>().wallTransform.position.y + shadowCast.transformOffset.y, transform.position.z);
+			transform.position = new Vector3(transform.position.x, shadowCast.wallTransform.position.y + shadowCast.transformOffset.y, transform.position.z);
 		}
 		if(shadowCast.transformOffset.z > 0 + errorMargin || shadowCast.transformOffset.z < 0 - errorMargin)
 		{
-			transform.position = new Vector3(transform.position.x, transform.position.y, gameObject.transform.parent.GetComponent<ShadowCast>().wallTransform.position.z + shadowCast.transformOffset.z);
+			transform.position = new Vector3(transform.position.x, transform.position.y, shadowCast.wallTransform.position.z + shadowCast.transformOffset.z);
 		}
 	}
 
@@ -69,6 +74,24 @@ public class ShadowCollider : MonoBehaviour {
 		platformCollider.AddComponent<MovingShadowPlatform>();
 		platformCollider.GetComponent<BoxCollider>().size = gameObject.transform.parent.transform.parent.GetComponent<BoxCollider>().size;
 		platformCollider.GetComponent<BoxCollider>().center = gameObject.transform.parent.transform.parent.GetComponent<BoxCollider>().center;
+	}
+
+	public void CreatePropellorShadowCollider()
+	{
+		gameObject.AddComponent<TransformLock>();
+		GameObject propellorShadowCollider = new GameObject("PropellorShadowPlatform");
+		propellorShadowCollider.transform.position = transform.position;
+		if(shadowCast.transformOffset.x > 0 + errorMargin || shadowCast.transformOffset.x < 0 - errorMargin)
+		{
+			propellorShadowCollider.transform.position = new Vector3(shadowCast.wallTransform.position.x + shadowCast.transformOffset.x, propellorShadowCollider.transform.position.y, propellorShadowCollider.transform.position.z);
+		}
+		if(shadowCast.transformOffset.z > 0 + errorMargin || shadowCast.transformOffset.z < 0 - errorMargin)
+		{
+			propellorShadowCollider.transform.position = new Vector3(propellorShadowCollider.transform.position.x, propellorShadowCollider.transform.position.y, shadowCast.wallTransform.position.z + shadowCast.transformOffset.z);
+		}
+		propellorShadowCollider.AddComponent<BoxCollider>();
+		propellorShadowCollider.AddComponent<PropellorShadowCollider>();
+		propellorShadowCollider.GetComponent<PropellorShadowCollider>().propellor = gameObject.transform.parent.parent.gameObject;
 	}
 
 	public void CreateSpikesShadowCollider()

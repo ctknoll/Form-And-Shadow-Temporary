@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
 	[Header("Object References")]
 	public GameObject playerShadow;
 	public Transform cameraTransform;
+	public CameraControl camControl;
+	public GameObject transitionFollow;
 
 	[Header("Movement Variables")]
 	public float movementSpeed;
@@ -34,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
 	{
 		playerStartPosition = transform.position;
 		in3DSpace = true;
+		camControl = cameraTransform.GetComponent<CameraControl>();
 		controller = GetComponent<CharacterController>();
 		jumpSpeedCurrent = jumpSpeed;
 	}
@@ -45,11 +48,11 @@ public class PlayerMovement : MonoBehaviour
 
 		// In the case that the player is controlling their shadow, force the base player character
 		// to follow the shadow in the wall
-		if(in3DSpace)
+		if(in3DSpace && !camControl.cameraIsPanning)
 		{
 			PlayerMovement3D();
 		}
-		else
+		else if(!in3DSpace && !camControl.cameraIsPanning)
 		{
 			PlayerMovement2D();
 			FollowShadow();
@@ -171,15 +174,8 @@ public class PlayerMovement : MonoBehaviour
 					if(!Physics.Raycast(hit.point + new Vector3(0, 0.2f, 0), LightSourceControl.lightSourceDirection, 1f, 1 << 11) && 
 						!Physics.Raycast(hit.point - new Vector3(0, 0.2f, 0), LightSourceControl.lightSourceDirection, 1f, 1 << 11))
 					{
-						// This basically manages all of the turning off and on of the CharacterControllers and the 3Dspace global
-						// variable and sets the distanceFromShadow float
-						in3DSpace = false;
-						GetComponent<CharacterController>().enabled = false;
-						playerShadow.GetComponent<CharacterController>().enabled = true;
-						controller = playerShadow.GetComponent<CharacterController>();
-						GetComponent<PlayerShadowCast>().CastShadow();
-						distanceFromShadow = transform.position - playerShadow.transform.position;
-						Debug.Log("In Wall");
+						StartCoroutine(CameraPanIn(hit.point));
+						StartCoroutine(CameraPanFinalStepIn());
 					}
 					else
 						Debug.Log("You can't transfer, there is a shadow in the way!");
@@ -204,14 +200,53 @@ public class PlayerMovement : MonoBehaviour
 				transferPlatforms.Sort(delegate(GameObject t1, GameObject t2) {
 					return Vector3.Distance(t1.transform.position, playerShadow.transform.position).CompareTo(Vector3.Distance(t2.transform.position, playerShadow.transform.position));
 				});
-				transform.position = new Vector3(playerShadow.transform.position.x, playerShadow.transform.position.y, transferPlatforms[0].transform.position.z);
+				if(LightSourceControl.zAxisMovement)
+					transform.position = new Vector3(playerShadow.transform.position.x, playerShadow.transform.position.y, transferPlatforms[0].transform.position.z);
+				else if(LightSourceControl.xAxisMovement)
+					transform.position = new Vector3(transferPlatforms[0].transform.position.x, playerShadow.transform.position.y, playerShadow.transform.position.z);
 			}
+
 			in3DSpace = true;
 			playerShadow.GetComponent<CharacterController>().enabled = false;
 			GetComponent<CharacterController>().enabled = true;
 			controller = GetComponent<CharacterController>();
 			Debug.Log("Out of wall");
 		}
+	}
+
+	public IEnumerator CameraPanIn(Vector3 wallHit)
+	{
+		camControl.cameraIsPanning = true;
+
+		transitionFollow = new GameObject("Transition Follow");
+
+		// Camera transition inwards to the targeted location
+		Vector3 startPos = cameraTransform.position;
+		float panStart = Time.time;
+		while(Time.time < panStart + camControl.cameraPanDuration)
+		{
+			cameraTransform.position = Vector3.Lerp(startPos, wallHit + -LightSourceControl.lightSourceDirection * camControl.distanceToPlayer2D, (Time.time - panStart)/camControl.cameraPanDuration);
+			transitionFollow.transform.position = (Vector3.Lerp(transform.position, wallHit, (Time.time - panStart)/camControl.cameraPanDuration));
+			yield return null;
+		}
+	}
+
+	public IEnumerator CameraPanFinalStepIn()
+	{
+		// This basically manages all of the turning off and on of the CharacterControllers and the 3Dspace global
+		// variable and sets the distanceFromShadow float
+		yield return new WaitForSeconds(camControl.cameraPanDuration);
+		cameraTransform.rotation = Quaternion.LookRotation(LightSourceControl.lightSourceDirection, Vector3.up);
+		camControl.cameraIsPanning = false;
+		Destroy(transitionFollow);
+
+		in3DSpace = false;
+		GetComponent<CharacterController>().enabled = false;
+		playerShadow.GetComponent<CharacterController>().enabled = true;
+		controller = playerShadow.GetComponent<CharacterController>();
+		GetComponent<PlayerShadowCast>().CastShadow();
+		distanceFromShadow = transform.position - playerShadow.transform.position;
+		Debug.Log("In Wall");
 	}
 }
 

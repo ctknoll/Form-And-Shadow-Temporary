@@ -1,15 +1,17 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\World Interaction\GameController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Shadow Interaction\LightSourceControl.cs">
     <Files>
-      <File FileName="Assets\Scripts\Player\PlayerMovement.cs" Line="60" Column="5" />
-      <File FileName="Assets\Scripts\Player\PlayerShadowCollider.cs" Line="18" Column="30" />
+      <File FileName="Assets\Scripts\Player\PlayerMovement.cs" Line="158" Column="76" />
+      <File FileName="Assets\Scripts\Camera\CameraControl.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Player\PlayerShadowCast.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Shadow Interaction\ShadowCast.cs" Line="64" Column="59" />
-      <File FileName="Assets\Scripts\World Interaction\GameController.cs" Line="17" Column="1" />
-      <File FileName="Assets\Scripts\World Interaction\Killzone.cs" Line="19" Column="48" />
-      <File FileName="Assets\Scripts\World Interaction\MoveCube.cs" Line="41" Column="38" />
-      <File FileName="Assets\Scripts\Shadow Interaction\ShadowCollider.cs" Line="12" Column="62" />
+      <File FileName="Assets\Scripts\Player\PlayerShadowCollider.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Shadow Interaction\ShadowCast.cs" Line="78" Column="22" />
+      <File FileName="Assets\Scripts\Shadow Interaction\ShadowCollider.cs" Line="94" Column="125" />
+      <File FileName="Assets\Scripts\World Interaction\Dynamic and Moving Objects\MovingPlatform.cs" Line="42" Column="24" />
+      <File FileName="Assets\Scripts\World Interaction\Dynamic and Moving Objects\PropellorPlatform.cs" Line="36" Column="20" />
+      <File FileName="Assets\Scripts\Shadow Interaction\LightSourceControl.cs" Line="10" Column="35" />
+      <File FileName="Assets\Scripts\World Interaction\Dynamic and Moving Objects\TransformLock.cs" Line="17" Column="12" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
