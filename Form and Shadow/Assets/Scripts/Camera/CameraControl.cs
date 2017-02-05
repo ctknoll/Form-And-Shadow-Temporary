@@ -23,43 +23,50 @@ public class CameraControl : MonoBehaviour
 	public float smoothSpeed = 0.125f;
 	public float distanceToPlayer2D;
 
+	public float cameraPanDuration;
+	[HideInInspector]
+	public bool cameraIsPanning;
+
+
+
     void Start()
     {
+		cameraIsPanning = false;
         Vector3 angles = transform.eulerAngles;
         x = angles.y;
         y = angles.x;
     }
 
-	void Update()
-	{
-        if (Input.GetButtonDown("Cancel"))
-            Application.Quit();
-	}
-
     void LateUpdate()
     {
-		if (PlayerMovement.in3DSpace)
-        {
-            x += Input.GetAxis("Mouse X") * xSpeed * distanceToPlayer3D * 0.02f;
-            y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
-
-            y = ClampAngle(y, yMinLimit, yMaxLimit);
-
-            Quaternion rotation = Quaternion.Euler(y, x, 0);
-
-            Vector3 negDistance = new Vector3(0.0f, 0.0f, -distanceToPlayer3D);
-            Vector3 position = rotation * negDistance + target3D.position;
-
-            transform.rotation = rotation;
-            transform.position = position;
-        }
-
-		else if(!PlayerMovement.in3DSpace)
+		if(!cameraIsPanning)
 		{
-			transform.rotation = Quaternion.LookRotation(LightSourceControl.lightSourceDirection, Vector3.up);
-			Vector3 desiredPosition = target2D.transform.position + -transform.forward * distanceToPlayer2D;
+			if (PlayerMovement.in3DSpace)
+	        {
+	            x += Input.GetAxis("Mouse X") * xSpeed * distanceToPlayer3D * 0.02f;
+	            y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
 
-			transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+	            y = ClampAngle(y, yMinLimit, yMaxLimit);
+
+	            Quaternion rotation = Quaternion.Euler(y, x, 0);
+
+	            Vector3 negDistance = new Vector3(0.0f, 0.0f, -distanceToPlayer3D);
+	            Vector3 position = rotation * negDistance + target3D.position;
+
+	            transform.rotation = rotation;
+	            transform.position = position;
+	        }
+
+			else if(!PlayerMovement.in3DSpace)
+			{
+				Vector3 desiredPosition = target2D.transform.position + -transform.forward * distanceToPlayer2D;
+
+				transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+			}
+		}
+		else
+		{
+			transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionFollow.transform);
 		}
     }
 

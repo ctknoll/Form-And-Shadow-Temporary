@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour {
 	void Start () 
 	{
 		player = GameObject.Find("Player_Character");
+		playerShadow = GameObject.Find("Player_Shadow");
 	}
 
 	public IEnumerator ResetLevel()
