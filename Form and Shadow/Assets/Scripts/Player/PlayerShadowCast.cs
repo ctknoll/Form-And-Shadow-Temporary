@@ -10,6 +10,7 @@ public class PlayerShadowCast : MonoBehaviour {
 
 	void Update () 
 	{
+		//zOffset = ((transform.lossyScale.z / 2f + .1f) * LightSourceControl.lightSourceDirection);
 		Check2DInvisibility();
 	}
 

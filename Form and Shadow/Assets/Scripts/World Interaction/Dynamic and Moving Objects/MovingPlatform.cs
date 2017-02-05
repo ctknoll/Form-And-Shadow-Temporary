@@ -6,6 +6,9 @@ public class MovingPlatform : MonoBehaviour {
 	public ShiftDirection moveDirection;
 	public float moveDistance;
 	public float moveSpeed;
+    public float slowValue = 1;
+
+	private float personalTime;
 
 	public bool playerChildedIn3D;
 	public bool playerChildedIn2D;
@@ -14,6 +17,7 @@ public class MovingPlatform : MonoBehaviour {
 
 	void Start()
 	{
+        personalTime = 0;
 		startPosition = transform.position;
 		GetComponent<BoxCollider>().size = new Vector3(gameObject.transform.GetChild(0).gameObject.GetComponent<Transform>().localScale.x, 1f, 
 			gameObject.transform.GetChild(0).gameObject.GetComponent<Transform>().localScale.z);
@@ -39,16 +43,17 @@ public class MovingPlatform : MonoBehaviour {
 
 	void Update () 
 	{
+		personalTime += slowValue * Time.deltaTime;
 		switch(moveDirection)
 		{
 		case ShiftDirection.X:
-			transform.position = new Vector3(startPosition.x + Mathf.Sin(Time.time * moveSpeed) * moveDistance, transform.position.y, transform.position.z);
+			transform.position = new Vector3(startPosition.x + Mathf.Sin(personalTime * moveSpeed) * moveDistance, transform.position.y, transform.position.z);
 			break;
 		case ShiftDirection.Y:
-			transform.position = new Vector3(transform.position.x, startPosition.y + Mathf.Sin(Time.time * moveSpeed) * moveDistance, transform.position.z);
+			transform.position = new Vector3(transform.position.x, startPosition.y + Mathf.Sin(personalTime * moveSpeed) * moveDistance, transform.position.z);
 			break;
 		case ShiftDirection.Z:
-			transform.position = new Vector3(transform.position.x, transform.position.y, startPosition.z + Mathf.Sin(Time.time * moveSpeed) * moveDistance);
+			transform.position = new Vector3(transform.position.x, transform.position.y, startPosition.z + Mathf.Sin(personalTime * moveSpeed) * moveDistance);
 			break;
 		default:
 			break;

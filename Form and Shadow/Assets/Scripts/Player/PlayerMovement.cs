@@ -65,6 +65,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void PlayerJumpandGravity()
     {
+
 		if (Input.GetButton("Jump") && jumpHeldTime < jumpTime && !isGrabbing)
         {
 			if (jumpSpeedCurrent <= ((jumpSpeed - gravity) / jumpTime) * Time.deltaTime)

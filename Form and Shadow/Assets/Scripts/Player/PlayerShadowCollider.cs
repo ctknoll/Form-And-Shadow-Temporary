@@ -26,6 +26,8 @@ public class PlayerShadowCollider : MonoBehaviour {
 
 	public List<GameObject> GetTransferPlatforms()
 	{
+        //transform.position = player.transform.position + Vector3.up * 10;
+
 		// Cast a ray down from the player shadow and store all colliders hit in an array of RaycastHits
 		RaycastHit [] hits;
 		hits = Physics.RaycastAll(transform.position, Vector3.down, Vector3.Distance(transform.position, new Vector3(transform.position.x, 0, transform.position.z)), 1 << 11);
