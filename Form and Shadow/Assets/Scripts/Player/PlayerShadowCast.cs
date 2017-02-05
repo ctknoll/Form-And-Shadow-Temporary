@@ -17,41 +17,36 @@ public class PlayerShadowCast : MonoBehaviour {
 	public void CastShadow()
 	{
 		RaycastHit hit;
-		if(Physics.Raycast(transform.position, LightSourceControl.lightSourceDirection, out hit, Mathf.Infinity))
+		if(Physics.Raycast(transform.position, LightSourceControl.lightSourceDirection, out hit, Mathf.Infinity, 1 << 10))
 		{
-			if (hit.collider.gameObject.tag == "Shadow Wall") 
+			/* To explain this, first one must know that there is a game object called Lighting Reference in the scene
+			 * that is always rotated to (0, 0, 0) and that all objects in the scene that will cast shadows must have
+			 * their parent objects rotated the same. This basically checks if the light source direction in relativity
+			 * to said lighting reference, and then sets the transform offset of the shadow collider (whether it be the
+			 * player's shadow collider or an object's) relative to said direction. So, if the light source direction is
+			 * equal to the reference's -transform.right (left), then all shadows are offset a little more than their size
+			 * behind the respective wall the previous Raycast hits.
+			*/
+			
+			// Is the light source projecting forward or backward?
+			if (LightSourceControl.zAxisMovement) 
 			{
-				/* To explain this, first one must know that there is a game object called Lighting Reference in the scene
-				 * that is always rotated to (0, 0, 0) and that all objects in the scene that will cast shadows must have
-				 * their parent objects rotated the same. This basically checks if the light source direction in relativity
-				 * to said lighting reference, and then sets the transform offset of the shadow collider (whether it be the
-				 * player's shadow collider or an object's) relative to said direction. So, if the light source direction is
-				 * equal to the reference's -transform.right (left), then all shadows are offset a little more than their size
-				 * behind the respective wall the previous Raycast hits.
-				*/
-
-				// Is the light source projecting forward or backward?
-				if (LightSourceControl.lightSourceDirection == GameObject.Find("Light Reference").transform.forward || 
-					-1 * LightSourceControl.lightSourceDirection == GameObject.Find("Light Reference").transform.forward) 
-				{
-					transformOffset = ((transform.lossyScale.z / 1.9f) * LightSourceControl.lightSourceDirection);
-				}
-				// Is the light source projecting left or right?
-				else if (LightSourceControl.lightSourceDirection == GameObject.Find("Light Reference").transform.right || 
-					-1 * LightSourceControl.lightSourceDirection == GameObject.Find("Light Reference").transform.right) 
-				{
-					transformOffset = ((transform.lossyScale.x / 1.9f) * LightSourceControl.lightSourceDirection);
-				}
-				// Is the light source projecting up or down #TODO WORK IN PROGRESS
-				else 
-				{
-					transformOffset = ((transform.lossyScale.y / 1.9f) * LightSourceControl.lightSourceDirection);
-				}
-
-				wallTransform = hit.collider.transform;
-				GetComponent<PlayerMovement>().playerShadow.transform.position = hit.point + transformOffset;
-                GetComponent<PlayerMovement>().playerShadow.transform.rotation = Quaternion.LookRotation(hit.normal);
+				transformOffset = ((transform.lossyScale.z / 1.9f) * LightSourceControl.lightSourceDirection);
 			}
+			// Is the light source projecting left or right?
+			else if (LightSourceControl.xAxisMovement) 
+			{
+				transformOffset = ((transform.lossyScale.x / 1.9f) * LightSourceControl.lightSourceDirection);
+			}
+			// Is the light source projecting up or down #TODO WORK IN PROGRESS
+			else 
+			{
+				transformOffset = ((transform.lossyScale.y / 1.9f) * LightSourceControl.lightSourceDirection);
+			}
+			
+			wallTransform = hit.collider.transform;
+			GetComponent<PlayerMovement>().playerShadow.transform.position = hit.point + transformOffset;
+			GetComponent<PlayerMovement>().playerShadow.transform.rotation = Quaternion.LookRotation(hit.normal);
 		}
 	}
 

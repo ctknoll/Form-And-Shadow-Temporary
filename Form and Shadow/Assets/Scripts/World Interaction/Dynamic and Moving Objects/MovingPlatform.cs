@@ -10,6 +10,9 @@ public class MovingPlatform : MonoBehaviour {
 
 	private float personalTime;
 
+	public bool playerChildedIn3D;
+	public bool playerChildedIn2D;
+
 	private Vector3 startPosition;
 
 	void Start()
@@ -24,6 +27,7 @@ public class MovingPlatform : MonoBehaviour {
 	{
 		if(other.gameObject.tag == "Player")
 		{
+			playerChildedIn3D = true;
 			other.gameObject.transform.parent = gameObject.transform;
 		}
 	}
@@ -32,6 +36,7 @@ public class MovingPlatform : MonoBehaviour {
 	{
 		if(other.gameObject.tag == "Player")
 		{
+			playerChildedIn3D = false;
 			other.gameObject.transform.parent = null;
 		}
 	}

@@ -19,7 +19,6 @@ public class MovingPlatformSpeedPressureSwitch : PressureSwitch
 	public void Update () 
 	{
         base.Update();
-        Debug.Log(active);
         if (active) 
 		{
 			if (movingBlock.GetComponent<MovingPlatform> () != null) 
@@ -34,11 +33,9 @@ public class MovingPlatformSpeedPressureSwitch : PressureSwitch
 			{
 				if (locked) 
 				{
-
 					movingBlock.GetComponent<MovingPlatform>().slowValue = 1;
 					locked = false;
 				}
-					
 			}
 		}
 	}

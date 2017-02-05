@@ -6,6 +6,8 @@ public class MovingShadowPlatform : MonoBehaviour {
 	{
 		if(other.gameObject.tag == "Player")
 		{
+			if(GetComponentInParent<ConveyorPlatform>())
+				GetComponentInParent<ConveyorPlatform>().playerChildedIn2D = true;
 			other.gameObject.transform.parent = gameObject.transform;
 		}
 	}
@@ -14,6 +16,8 @@ public class MovingShadowPlatform : MonoBehaviour {
 	{
 		if(other.gameObject.tag == "Player")
 		{
+			if(GetComponentInParent<ConveyorPlatform>())
+				GetComponentInParent<ConveyorPlatform>().playerChildedIn2D = false;
 			other.gameObject.transform.parent = null;
 		}
 	}
