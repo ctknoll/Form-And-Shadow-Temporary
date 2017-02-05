@@ -17,9 +17,6 @@ public class ToggleSwitch : MonoBehaviour {
 	// Update is called once per frame
 	public void Update () 
 	{
-        Debug.Log(active);
-        if (active)
-            Debug.Log(runningTime);
 		active = (runningTime != 0);
 		Vector3 distance = GameObject.Find ("Player_Character").transform.position - transform.position;
 		if (distance.magnitude <= 2) 
