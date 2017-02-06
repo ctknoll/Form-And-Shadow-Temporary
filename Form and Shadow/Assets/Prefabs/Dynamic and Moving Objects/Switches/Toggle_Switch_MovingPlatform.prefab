@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 136516779081532742}
   - component: {fileID: 33573759066974072}
   - component: {fileID: 23363461363824654}
+  - component: {fileID: 114055735157955440}
   m_Layer: 0
   m_Name: Toggle_Switch_MovingPlatform
   m_TagString: Untagged
@@ -36,8 +37,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1374539617682226}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.25, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9, y: 6.25, z: 9.25}
   m_LocalScale: {x: 0.75, y: 0.25, z: 0.75}
   m_Children: []
   m_Father: {fileID: 0}
@@ -56,7 +57,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 47339a99c8e1ee7409b65575baccd68a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -81,6 +82,22 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1374539617682226}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114055735157955440
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1374539617682226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0b630b6213c1e46b04cc066ccc2c64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canInteract: 0
+  active: 0
+  activationTime: 7
+  movingBlock: {fileID: 0}
+  percentSlow: 0
 --- !u!114 &114238050304139740
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -94,7 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canInteract: 0
   active: 0
-  activationTime: 0
+  activationTime: 7
   movingBlock: {fileID: 0}
   percentSlow: 0
 --- !u!136 &136516779081532742
