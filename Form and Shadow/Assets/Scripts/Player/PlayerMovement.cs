@@ -66,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
     public void PlayerJumpandGravity()
     {
 
+
 		if (Input.GetButton("Jump") && jumpHeldTime < jumpTime && !isGrabbing)
         {
 			if (jumpSpeedCurrent <= ((jumpSpeed - gravity) / jumpTime) * Time.deltaTime)
@@ -110,6 +111,8 @@ public class PlayerMovement : MonoBehaviour
 		}
 
 	}
+
+	//#TODO remove cameraTransform, as it makes jump relative to cameraPos relative to player
 	public void PlayerMovement3D()
 	{
 		if(!isGrabbing)

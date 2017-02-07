@@ -3,33 +3,42 @@
 public class ShadowCollider : MonoBehaviour {
 	private ShadowCast shadowCast;
 	private float errorMargin;
+	public GameObject exceptionParent;
 
 	// Use this for initialization
 	void Start () 
 	{
 		errorMargin = 0.1f;
-		shadowCast = GetComponentInParent<ShadowCast>();
 		gameObject.layer = LayerMask.NameToLayer("Shadow Collider");
 
-		if(gameObject.transform.parent.gameObject.tag == "Move Platform")
+		if (exceptionParent == null) 
 		{
-			gameObject.name = "Platform Collider";
-			CreatePlatformShadowCollider();
-		}
-		else if(gameObject.transform.parent.gameObject.tag == "Propellor Platform")
-		{
-			gameObject.name = "Propellor Collider";
-			CreatePropellorShadowCollider();
-		}
-		else if(gameObject.transform.parent.gameObject.tag == "Spikes")
-		{
-			gameObject.name = "Spike Collider";
-			CreateSpikesShadowCollider();
-		}
+			shadowCast = GetComponentInParent<ShadowCast> ();
+			if(gameObject.transform.parent.gameObject.tag == "Move Platform")
+			{
+				gameObject.name = "Platform Collider";
+				CreatePlatformShadowCollider();
+			}
+
+			else if(gameObject.transform.parent.gameObject.tag == "Spikes")
+			{
+				gameObject.name = "Spike Collider";
+				CreateSpikesShadowCollider();
+			}
+			else
+			{
+				gameObject.name = "Basic Collider";
+				CreateBasicCollider();
+			}
+		} 
 		else
 		{
-			gameObject.name = "Basic Collider";
-			CreateBasicCollider();
+			shadowCast = exceptionParent.GetComponent<ShadowCast> ();
+			if (exceptionParent.tag == "Propellor Platform")
+			{
+				gameObject.name = "Propellor Collider";
+				CreatePropellorShadowCollider();
+			}
 		}
 		Vector3 pos = transform.position + shadowCast.transformOffset;
         transform.position = pos;
@@ -78,7 +87,6 @@ public class ShadowCollider : MonoBehaviour {
 
 	public void CreatePropellorShadowCollider()
 	{
-		gameObject.AddComponent<TransformLock>();
 		GameObject propellorShadowCollider = new GameObject("PropellorShadowPlatform");
 		propellorShadowCollider.transform.position = transform.position;
 		if(shadowCast.transformOffset.x > 0 + errorMargin || shadowCast.transformOffset.x < 0 - errorMargin)
@@ -91,7 +99,7 @@ public class ShadowCollider : MonoBehaviour {
 		}
 		propellorShadowCollider.AddComponent<BoxCollider>();
 		propellorShadowCollider.AddComponent<PropellorShadowCollider>();
-		propellorShadowCollider.GetComponent<PropellorShadowCollider>().propellor = gameObject.transform.parent.parent.gameObject;
+		propellorShadowCollider.GetComponent<PropellorShadowCollider> ().propellor = exceptionParent.transform.parent.gameObject;
 	}
 
 	public void CreateSpikesShadowCollider()
