@@ -87,15 +87,21 @@ public class ShadowCollider : MonoBehaviour {
 
 	public void CreatePropellorShadowCollider()
 	{
+		gameObject.AddComponent<TransformLock>();
+		gameObject.AddComponent<BoxCollider>();
+		gameObject.GetComponent<BoxCollider>().isTrigger = true;
+
 		GameObject propellorShadowCollider = new GameObject("PropellorShadowPlatform");
 		propellorShadowCollider.transform.position = transform.position;
 		if(shadowCast.transformOffset.x > 0 + errorMargin || shadowCast.transformOffset.x < 0 - errorMargin)
 		{
-			propellorShadowCollider.transform.position = new Vector3(shadowCast.wallTransform.position.x + shadowCast.transformOffset.x, propellorShadowCollider.transform.position.y, propellorShadowCollider.transform.position.z);
+			propellorShadowCollider.transform.position = new Vector3(shadowCast.wallTransform.position.x + shadowCast.transformOffset.x, propellorShadowCollider.transform.position.y, 
+				propellorShadowCollider.transform.position.z);
 		}
 		if(shadowCast.transformOffset.z > 0 + errorMargin || shadowCast.transformOffset.z < 0 - errorMargin)
 		{
-			propellorShadowCollider.transform.position = new Vector3(propellorShadowCollider.transform.position.x, propellorShadowCollider.transform.position.y, shadowCast.wallTransform.position.z + shadowCast.transformOffset.z);
+			propellorShadowCollider.transform.position = new Vector3(propellorShadowCollider.transform.position.x, propellorShadowCollider.transform.position.y, 
+				shadowCast.wallTransform.position.z + shadowCast.transformOffset.z);
 		}
 		propellorShadowCollider.AddComponent<BoxCollider>();
 		propellorShadowCollider.AddComponent<PropellorShadowCollider>();

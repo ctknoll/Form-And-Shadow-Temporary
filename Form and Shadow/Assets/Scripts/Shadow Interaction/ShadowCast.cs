@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public class ShadowCast : MonoBehaviour {
-	public GameObject shadowPrefab;
+	public GameObject shadowColliderPrefab;
 	public GameObject shadowCollider;
 
 	[HideInInspector]
@@ -70,12 +70,11 @@ public class ShadowCast : MonoBehaviour {
 
 			if (tag != "Propellor Platform") 
 			{
-				shadowCollider = Instantiate (shadowPrefab, hit.point, Quaternion.identity, gameObject.transform) as GameObject;
-//				shadowCollider.GetComponent<ShadowCollider> ().propellorParent = gameObject;
+				shadowCollider = Instantiate (shadowColliderPrefab, hit.point, Quaternion.identity, gameObject.transform) as GameObject;
 			}
 				
 			else {
-				shadowCollider = Instantiate (shadowPrefab, hit.point, Quaternion.identity) as GameObject;
+				shadowCollider = Instantiate (shadowColliderPrefab, hit.point, Quaternion.identity) as GameObject;
 				shadowCollider.GetComponent<ShadowCollider> ().exceptionParent = gameObject;
 			}
 			
@@ -85,7 +84,7 @@ public class ShadowCast : MonoBehaviour {
 
 	public void Check2DInvisibility()
 	{
-		if(!PlayerMovement.in3DSpace)
+		if(!PlayerMovement.in3DSpace && !PlayerMovement.shiftingOut)
 		{
 			if(singleMesh)
 				GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;

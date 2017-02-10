@@ -6,12 +6,17 @@ public class PlayerMovement : MonoBehaviour
 {
 	public static Vector3 playerStartPosition;
 	public static bool in3DSpace;
+	public static bool shiftingOut;
 
 	[Header("Object References")]
 	public GameObject playerShadow;
-	public Transform cameraTransform;
-	public CameraControl camControl;
-	public GameObject transitionFollow;
+	public GameObject camera;
+	public GameObject movementReference;
+	public GameObject transitionFollowPrefab;
+	public GameObject transitionInFollow;
+	public GameObject transitionOutFollow;
+	private List<GameObject> transferPlatforms;
+	private CameraControl camControl;
 
 	[Header("Movement Variables")]
 	public float movementSpeed;
@@ -23,49 +28,123 @@ public class PlayerMovement : MonoBehaviour
 
 	[Header("Interaction Variables")]
 	public static bool isGrabbing;
-	public GameObject grabbedObject;
+	public static GameObject grabbedObject;
 
 
 	private Vector3 rotationDirection;
 	private float jumpHeldTime;
+	private Vector3 cameraPanInStartPos;
+	private Vector3 cameraRelativeDirectionOffset;
+	private float cameraPanInRelativeDistance;
+	private int currentPlatformIndex;
     public Vector3 distanceFromShadow;
 
 	public CharacterController controller;
 
 	void Start()
 	{
+
 		playerStartPosition = transform.position;
 		in3DSpace = true;
-		camControl = cameraTransform.GetComponent<CameraControl>();
+		shiftingOut = false;
+		camControl = camera.GetComponent<CameraControl>();
 		controller = GetComponent<CharacterController>();
 		jumpSpeedCurrent = jumpSpeed;
+		currentPlatformIndex = 0;
 	}
 
 	void Update() 
 	{
         // Movement Methods
-        PlayerJumpandGravity();
+		if(!CameraControl.cameraIsPanning && !shiftingOut && !isGrabbing)
+        	PlayerJumpandGravity();
 
 		// In the case that the player is controlling their shadow, force the base player character
 		// to follow the shadow in the wall
-		if(in3DSpace && !camControl.cameraIsPanning)
+		if(in3DSpace && !CameraControl.cameraIsPanning && !shiftingOut)
 		{
 			PlayerMovement3D();
 		}
-		else if(!in3DSpace && !camControl.cameraIsPanning)
+
+		else if(!in3DSpace && !CameraControl.cameraIsPanning && !shiftingOut)
 		{
 			PlayerMovement2D();
 			FollowShadow();
 		}
+
 		// Shadow shift Methods
-		if(Input.GetButtonDown("Fire3"))
-			if(!isGrabbing)
-				CheckShadowShift();
+		if(in3DSpace && !CameraControl.cameraIsPanning)
+		{
+			if(Input.GetButtonDown("Fire3"))
+			{
+				if(!isGrabbing)
+				{
+					StartShadowShiftIn();
+				}
+			}
+		}
+
+		else if(!in3DSpace && !CameraControl.cameraIsPanning)
+		{
+			if(Input.GetButtonDown("Fire3"))
+			{
+				StartShadowShiftOut();
+			}
+		}
+
+		if(shiftingOut)
+		{
+			if(Input.GetKeyDown(KeyCode.UpArrow))
+			{
+				if(currentPlatformIndex + 1 < transferPlatforms.Count)
+				{
+					currentPlatformIndex += 1;
+
+					if(LightSourceControl.zAxisMovement)
+						StartCoroutine(CameraPanOut(transitionOutFollow.transform.position, new Vector3(playerShadow.transform.position.x, 
+							(transferPlatforms[currentPlatformIndex].transform.position.y + transferPlatforms[currentPlatformIndex].transform.lossyScale.y / 2 + transform.lossyScale.y), 
+							transferPlatforms[currentPlatformIndex].transform.position.z), false));
+					else if(LightSourceControl.xAxisMovement)
+						StartCoroutine(CameraPanOut(transitionOutFollow.transform.position, new Vector3(transferPlatforms[currentPlatformIndex].transform.position.x, 
+							(transferPlatforms[currentPlatformIndex].transform.position.y + transferPlatforms[currentPlatformIndex].transform.lossyScale.y / 2 + transform.lossyScale.y), 
+							playerShadow.transform.position.z), false));
+				}
+			}
+
+			if(Input.GetKeyDown(KeyCode.DownArrow))
+			{
+				if(currentPlatformIndex - 1 >= 0)
+				{
+					currentPlatformIndex -= 1;
+
+					if(LightSourceControl.zAxisMovement)
+						StartCoroutine(CameraPanOut(transitionOutFollow.transform.position, new Vector3(playerShadow.transform.position.x, 
+							(transferPlatforms[currentPlatformIndex].transform.position.y + transferPlatforms[currentPlatformIndex].transform.lossyScale.y / 2 + transform.lossyScale.y), 
+							transferPlatforms[currentPlatformIndex].transform.position.z), false));
+					else if(LightSourceControl.xAxisMovement)
+						StartCoroutine(CameraPanOut(transitionOutFollow.transform.position, new Vector3(transferPlatforms[currentPlatformIndex].transform.position.x, 
+							(transferPlatforms[currentPlatformIndex].transform.position.y + transferPlatforms[currentPlatformIndex].transform.lossyScale.y / 2 + transform.lossyScale.y), 
+							playerShadow.transform.position.z), false));
+				}
+			}
+		
+			if(Input.GetButtonDown("Submit"))
+			{
+				FinishShiftOut();
+			}
+
+			if(Input.GetButtonDown("Cancel"))
+			{
+				transitionInFollow = transitionOutFollow;
+				transitionOutFollow = null;
+				StartCoroutine(CameraPanIn(transitionInFollow.transform.position, playerShadow.transform.position, -LightSourceControl.lightSourceDirection * camControl.distanceToPlayer2D));
+				StartCoroutine(FinishMultiExitShiftIn());
+			}
+		}
 	}
 
     public void PlayerJumpandGravity()
     {
-
 
 		if (Input.GetButton("Jump") && jumpHeldTime < jumpTime && !isGrabbing)
         {
@@ -86,7 +165,6 @@ public class PlayerMovement : MonoBehaviour
 				jumpHeldTime = 0;
 				jumpSpeedCurrent = jumpSpeed;
 			}
-
         }
         else
         {
@@ -112,47 +190,39 @@ public class PlayerMovement : MonoBehaviour
 
 	}
 
-	//#TODO remove cameraTransform, as it makes jump relative to cameraPos relative to player
 	public void PlayerMovement3D()
 	{
 		if(!isGrabbing)
 		{
-			rotationDirection = new Vector3(cameraTransform.forward.x, 0, cameraTransform.forward.z);
+			rotationDirection = new Vector3(movementReference.transform.forward.x, 0, movementReference.transform.forward.z);
 			transform.rotation = Quaternion.LookRotation(rotationDirection, Vector3.up);
-			if (Input.GetAxis("Horizontal") > 0)
+			if (Input.GetAxisRaw("Horizontal") > 0)
 			{
-				controller.Move(cameraTransform.right * Time.deltaTime * movementSpeed);
+				controller.Move(movementReference.transform.right * Time.deltaTime * movementSpeed);
 			}
-			if (Input.GetAxis("Horizontal") < 0)
+			if (Input.GetAxisRaw("Horizontal") < 0)
 			{
-				controller.Move(-cameraTransform.right * Time.deltaTime * movementSpeed);
+				controller.Move(-movementReference.transform.right * Time.deltaTime * movementSpeed);
 			}
-			if (Input.GetAxis("Vertical") > 0)
+			if (Input.GetAxisRaw("Vertical") > 0)
 			{
-				controller.Move(cameraTransform.forward * Time.deltaTime * movementSpeed);
+				controller.Move(movementReference.transform.forward * Time.deltaTime * movementSpeed);
 			}
-			if (Input.GetAxis("Vertical") < 0)
+			if (Input.GetAxisRaw("Vertical") < 0)
 			{
-				controller.Move(-cameraTransform.forward * Time.deltaTime * movementSpeed);
+				controller.Move(-movementReference.transform.forward * Time.deltaTime * movementSpeed);
 			}
 		}
+		// Grabbing movement
 		else
 		{
-			if (Input.GetAxis("Horizontal") > 0)
+			if (Input.GetAxisRaw("Vertical") > 0 && !grabbedObject.GetComponent<MoveCube>().blockedAhead)
 			{
-				controller.Move(cameraTransform.right * Time.deltaTime * grabMovementSpeed);
+				controller.Move(grabbedObject.GetComponent<MoveCube>().directionAwayFromPlayer * Time.deltaTime * grabMovementSpeed);
 			}
-			if (Input.GetAxis("Horizontal") < 0)
+			if (Input.GetAxisRaw("Vertical") < 0)
 			{
-				controller.Move(-cameraTransform.right * Time.deltaTime * grabMovementSpeed);
-			}
-			if (Input.GetAxis("Vertical") > 0)
-			{
-				controller.Move(cameraTransform.forward * Time.deltaTime * grabMovementSpeed);
-			}
-			if (Input.GetAxis("Vertical") < 0)
-			{
-				controller.Move(-cameraTransform.forward * Time.deltaTime * grabMovementSpeed);
+				controller.Move(-grabbedObject.GetComponent<MoveCube>().directionAwayFromPlayer * Time.deltaTime * grabMovementSpeed);
 			}
 		}
 	}
@@ -162,88 +232,98 @@ public class PlayerMovement : MonoBehaviour
 		transform.position = playerShadow.transform.position + distanceFromShadow;
 	}
 
-	public void CheckShadowShift()
+	public void StartShadowShiftIn()
 	{
 		RaycastHit hit;
-		// Check if the player is shifting into or out from the wall
-		if(in3DSpace)
+		// Cast a ray in the direction of the light source and see if it hits a shadow wall
+		if (Physics.Raycast(transform.position, LightSourceControl.lightSourceDirection, out hit, Mathf.Infinity))
 		{
-			// Cast a ray in the direction of the light source and see if it hits a shadow wall
-			if (Physics.Raycast(transform.position, LightSourceControl.lightSourceDirection, out hit, Mathf.Infinity))
+			if(hit.collider.gameObject.tag == "Shadow Wall")
 			{
-				if(hit.collider.gameObject.tag == "Shadow Wall")
+				// If so, cast a ray offset 0.2 upwards and downwards in the y and see if it collides with any shadow colliders
+				// behind the wall. If not, shift the player into the wall
+				if(!Physics.Raycast(hit.point + new Vector3(0, 0.2f, 0), LightSourceControl.lightSourceDirection, 1f, 1 << 11) && 
+					!Physics.Raycast(hit.point - new Vector3(0, 0.2f, 0), LightSourceControl.lightSourceDirection, 1f, 1 << 11))
 				{
-					// If so, cast a ray offset 0.2 upwards and downwards in the y and see if it collides with any shadow colliders
-					// behind the wall. If not, shift the player into the wall
-					if(!Physics.Raycast(hit.point + new Vector3(0, 0.2f, 0), LightSourceControl.lightSourceDirection, 1f, 1 << 11) && 
-						!Physics.Raycast(hit.point - new Vector3(0, 0.2f, 0), LightSourceControl.lightSourceDirection, 1f, 1 << 11))
-					{
-						StartCoroutine(CameraPanIn(hit.point));
-						StartCoroutine(CameraPanFinalStepIn());
-					}
-					else
-						Debug.Log("You can't transfer, there is a shadow in the way!");
+					StartCoroutine(CameraPanIn(transform.position, hit.point, -LightSourceControl.lightSourceDirection * camControl.distanceToPlayer2D));
+					StartCoroutine(FinishShiftIn());
 				}
 				else
-					Debug.Log("You can't transfer, you didn't hit a shadow wall!");
+					Debug.Log("You can't transfer, there is a shadow in the way!");
+			}
+			else
+				Debug.Log("You can't transfer, you didn't hit a shadow wall!");
+		}
+		
+	}
+
+	public void StartShadowShiftOut()
+	{
+		shiftingOut = true;
+		ShiftOutSetup();
+		if(transferPlatforms.Count != 0)
+		{
+			if(transferPlatforms.Count == 1)
+			{
+				if(LightSourceControl.zAxisMovement)
+					StartCoroutine(CameraPanOut(playerShadow.transform.position, new Vector3(playerShadow.transform.position.x, 
+						(transferPlatforms[0].transform.position.y + transferPlatforms[0].transform.lossyScale.y / 2 + transform.lossyScale.y), 
+						transferPlatforms[0].transform.position.z), true));
+				else if(LightSourceControl.xAxisMovement)
+					StartCoroutine(CameraPanOut(playerShadow.transform.position, new Vector3(transferPlatforms[0].transform.position.x, 
+						(transferPlatforms[0].transform.position.y + transferPlatforms[0].transform.lossyScale.y / 2 + transform.lossyScale.y), 
+						playerShadow.transform.position.z), true));
+			}
+			else
+			{
+				if(LightSourceControl.zAxisMovement)
+				{
+					StartCoroutine(CameraPanOut(playerShadow.transform.position, new Vector3(playerShadow.transform.position.x, 
+						(transferPlatforms[0].transform.position.y + transferPlatforms[0].transform.lossyScale.y / 2 + transform.lossyScale.y), 
+						transferPlatforms[0].transform.position.z), false));
+				}
+				else if(LightSourceControl.xAxisMovement)
+					StartCoroutine(CameraPanOut(playerShadow.transform.position, new Vector3(transferPlatforms[0].transform.position.x, 
+						(transferPlatforms[0].transform.position.y + transferPlatforms[0].transform.lossyScale.y / 2 + transform.lossyScale.y), 
+						playerShadow.transform.position.z), false));
 			}
 		}
+
 		else
 		{
-			// To prevent issues with moving platforms, remove parents when transferring
-			transform.parent = null;
-			playerShadow.transform.parent = null;
-
-			// Get a list of gameobjects from the PlayerShadowCollider script on the player shadow
-			List<GameObject> transferPlatforms = playerShadow.GetComponent<PlayerShadowCollider>().GetTransferPlatforms();
-
-			// If there are platforms to which the player can transfer out to, sort the platforms by their distance from the player
-			// and then transfer the player character to the closest one
-			if(transferPlatforms.Count != 0)
-			{
-				transferPlatforms.Sort(delegate(GameObject t1, GameObject t2) {
-					return Vector3.Distance(t1.transform.position, playerShadow.transform.position).CompareTo(Vector3.Distance(t2.transform.position, playerShadow.transform.position));
-				});
-				if(LightSourceControl.zAxisMovement)
-					transform.position = new Vector3(playerShadow.transform.position.x, playerShadow.transform.position.y, transferPlatforms[0].transform.position.z);
-				else if(LightSourceControl.xAxisMovement)
-					transform.position = new Vector3(transferPlatforms[0].transform.position.x, playerShadow.transform.position.y, playerShadow.transform.position.z);
-			}
-
-			in3DSpace = true;
-			playerShadow.GetComponent<CharacterController>().enabled = false;
-			GetComponent<CharacterController>().enabled = true;
-			controller = GetComponent<CharacterController>();
-			Debug.Log("Out of wall");
+			StartCoroutine(CameraPanOut(playerShadow.transform.position, transform.position, true));
 		}
 	}
 
-	public IEnumerator CameraPanIn(Vector3 wallHit)
+	public IEnumerator CameraPanIn(Vector3 start, Vector3 target, Vector3 offset)
 	{
-		camControl.cameraIsPanning = true;
+		CameraControl.cameraIsPanning = true;
 
-		transitionFollow = new GameObject("Transition Follow");
+		if(transitionInFollow == null)
+			transitionInFollow = Instantiate(transitionFollowPrefab, start, transitionFollowPrefab.transform.rotation);
 
 		// Camera transition inwards to the targeted location
-		Vector3 startPos = cameraTransform.position;
+		cameraPanInStartPos = camera.transform.position;
+		cameraRelativeDirectionOffset = (cameraPanInStartPos - transform.position).normalized;
+
 		float panStart = Time.time;
 		while(Time.time < panStart + camControl.cameraPanDuration)
 		{
-			cameraTransform.position = Vector3.Lerp(startPos, wallHit + -LightSourceControl.lightSourceDirection * camControl.distanceToPlayer2D, (Time.time - panStart)/camControl.cameraPanDuration);
-			transitionFollow.transform.position = (Vector3.Lerp(transform.position, wallHit, (Time.time - panStart)/camControl.cameraPanDuration));
+			transitionInFollow.transform.position = Vector3.Lerp(start, target, (Time.time - panStart)/camControl.cameraPanDuration);
+			camera.transform.position = Vector3.Lerp(cameraPanInStartPos, target + offset, (Time.time - panStart)/camControl.cameraPanDuration);
 			yield return null;
 		}
+		CameraControl.cameraIsPanning = false;
+		Destroy(transitionInFollow);
 	}
 
-	public IEnumerator CameraPanFinalStepIn()
+	public IEnumerator FinishShiftIn()
 	{
+		yield return new WaitForSeconds(camControl.cameraPanDuration);
 		// This basically manages all of the turning off and on of the CharacterControllers and the 3Dspace global
 		// variable and sets the distanceFromShadow float
-		yield return new WaitForSeconds(camControl.cameraPanDuration);
-		cameraTransform.rotation = Quaternion.LookRotation(LightSourceControl.lightSourceDirection, Vector3.up);
-		camControl.cameraIsPanning = false;
-		Destroy(transitionFollow);
-
+		transform.parent = null;
+		playerShadow.transform.parent = null;
 		in3DSpace = false;
 		GetComponent<CharacterController>().enabled = false;
 		playerShadow.GetComponent<CharacterController>().enabled = true;
@@ -251,6 +331,80 @@ public class PlayerMovement : MonoBehaviour
 		GetComponent<PlayerShadowCast>().CastShadow();
 		distanceFromShadow = transform.position - playerShadow.transform.position;
 		Debug.Log("In Wall");
+	}
+
+	public IEnumerator FinishMultiExitShiftIn()
+	{
+		Destroy(transitionOutFollow);
+		yield return new WaitForSeconds(camControl.cameraPanDuration);
+		// This basically manages all of the turning off and on of the CharacterControllers and the 3Dspace global
+		// variable and sets the distanceFromShadow float
+		currentPlatformIndex = 0;
+		CameraControl.cameraIsPanning = false;
+		shiftingOut = false;
+		transform.parent = null;
+		playerShadow.transform.parent = null;
+		in3DSpace = false;
+		GetComponent<CharacterController>().enabled = false;
+		playerShadow.GetComponent<CharacterController>().enabled = true;
+		controller = playerShadow.GetComponent<CharacterController>();
+		GetComponent<PlayerShadowCast>().CastShadow();
+		distanceFromShadow = transform.position - playerShadow.transform.position;
+		Debug.Log("In Wall");
+	}
+
+	public IEnumerator CameraPanOut(Vector3 start, Vector3 target, bool finishing)
+	{
+		CameraControl.cameraIsPanning = true;
+
+		if(transitionOutFollow == null)
+			transitionOutFollow = Instantiate(transitionFollowPrefab, playerShadow.transform.position, transitionFollowPrefab.transform.rotation);
+
+		// Camera transition outwards from the wall
+		Vector3 startPos = camera.transform.position;
+		float panStart = Time.time;
+		while(Time.time < panStart + camControl.cameraPanDuration)
+		{
+			transitionOutFollow.transform.position = Vector3.Lerp(start, target, (Time.time - panStart)/camControl.cameraPanDuration);
+			camera.transform.position = Vector3.Lerp(startPos, target + cameraRelativeDirectionOffset * camControl.distanceToPlayer3D, (Time.time - panStart)/camControl.cameraPanDuration);
+
+			yield return null;
+		}
+
+		if(finishing)
+			FinishShiftOut();
+	}
+
+	public void FinishShiftOut()
+	{
+		currentPlatformIndex = 0;
+		CameraControl.cameraIsPanning = false;
+		shiftingOut = false;
+		transform.position = transitionOutFollow.transform.position;
+		Destroy(transitionOutFollow);
+
+		transform.parent = null;
+		playerShadow.transform.parent = null;
+		in3DSpace = true;
+		playerShadow.GetComponent<CharacterController>().enabled = false;
+		GetComponent<CharacterController>().enabled = true;
+		controller = GetComponent<CharacterController>();
+		Debug.Log("Out of wall");
+	}
+
+	public void ShiftOutSetup()
+	{
+		// Get a list of gameobjects from the PlayerShadowCollider script on the player shadow
+		transferPlatforms = playerShadow.GetComponent<PlayerShadowCollider>().GetTransferPlatforms();
+
+		// If there are platforms to which the player can transfer out to, sort the platforms by their distance from the player
+		// and then transfer the player character to the closest one
+		if(transferPlatforms.Count != 0)
+		{
+			transferPlatforms.Sort(delegate(GameObject t1, GameObject t2) {
+				return Vector3.Distance(t1.transform.position, playerShadow.transform.position).CompareTo(Vector3.Distance(t2.transform.position, playerShadow.transform.position));
+			});
+		}
 	}
 }
 

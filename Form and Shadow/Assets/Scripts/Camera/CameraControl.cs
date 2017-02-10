@@ -25,7 +25,7 @@ public class CameraControl : MonoBehaviour
 
 	public float cameraPanDuration;
 	[HideInInspector]
-	public bool cameraIsPanning;
+	public static bool cameraIsPanning;
 
 
 
@@ -41,7 +41,7 @@ public class CameraControl : MonoBehaviour
     {
 		if(!cameraIsPanning)
 		{
-			if (PlayerMovement.in3DSpace)
+			if (PlayerMovement.in3DSpace || PlayerMovement.shiftingOut)
 	        {
 	            x += Input.GetAxis("Mouse X") * xSpeed * distanceToPlayer3D * 0.02f;
 	            y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
@@ -66,7 +66,15 @@ public class CameraControl : MonoBehaviour
 		}
 		else
 		{
-			transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionFollow.transform);
+			if(PlayerMovement.in3DSpace)
+				transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionInFollow.transform);
+			else if(!PlayerMovement.in3DSpace)
+			{
+				if(target3D.GetComponent<PlayerMovement>().transitionOutFollow)
+					transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionOutFollow.transform);
+				else
+					transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionInFollow.transform);
+			}
 		}
     }
 
