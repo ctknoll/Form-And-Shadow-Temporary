@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public class ShadowCast : MonoBehaviour {
-	public GameObject shadowPrefab;
+	public GameObject shadowColliderPrefab;
 	public GameObject shadowCollider;
 
 	[HideInInspector]
@@ -68,14 +68,14 @@ public class ShadowCast : MonoBehaviour {
 				transformOffset = ((transform.lossyScale.y / 1.9f) * LightSourceControl.lightSourceDirection);
 			}
 
-			shadowCollider = Instantiate (shadowPrefab, hit.point, Quaternion.identity, gameObject.transform) as GameObject;
+			shadowCollider = Instantiate (shadowColliderPrefab, hit.point, Quaternion.identity, gameObject.transform) as GameObject;
 			wallTransform = hit.collider.transform;
 		}
 	}
 
 	public void Check2DInvisibility()
 	{
-		if(!PlayerMovement.in3DSpace)
+		if(!PlayerMovement.in3DSpace && !PlayerMovement.shiftingOut)
 		{
 			if(singleMesh)
 				GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;

@@ -79,6 +79,9 @@ public class ShadowCollider : MonoBehaviour {
 	public void CreatePropellorShadowCollider()
 	{
 		gameObject.AddComponent<TransformLock>();
+		gameObject.AddComponent<BoxCollider>();
+		gameObject.GetComponent<BoxCollider>().isTrigger = true;
+
 		GameObject propellorShadowCollider = new GameObject("PropellorShadowPlatform");
 		propellorShadowCollider.transform.position = transform.position;
 		if(shadowCast.transformOffset.x > 0 + errorMargin || shadowCast.transformOffset.x < 0 - errorMargin)
