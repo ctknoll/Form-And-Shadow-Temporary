@@ -4,11 +4,6 @@ using System.Collections;
 public class PropellorShadowCollider : MonoBehaviour
 {
 	public GameObject propellor;
-
-	private float midScale;
-	private float maxScale;
-	private float minScale;
-
 	private GameObject propellorMesh;
 
 	void Start ()
@@ -22,13 +17,13 @@ public class PropellorShadowCollider : MonoBehaviour
 		{
 			if(LightSourceControl.zAxisMovement)
 			{
-				transform.localScale = new Vector3(propellorMesh.transform.lossyScale.x + (propellorMesh.transform.lossyScale.z - propellorMesh.transform.lossyScale.x) * Mathf.Abs(Mathf.Sin((propellor.GetComponent<PropellorPlatform>().rotationSpeed * Time.time * Mathf.PI / 180))),
+				transform.localScale = new Vector3(propellorMesh.transform.lossyScale.z - (propellorMesh.transform.lossyScale.z - propellorMesh.transform.lossyScale.x) * Mathf.Abs(Mathf.Cos((propellor.GetComponent<PropellorPlatform>().rotationSpeed * Time.time * Mathf.PI / 180))),
 					propellorMesh.transform.lossyScale.y, propellorMesh.transform.lossyScale.z);
 			}
 			else if(LightSourceControl.xAxisMovement)
 			{
 				transform.localScale = new Vector3(propellorMesh.transform.lossyScale.x, propellorMesh.transform.lossyScale.y, 
-					propellorMesh.transform.lossyScale.z + (propellorMesh.transform.lossyScale.x - propellorMesh.transform.lossyScale.z) * Mathf.Abs(Mathf.Sin((propellor.GetComponent<PropellorPlatform>().rotationSpeed * Time.time * Mathf.PI / 180))));
+					propellorMesh.transform.lossyScale.x - (propellorMesh.transform.lossyScale.x - propellorMesh.transform.lossyScale.z) * Mathf.Abs(Mathf.Cos((propellor.GetComponent<PropellorPlatform>().rotationSpeed * Time.time * Mathf.PI / 180))));
 			}
 		}
 	}
