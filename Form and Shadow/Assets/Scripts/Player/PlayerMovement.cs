@@ -179,11 +179,11 @@ public class PlayerMovement : MonoBehaviour
 
 	public void PlayerMovement2D()
 	{
-		if (Input.GetAxis("Horizontal") > 0)
+		if (Input.GetAxisRaw("Horizontal") > 0)
 		{
 			controller.Move(-playerShadow.transform.right * Time.deltaTime * movementSpeed);
 		}
-		if (Input.GetAxis("Horizontal") < 0)
+		if (Input.GetAxisRaw("Horizontal") < 0)
 		{
 			controller.Move(playerShadow.transform.right * Time.deltaTime * movementSpeed);
 		}
