@@ -146,7 +146,7 @@ public class PlayerMovement : MonoBehaviour
     public void PlayerJumpandGravity()
     {
 
-		if (Input.GetButton("Jump") && jumpHeldTime < jumpTime)
+		if (Input.GetButton("Jump") && jumpHeldTime < jumpTime && !isGrabbing)
         {
 			if (jumpSpeedCurrent <= ((jumpSpeed - gravity) / jumpTime) * Time.deltaTime)
 				jumpSpeedCurrent = 0;
@@ -189,6 +189,7 @@ public class PlayerMovement : MonoBehaviour
 		}
 
 	}
+
 	public void PlayerMovement3D()
 	{
 		if(!isGrabbing)

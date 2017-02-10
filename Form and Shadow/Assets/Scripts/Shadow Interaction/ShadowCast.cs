@@ -68,7 +68,16 @@ public class ShadowCast : MonoBehaviour {
 				transformOffset = ((transform.lossyScale.y / 1.9f) * LightSourceControl.lightSourceDirection);
 			}
 
-			shadowCollider = Instantiate (shadowColliderPrefab, hit.point, Quaternion.identity, gameObject.transform) as GameObject;
+			if (tag != "Propellor Platform") 
+			{
+				shadowCollider = Instantiate (shadowColliderPrefab, hit.point, Quaternion.identity, gameObject.transform) as GameObject;
+			}
+				
+			else {
+				shadowCollider = Instantiate (shadowColliderPrefab, hit.point, Quaternion.identity) as GameObject;
+				shadowCollider.GetComponent<ShadowCollider> ().exceptionParent = gameObject;
+			}
+			
 			wallTransform = hit.collider.transform;
 		}
 	}
