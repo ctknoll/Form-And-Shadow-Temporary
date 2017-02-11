@@ -27,7 +27,7 @@ public class MovingPlatformSpeedToggleSwitch : ToggleSwitch
                 locked = true;
             }
         }
-        else
+       else
         {
             if (movingBlock.GetComponent<MovingPlatform>() != null)
             {

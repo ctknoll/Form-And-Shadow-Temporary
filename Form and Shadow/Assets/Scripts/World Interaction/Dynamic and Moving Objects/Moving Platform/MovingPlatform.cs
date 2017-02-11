@@ -46,20 +46,20 @@ public class MovingPlatform : MonoBehaviour {
 		if(!CameraControl.cameraIsPanning)
 		{
 			personalTime += slowValue * Time.deltaTime;
-			switch(moveDirection)
-			{
-			case ShiftDirection.X:
-				transform.position = new Vector3(startPosition.x + Mathf.Sin(personalTime * moveSpeed) * moveDistance, transform.position.y, transform.position.z);
-				break;
-			case ShiftDirection.Y:
-				transform.position = new Vector3(transform.position.x, startPosition.y + Mathf.Sin(personalTime * moveSpeed) * moveDistance, transform.position.z);
-				break;
-			case ShiftDirection.Z:
-				transform.position = new Vector3(transform.position.x, transform.position.y, startPosition.z + Mathf.Sin(personalTime * moveSpeed) * moveDistance);
-				break;
-			default:
-				break;
-			}
 		}
-	}
+        switch (moveDirection)
+        {
+            case ShiftDirection.X:
+                transform.position = new Vector3(startPosition.x + Mathf.Sin(personalTime * moveSpeed) * moveDistance, transform.position.y, transform.position.z);
+                break;
+            case ShiftDirection.Y:
+                transform.position = new Vector3(transform.position.x, startPosition.y + Mathf.Sin(personalTime * moveSpeed) * moveDistance, transform.position.z);
+                break;
+            case ShiftDirection.Z:
+                transform.position = new Vector3(transform.position.x, transform.position.y, startPosition.z + Mathf.Sin(personalTime * moveSpeed) * moveDistance);
+                break;
+            default:
+                break;
+        }
+    }
 }
