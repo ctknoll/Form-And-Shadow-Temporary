@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
 	private float cameraPanInRelativeDistance;
 	private int currentPlatformIndex;
     public Vector3 distanceFromShadow;
+    public bool supressShift;
 
 	public CharacterController controller;
 
@@ -55,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
 
 	void Update() 
 	{
+        supressShift = false;
         // Movement Methods
 		if(!CameraControl.cameraIsPanning && !shiftingOut && !isGrabbing)
         	PlayerJumpandGravity();
@@ -89,12 +91,13 @@ public class PlayerMovement : MonoBehaviour
 			if(Input.GetButtonDown("Fire3"))
 			{
 				StartShadowShiftOut();
+                supressShift = true;
 			}
 		}
 
 		if(shiftingOut)
 		{
-			if(Input.GetKeyDown(KeyCode.UpArrow))
+			if(Input.GetKeyDown(KeyCode.S))
 			{
 				if(currentPlatformIndex + 1 < transferPlatforms.Count)
 				{
@@ -111,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
 				}
 			}
 
-			if(Input.GetKeyDown(KeyCode.DownArrow))
+			if(Input.GetKeyDown(KeyCode.W))
 			{
 				if(currentPlatformIndex - 1 >= 0)
 				{
@@ -128,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
 				}
 			}
 		
-			if(Input.GetButtonDown("Submit"))
+			if(Input.GetButtonDown("Fire3") && !supressShift)
 			{
 				FinishShiftOut();
 			}

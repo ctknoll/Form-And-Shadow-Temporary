@@ -50,7 +50,8 @@ public class ShadowCollider : MonoBehaviour {
 		LockMovementAxis();
 	}
 
-	public void LockMovementAxis()
+    //The issue with multiple light sources is here
+    public void LockMovementAxis()
 	{
 		if(shadowCast.transformOffset.x > 0 + errorMargin || shadowCast.transformOffset.x < 0 - errorMargin)
 		{
