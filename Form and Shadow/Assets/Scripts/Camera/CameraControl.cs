@@ -39,9 +39,9 @@ public class CameraControl : MonoBehaviour
 
     void LateUpdate()
     {
-		if(!cameraIsPanning)
+		if(!cameraIsPanning && !PlayerMovement.shiftingOut && !PlayerMovement.shiftingIn)
 		{
-			if (PlayerMovement.in3DSpace || PlayerMovement.shiftingOut)
+			if (PlayerMovement.in3DSpace)
 	        {
 	            x += Input.GetAxis("Mouse X") * xSpeed * distanceToPlayer3D * 0.02f;
 	            y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
@@ -57,7 +57,7 @@ public class CameraControl : MonoBehaviour
 	            transform.position = position;
 	        }
 
-			else if(!PlayerMovement.in3DSpace)
+			else
 			{
 				Vector3 desiredPosition = target2D.transform.position + -transform.forward * distanceToPlayer2D;
 

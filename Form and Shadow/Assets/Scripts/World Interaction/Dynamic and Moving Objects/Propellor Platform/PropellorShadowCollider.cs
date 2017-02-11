@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class PropellorShadowCollider : MonoBehaviour
 {
@@ -15,7 +14,7 @@ public class PropellorShadowCollider : MonoBehaviour
 	
 	void FixedUpdate ()
 	{
-		if(!CameraControl.cameraIsPanning)
+		if(!PlayerMovement.shiftingIn && !PlayerMovement.shiftingOut)
 		{
             personalTime += Time.deltaTime;
 		}

@@ -15,7 +15,7 @@ public class PulleySystem : MonoBehaviour {
 	
 	void Update ()
 	{
-		if(!CameraControl.cameraIsPanning)
+		if(!PlayerMovement.shiftingIn && !PlayerMovement.shiftingOut)
 		{
 			personalTime += Time.deltaTime;	
 			if(personalTime >= spawnTime + spawnCooldown)

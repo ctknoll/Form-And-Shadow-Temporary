@@ -5,7 +5,6 @@ public class ShadowCollider : MonoBehaviour {
 	private float errorMargin;
 	public GameObject exceptionParent;
 
-	// Use this for initialization
 	void Start () 
 	{
 		errorMargin = 0.1f;
@@ -44,7 +43,6 @@ public class ShadowCollider : MonoBehaviour {
         transform.position = pos;
 	}
 	
-	// Update is called once per frame
 	void FixedUpdate () 
 	{
 		LockMovementAxis();
@@ -91,6 +89,8 @@ public class ShadowCollider : MonoBehaviour {
 		gameObject.AddComponent<TransformLock>();
 		gameObject.AddComponent<BoxCollider>();
 		gameObject.GetComponent<BoxCollider>().isTrigger = true;
+		gameObject.transform.localScale = exceptionParent.transform.lossyScale;
+
 
 		GameObject propellorShadowCollider = new GameObject("PropellorShadowPlatform");
 		propellorShadowCollider.transform.position = transform.position;

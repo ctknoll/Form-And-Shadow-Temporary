@@ -36,8 +36,11 @@ public class PlayerShadowCollider : MonoBehaviour {
 		List <GameObject> transferPlatforms = new List<GameObject>();
 		foreach (RaycastHit hit in hits)
 		{
-			if(hit.collider.gameObject.transform.parent.gameObject.tag != "Spikes")
-				transferPlatforms.Add(hit.collider.gameObject.transform.parent.gameObject);
+			if(hit.collider.gameObject.GetComponent<ShadowCollider>().exceptionParent == null)
+				if(hit.collider.gameObject.transform.parent.gameObject.tag != "Spikes")
+					transferPlatforms.Add(hit.collider.gameObject.transform.parent.gameObject);
+			else
+				transferPlatforms.Add(hit.collider.gameObject.GetComponent<ShadowCollider>().exceptionParent);
 		}
 		// Then, return a list of gameobjects equal to all the shadow colliders below the player when called
 		return transferPlatforms;

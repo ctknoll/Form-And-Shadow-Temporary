@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour {
 	public enum ShiftDirection {X, Y, Z};
@@ -43,7 +42,7 @@ public class MovingPlatform : MonoBehaviour {
 
 	void FixedUpdate () 
 	{
-		if(!CameraControl.cameraIsPanning)
+		if(!PlayerMovement.shiftingIn && !PlayerMovement.shiftingOut)
 		{
 			personalTime += slowValue * Time.deltaTime;
 		}

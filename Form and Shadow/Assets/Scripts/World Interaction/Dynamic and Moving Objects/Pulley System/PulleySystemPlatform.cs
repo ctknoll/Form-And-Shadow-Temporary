@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PulleySystemPlatform : MonoBehaviour {
 	public float moveSpeed;
@@ -40,7 +39,7 @@ public class PulleySystemPlatform : MonoBehaviour {
 
 	void FixedUpdate () 
 	{
-		if(!CameraControl.cameraIsPanning)
+		if(!PlayerMovement.shiftingIn && !PlayerMovement.shiftingOut)
 		{
 			transform.position += moveSpeed * moveDirection;
 
