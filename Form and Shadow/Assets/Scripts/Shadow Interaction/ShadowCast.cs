@@ -29,7 +29,6 @@ public class ShadowCast : MonoBehaviour {
 
 	void Update () 
 	{
-        Debug.Log(shadowCollider[0]);
 		if((shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.On || shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly) && shadowCollider.Count == 1)
 			CastShadow();
 

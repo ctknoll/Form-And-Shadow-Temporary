@@ -10,7 +10,6 @@ public class PlayerShadowCast : MonoBehaviour {
 
 	void Update () 
 	{
-		//zOffset = ((transform.lossyScale.z / 2f + .1f) * LightSourceControl.lightSourceDirection);
 		Check2DInvisibility();
 	}
 
@@ -37,11 +36,6 @@ public class PlayerShadowCast : MonoBehaviour {
 			else if (LightSourceControl.xAxisMovement) 
 			{
 				transformOffset = ((transform.lossyScale.x / 1.9f) * LightSourceControl.lightSourceDirection);
-			}
-			// Is the light source projecting up or down #TODO WORK IN PROGRESS
-			else 
-			{
-				transformOffset = ((transform.lossyScale.y / 1.9f) * LightSourceControl.lightSourceDirection);
 			}
 			
 			wallTransform = hit.collider.transform;

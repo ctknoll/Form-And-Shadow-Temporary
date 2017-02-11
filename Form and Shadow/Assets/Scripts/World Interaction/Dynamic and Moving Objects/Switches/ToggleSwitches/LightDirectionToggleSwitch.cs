@@ -18,7 +18,6 @@ public class LightDirectionToggleSwitch : ToggleSwitch
     // Update is called once per frame
     public void Update()
     {
-        Debug.Log(active + ", " + locked);
         if (active)
         {
             if (!locked)

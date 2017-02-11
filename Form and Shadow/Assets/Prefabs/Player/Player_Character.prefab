@@ -74,7 +74,7 @@ GameObject:
   m_Layer: 0
   m_Name: CameraRaycast
   m_TagString: Untagged
-  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -98,7 +98,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1498563667086114}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.1, z: 0}
+  m_LocalPosition: {x: 0, y: -0.095, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4710416165020350}
@@ -111,7 +111,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1099584862315612}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6, y: 1, z: 6}
+  m_LocalPosition: {x: 2.93, y: 2, z: 15.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4969831798489872}
@@ -217,11 +217,10 @@ MonoBehaviour:
   transitionInFollow: {fileID: 0}
   transitionOutFollow: {fileID: 0}
   movementSpeed: 6
-  grabMovementSpeed: 4
+  grabMovementSpeed: 3
   jumpSpeed: 20
   jumpTime: 0.4
   gravity: 8
-  grabbedObject: {fileID: 0}
   distanceFromShadow: {x: 0, y: 0, z: 0}
   controller: {fileID: 0}
 --- !u!114 &114973802022037786

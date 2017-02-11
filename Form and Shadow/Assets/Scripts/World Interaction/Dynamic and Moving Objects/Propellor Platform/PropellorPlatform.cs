@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PropellorPlatform : MonoBehaviour {
 	public float rotationSpeed;
@@ -33,7 +32,7 @@ public class PropellorPlatform : MonoBehaviour {
 
 	void FixedUpdate () 
 	{
-		if(!CameraControl.cameraIsPanning)
+		if(!PlayerMovement.shiftingIn && !PlayerMovement.shiftingOut)
 			transform.Rotate(Vector3.up, Time.deltaTime * rotationSpeed);
 	}
 }
