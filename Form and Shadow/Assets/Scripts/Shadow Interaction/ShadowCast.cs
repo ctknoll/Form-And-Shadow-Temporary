@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class ShadowCast : MonoBehaviour {
-	public GameObject shadowPrefab;
-	public GameObject shadowCollider;
+	public GameObject shadowColliderPrefab;
+	public List<GameObject> shadowCollider = new List<GameObject>();
 
 	[HideInInspector]
 	public Vector3 transformOffset;
@@ -28,11 +29,8 @@ public class ShadowCast : MonoBehaviour {
 
 	void Update () 
 	{
-		if(!shadowCollider)
-		{
-			if(shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.On || shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly)
-				CastShadow();
-		}
+		if((shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.On || shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly) && shadowCollider.Count == 1)
+			CastShadow();
 
 		if(shadowCastMode != UnityEngine.Rendering.ShadowCastingMode.Off)
 			Check2DInvisibility();
@@ -68,14 +66,24 @@ public class ShadowCast : MonoBehaviour {
 				transformOffset = ((transform.lossyScale.y / 1.9f) * LightSourceControl.lightSourceDirection);
 			}
 
-			shadowCollider = Instantiate (shadowPrefab, hit.point, Quaternion.identity, gameObject.transform) as GameObject;
+			if (tag != "Propellor Platform") 
+			{
+				shadowCollider.Add(Instantiate (shadowColliderPrefab, hit.point, Quaternion.identity, gameObject.transform) as GameObject);
+			}
+				
+			else {
+				GameObject shadowAdd = Instantiate (shadowColliderPrefab, hit.point, Quaternion.identity) as GameObject;
+                shadowAdd.GetComponent<ShadowCollider> ().exceptionParent = gameObject;
+                shadowCollider.Add(shadowAdd);
+			}
+			
 			wallTransform = hit.collider.transform;
 		}
 	}
 
 	public void Check2DInvisibility()
 	{
-		if(!PlayerMovement.in3DSpace)
+		if(!PlayerMovement.in3DSpace && !PlayerMovement.shiftingOut)
 		{
 			if(singleMesh)
 				GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;

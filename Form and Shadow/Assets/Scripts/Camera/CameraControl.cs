@@ -25,7 +25,7 @@ public class CameraControl : MonoBehaviour
 
 	public float cameraPanDuration;
 	[HideInInspector]
-	public bool cameraIsPanning;
+	public static bool cameraIsPanning;
 
 
 
@@ -39,7 +39,7 @@ public class CameraControl : MonoBehaviour
 
     void LateUpdate()
     {
-		if(!cameraIsPanning)
+		if(!cameraIsPanning && !PlayerMovement.shiftingOut && !PlayerMovement.shiftingIn)
 		{
 			if (PlayerMovement.in3DSpace)
 	        {
@@ -57,7 +57,7 @@ public class CameraControl : MonoBehaviour
 	            transform.position = position;
 	        }
 
-			else if(!PlayerMovement.in3DSpace)
+			else
 			{
 				Vector3 desiredPosition = target2D.transform.position + -transform.forward * distanceToPlayer2D;
 
@@ -66,7 +66,15 @@ public class CameraControl : MonoBehaviour
 		}
 		else
 		{
-			transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionFollow.transform);
+			if(PlayerMovement.in3DSpace)
+				transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionInFollow.transform);
+			else if(!PlayerMovement.in3DSpace)
+			{
+				if(target3D.GetComponent<PlayerMovement>().transitionOutFollow)
+					transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionOutFollow.transform);
+				else
+					transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionInFollow.transform);
+			}
 		}
     }
 

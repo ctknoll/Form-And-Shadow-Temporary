@@ -10,7 +10,6 @@ public class PlayerShadowCast : MonoBehaviour {
 
 	void Update () 
 	{
-		//zOffset = ((transform.lossyScale.z / 2f + .1f) * LightSourceControl.lightSourceDirection);
 		Check2DInvisibility();
 	}
 
@@ -38,11 +37,6 @@ public class PlayerShadowCast : MonoBehaviour {
 			{
 				transformOffset = ((transform.lossyScale.x / 1.9f) * LightSourceControl.lightSourceDirection);
 			}
-			// Is the light source projecting up or down #TODO WORK IN PROGRESS
-			else 
-			{
-				transformOffset = ((transform.lossyScale.y / 1.9f) * LightSourceControl.lightSourceDirection);
-			}
 			
 			wallTransform = hit.collider.transform;
 			GetComponent<PlayerMovement>().playerShadow.transform.position = hit.point + transformOffset;
@@ -53,8 +47,8 @@ public class PlayerShadowCast : MonoBehaviour {
 	public void Check2DInvisibility()
 	{
 		if(!PlayerMovement.in3DSpace)
-			GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+			GetComponentInChildren<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
 		else
-			GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+			GetComponentInChildren<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
 	}
 }

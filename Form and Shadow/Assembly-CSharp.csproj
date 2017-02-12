@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Camera\CameraControl.cs" />
      <Compile Include="Assets\Scripts\Camera\RaycastToCamera.cs" />
+     <Compile Include="Assets\Scripts\Player\MovementReference.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerShadowCast.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerShadowCollider.cs" />
@@ -55,21 +56,24 @@
      <Compile Include="Assets\Scripts\Shadow Interaction\ShadowCast.cs" />
      <Compile Include="Assets\Scripts\Shadow Interaction\ShadowCollider.cs" />
      <Compile Include="Assets\Scripts\UI and Menu Control\GameExit.cs" />
-     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\ConveyorBelt.cs" />
-     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\ConveyorPlatform.cs" />
-     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\MoveCube.cs" />
-     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\MovingPlatform.cs" />
-     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\MovingShadowPlatform.cs" />
-     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\PropellorPlatform.cs" />
-     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\PropellorShadowCollider.cs" />
-     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\TransformLock.cs" />
-     <Compile Include="Assets\Scripts\World Interaction\GameController.cs" />
-     <Compile Include="Assets\Scripts\World Interaction\Killzone.cs" />
-     <Compile Include="Assets\Scripts\World Interaction\LevelFinish.cs" />
-     <Compile Include="Assets\Scripts\World Interaction\Switches\PressureSwitch.cs" />
-     <Compile Include="Assets\Scripts\World Interaction\Switches\PressureSwitches\MovingPlatformSpeedPressureSwitch.cs" />
-     <Compile Include="Assets\Scripts\World Interaction\Switches\ToggleSwitch.cs" />
-     <Compile Include="Assets\Scripts\World Interaction\Switches\ToggleSwitches\MovingPlatformSpeedToggleSwitch.cs" />
+     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\Move Cube\MoveCube.cs" />
+     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\Move Cube\MoveCubeReference.cs" />
+     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\Moving Platform\MovingPlatform.cs" />
+     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\Moving Platform\MovingShadowPlatform.cs" />
+     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\Propellor Platform\PropellorPlatform.cs" />
+     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\Propellor Platform\PropellorShadowCollider.cs" />
+     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\Propellor Platform\TransformLock.cs" />
+     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\Pulley System\PulleySystem.cs" />
+     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\Pulley System\PulleySystemEnd.cs" />
+     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\Pulley System\PulleySystemPlatform.cs" />
+     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\Switches\PressureSwitch.cs" />
+     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\Switches\PressureSwitches\MovingPlatformSpeedPressureSwitch.cs" />
+     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\Switches\ToggleSwitch.cs" />
+     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\Switches\ToggleSwitches\LightDirectionToggleSwitch.cs" />
+     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\Switches\ToggleSwitches\MovingPlatformSpeedToggleSwitch.cs" />
+     <Compile Include="Assets\Scripts\World Interaction\Game Control\GameController.cs" />
+     <Compile Include="Assets\Scripts\World Interaction\Game Control\Killzone.cs" />
+     <Compile Include="Assets\Scripts\World Interaction\Game Control\LevelFinish.cs" />
      <Compile Include="Assets\TwoDimensionalObject.cs" />
  <Reference Include="UnityEngine.Advertisements">
  <HintPath>E:/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>

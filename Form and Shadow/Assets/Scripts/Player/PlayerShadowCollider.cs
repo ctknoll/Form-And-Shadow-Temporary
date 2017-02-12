@@ -30,15 +30,18 @@ public class PlayerShadowCollider : MonoBehaviour {
 
 		// Cast a ray down from the player shadow and store all colliders hit in an array of RaycastHits
 		RaycastHit [] hits;
-		hits = Physics.RaycastAll(transform.position, Vector3.down, Vector3.Distance(transform.position, new Vector3(transform.position.x, 0, transform.position.z)), 1 << 11);
+		hits = Physics.SphereCastAll(transform.position, 0.5f, Vector3.down, Vector3.Distance(transform.position, new Vector3(transform.position.x, 0, transform.position.z)), 1 << 11);
 
 		// Then, create a list of gameobjects and for each RaycastHit in hits, add the hit collider's gameobject to the list of transferPlatforms
 		List <GameObject> transferPlatforms = new List<GameObject>();
 		foreach (RaycastHit hit in hits)
 		{
-			transferPlatforms.Add(hit.collider.gameObject.transform.parent.gameObject);
+			if(hit.collider.gameObject.GetComponent<ShadowCollider>().exceptionParent == null)
+				if(hit.collider.gameObject.transform.parent.gameObject.tag != "Spikes")
+					transferPlatforms.Add(hit.collider.gameObject.transform.parent.gameObject);
+			else
+				transferPlatforms.Add(hit.collider.gameObject.GetComponent<ShadowCollider>().exceptionParent);
 		}
-
 		// Then, return a list of gameobjects equal to all the shadow colliders below the player when called
 		return transferPlatforms;
 	}

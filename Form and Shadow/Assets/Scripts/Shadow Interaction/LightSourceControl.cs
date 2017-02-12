@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class LightSourceControl : MonoBehaviour 
 {
@@ -17,22 +15,38 @@ public class LightSourceControl : MonoBehaviour
 
 	void Update () 
 	{
-		lightSourceDirection = transform.forward;
-	}
+        //transform.Rotate(0, 90, 0);
+        lightSourceDirection = transform.forward;
+
+    }
 
 	public void CheckLightingDirection()
 	{
-		if (lightSourceDirection == GameObject.Find("Light Reference").transform.forward || 
+        if (lightSourceDirection == GameObject.Find("Light Reference").transform.forward || 
 			-1 * lightSourceDirection == GameObject.Find("Light Reference").transform.forward) 
 		{
-			zAxisMovement = true;
+            zAxisMovement = true;
 			xAxisMovement = false;
-		}
+        }
 		else if(LightSourceControl.lightSourceDirection == GameObject.Find("Light Reference").transform.right || 
 			-1 * LightSourceControl.lightSourceDirection == GameObject.Find("Light Reference").transform.right) 
 		{
-			zAxisMovement = false;
+            zAxisMovement = false;
 			xAxisMovement = true;
 		}
-	}
+    }
+
+    //This function is suboptimal -- it casts EVERY time, creating a lot of unnecesary overhead
+    public void turnLightSource()
+    {
+        GameObject.Find("/Directional light").transform.Rotate(0, -90, 0);
+        lightSourceDirection = GameObject.Find("/Directional light").transform.forward;
+        CheckLightingDirection();
+        Object[] listOfObjs = Object.FindObjectsOfType(typeof(ShadowCast));
+        foreach(ShadowCast shadow in listOfObjs)
+        {
+            //if(shadow.shadowCollider.Count < 5)
+            shadow.CastShadow();
+        }
+    }
 }
