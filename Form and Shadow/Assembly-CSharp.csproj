@@ -64,6 +64,7 @@
      <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\Propellor Platform\PropellorShadowCollider.cs" />
      <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\Propellor Platform\TransformLock.cs" />
      <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\Pulley System\PulleySystem.cs" />
+     <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\Pulley System\PulleySystemEnd.cs" />
      <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\Pulley System\PulleySystemPlatform.cs" />
      <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\Switches\PressureSwitch.cs" />
      <Compile Include="Assets\Scripts\World Interaction\Dynamic and Moving Objects\Switches\PressureSwitches\MovingPlatformSpeedPressureSwitch.cs" />
@@ -74,6 +75,9 @@
      <Compile Include="Assets\Scripts\World Interaction\Game Control\Killzone.cs" />
      <Compile Include="Assets\Scripts\World Interaction\Game Control\LevelFinish.cs" />
      <Compile Include="Assets\TwoDimensionalObject.cs" />
+ <Reference Include="UnityEngine.Advertisements">
+ <HintPath>E:/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>E:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -88,6 +92,9 @@
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>E:/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Purchasing">
+ <HintPath>E:/Unity/Editor/Data/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>E:/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>

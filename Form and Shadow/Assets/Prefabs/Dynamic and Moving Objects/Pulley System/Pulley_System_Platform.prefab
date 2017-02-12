@@ -148,10 +148,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0.05
+  destroyDelayTime: 0.25
   pulleyStart: {fileID: 0}
   pulleyEnd: {fileID: 0}
   playerChildedIn3D: 0
   playerChildedIn2D: 0
+  atEndOfRoute: 0
 --- !u!114 &114656646394542690
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -165,6 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
     type: 2}
-  shadowCollider: {fileID: 0}
+  shadowCollider:
+  - {fileID: 0}
   transformOffset: {x: 0, y: 0, z: 0}
   wallTransform: {fileID: 0}

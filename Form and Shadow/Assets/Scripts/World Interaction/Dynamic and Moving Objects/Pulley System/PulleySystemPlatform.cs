@@ -1,13 +1,21 @@
 ﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class PulleySystemPlatform : MonoBehaviour {
 	public float moveSpeed;
+	public float destroyDelayTime;
+
 
 	public Transform pulleyStart;
 	public Transform pulleyEnd;
 
+	[HideInInspector]
 	public bool playerChildedIn3D;
+	[HideInInspector]
 	public bool playerChildedIn2D;
+	[HideInInspector]
+	public bool atEndOfRoute;
 
 	private float startTime;
 	private Vector3 moveDirection;
@@ -43,14 +51,20 @@ public class PulleySystemPlatform : MonoBehaviour {
 		{
 			transform.position += moveSpeed * moveDirection;
 
-			if(transform.position == pulleyEnd.position)
+			if(atEndOfRoute)
 			{
-				if(playerChildedIn3D)
-					GameObject.Find("Player_Character").transform.parent = null;
-				else if(playerChildedIn2D)
-					GameObject.Find("Player_Shadow").transform.parent = null;
-				Destroy(gameObject);
+				StartCoroutine(DestroyPlatform());
 			}
 		}
+	}
+
+	public IEnumerator DestroyPlatform()
+	{
+		yield return new WaitForSeconds(destroyDelayTime);
+		if(playerChildedIn3D)
+			GameObject.Find("Player_Character").transform.parent = null;
+		else if(playerChildedIn2D)
+			GameObject.Find("Player_Shadow").transform.parent = null;
+		Destroy(gameObject);
 	}
 }

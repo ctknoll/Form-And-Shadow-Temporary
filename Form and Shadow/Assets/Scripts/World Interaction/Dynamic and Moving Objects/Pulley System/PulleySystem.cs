@@ -21,7 +21,7 @@ public class PulleySystem : MonoBehaviour {
 			if(personalTime >= spawnTime + spawnCooldown)
 			{
 				spawnTime = personalTime;
-				GameObject pulleyPlatform = Instantiate(pulleyPlatformPrefab, transform.position, transform.rotation, null) as GameObject;
+				GameObject pulleyPlatform = Instantiate(pulleyPlatformPrefab, transform.GetChild(0).position, transform.rotation, null) as GameObject;
 				pulleyPlatform.GetComponent<PulleySystemPlatform>().pulleyStart = transform.GetChild(0).gameObject.transform;
 				pulleyPlatform.GetComponent<PulleySystemPlatform>().pulleyEnd = transform.GetChild(1).gameObject.transform;
 			}
