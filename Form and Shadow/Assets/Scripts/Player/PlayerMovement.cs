@@ -22,10 +22,14 @@ public class PlayerMovement : MonoBehaviour
 	[Header("Movement Variables")]
 	public float movementSpeed;
 	public float grabMovementSpeed;
+
+
 	public float jumpSpeed;
-	private float jumpSpeedCurrent;
 	public float jumpTime;
 	public float gravity;
+	public static bool grounded;
+	private float verticalVelocity;
+
 
 	[Header("Interaction Variables")]
 	public static bool isGrabbing;
@@ -51,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
 		shiftingIn = false;
 		camControl = camera.GetComponent<CameraControl>();
 		controller = GetComponent<CharacterController>();
-		jumpSpeedCurrent = jumpSpeed;
+
 		currentPlatformIndex = 0;
 	}
 
@@ -101,36 +105,50 @@ public class PlayerMovement : MonoBehaviour
 
     public void PlayerJumpandGravity()
     {
-
-		if (Input.GetButton("Jump") && jumpHeldTime < jumpTime)
-        {
-			if (jumpSpeedCurrent <= ((jumpSpeed - gravity) / jumpTime) * Time.deltaTime)
-				jumpSpeedCurrent = 0;
-			else jumpSpeedCurrent -= ((jumpSpeed - gravity) / jumpTime) * Time.deltaTime;
-			controller.Move(new Vector3(0, jumpSpeedCurrent * Time.deltaTime, 0));
-            jumpHeldTime += Time.deltaTime;
-        }
-
-		controller.Move(new Vector3(0, -gravity * Time.deltaTime, 0));
-
-        RaycastHit hit;
-        if (in3DSpace)
-        {
-			if (Physics.Raycast (new Vector3 (transform.position.x, transform.position.y - (transform.lossyScale.y), transform.position.z), -Vector3.up, out hit, .1f)) 
+		RaycastHit hit;
+		// Check if grounded in 3D
+		if(grounded)
+		{
+			if(Input.GetButtonDown("Jump"))
 			{
-				jumpHeldTime = 0;
-				jumpSpeedCurrent = jumpSpeed;
+				verticalVelocity = jumpSpeed;
 			}
-        }
-        else
-        {
-            Debug.DrawLine(playerShadow.transform.position + Vector3.down * transform.lossyScale.y, playerShadow.transform.position + Vector3.down * (transform.lossyScale.y+.1f), Color.red, .25f);
-            if (Physics.Raycast(new Vector3(playerShadow.transform.position.x, playerShadow.transform.position.y - (playerShadow.transform.lossyScale.y), playerShadow.transform.position.z), -Vector3.up, out hit, .1f))
-			{
-				jumpHeldTime = 0;
-				jumpSpeedCurrent = jumpSpeed;
-			}
-        }
+		}
+		else
+		{
+			verticalVelocity -= gravity * Time.deltaTime;
+		}
+		Vector3 moveVector = new Vector3(0, verticalVelocity, 0);
+		controller.Move(moveVector * Time.deltaTime);
+//		if (Input.GetButton("Jump") && jumpHeldTime < jumpTime)
+//        {
+//			if (jumpSpeedCurrent <= ((jumpSpeed - gravity) / jumpTime) * Time.deltaTime)
+//				jumpSpeedCurrent = 0;
+//			else jumpSpeedCurrent -= ((jumpSpeed - gravity) / jumpTime) * Time.deltaTime;
+//			controller.Move(new Vector3(0, jumpSpeedCurrent * Time.deltaTime, 0));
+//            jumpHeldTime += Time.deltaTime;
+//        }
+//
+//		controller.Move(new Vector3(0, -gravity * Time.deltaTime, 0));
+//
+//        RaycastHit hit;
+//        if (in3DSpace)
+//        {
+//			if (Physics.Raycast (new Vector3 (transform.position.x, transform.position.y - (transform.lossyScale.y), transform.position.z), -Vector3.up, out hit, .1f)) 
+//			{
+//				jumpHeldTime = 0;
+//				jumpSpeedCurrent = jumpSpeed;
+//			}
+//        }
+//        else
+//        {
+//            Debug.DrawLine(playerShadow.transform.position + Vector3.down * transform.lossyScale.y, playerShadow.transform.position + Vector3.down * (transform.lossyScale.y+.1f), Color.red, .25f);
+//            if (Physics.Raycast(new Vector3(playerShadow.transform.position.x, playerShadow.transform.position.y - (playerShadow.transform.lossyScale.y), playerShadow.transform.position.z), -Vector3.up, out hit, .1f))
+//			{
+//				jumpHeldTime = 0;
+//				jumpSpeedCurrent = jumpSpeed;
+//			}
+//        }
 	}
 
 	public void PlayerMovement2D()
@@ -384,9 +402,7 @@ public class PlayerMovement : MonoBehaviour
 		distanceFromShadow = transform.position - playerShadow.transform.position;
 		Debug.Log("In Wall");
 	}
-
-
-
+		
 	public void FinishShiftOut()
 	{
 		currentPlatformIndex = 0;

@@ -46,7 +46,7 @@ public class PlayerShadowCast : MonoBehaviour {
 
 	public void Check2DInvisibility()
 	{
-		if(!PlayerMovement.in3DSpace)
+		if(!PlayerMovement.in3DSpace || PlayerMovement.shiftingIn)
 			GetComponentInChildren<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
 		else
 			GetComponentInChildren<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
