@@ -192,14 +192,17 @@ public class PlayerMovement : MonoBehaviour
 	{
 		RaycastHit hit;
 		// Cast a ray in the direction of the light source and see if it hits a shadow wall
-		if (Physics.Raycast(transform.position, LightSourceControl.lightSourceDirection, out hit, Mathf.Infinity))
+
+		if (Physics.SphereCast(transform.position, 0.1f, LightSourceControl.lightSourceDirection, out hit, Mathf.Infinity))
 		{
 			if(hit.collider.gameObject.tag == "Shadow Wall")
 			{
 				// If so, cast a ray offset 0.2 upwards and downwards in the y and see if it collides with any shadow colliders
 				// behind the wall. If not, shift the player into the wall
-				if(!Physics.Raycast(hit.point + new Vector3(0, 0.2f, 0), LightSourceControl.lightSourceDirection, 1f, 1 << 11) && 
-					!Physics.Raycast(hit.point - new Vector3(0, 0.2f, 0), LightSourceControl.lightSourceDirection, 1f, 1 << 11))
+
+				if(!Physics.Raycast(hit.point + new Vector3(0, transform.lossyScale.y * 1/3, 0), LightSourceControl.lightSourceDirection, 1f, 1 << 11) && 
+					!Physics.Raycast(hit.point - new Vector3(0,transform.lossyScale.y * 2/3, 0), LightSourceControl.lightSourceDirection, 1f, 1 << 11) && 
+					!Physics.Raycast(hit.point, LightSourceControl.lightSourceDirection, 1f, 1 << 11))
 				{
 					StartCoroutine(CameraPanIn(transform.position, hit.point, -LightSourceControl.lightSourceDirection * camControl.distanceToPlayer2D));
 					StartCoroutine(FinishShiftIn());

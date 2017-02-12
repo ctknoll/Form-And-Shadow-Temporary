@@ -104,6 +104,7 @@ MonoBehaviour:
   yMaxLimit: 50
   smoothSpeed: 0.125
   distanceToPlayer2D: 10
+  cameraPanDuration: 0
 --- !u!124 &124534206491126698
 Behaviour:
   m_ObjectHideFlags: 1
