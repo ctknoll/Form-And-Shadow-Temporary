@@ -45,8 +45,7 @@ public class LightSourceControl : MonoBehaviour
         Object[] listOfObjs = Object.FindObjectsOfType(typeof(ShadowCast));
         foreach(ShadowCast shadow in listOfObjs)
         {
-            //if(shadow.shadowCollider.Count < 5)
-            shadow.CastShadow();
+            if(shadow.shadowCollider.Count < 5) shadow.CastShadow();
         }
     }
 }

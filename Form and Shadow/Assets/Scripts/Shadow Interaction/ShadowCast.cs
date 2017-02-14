@@ -73,7 +73,9 @@ public class ShadowCast : MonoBehaviour {
 				
 			else {
 				GameObject shadowAdd = Instantiate (shadowColliderPrefab, hit.point, Quaternion.identity) as GameObject;
-                shadowAdd.GetComponent<ShadowCollider> ().exceptionParent = gameObject;
+                shadowAdd.GetComponent<ShadowCollider>().exceptionParent = gameObject;
+				shadowAdd.GetComponent<ShadowCollider>().isXAligned = LightSourceControl.xAxisMovement;
+				shadowAdd.GetComponent<ShadowCollider>().isZAligned = LightSourceControl.zAxisMovement;
                 shadowCollider.Add(shadowAdd);
 			}
 			
