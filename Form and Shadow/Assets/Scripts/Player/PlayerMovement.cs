@@ -105,8 +105,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void PlayerJumpandGravity()
     {
-		RaycastHit hit;
-		// Check if grounded in 3D
 		if(grounded)
 		{
 			if(Input.GetButtonDown("Jump"))
