@@ -104,7 +104,6 @@ Transform:
   m_GameObject: {fileID: 1722832261627040}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -1.1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4710416165020350}
   m_RootOrder: 3
@@ -277,9 +276,9 @@ MonoBehaviour:
   transitionOutFollow: {fileID: 0}
   movementSpeed: 6
   grabMovementSpeed: 3
-  jumpSpeed: 9
+  jumpSpeed: 10
   jumpTime: 0.4
-  gravity: 16
+  gravity: 20
   distanceFromShadow: {x: 0, y: 0, z: 0}
   controller: {fileID: 0}
 --- !u!114 &114856709620491564
