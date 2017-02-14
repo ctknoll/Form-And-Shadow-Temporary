@@ -101,11 +101,15 @@
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerShadowCast.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerShadowCollider.cs" />
+    <Compile Include="Assets\Scripts\Shadow Interaction\DownwardShadowControl.cs" />
     <Compile Include="Assets\Scripts\Shadow Interaction\LightSourceControl.cs" />
     <Compile Include="Assets\Scripts\Shadow Interaction\ShadowCast.cs" />
     <Compile Include="Assets\Scripts\Shadow Interaction\ShadowCollider.cs" />
     <Compile Include="Assets\Scripts\UI and Menu Control\GameExit.cs" />
     <Compile Include="Assets\TwoDimensionalObject.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Resources and Art Assets\Fake Player Shadow\ProjectorMultiply.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

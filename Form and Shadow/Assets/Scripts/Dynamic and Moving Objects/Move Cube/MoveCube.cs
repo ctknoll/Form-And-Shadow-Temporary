@@ -58,7 +58,7 @@ public class MoveCube : MonoBehaviour {
 	{
 		gravityDirection = Vector3.down;
 
-		acceleration = gravityDirection * player.GetComponent<PlayerMovement>().gravity;
+		acceleration = gravityDirection * Physics.gravity.magnitude;
 
 		velocity += (acceleration * Time.deltaTime);
 
