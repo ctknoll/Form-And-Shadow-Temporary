@@ -3,9 +3,8 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.20506</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
     <ProjectGuid>{E50C8C07-92D0-5171-2AC3-1E427F3240B0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -34,66 +33,67 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.XML" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>E:/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+      <HintPath>E:\Unity\Editor\Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>E:/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+      <HintPath>E:\Unity\Editor\Data\Managed\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Camera\CameraControl.cs" />
-     <Compile Include="Assets\Scripts\Camera\RaycastToCamera.cs" />
-     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Move Cube\MoveCube.cs" />
-     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Move Cube\MoveCubeReference.cs" />
-     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Moving Platform\MovingPlatform.cs" />
-     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Moving Platform\MovingShadowPlatform.cs" />
-     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Propellor Platform\PropellorPlatform.cs" />
-     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Propellor Platform\PropellorShadowCollider.cs" />
-     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Propellor Platform\TransformLock.cs" />
-     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Pulley System\PulleySystem.cs" />
-     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Pulley System\PulleySystemEnd.cs" />
-     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Pulley System\PulleySystemPlatform.cs" />
-     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\PressureSwitch.cs" />
-     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\PressureSwitches\MovingPlatformSpeedPressureSwitch.cs" />
-     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\ToggleSwitch.cs" />
-     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\ToggleSwitches\LightDirectionToggleSwitch.cs" />
-     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\ToggleSwitches\MovingPlatformSpeedToggleSwitch.cs" />
-     <Compile Include="Assets\Scripts\Game Control\GameController.cs" />
-     <Compile Include="Assets\Scripts\Game Control\Killzone.cs" />
-     <Compile Include="Assets\Scripts\Game Control\LevelFinish.cs" />
-     <Compile Include="Assets\Scripts\Player\MovementReference.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerGroundedZone.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerShadowCast.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerShadowCollider.cs" />
-     <Compile Include="Assets\Scripts\Shadow Interaction\LightSourceControl.cs" />
-     <Compile Include="Assets\Scripts\Shadow Interaction\ShadowCast.cs" />
-     <Compile Include="Assets\Scripts\Shadow Interaction\ShadowCollider.cs" />
-     <Compile Include="Assets\Scripts\UI and Menu Control\GameExit.cs" />
-     <Compile Include="Assets\TwoDimensionalObject.cs" />
- <Reference Include="UnityEngine.UI">
- <HintPath>E:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Networking">
- <HintPath>E:/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.PlaymodeTestsRunner">
- <HintPath>E:/Unity/Editor/Data/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Analytics">
- <HintPath>E:/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.HoloLens">
- <HintPath>E:/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.VR">
- <HintPath>E:/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
- </Reference>
+    <Compile Include="Assets\Scripts\Camera\CameraControl.cs" />
+    <Compile Include="Assets\Scripts\Camera\RaycastToCamera.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Move Cube\MoveCube.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Move Cube\MoveCubeReference.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Moving Platform\MovingPlatform.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Moving Platform\MovingShadowPlatform.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Propellor Platform\PropellorPlatform.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Propellor Platform\PropellorShadowCollider.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Propellor Platform\TransformLock.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Pulley System\PulleySystem.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Pulley System\PulleySystemEnd.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Pulley System\PulleySystemPlatform.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\PressureSwitch.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\PressureSwitches\MovingPlatformSpeedPressureSwitch.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\ToggleSwitch.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\ToggleSwitches\LightDirectionToggleSwitch.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\ToggleSwitches\MovingPlatformSpeedToggleSwitch.cs" />
+    <Compile Include="Assets\Scripts\Game Control\Checkpoint.cs" />
+    <Compile Include="Assets\Scripts\Game Control\GameController.cs" />
+    <Compile Include="Assets\Scripts\Game Control\Killzone.cs" />
+    <Compile Include="Assets\Scripts\Game Control\LevelFinish.cs" />
+    <Compile Include="Assets\Scripts\Player\MovementReference.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerGroundedZone.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerShadowCast.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerShadowCollider.cs" />
+    <Compile Include="Assets\Scripts\Shadow Interaction\LightSourceControl.cs" />
+    <Compile Include="Assets\Scripts\Shadow Interaction\ShadowCast.cs" />
+    <Compile Include="Assets\Scripts\Shadow Interaction\ShadowCollider.cs" />
+    <Compile Include="Assets\Scripts\UI and Menu Control\GameExit.cs" />
+    <Compile Include="Assets\TwoDimensionalObject.cs" />
+    <Reference Include="UnityEngine.UI">
+      <HintPath>E:\Unity\Editor\Data\UnityExtensions\Unity\GUISystem\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>E:\Unity\Editor\Data\UnityExtensions\Unity\Networking\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PlaymodeTestsRunner">
+      <HintPath>E:\Unity\Editor\Data\UnityExtensions\Unity\PlaymodeTestsRunner\UnityEngine.PlaymodeTestsRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>E:\Unity\Editor\Data\UnityExtensions\Unity\UnityAnalytics\UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.HoloLens">
+      <HintPath>E:\Unity\Editor\Data\UnityExtensions\Unity\UnityHoloLens\RuntimeEditor\UnityEngine.HoloLens.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VR">
+      <HintPath>E:\Unity\Editor\Data\UnityExtensions\Unity\UnityVR\RuntimeEditor\UnityEngine.VR.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -103,5 +103,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  
 </Project>
