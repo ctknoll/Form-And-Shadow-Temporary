@@ -3,6 +3,7 @@ using System.Collections;
 
 public class GameController : MonoBehaviour {
 	public static bool resetting;
+	public int score; //JSM 2.12.17 -- Score for Pickups
 
 	private GameObject player;
 	private GameObject playerShadow;
@@ -29,5 +30,11 @@ public class GameController : MonoBehaviour {
 		player.transform.position = PlayerMovement.playerStartPosition;
 		resetting = false;
 
+	}
+
+	//JSM 2.12.17 -- Simple script for flexible score addition
+	public void scoreIncrement(int amount)
+	{
+		score += amount;
 	}
 }
