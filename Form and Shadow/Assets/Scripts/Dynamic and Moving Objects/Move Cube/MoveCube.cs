@@ -9,7 +9,6 @@ public class MoveCube : MonoBehaviour {
 	public Vector3 directionAwayFromPlayer;
 	public bool blockedAhead;
 
-	public bool stopped;
 	private Vector3 gravityDirection;
 	private Vector3 velocity = new Vector3(0, 0, 0);
 	private Vector3 acceleration;
@@ -66,8 +65,6 @@ public class MoveCube : MonoBehaviour {
 		RaycastHit hit;
 		if(Physics.BoxCast(transform.position, transform.GetChild(0).lossyScale / 2, velocity.normalized, out hit, transform.rotation, (acceleration * Time.deltaTime).magnitude))
 		{
-			transform.position += (velocity.normalized * hit.distance);
-			stopped = true;
 			velocity = Vector3.zero;
 		}
 
