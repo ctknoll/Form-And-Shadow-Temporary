@@ -4,6 +4,8 @@ public class ShadowCollider : MonoBehaviour {
 	private ShadowCast shadowCast;
 	private float errorMargin;
 	public GameObject exceptionParent;
+	public bool isXAligned;
+	public bool isZAligned;
 
 	void Start () 
 	{
@@ -51,17 +53,20 @@ public class ShadowCollider : MonoBehaviour {
     //The issue with multiple light sources is here
     public void LockMovementAxis()
 	{
-		if(shadowCast.transformOffset.x > 0 + errorMargin || shadowCast.transformOffset.x < 0 - errorMargin)
+		if(isXAligned == LightSourceControl.xAxisMovement && isZAligned == LightSourceControl.zAxisMovement)
 		{
-			transform.position = new Vector3(shadowCast.wallTransform.position.x + shadowCast.transformOffset.x, transform.position.y, transform.position.z);
-		}
-		if(shadowCast.transformOffset.y > 0 + errorMargin || shadowCast.transformOffset.y < 0 - errorMargin)
-		{
-			transform.position = new Vector3(transform.position.x, shadowCast.wallTransform.position.y + shadowCast.transformOffset.y, transform.position.z);
-		}
-		if(shadowCast.transformOffset.z > 0 + errorMargin || shadowCast.transformOffset.z < 0 - errorMargin)
-		{
-			transform.position = new Vector3(transform.position.x, transform.position.y, shadowCast.wallTransform.position.z + shadowCast.transformOffset.z);
+			if(shadowCast.transformOffset.x > 0 + errorMargin || shadowCast.transformOffset.x < 0 - errorMargin)
+			{
+				transform.position = new Vector3(shadowCast.wallTransform.position.x + shadowCast.transformOffset.x, transform.position.y, transform.position.z);
+			}
+			if(shadowCast.transformOffset.y > 0 + errorMargin || shadowCast.transformOffset.y < 0 - errorMargin)
+			{
+				transform.position = new Vector3(transform.position.x, shadowCast.wallTransform.position.y + shadowCast.transformOffset.y, transform.position.z);
+			}
+			if(shadowCast.transformOffset.z > 0 + errorMargin || shadowCast.transformOffset.z < 0 - errorMargin)
+			{
+				transform.position = new Vector3(transform.position.x, transform.position.y, shadowCast.wallTransform.position.z + shadowCast.transformOffset.z);
+			}
 		}
 	}
 
