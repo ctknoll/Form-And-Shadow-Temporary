@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Menu and Game Over Scenes/Menu_Title.unity
+- path: Assets/Scenes/Levels/Level_1_Whitebox/Level_1_Whitebox.unity
   isLoaded: 1
   isActive: 1
