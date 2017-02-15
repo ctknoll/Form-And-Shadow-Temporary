@@ -18,7 +18,7 @@ public class LightDirectionToggleSwitch : ToggleSwitch
     // Update is called once per frame
     public void Update()
     {
-        if (active)
+        if (pressed)
         {
             if (!locked)
             {

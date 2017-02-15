@@ -6,7 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Whitebox 1.unity
+    path: Assets/Scenes/Menu and Game Over Scenes/Menu_Title.unity
+  - enabled: 1
+    path: Assets/Scenes/Menu and Game Over Scenes/Credits.unity
+  - enabled: 1
+    path: Assets/Scenes/Menu and Game Over Scenes/Level_Select.unity
+  - enabled: 1
+    path: Assets/Scenes/Levels/Whitebox 1/Whitebox 1.unity
   - enabled: 0
     path: Assets/Scenes/Basic Test Scene/Basic Test Scene.unity
   - enabled: 1

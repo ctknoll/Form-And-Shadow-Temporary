@@ -8,6 +8,7 @@ TagManager:
   - Move Platform
   - Spikes
   - Propellor Platform
+  - Push Cube
   layers:
   - Default
   - TransparentFX

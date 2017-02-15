@@ -58,12 +58,12 @@ public class MoveCube : MonoBehaviour {
 	{
 		gravityDirection = Vector3.down;
 
-		acceleration = gravityDirection * player.GetComponent<PlayerMovement>().gravity;
+		acceleration = gravityDirection * Physics.gravity.magnitude;
 
 		velocity += (acceleration * Time.deltaTime);
 
 		RaycastHit hit;
-		if(Physics.BoxCast(transform.position, transform.GetChild(0).lossyScale / 2, velocity.normalized, out hit, transform.rotation, (acceleration * Time.deltaTime).magnitude))
+		if(Physics.BoxCast(transform.position, transform.GetChild(0).lossyScale / 2.2f, velocity.normalized, out hit, transform.rotation, (acceleration * Time.deltaTime).magnitude))
 		{
 			velocity = Vector3.zero;
 		}

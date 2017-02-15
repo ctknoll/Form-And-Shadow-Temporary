@@ -52,6 +52,9 @@
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Advertisements">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
@@ -66,6 +69,9 @@
     </Reference>
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Purchasing">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Purchasing.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VR">
       <HintPath>Library\UnityAssemblies\UnityEngine.VR.dll</HintPath>
@@ -96,16 +102,23 @@
     <Compile Include="Assets\Scripts\Game Control\GameController.cs" />
     <Compile Include="Assets\Scripts\Game Control\Killzone.cs" />
     <Compile Include="Assets\Scripts\Game Control\LevelFinish.cs" />
+    <Compile Include="Assets\Scripts\Game Control\Pickup.cs" />
     <Compile Include="Assets\Scripts\Player\MovementReference.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerGroundedZone.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerGroundedZone2D.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerGroundedZone3D.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerShadowCast.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerShadowCollider.cs" />
+    <Compile Include="Assets\Scripts\Shadow Interaction\DownwardShadowControl.cs" />
     <Compile Include="Assets\Scripts\Shadow Interaction\LightSourceControl.cs" />
     <Compile Include="Assets\Scripts\Shadow Interaction\ShadowCast.cs" />
     <Compile Include="Assets\Scripts\Shadow Interaction\ShadowCollider.cs" />
+    <Compile Include="Assets\Scripts\UI and Menu Control\ButtonManager.cs" />
     <Compile Include="Assets\Scripts\UI and Menu Control\GameExit.cs" />
     <Compile Include="Assets\TwoDimensionalObject.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Resources and Art Assets\Fake Player Shadow\ProjectorMultiply.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
