@@ -63,7 +63,7 @@ public class MoveCube : MonoBehaviour {
 		velocity += (acceleration * Time.deltaTime);
 
 		RaycastHit hit;
-		if(Physics.BoxCast(transform.position, transform.GetChild(0).lossyScale / 2, velocity.normalized, out hit, transform.rotation, (acceleration * Time.deltaTime).magnitude))
+		if(Physics.BoxCast(transform.position, transform.GetChild(0).lossyScale / 2.2f, velocity.normalized, out hit, transform.rotation, (acceleration * Time.deltaTime).magnitude))
 		{
 			velocity = Vector3.zero;
 		}

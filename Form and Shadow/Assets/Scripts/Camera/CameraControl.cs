@@ -67,13 +67,13 @@ public class CameraControl : MonoBehaviour
 		else
 		{
 			if(PlayerMovement.in3DSpace)
-				transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionInFollow.transform);
+				transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionFollow.transform);
 			else if(!PlayerMovement.in3DSpace)
 			{
-				if(target3D.GetComponent<PlayerMovement>().transitionOutFollow)
-					transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionOutFollow.transform);
+				if(target3D.GetComponent<PlayerMovement>().transitionFollow)
+					transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionFollow.transform);
 				else
-					transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionInFollow.transform);
+					transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionFollow.transform);
 			}
 		}
     }

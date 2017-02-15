@@ -6,13 +6,13 @@ public class DownwardShadowControl : MonoBehaviour {
 	
 	void Update ()
     {
-        if (!PlayerMovement.in3DSpace)
+        if (PlayerMovement.shiftingOut || PlayerMovement.in3DSpace)
         {
-            gameObject.GetComponent<Light>().enabled = false;
+            gameObject.GetComponent<Light>().enabled = true;
         }
         else
         {
-            gameObject.GetComponent<Light>().enabled = true;
+            gameObject.GetComponent<Light>().enabled = false;
         }
 	}
 }

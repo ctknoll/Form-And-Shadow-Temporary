@@ -19,7 +19,7 @@ public class MovingPlatformSpeedToggleSwitch : ToggleSwitch
     // Update is called once per frame
     public void Update()
     {
-        if (active)
+        if (pressed)
         {
             if (movingBlock.GetComponent<MovingPlatform>() != null)
             {
