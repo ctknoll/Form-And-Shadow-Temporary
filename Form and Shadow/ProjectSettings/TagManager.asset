@@ -9,6 +9,7 @@ TagManager:
   - Spikes
   - Propellor Platform
   - Push Cube
+  - Enemy Toad
   layers:
   - Default
   - TransparentFX

@@ -66,18 +66,29 @@ public class ShadowCast : MonoBehaviour {
 				transformOffset = ((transform.lossyScale.y / 1.9f) * LightSourceControl.lightSourceDirection);
 			}
 
-			if (tag != "Propellor Platform") 
+
+			if (tag == "Propellor Platform")
 			{
-				shadowCollider.Add(Instantiate (shadowColliderPrefab, hit.point, Quaternion.identity, gameObject.transform) as GameObject);
-			}
-				
-			else {
-				GameObject shadowAdd = Instantiate (shadowColliderPrefab, hit.point, Quaternion.identity) as GameObject;
+                GameObject shadowAdd = Instantiate(shadowColliderPrefab, hit.point, Quaternion.identity) as GameObject;
                 shadowAdd.GetComponent<ShadowCollider>().exceptionParent = gameObject;
-				shadowAdd.GetComponent<ShadowCollider>().isXAligned = LightSourceControl.xAxisMovement;
-				shadowAdd.GetComponent<ShadowCollider>().isZAligned = LightSourceControl.zAxisMovement;
+                shadowAdd.GetComponent<ShadowCollider>().isXAligned = LightSourceControl.xAxisMovement;
+                shadowAdd.GetComponent<ShadowCollider>().isZAligned = LightSourceControl.zAxisMovement;
                 shadowCollider.Add(shadowAdd);
+                
 			}
+            else if (tag == "Enemy Toad")
+            {
+                GameObject shadowAdd = Instantiate(shadowColliderPrefab, hit.point, Quaternion.identity) as GameObject;
+                shadowAdd.GetComponent<ShadowCollider>().exceptionParent = gameObject;
+                shadowAdd.GetComponent<ShadowCollider>().isXAligned = LightSourceControl.xAxisMovement;
+                shadowAdd.GetComponent<ShadowCollider>().isZAligned = LightSourceControl.zAxisMovement;
+                shadowCollider.Add(shadowAdd);
+            }
+				
+			else
+            {
+                shadowCollider.Add(Instantiate(shadowColliderPrefab, hit.point, Quaternion.identity, gameObject.transform) as GameObject);
+            }
 			
 			wallTransform = hit.collider.transform;
 		}

@@ -40,6 +40,11 @@ public class ShadowCollider : MonoBehaviour {
 				gameObject.name = "Propellor Collider";
 				CreatePropellorShadowCollider();
 			}
+            else if(exceptionParent.tag == "Enemy Toad")
+            {
+                gameObject.name = "Enemy Toad Collider";
+                CreateEnemyToadCollider();
+            }
 		}
 		Vector3 pos = transform.position + shadowCast.transformOffset;
         transform.position = pos;
@@ -114,7 +119,15 @@ public class ShadowCollider : MonoBehaviour {
 		propellorShadowCollider.GetComponent<PropellorShadowCollider> ().propellor = exceptionParent.transform.parent.gameObject;
 	}
 
-	public void CreateSpikesShadowCollider()
+    public void CreateEnemyToadCollider()
+    {
+        gameObject.AddComponent<MeshCollider>();
+        gameObject.GetComponent<MeshCollider>().sharedMesh = exceptionParent.GetComponent<MeshCollider>().sharedMesh;
+        gameObject.AddComponent<TransformLock>();
+        gameObject.AddComponent<Killzone>();
+    }
+
+    public void CreateSpikesShadowCollider()
 	{
 		// Creates a spike deathzone the player can fall into
 		gameObject.AddComponent<BoxCollider>();
