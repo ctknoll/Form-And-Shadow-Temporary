@@ -38,7 +38,7 @@ public class EnemyToad : MonoBehaviour {
 
     public Vector3 GetRelativePosition(GameObject targetObj)
     {
-        Vector3 relativePosition = targetObj.transform.position + new Vector3(0, targetObj.transform.lossyScale.y / 2 + transform.lossyScale.y, 0);
+        Vector3 relativePosition = targetObj.transform.position + new Vector3(0, targetObj.transform.GetChild(0).transform.lossyScale.y / 2 + transform.lossyScale.y, 0);
 
         return relativePosition;
     }

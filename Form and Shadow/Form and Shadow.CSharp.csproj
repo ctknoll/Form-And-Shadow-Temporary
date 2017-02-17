@@ -80,9 +80,9 @@
     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Move Cube\MoveCube.cs" />
     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Move Cube\MoveCubeReference.cs" />
     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Moving Platform\MovingPlatform.cs" />
-    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Moving Platform\MovingShadowPlatform.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Moving Platform\MovingPlatformShadowCollider.cs" />
     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Propellor Platform\PropellorPlatform.cs" />
-    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Propellor Platform\PropellorShadowCollider.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Propellor Platform\PropellorPlatformShadowCollider.cs" />
     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Propellor Platform\TransformLock.cs" />
     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Pulley System\PulleySystem.cs" />
     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Pulley System\PulleySystemEnd.cs" />

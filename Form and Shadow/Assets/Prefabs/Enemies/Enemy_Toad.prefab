@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 33104391105414284}
   - component: {fileID: 23108923543360952}
   - component: {fileID: 64742961727099290}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Enemy_Toad_Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4515009982340634}
   - component: {fileID: 114459652579524722}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Enemy_Toad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1346348854411718}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.44, y: 4, z: 14}
+  m_LocalPosition: {x: -12.44, y: 6, z: 14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4741417413382588}
@@ -156,7 +156,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
     type: 2}
-  shadowCollider:
-  - {fileID: 0}
-  transformOffset: {x: 0, y: 0, z: 0}
-  wallTransform: {fileID: 0}
+  meshException: 1
+  meshType: 4
+  shadowColliders: []

@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 23229268648773650}
   m_Layer: 0
   m_Name: Move_Platform_Mesh
-  m_TagString: Move Platform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55,7 +55,7 @@ Transform:
   m_GameObject: {fileID: 1793766845158978}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.5, z: 1}
+  m_LocalScale: {x: 3, y: 0.5, z: 2}
   m_Children: []
   m_Father: {fileID: 4988682997179216}
   m_RootOrder: 0
@@ -67,7 +67,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1439985451363458}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.4105797, y: 1.25, z: 8.454831}
+  m_LocalPosition: {x: -14.897205, y: 4.25, z: 3.412194}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4752003125930508}
@@ -149,9 +149,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
     type: 2}
-  shadowCollider: {fileID: 0}
-  transformOffset: {x: 0, y: 0, z: 0}
-  wallTransform: {fileID: 0}
+  meshType: 2
+  shadowCollider:
+  - {fileID: 0}
 --- !u!114 &114958400841393434
 MonoBehaviour:
   m_ObjectHideFlags: 1

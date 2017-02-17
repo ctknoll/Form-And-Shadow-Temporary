@@ -103,4 +103,4 @@ MonoBehaviour:
   yMaxLimit: 50
   smoothSpeed: 0.125
   distanceToPlayer2D: 10
-  cameraPanDuration: 0
+  cameraPanDuration: 1

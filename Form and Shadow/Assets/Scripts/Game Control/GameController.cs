@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class GameController : MonoBehaviour {
 	public static bool resetting;
-	public int score; //JSM 2.12.17 -- Score for Pickups
-
+	public static int score;
+    public static GameObject interactText;
+    public GameObject scoreText;
 	private GameObject player;
 	private GameObject playerShadow;
 
@@ -12,9 +14,15 @@ public class GameController : MonoBehaviour {
 	{
 		player = GameObject.Find("Player_Character");
 		playerShadow = GameObject.Find("Player_Shadow");
+        interactText = GameObject.Find("Interact_Text");
 	}
 
-	public IEnumerator ResetLevel()
+    void Update()
+    {
+        scoreText.GetComponent<Text>().text = "Score: " + score;
+    }
+
+    public IEnumerator ResetLevel()
 	{
 		resetting = true;
 		yield return new WaitForSeconds(0.01f);
@@ -32,8 +40,17 @@ public class GameController : MonoBehaviour {
 
 	}
 
-	//JSM 2.12.17 -- Simple script for flexible score addition
-	public void scoreIncrement(int amount)
+    public static void SetInteractText(string intText)
+    {
+        interactText.GetComponent<Text>().text = intText;
+    }
+
+    public static void ResetInteractText()
+    {
+        interactText.GetComponent<Text>().text = "";
+    }
+
+	public static void ScoreIncrement(int amount)
 	{
 		score += amount;
 	}

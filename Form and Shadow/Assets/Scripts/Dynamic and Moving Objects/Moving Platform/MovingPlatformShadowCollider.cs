@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class MovingShadowPlatform : MonoBehaviour {
+public class MovingPlatformShadowCollider : MonoBehaviour {
 	void OnTriggerStay(Collider other)
 	{
 		if(other.gameObject.tag == "Player")
