@@ -34,7 +34,8 @@ public class MoveCubeReference : MonoBehaviour
 	{
 		if(other.gameObject.tag == "Player")
 		{
-			moveCube.canInteract = false;
+            GameController.ResetInteractText();
+            moveCube.canInteract = false;
 			moveCube.gameObject.transform.parent = null;
 			moveCube.grabbed = false;
 			moveCube.transform.parent = null;

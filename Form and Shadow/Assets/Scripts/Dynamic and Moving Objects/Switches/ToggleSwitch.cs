@@ -26,25 +26,29 @@ public class ToggleSwitch : MonoBehaviour {
     {
         if(other.gameObject.tag == "Player")
         {
-            if (Input.GetButtonDown ("Grab")) 
-			{
-				if(pressed) 
-				{
-					pressed = false;
-					runningTime = 0;
-                    StartCoroutine(DepressSwitch());
-				} 
-				else 
-				{
-					pressed = true;
-					runningTime = timerDuration;
+            if(!pressed)
+            {
+                GameController.SetInteractText("Press E to toggle this switch");
+                if (Input.GetButtonDown("Grab"))
+                {
+                    pressed = true;
+                    runningTime = timerDuration;
                     StartCoroutine(PressSwitch());
-                    StartCoroutine(DepressSwitchWait());
-				}
-
-			}
+                    StartCoroutine(DepressSwitch());
+                    GameController.SetInteractText("");
+                }
+            }
         }
     }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            GameController.ResetInteractText();
+        }
+    }
+
 	public void Update () 
 	{
 		if (runningTime > 0) 
@@ -69,16 +73,6 @@ public class ToggleSwitch : MonoBehaviour {
     }
 
     public IEnumerator DepressSwitch()
-    {
-        float panStart = Time.time;
-        while (Time.time < panStart + pressAnimationTime)
-        {
-            switchButton.transform.position = Vector3.Lerp(lowLerpPosition, highLerpPosition, (Time.time - panStart) / pressAnimationTime);
-            yield return null;
-        }
-    }
-
-    public IEnumerator DepressSwitchWait()
     {
         yield return new WaitForSeconds(timerDuration);
 

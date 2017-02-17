@@ -5,7 +5,7 @@ using UnityEngine;
 public class MovingPlatformSpeedToggleSwitch : ToggleSwitch
 {
 
-    public GameObject movingBlock;
+    public GameObject movingPlatform;
     private float tempMoveSpeed;
     public float percentSlow;
     private bool locked;
@@ -21,19 +21,19 @@ public class MovingPlatformSpeedToggleSwitch : ToggleSwitch
     {
         if (pressed)
         {
-            if (movingBlock.GetComponent<MovingPlatform>() != null)
+            if (movingPlatform.GetComponent<MovingPlatform>() != null)
             {
-                movingBlock.GetComponent<MovingPlatform>().slowValue = 1 - (percentSlow / 100);
+                movingPlatform.GetComponent<MovingPlatform>().slowValue = 1 - (percentSlow / 100);
                 locked = true;
             }
         }
        else
         {
-            if (movingBlock.GetComponent<MovingPlatform>() != null)
+            if (movingPlatform.GetComponent<MovingPlatform>() != null)
             {
                 if (locked)
                 {
-                    movingBlock.GetComponent<MovingPlatform>().slowValue = 1;
+                    movingPlatform.GetComponent<MovingPlatform>().slowValue = 1;
                     locked = false;
                 }
 

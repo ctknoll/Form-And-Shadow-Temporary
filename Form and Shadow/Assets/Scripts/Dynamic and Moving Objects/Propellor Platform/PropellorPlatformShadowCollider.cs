@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
 
-public class PropellorShadowCollider : MonoBehaviour
+public class PropellorPlatformShadowCollider : MonoBehaviour
 {
 	public GameObject propellor;
-    private float personalTime;
+    public float personalTime;
 	private GameObject propellorMesh;
+    private ShadowCollider shadowColliderMaster;
 
 	void Start ()
 	{
 		propellorMesh = propellor.transform.GetChild(0).gameObject;
         personalTime = 0;
-	}
+        shadowColliderMaster = GetComponentInParent<ShadowCollider>();
+    }
 	
 	void FixedUpdate ()
 	{
@@ -18,14 +20,14 @@ public class PropellorShadowCollider : MonoBehaviour
 		{
             personalTime += Time.deltaTime;
 		}
-        if (LightSourceControl.zAxisMovement)
+        if (shadowColliderMaster.lockedInZAxis)
         {
-            transform.localScale = new Vector3(propellorMesh.transform.lossyScale.z - (propellorMesh.transform.lossyScale.z - propellorMesh.transform.lossyScale.x) * Mathf.Abs(Mathf.Cos((propellor.GetComponent<PropellorPlatform>().rotationSpeed * personalTime * Mathf.PI / 180))),
+            GetComponent<BoxCollider>().size = new Vector3(propellorMesh.transform.lossyScale.z - (propellorMesh.transform.lossyScale.z - propellorMesh.transform.lossyScale.x) * Mathf.Abs(Mathf.Cos((propellor.GetComponent<PropellorPlatform>().rotationSpeed * personalTime * Mathf.PI / 180))),
                 propellorMesh.transform.lossyScale.y, propellorMesh.transform.lossyScale.z);
         }
-        else if (LightSourceControl.xAxisMovement)
+        else
         {
-            transform.localScale = new Vector3(propellorMesh.transform.lossyScale.x, propellorMesh.transform.lossyScale.y,
+            GetComponent<BoxCollider>().size = new Vector3(propellorMesh.transform.lossyScale.x, propellorMesh.transform.lossyScale.y,
                 propellorMesh.transform.lossyScale.x - (propellorMesh.transform.lossyScale.x - propellorMesh.transform.lossyScale.z) * Mathf.Abs(Mathf.Cos((propellor.GetComponent<PropellorPlatform>().rotationSpeed * personalTime * Mathf.PI / 180))));
         }
     }
