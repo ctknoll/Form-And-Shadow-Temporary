@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 public class ShadowCast : MonoBehaviour {
 	public GameObject shadowColliderPrefab;
-	public List<GameObject> shadowCollider = new List<GameObject>();
+    public enum MeshType {BASIC_CUBE, SPIKES, MOVE_PLATFORM, PROPELLOR_PLATFORM, ENEMY_TOAD};
+    public bool meshException;
+    public MeshType meshType;
 
-	[HideInInspector]
-	public Vector3 transformOffset;
-	[SerializeField]
-	public Transform wallTransform = null;
-	private bool singleMesh;
+    public List<GameObject> shadowColliders = new List<GameObject>();
+
+    private bool singleMesh;
 	private UnityEngine.Rendering.ShadowCastingMode shadowCastMode;
 
 	void Start()
@@ -22,25 +22,28 @@ public class ShadowCast : MonoBehaviour {
 			shadowCastMode = GetComponent<MeshRenderer>().shadowCastingMode;
 		else
 			// Or, in the case of multiple children renderers, access just one of the renderers and 
-			// set the global shadowcast mode equal to it, assuming all children follow the same shadowcast
-			// mode
+			// set the global shadowcast mode equal to it, assuming all children follow the same shadowcast mode
 			shadowCastMode = GetComponentInChildren<MeshRenderer>().shadowCastingMode;
+
+        CastShadow(GameObject.Find("Lighting_Reference").transform.right);
+        CastShadow(-GameObject.Find("Lighting_Reference").transform.right);
+        CastShadow(GameObject.Find("Lighting_Reference").transform.forward);
+        CastShadow(-GameObject.Find("Lighting_Reference").transform.forward);
 	}
 
 	void Update () 
 	{
-		if((shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.On || shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly) && shadowCollider.Count == 1)
-			CastShadow();
+		//if((shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.On || shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly) && shadowColliders.Count == 0)
+		//	CastShadow();
 
-		if(shadowCastMode != UnityEngine.Rendering.ShadowCastingMode.Off)
+		if(shadowCastMode != UnityEngine.Rendering.ShadowCastingMode.Off && meshType != MeshType.ENEMY_TOAD)
 			Check2DInvisibility();
 	}
 
-	public void CastShadow()
+	public void CastShadow(Vector3 direction)
 	{
 		RaycastHit hit;
-        Debug.DrawLine(transform.position, transform.position + LightSourceControl.lightSourceDirection * 10, Color.red, 1);
-        if (Physics.Raycast(transform.position, LightSourceControl.lightSourceDirection, out hit, Mathf.Infinity, 1 << 10))
+        if (Physics.Raycast(transform.position, direction, out hit, Mathf.Infinity, 1 << 10))
 		{
 			/* To explain this, first one must know that there is a game object called Lighting Reference in the scene
 			 * that is always rotated to (0, 0, 0) and that all objects in the scene that will cast shadows must have
@@ -51,36 +54,26 @@ public class ShadowCast : MonoBehaviour {
 			 * behind the respective wall the previous Raycast hits.
 			*/
 
-			// Is thelight source projecting forward or backward?
-			if (LightSourceControl.zAxisMovement) 
-			{
-				transformOffset = ((transform.lossyScale.z / 1.9f) * LightSourceControl.lightSourceDirection);
-			}
-			// Is the light source projecting left or right?
-			else if (LightSourceControl.xAxisMovement) 
-			{
-				transformOffset = ((transform.lossyScale.x / 1.9f) * LightSourceControl.lightSourceDirection);
-			}
-			else 
-			{
-				transformOffset = ((transform.lossyScale.y / 1.9f) * LightSourceControl.lightSourceDirection);
-			}
-
-			if (tag != "Propellor Platform") 
-			{
-				shadowCollider.Add(Instantiate (shadowColliderPrefab, hit.point, Quaternion.identity, gameObject.transform) as GameObject);
-			}
-				
-			else {
-				GameObject shadowAdd = Instantiate (shadowColliderPrefab, hit.point, Quaternion.identity) as GameObject;
+            // Is the mesh type one that needs an exception parent (see ShadowCollider.cs to fully understand,
+            // but essentially certain shadow colliders don't need to be childed, namely Propellor Shadow Colliders
+            if (meshType == MeshType.PROPELLOR_PLATFORM || meshType == MeshType.ENEMY_TOAD)
+            {
+                GameObject shadowAdd = Instantiate(shadowColliderPrefab, hit.point, hit.collider.gameObject.transform.rotation) as GameObject;
                 shadowAdd.GetComponent<ShadowCollider>().exceptionParent = gameObject;
-				shadowAdd.GetComponent<ShadowCollider>().isXAligned = LightSourceControl.xAxisMovement;
-				shadowAdd.GetComponent<ShadowCollider>().isZAligned = LightSourceControl.zAxisMovement;
-                shadowCollider.Add(shadowAdd);
-			}
-			
-			wallTransform = hit.collider.transform;
-		}
+                shadowAdd.GetComponent<ShadowCollider>().castDirection = direction;
+                shadowAdd.GetComponent<ShadowCollider>().wallTransform = hit.collider.transform;
+                shadowColliders.Add(shadowAdd);
+
+            }
+            // If not, instantiate the shadowcollider prefab and child it to the gameobject
+            else
+            {
+                GameObject shadowAdd = Instantiate(shadowColliderPrefab, hit.point, Quaternion.identity, gameObject.transform) as GameObject;
+                shadowAdd.GetComponent<ShadowCollider>().castDirection = direction;
+                shadowAdd.GetComponent<ShadowCollider>().wallTransform = hit.collider.transform;
+                shadowColliders.Add(shadowAdd);
+            }
+        }
 	}
 
 	public void Check2DInvisibility()

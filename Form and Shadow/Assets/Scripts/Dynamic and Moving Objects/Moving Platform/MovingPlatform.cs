@@ -46,6 +46,7 @@ public class MovingPlatform : MonoBehaviour {
 		{
 			personalTime += slowValue * Time.deltaTime;
 		}
+
         switch (moveDirection)
         {
             case ShiftDirection.X:
