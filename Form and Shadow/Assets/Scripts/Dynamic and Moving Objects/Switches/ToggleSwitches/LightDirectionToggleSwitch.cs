@@ -5,9 +5,10 @@ using UnityEngine;
 public class LightDirectionToggleSwitch : ToggleSwitch
 {
 
-    public GameObject lightSource;
+    public GameObject[] lightSources;
     public float rotateDegrees;
     private bool locked;
+	public bool turnClockwise;
 
     // Use this for initialization
     void Start()
@@ -18,23 +19,30 @@ public class LightDirectionToggleSwitch : ToggleSwitch
     // Update is called once per frame
     public void Update()
     {
-        if (active)
+        if (pressed)
         {
             if (!locked)
             {
-                if (lightSource.GetComponent<LightSourceControl>() != null)
-                {
-                    lightSource.GetComponent<LightSourceControl>().turnLightSource();
-                    locked = true;
-                }
+				foreach (GameObject lightSource in lightSources) 
+				{
+					if (lightSource.GetComponent<LightSourceControl>() != null)
+					{
+						lightSource.GetComponent<LightSourceControl>().turnLightSource(turnClockwise);
+						locked = true;
+					}
+				}
+					
             }
         }
         else
         {
-            if (lightSource.GetComponent<LightSourceControl>() != null)
-            {
-                locked = false;
-            }
+			foreach (GameObject lightSource in lightSources) 
+			{
+				if (lightSource.GetComponent<LightSourceControl>() != null)
+				{
+					locked = false;
+				}
+			}
         }
         base.Update();
     }

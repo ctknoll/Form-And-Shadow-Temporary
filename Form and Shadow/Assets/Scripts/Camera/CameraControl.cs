@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-[AddComponentMenu("Camera-Control/Mouse Orbit with zoom")]
 public class CameraControl : MonoBehaviour
 {
 	[Header("Player Target")]
@@ -10,6 +8,7 @@ public class CameraControl : MonoBehaviour
 
 	[Header("3D Camera Variables")]
 	public float distanceToPlayer3D;
+    private float currentDistanceToPlayer3D;
     public float xSpeed;
     public float ySpeed;
 
@@ -37,6 +36,20 @@ public class CameraControl : MonoBehaviour
         y = angles.x;
     }
 
+
+    void Update()
+    {
+
+        //Updating camera distance on every frame
+        currentDistanceToPlayer3D = RaycastToCamera.distance;
+
+        //Setting maximum distance so the camera doesnt go too far
+        if (currentDistanceToPlayer3D > distanceToPlayer3D)
+        {
+            currentDistanceToPlayer3D = distanceToPlayer3D;
+        }
+
+    }
     void LateUpdate()
     {
 		if(!cameraIsPanning && !PlayerMovement.shiftingOut && !PlayerMovement.shiftingIn)
@@ -50,7 +63,7 @@ public class CameraControl : MonoBehaviour
 
 	            Quaternion rotation = Quaternion.Euler(y, x, 0);
 
-	            Vector3 negDistance = new Vector3(0.0f, 0.0f, -distanceToPlayer3D);
+	            Vector3 negDistance = new Vector3(0.0f, 0.0f, -currentDistanceToPlayer3D);
 	            Vector3 position = rotation * negDistance + target3D.position;
 
 	            transform.rotation = rotation;
@@ -67,13 +80,13 @@ public class CameraControl : MonoBehaviour
 		else
 		{
 			if(PlayerMovement.in3DSpace)
-				transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionInFollow.transform);
+				transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionFollow.transform);
 			else if(!PlayerMovement.in3DSpace)
 			{
-				if(target3D.GetComponent<PlayerMovement>().transitionOutFollow)
-					transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionOutFollow.transform);
+				if(target3D.GetComponent<PlayerMovement>().transitionFollow)
+					transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionFollow.transform);
 				else
-					transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionInFollow.transform);
+					transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionFollow.transform);
 			}
 		}
     }

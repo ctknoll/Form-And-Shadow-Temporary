@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MovingPlatformSpeedPressureSwitch : PressureSwitch
 {
@@ -18,8 +16,8 @@ public class MovingPlatformSpeedPressureSwitch : PressureSwitch
 	// Update is called once per frame
 	public void Update () 
 	{
-        base.Update();
-        if (active) 
+        //base.Update();
+        if (pressed) 
 		{
 			if (movingBlock.GetComponent<MovingPlatform> () != null) 
 			{

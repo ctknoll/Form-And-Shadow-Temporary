@@ -7,16 +7,18 @@ public class PlayerShadowCast : MonoBehaviour {
 	public Vector3 transformOffset;
 	[SerializeField]
 	public Transform wallTransform;
+	public LightSourceControl lightSourceAligned;
 
 	void Update () 
 	{
 		Check2DInvisibility();
+		lightSourceAligned = checkLightSourceAligned().GetComponent<LightSourceControl>();
 	}
 
 	public void CastShadow()
 	{
 		RaycastHit hit;
-		if(Physics.Raycast(transform.position, LightSourceControl.lightSourceDirection, out hit, Mathf.Infinity, 1 << 10))
+		if(Physics.Raycast(transform.position, lightSourceAligned.lightSourceDirection, out hit, Mathf.Infinity, 1 << 10))
 		{
 			/* To explain this, first one must know that there is a game object called Lighting Reference in the scene
 			 * that is always rotated to (0, 0, 0) and that all objects in the scene that will cast shadows must have
@@ -26,16 +28,16 @@ public class PlayerShadowCast : MonoBehaviour {
 			 * equal to the reference's -transform.right (left), then all shadows are offset a little more than their size
 			 * behind the respective wall the previous Raycast hits.
 			*/
-			
+
 			// Is the light source projecting forward or backward?
-			if (LightSourceControl.zAxisMovement) 
+			if (lightSourceAligned.zAxisMovement) 
 			{
-				transformOffset = ((transform.lossyScale.z / 1.9f) * LightSourceControl.lightSourceDirection);
+				transformOffset = ((transform.lossyScale.z / 1.9f) * lightSourceAligned.lightSourceDirection);
 			}
 			// Is the light source projecting left or right?
-			else if (LightSourceControl.xAxisMovement) 
+			else if (lightSourceAligned.xAxisMovement) 
 			{
-				transformOffset = ((transform.lossyScale.x / 1.9f) * LightSourceControl.lightSourceDirection);
+				transformOffset = ((transform.lossyScale.x / 1.9f) * lightSourceAligned.lightSourceDirection);
 			}
 			
 			wallTransform = hit.collider.transform;
@@ -50,5 +52,25 @@ public class PlayerShadowCast : MonoBehaviour {
 			GetComponentInChildren<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
 		else
 			GetComponentInChildren<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+	}
+
+	public GameObject checkLightSourceAligned()
+	{
+		GameObject nearest = null;
+		float distance = float.MaxValue;
+		foreach(Transform child in GameObject.Find("Lighting").transform)
+		{
+			float tempDistance = 0;
+			tempDistance += Mathf.Pow((child.forward.x - GameObject.Find ("Main_Camera").transform.forward.x), 2);
+			tempDistance += Mathf.Pow((child.forward.y - GameObject.Find ("Main_Camera").transform.forward.y), 2);
+			tempDistance += Mathf.Pow((child.forward.z - GameObject.Find ("Main_Camera").transform.forward.z), 2);
+
+			if (tempDistance < distance) 
+			{
+				distance = tempDistance;
+				nearest = child.gameObject;
+			}
+		}
+		return nearest;
 	}
 }
