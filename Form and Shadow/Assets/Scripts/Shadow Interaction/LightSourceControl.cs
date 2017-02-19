@@ -9,7 +9,7 @@ public class LightSourceControl : MonoBehaviour
 
 	void Start ()
 	{
-		lightSourceDirection = transform.forward;
+        lightSourceDirection = transform.forward;
 		CheckLightingDirection();
 	}
 
@@ -28,8 +28,8 @@ public class LightSourceControl : MonoBehaviour
             zAxisMovement = true;
 			xAxisMovement = false;
         }
-		else if(LightSourceControl.lightSourceDirection == GameObject.Find("Light Reference").transform.right || 
-			-1 * LightSourceControl.lightSourceDirection == GameObject.Find("Light Reference").transform.right) 
+		else if(lightSourceDirection == GameObject.Find("Light Reference").transform.right || 
+			-1 * lightSourceDirection == GameObject.Find("Light Reference").transform.right)
 		{
             zAxisMovement = false;
 			xAxisMovement = true;
@@ -39,14 +39,8 @@ public class LightSourceControl : MonoBehaviour
     //This function is suboptimal -- it casts EVERY time, creating a lot of unnecesary overhead
     public void turnLightSource()
     {
-        GameObject.Find("/Directional light").transform.Rotate(0, -90, 0);
-        lightSourceDirection = GameObject.Find("/Directional light").transform.forward;
+        GameObject.Find("Master_Directional_Light").transform.Rotate(0, -90, 0);
+        lightSourceDirection = GameObject.Find("Master_Directional_Light").transform.forward;
         CheckLightingDirection();
-        Object[] listOfObjs = Object.FindObjectsOfType(typeof(ShadowCast));
-        foreach(ShadowCast shadow in listOfObjs)
-        {
-            //if(shadow.shadowCollider.Count < 5)
-            shadow.CastShadow();
-        }
     }
 }

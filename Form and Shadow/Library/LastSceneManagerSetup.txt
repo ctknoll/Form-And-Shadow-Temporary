@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Whitebox 1.unity
+- path: Assets/Scenes/Levels/Level_1_Whitebox/Level_1_Whitebox.unity
   isLoaded: 1
   isActive: 1

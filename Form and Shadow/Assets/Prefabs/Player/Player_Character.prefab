@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114802687816552978}
   - component: {fileID: 143736298376177622}
   - component: {fileID: 114282443917408160}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Player_Character
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4182093174865406}
   - component: {fileID: 114973802022037786}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Player_Movement_Check
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 4487168017051280}
   - component: {fileID: 33228657308330534}
   - component: {fileID: 23293495677762420}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Player_Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,9 +72,9 @@ GameObject:
   - component: {fileID: 4173897930357246}
   - component: {fileID: 65235106533843754}
   - component: {fileID: 54822601893208556}
-  - component: {fileID: 114856709620491564}
-  m_Layer: 0
-  m_Name: Player_Jump_Check
+  - component: {fileID: 114680685476149912}
+  m_Layer: 12
+  m_Name: Player_Character_Grounded_Check
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,7 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4969831798489872}
   - component: {fileID: 114475491659319378}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Player_Camera_Raycast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ Transform:
   m_GameObject: {fileID: 1722832261627040}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -1.1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 1, z: 0.4}
   m_Children: []
   m_Father: {fileID: 4710416165020350}
   m_RootOrder: 3
@@ -120,7 +120,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4710416165020350}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4487168017051280
 Transform:
@@ -133,7 +133,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4710416165020350}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4710416165020350
 Transform:
@@ -145,9 +145,9 @@ Transform:
   m_LocalPosition: {x: 2.93, y: 5.31, z: 15.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4487168017051280}
   - {fileID: 4969831798489872}
   - {fileID: 4182093174865406}
-  - {fileID: 4487168017051280}
   - {fileID: 4173897930357246}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -163,7 +163,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4710416165020350}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23293495677762420
 MeshRenderer:
@@ -214,7 +214,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -255,8 +255,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 579bf9fbe6b322341ba5121799cb8ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 8
   target: {fileID: 0}
+--- !u!114 &114680685476149912
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1722832261627040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea3831c07a82a6444bd221d57d6ba326, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114802687816552978
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -273,26 +283,13 @@ MonoBehaviour:
   movementReference: {fileID: 1313981167222766}
   transitionFollowPrefab: {fileID: 1506101941598320, guid: 96f053d07a717d64d8dc4a6db0ea4a06,
     type: 2}
-  transitionInFollow: {fileID: 0}
-  transitionOutFollow: {fileID: 0}
+  transitionFollow: {fileID: 0}
   movementSpeed: 6
   grabMovementSpeed: 3
-  jumpSpeed: 9
+  jumpSpeed: 10
   jumpTime: 0.4
-  gravity: 16
-  distanceFromShadow: {x: 0, y: 0, z: 0}
+  gravity: 20
   controller: {fileID: 0}
---- !u!114 &114856709620491564
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1722832261627040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c58fd1791df5484ea2b7f0e0589ccc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114973802022037786
 MonoBehaviour:
   m_ObjectHideFlags: 1

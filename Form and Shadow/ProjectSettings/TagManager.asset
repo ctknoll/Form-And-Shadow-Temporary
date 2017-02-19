@@ -5,9 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Shadow Wall
+  - Push Cube
   - Move Platform
-  - Spikes
-  - Propellor Platform
+  - MainCameraReference
   layers:
   - Default
   - TransparentFX
@@ -17,11 +17,11 @@ TagManager:
   - UI
   - 
   - 
-  - 3D Objects
+  - 
   - Main Camera Clip
   - Shadow Wall
-  - Shadow Collider
-  - 
+  - Shadow
+  - Form
   - 
   - 
   - 

@@ -24,29 +24,32 @@ public class MoveCube : MonoBehaviour {
 	{
 		if(canInteract)
 		{
-			if(Input.GetButton("Grab"))
+            if (!grabbed)
 			{
-				if(!grabbed)
+                GameController.SetInteractText("Hold E to grab this cube from this side");
+                if (Input.GetButtonDown("Grab"))
 				{
-					grabbed = true;
+                    GameController.ResetInteractText();
+                    grabbed = true;
 					transform.parent = player.transform;
 					PlayerMovement.isGrabbing = true;
 					PlayerMovement.grabbedObject = gameObject;
 				}
 			}
 
-			if(Input.GetButtonUp("Grab"))
-			{
-				grabbed = false;
-				transform.parent = null;
-				PlayerMovement.isGrabbing = false;
-				PlayerMovement.grabbedObject = null;
-			}
-		}
+            if (Input.GetButtonUp("Grab"))
+            {
+                grabbed = false;
+                transform.parent = null;
+                PlayerMovement.isGrabbing = false;
+                PlayerMovement.grabbedObject = null;
+            }
+        }
 
 		if(GameController.resetting)
 		{
-			transform.position = startPos;
+            GameController.ResetInteractText();
+            transform.position = startPos;
 			grabbed = false;
 			transform.parent = null;
 			PlayerMovement.isGrabbing = false;
@@ -58,12 +61,12 @@ public class MoveCube : MonoBehaviour {
 	{
 		gravityDirection = Vector3.down;
 
-		acceleration = gravityDirection * player.GetComponent<PlayerMovement>().gravity;
+		acceleration = gravityDirection * Physics.gravity.magnitude;
 
 		velocity += (acceleration * Time.deltaTime);
 
 		RaycastHit hit;
-		if(Physics.BoxCast(transform.position, transform.GetChild(0).lossyScale / 2, velocity.normalized, out hit, transform.rotation, (acceleration * Time.deltaTime).magnitude))
+		if(Physics.BoxCast(transform.position, transform.GetChild(0).lossyScale / 2.2f, velocity.normalized, out hit, transform.rotation, (acceleration * Time.deltaTime).magnitude))
 		{
 			velocity = Vector3.zero;
 		}
