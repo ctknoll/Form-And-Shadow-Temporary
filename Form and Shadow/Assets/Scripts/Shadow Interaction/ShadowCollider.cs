@@ -63,8 +63,8 @@ public class ShadowCollider : MonoBehaviour {
                     break;
             }
         }
-        GetTransformOffset();
         GetLockedAxis();
+        GetTransformOffset();
 
         if(shadowCast.meshType == ShadowCast.MeshType.PROPELLOR_PLATFORM)
             SetPropellorOffset();
@@ -80,34 +80,38 @@ public class ShadowCollider : MonoBehaviour {
         }
 	}
 
-    public void GetTransformOffset()
-    {
-        if (LightSourceControl.zAxisMovement)
-        {
-            if(shadowCast.meshException)
-                transformOffset = ((shadowCast.GetComponent<MeshCollider>().bounds.size.z / 2) * castDirection);
-            else
-                transformOffset = ((shadowCast.transform.lossyScale.z / 2) * castDirection);
-
-        }
-        else if (LightSourceControl.xAxisMovement)
-        {
-            if (shadowCast.meshException)
-                transformOffset = ((shadowCast.GetComponent<MeshCollider>().bounds.size.x / 2) * castDirection);
-            else
-                transformOffset = ((shadowCast.transform.lossyScale.x / 2) * castDirection);
-        }
-    }
-
     public void GetLockedAxis()
     {
-        if (transformOffset.z > 0 + errorMargin || transformOffset.z < 0 - errorMargin)
+        if (castDirection == GameObject.Find("Lighting_Reference").transform.forward || 
+			-1 * castDirection == GameObject.Find("Lighting_Reference").transform.forward)
         {
             lockedInZAxis = true;
         }
         else
         {
             lockedInZAxis = false;
+        }
+    }
+
+    public void GetTransformOffset()
+    {
+        if (lockedInZAxis)
+        {
+            if (shadowCast.meshException)
+                transformOffset = ((shadowCast.GetComponent<MeshCollider>().bounds.size.z / 2) * castDirection);
+            else if(shadowCast.meshType == ShadowCast.MeshType.PROPELLOR_PLATFORM)
+                transformOffset = ((shadowCast.transform.lossyScale.z / 2) * castDirection);
+            else
+                transformOffset = ((shadowCast.transform.lossyScale.z / 2) * castDirection);
+        }
+        else
+        {
+            if (shadowCast.meshException)
+                transformOffset = ((shadowCast.GetComponent<MeshCollider>().bounds.size.x / 2) * castDirection);
+            else if (shadowCast.meshType == ShadowCast.MeshType.PROPELLOR_PLATFORM)
+                transformOffset = ((shadowCast.transform.lossyScale.z / 2) * castDirection);
+            else
+                transformOffset = ((shadowCast.transform.lossyScale.x / 2) * castDirection);
         }
     }
 

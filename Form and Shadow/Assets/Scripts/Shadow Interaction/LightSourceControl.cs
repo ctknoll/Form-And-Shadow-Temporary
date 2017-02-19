@@ -22,14 +22,14 @@ public class LightSourceControl : MonoBehaviour
 
 	public void CheckLightingDirection()
 	{
-        if (lightSourceDirection == GameObject.Find("Light Reference").transform.forward || 
-			-1 * lightSourceDirection == GameObject.Find("Light Reference").transform.forward) 
+        if (lightSourceDirection == GameObject.Find("Lighting_Reference").transform.forward || 
+			-1 * lightSourceDirection == GameObject.Find("Lighting_Reference").transform.forward) 
 		{
             zAxisMovement = true;
 			xAxisMovement = false;
         }
-		else if(lightSourceDirection == GameObject.Find("Light Reference").transform.right || 
-			-1 * lightSourceDirection == GameObject.Find("Light Reference").transform.right)
+		else if(lightSourceDirection == GameObject.Find("Lighting_Reference").transform.right || 
+			-1 * lightSourceDirection == GameObject.Find("Lighting_Reference").transform.right)
 		{
             zAxisMovement = false;
 			xAxisMovement = true;
