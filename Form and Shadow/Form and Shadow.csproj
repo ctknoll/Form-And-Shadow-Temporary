@@ -52,14 +52,11 @@
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
+    <Reference Include="UnityEngine.Advertisements">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Advertisements.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
@@ -73,11 +70,8 @@
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.HoloLens">
-      <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VR">
-      <HintPath>Library\UnityAssemblies\UnityEngine.VR.dll</HintPath>
+    <Reference Include="UnityEngine.Purchasing">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Purchasing.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VR">
       <HintPath>Library\UnityAssemblies\UnityEngine.VR.dll</HintPath>
@@ -95,15 +89,43 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Camera\CameraControl.cs" />
     <Compile Include="Assets\Scripts\Camera\RaycastToCamera.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Move Cube\MoveCube.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Move Cube\MoveCubeReference.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Moving Platform\MovingPlatform.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Moving Platform\MovingPlatformShadowCollider.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Propellor Platform\PropellorPlatform.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Propellor Platform\PropellorPlatformShadowCollider.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Propellor Platform\TransformLock.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Pulley System\PulleySystem.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Pulley System\PulleySystemEnd.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Pulley System\PulleySystemPlatform.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\PressureSwitch.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\PressureSwitches\MovingPlatformSpeedPressureSwitch.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\ToggleSwitch.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\ToggleSwitches\LightDirectionToggleSwitch.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\ToggleSwitches\MovingPlatformSpeedToggleSwitch.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyToad.cs" />
+    <Compile Include="Assets\Scripts\Game Control\Checkpoint.cs" />
+    <Compile Include="Assets\Scripts\Game Control\GameController.cs" />
+    <Compile Include="Assets\Scripts\Game Control\Killzone.cs" />
+    <Compile Include="Assets\Scripts\Game Control\LevelFinish.cs" />
+    <Compile Include="Assets\Scripts\Game Control\Pickup.cs" />
+    <Compile Include="Assets\Scripts\Player\MovementReference.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerGroundedZone2D.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerGroundedZone3D.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerShadowCast.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerShadowCollider.cs" />
+    <Compile Include="Assets\Scripts\Shadow Interaction\DownwardShadowControl.cs" />
     <Compile Include="Assets\Scripts\Shadow Interaction\LightSourceControl.cs" />
     <Compile Include="Assets\Scripts\Shadow Interaction\ShadowCast.cs" />
     <Compile Include="Assets\Scripts\Shadow Interaction\ShadowCollider.cs" />
-    <Compile Include="Assets\Scripts\World Interaction\Killzone.cs" />
-    <Compile Include="Assets\Scripts\World Interaction\LevelFinish.cs" />
+    <Compile Include="Assets\Scripts\UI and Menu Control\ButtonManager.cs" />
+    <Compile Include="Assets\Scripts\UI and Menu Control\GameExit.cs" />
     <Compile Include="Assets\TwoDimensionalObject.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Resources and Art Assets\Fake Player Shadow\ProjectorMultiply.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
