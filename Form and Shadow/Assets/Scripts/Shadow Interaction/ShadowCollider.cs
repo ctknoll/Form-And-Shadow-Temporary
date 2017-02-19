@@ -21,9 +21,9 @@ public class ShadowCollider : MonoBehaviour {
 
         // Does the object have a normal parented mesh, and is childed
         // to that normal parent?
-		if (exceptionParent == null) 
-		{
-			shadowCast = GetComponentInParent<ShadowCast> ();
+        if (exceptionParent == null)
+        {
+            shadowCast = GetComponentInParent<ShadowCast>();
 
             switch (shadowCast.meshType)
             {
@@ -43,11 +43,11 @@ public class ShadowCollider : MonoBehaviour {
                     Debug.Log("You didn't assign a meshtype on my parent!");
                     break;
             }
-		}
+        }
 
-		else
-		{
-			shadowCast = exceptionParent.GetComponent<ShadowCast> ();
+        else
+        {
+            shadowCast = exceptionParent.GetComponent<ShadowCast>();
             switch (shadowCast.meshType)
             {
                 case ShadowCast.MeshType.PROPELLOR_PLATFORM:
@@ -63,11 +63,9 @@ public class ShadowCollider : MonoBehaviour {
                     break;
             }
         }
-        GetTransformOffset();
-        GetLockedAxis();
 
-        if(shadowCast.meshType == ShadowCast.MeshType.PROPELLOR_PLATFORM)
-            SetPropellorOffset();
+        GetLockedAxis();
+        GetTransformOffset();
 	}
 	
 	void FixedUpdate () 
@@ -80,28 +78,10 @@ public class ShadowCollider : MonoBehaviour {
         }
 	}
 
-    public void GetTransformOffset()
-    {
-        if (lockedInZAxis)
-        {
-            if(shadowCast.meshException)
-                transformOffset = ((shadowCast.GetComponent<MeshCollider>().bounds.size.z / 2) * castDirection);
-            else
-                transformOffset = ((shadowCast.transform.lossyScale.z / 2) * castDirection);
-
-        }
-        else
-        {
-            if (shadowCast.meshException)
-                transformOffset = ((shadowCast.GetComponent<MeshCollider>().bounds.size.x / 2) * castDirection);
-            else
-                transformOffset = ((shadowCast.transform.lossyScale.x / 2) * castDirection);
-        }
-    }
-
     public void GetLockedAxis()
     {
-        if (transformOffset.z > 0 + errorMargin || transformOffset.z < 0 - errorMargin)
+        if (castDirection == GameObject.Find("Lighting_Reference").transform.forward ||
+            -1 * castDirection == GameObject.Find("Lighting_Reference").transform.forward)
         {
             lockedInZAxis = true;
         }
@@ -111,6 +91,28 @@ public class ShadowCollider : MonoBehaviour {
         }
     }
 
+    public void GetTransformOffset()
+    {
+        if (lockedInZAxis)
+        {
+            if (shadowCast.meshException)
+                transformOffset = ((shadowCast.GetComponent<MeshCollider>().bounds.size.z / 2) * castDirection);
+            else if (shadowCast.meshType == ShadowCast.MeshType.PROPELLOR_PLATFORM)
+                transformOffset = ((shadowCast.transform.lossyScale.z / 2) * castDirection);
+            else
+                transformOffset = ((shadowCast.transform.lossyScale.z / 2) * castDirection);
+
+        }
+        else
+        {
+            if (shadowCast.meshException)
+                transformOffset = ((shadowCast.GetComponent<MeshCollider>().bounds.size.x / 2) * castDirection);
+            else if (shadowCast.meshType == ShadowCast.MeshType.PROPELLOR_PLATFORM)
+                transformOffset = ((shadowCast.transform.lossyScale.z / 2) * castDirection);
+            else
+                transformOffset = ((shadowCast.transform.lossyScale.x / 2) * castDirection);
+        }
+    }
 
     public void LockMovementAxis()
 	{
@@ -122,18 +124,6 @@ public class ShadowCollider : MonoBehaviour {
         {
 			transform.position = new Vector3(wallTransform.position.x + transformOffset.x, transform.position.y, transform.position.z);
 		}
-    }
-
-    public void SetPropellorOffset()
-    {
-        if (lockedInZAxis)
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, wallTransform.position.z + transformOffset.z);
-        }
-        else
-        {
-            transform.position = new Vector3(wallTransform.position.x + shadowCast.transform.lossyScale.z / 2, transform.position.y, transform.position.z);
-        }
     }
 
     public void FollowExceptionParent()
