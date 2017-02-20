@@ -11,7 +11,7 @@ public class ToggleSwitch : MonoBehaviour {
 
     private Vector3 highLerpPosition;
     private Vector3 lowLerpPosition;
-	private float runningTime = 0;
+	protected float runningTime = 0;
 
 
 	public void Start()
@@ -26,18 +26,27 @@ public class ToggleSwitch : MonoBehaviour {
     {
         if(other.gameObject.tag == "Player")
         {
-            if(!pressed)
-            {
-                GameController.SetInteractText("Press E to toggle this switch");
-                if (Input.GetButtonDown("Grab"))
-                {
-                    pressed = true;
-                    runningTime = timerDuration;
-                    StartCoroutine(PressSwitch());
-                    StartCoroutine(DepressSwitch());
-                    GameController.SetInteractText("");
-                }
-            }
+			if (!pressed) {
+				GameController.SetInteractText ("Press E to toggle this switch");
+				if (Input.GetButtonDown ("Grab")) 
+				{
+					pressed = true;
+					runningTime = timerDuration;
+					StartCoroutine (PressSwitch ());
+					if (timerDuration >= 0) StartCoroutine (DepressSwitch ());
+					GameController.SetInteractText ("");
+				}
+			} 
+			else 
+			{
+				if (Input.GetButtonDown ("Grab")) 
+				{
+					pressed = false;
+					runningTime = 0;
+					if (timerDuration == -1) StartCoroutine (DepressSwitch ());		
+					GameController.SetInteractText ("");
+				}
+			}
         }
     }
 
@@ -74,7 +83,7 @@ public class ToggleSwitch : MonoBehaviour {
 
     public IEnumerator DepressSwitch()
     {
-        yield return new WaitForSeconds(timerDuration);
+		if (timerDuration >= 0) yield return new WaitForSeconds(timerDuration);
 
         float panStart = Time.time;
         while (Time.time < panStart + pressAnimationTime)
