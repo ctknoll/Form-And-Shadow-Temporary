@@ -318,7 +318,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.36087033, y: 0.642}
   m_AnchorMax: {x: 0.6363891, y: 0.7448392}
-  m_AnchoredPosition: {x: 1.7235107, y: 1.191}
+  m_AnchoredPosition: {x: 1.7235107, y: 1.1910019}
   m_SizeDelta: {x: -2, y: -0.90600014}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &245371193
@@ -768,7 +768,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Collin Hill
+  m_Text: Colin Hill
 --- !u!222 &530651612
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1082,7 +1082,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.36087033, y: 0.07773993}
   m_AnchorMax: {x: 0.6363891, y: 0.17331097}
-  m_AnchoredPosition: {x: -1, y: 1.1889992}
+  m_AnchoredPosition: {x: -1, y: 1.1889954}
   m_SizeDelta: {x: -2, y: -1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1508157567
