@@ -97,6 +97,7 @@ Assets/Scripts/Camera/RaycastToCamera.cs
 "Assets/Scripts/Dynamic and Moving Objects/Switches/ToggleSwitch.cs"
 "Assets/Scripts/Dynamic and Moving Objects/Switches/ToggleSwitches/LightDirectionToggleSwitch.cs"
 "Assets/Scripts/Dynamic and Moving Objects/Switches/ToggleSwitches/MovingPlatformSpeedToggleSwitch.cs"
+"Assets/Scripts/Dynamic and Moving Objects/Switches/ToggleSwitches/PlatformLERPToggleSwitch.cs"
 Assets/Scripts/Enemy/EnemyToad.cs
 "Assets/Scripts/Game Control/Checkpoint.cs"
 "Assets/Scripts/Game Control/GameController.cs"
