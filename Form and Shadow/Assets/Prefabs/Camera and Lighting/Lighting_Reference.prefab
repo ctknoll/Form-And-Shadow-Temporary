@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4130924538474950}
   m_Layer: 0
-  m_Name: Light Reference
+  m_Name: Lighting_Reference
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
