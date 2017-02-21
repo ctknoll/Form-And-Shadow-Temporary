@@ -57,8 +57,12 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
 				}
 			}
 		}
+        else if (!pressed)
+        {
+            locked = false;
+        }
 
-		base.Update();
+        base.Update();
     }
 
 	public IEnumerator MoveOut(GameObject platform)
