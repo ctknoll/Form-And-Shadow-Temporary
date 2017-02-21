@@ -8,6 +8,7 @@ public class MovingPlatformSpeedToggleSwitch : ToggleSwitch
     public GameObject movingPlatform;
     private float tempMoveSpeed;
     public float percentSlow;
+    public bool haltWhenNotPressed;
     private bool locked;
 
     // Use this for initialization
@@ -19,6 +20,7 @@ public class MovingPlatformSpeedToggleSwitch : ToggleSwitch
     // Update is called once per frame
     public void Update()
     {
+        if (haltWhenNotPressed) movingPlatform.GetComponent<MovingPlatform>().slowValue = 0;
         if (pressed)
         {
             if (movingPlatform.GetComponent<MovingPlatform>() != null)
