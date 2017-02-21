@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Pulley System\PulleySystemPlatform.cs" />
      <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\PressureSwitch.cs" />
      <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\PressureSwitches\MovingPlatformSpeedPressureSwitch.cs" />
+     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\PressureSwitches\PlatformLERPPressureSwitch.cs" />
      <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\ToggleSwitch.cs" />
      <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\ToggleSwitches\LightDirectionToggleSwitch.cs" />
      <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\ToggleSwitches\MovingPlatformSpeedToggleSwitch.cs" />
