@@ -16,7 +16,8 @@ public class RaycastToCamera : MonoBehaviour {
 		RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit))
         {
-            distance = hit.distance - 0.5f;
+            if(hit.collider.gameObject.tag != "Player")
+                distance = hit.distance - 0.5f;
         }
         else
             distance = target.GetComponent<CameraControl>().distanceToPlayer3D;

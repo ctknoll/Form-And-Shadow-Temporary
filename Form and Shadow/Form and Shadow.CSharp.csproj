@@ -92,6 +92,7 @@
     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\ToggleSwitch.cs" />
     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\ToggleSwitches\LightDirectionToggleSwitch.cs" />
     <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\ToggleSwitches\MovingPlatformSpeedToggleSwitch.cs" />
+    <Compile Include="Assets\Scripts\Dynamic and Moving Objects\Switches\ToggleSwitches\PlatformLERPToggleSwitch.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyToad.cs" />
     <Compile Include="Assets\Scripts\Game Control\Checkpoint.cs" />
     <Compile Include="Assets\Scripts\Game Control\GameController.cs" />
