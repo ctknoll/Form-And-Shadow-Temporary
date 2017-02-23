@@ -2,8 +2,6 @@
 
 public class MoveCubeReference : MonoBehaviour
 {
-	public GameObject acrossReference;
-	public bool blocked;
 	private MoveCube moveCube;
 	private GameObject moveCubeMesh;
 
@@ -18,15 +16,7 @@ public class MoveCubeReference : MonoBehaviour
 		if(other.gameObject.tag == "Player")
 		{
 			moveCube.canInteract = true;
-			moveCube.directionAwayFromPlayer = (moveCubeMesh.transform.position - transform.position);
-			if(acrossReference.GetComponent<MoveCubeReference>().blocked)
-				moveCube.blockedAhead = true;
-			else
-				moveCube.blockedAhead = false;
-		}
-		else
-		{
-			blocked = true;
+			moveCube.directionAwayFromPlayer = (moveCubeMesh.transform.position - transform.position).normalized;
 		}
 	}
 
@@ -36,14 +26,10 @@ public class MoveCubeReference : MonoBehaviour
 		{
             GameController.ResetInteractText();
             moveCube.canInteract = false;
-			moveCube.gameObject.transform.parent = null;
 			moveCube.grabbed = false;
-			moveCube.transform.parent = null;
 			PlayerMovement.isGrabbing = false;
 			PlayerMovement.grabbedObject = null;
 		}
-		else
-			blocked = false;
 	}
 }
 

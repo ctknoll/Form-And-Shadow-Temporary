@@ -16,7 +16,7 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
 	private float moveTime;
 
     // Use this for initialization
-    void Start()
+    new void Start()
     {
         base.Start();
 		moveTime = (directionToMove.magnitude / moveSpeed);
@@ -26,7 +26,7 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
     }
 
     // Update is called once per frame
-    public void Update()
+    new public void Update()
     {
 		if (pressed && !locked) {
 			foreach (GameObject platform in platforms)

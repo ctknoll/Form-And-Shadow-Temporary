@@ -22,7 +22,7 @@ public class MovingPlatform : MonoBehaviour {
 			gameObject.transform.GetChild(0).gameObject.GetComponent<Transform>().localScale.z);
 	}
 
-	void OnTriggerStay(Collider other)
+	void OnTriggerEnter(Collider other)
 	{
 		if(other.gameObject.tag == "Player")
 		{
