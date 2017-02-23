@@ -23,7 +23,6 @@ public class PlayerMovement : MonoBehaviour
     public float movementSpeed;
     public float grabMovementSpeed;
 
-
     public float jumpSpeed;
     public float jumpTime;
     public float gravity;
@@ -35,12 +34,16 @@ public class PlayerMovement : MonoBehaviour
     [Header("Interaction Variables")]
     public static bool isGrabbing;
     public static GameObject grabbedObject;
+    private Vector3 pushDir;
 
     [Header("Shadowmeld Variables")]
     public bool shadowMelded;
-    public float shadowMeldDuration;
     public float shadowMeldTimeLeft;
-    public float shadowMeldRegenPerSecond;
+    public float shadowMeldResourceCost;
+    public float shadowMeldResourceRegen;
+    [HideInInspector]
+    public float shadowMeldResource;
+    private float shadowMeldMaxDuration;
     private float shadowMeldStartTime;
 
     private Vector3 rotationDirection;
@@ -116,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (in3DSpace && !isGrabbing && !shiftingIn && !shiftingOut)
         {
-            if (Input.GetButtonDown("Shadowmeld"))
+            if (Input.GetButtonDown("Shadowmeld") && shadowMeldResource > 0)
             {
                 if (!shadowMelded)
                 {
@@ -130,10 +133,18 @@ public class PlayerMovement : MonoBehaviour
         }
         if (shadowMelded)
         {
-            if (Time.time > shadowMeldStartTime + shadowMeldDuration)
+            if(shadowMeldResource > 0)
+                shadowMeldResource -= shadowMeldResourceCost * Time.deltaTime;
+
+            if (shadowMeldResource <= 0)
             {
                 ExitShadowMeld();
             }
+        }
+        else
+        {
+            if(shadowMeldResource < 100)
+                shadowMeldResource += shadowMeldResourceRegen * Time.deltaTime;
         }
     }
 
@@ -211,13 +222,17 @@ public class PlayerMovement : MonoBehaviour
         // Grabbing movement
         else
         {
-            if (Input.GetAxisRaw("Vertical") > 0 && !grabbedObject.GetComponent<MoveCube>().blockedAhead)
+            if (Input.GetAxisRaw("Vertical") > 0)
             {
                 controller.Move(grabbedObject.GetComponent<MoveCube>().directionAwayFromPlayer * Time.deltaTime * grabMovementSpeed);
+                grabbedObject.GetComponent<Rigidbody>().velocity = grabbedObject.GetComponent<MoveCube>().directionAwayFromPlayer * grabMovementSpeed;
+
+
             }
             if (Input.GetAxisRaw("Vertical") < 0)
             {
                 controller.Move(-grabbedObject.GetComponent<MoveCube>().directionAwayFromPlayer * Time.deltaTime * grabMovementSpeed);
+                grabbedObject.GetComponent<Rigidbody>().velocity = -grabbedObject.GetComponent<MoveCube>().directionAwayFromPlayer * grabMovementSpeed * 1.1f;
             }
         }
     }
@@ -259,7 +274,7 @@ public class PlayerMovement : MonoBehaviour
 					Debug.Log("You can't transfer, there is a shadow in the way!");
 			}
 			else
-				Debug.Log("You can't transfer, you didn't hit a shadow wall!");
+				Debug.Log("You can't transfer, you didn't hit a shadow wall!" + hit.collider.gameObject);
 		}
 		
 	}

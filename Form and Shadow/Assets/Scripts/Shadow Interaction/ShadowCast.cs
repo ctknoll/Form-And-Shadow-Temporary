@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class ShadowCast : MonoBehaviour {
 	public GameObject shadowColliderPrefab;
-    public enum MeshType {NO_SHADOW, BASIC_CUBE, SPIKES, MOVE_PLATFORM, PROPELLOR_PLATFORM, ENEMY_TOAD};
+    public enum MeshType {NO_SHADOW, BASIC_CUBE, SPIKES, MOVE_PLATFORM, PUSH_CUBE, PROPELLOR_PLATFORM, ENEMY_TOAD};
     public bool meshException;
     public MeshType meshType;
 
@@ -58,7 +58,7 @@ public class ShadowCast : MonoBehaviour {
 		RaycastHit hit;
         if (Physics.Raycast(transform.position, direction, out hit, Mathf.Infinity, 1 << 10))
 		{
-			/* To explain this, first one must know that there is a game object called Lighting Reference in the scene
+            /* To explain this, first one must know that there is a game object called Lighting Reference in the scene
 			 * that is always rotated to (0, 0, 0) and that all objects in the scene that will cast shadows must have
 			 * their parent objects rotated the same. This basically checks if the light source direction in relativity
 			 * to said lighting reference, and then sets the transform offset of the shadow collider (whether it be the
@@ -67,12 +67,15 @@ public class ShadowCast : MonoBehaviour {
 			 * behind the respective wall the previous Raycast hits.
 			*/
 
-            // Is the mesh type one that needs an exception parent (see ShadowCollider.cs to fully understand,
-            // but essentially certain shadow colliders don't need to be childed, namely Propellor Shadow Colliders
-            if (meshType == MeshType.PROPELLOR_PLATFORM || meshType == MeshType.ENEMY_TOAD)
+            
+            bool lockedInZ = GetLockedAxis(direction);
+            Vector3 transOffset = GetTransformOffset(direction, lockedInZ);
+            if (meshType == MeshType.PROPELLOR_PLATFORM || meshType == MeshType.ENEMY_TOAD || meshType == MeshType.PUSH_CUBE)
             {
-                GameObject shadowAdd = Instantiate(shadowColliderPrefab, hit.point, hit.collider.gameObject.transform.rotation) as GameObject;
+                GameObject shadowAdd = Instantiate(shadowColliderPrefab, hit.point + transOffset, hit.collider.gameObject.transform.rotation) as GameObject;
                 shadowAdd.GetComponent<ShadowCollider>().exceptionParent = gameObject;
+                shadowAdd.GetComponent<ShadowCollider>().transformOffset = transOffset;
+                shadowAdd.GetComponent<ShadowCollider>().lockedInZAxis = lockedInZ;
                 shadowAdd.GetComponent<ShadowCollider>().castDirection = direction;
                 shadowAdd.GetComponent<ShadowCollider>().wallTransform = hit.collider.transform;
                 shadowColliders.Add(shadowAdd);
@@ -81,13 +84,46 @@ public class ShadowCast : MonoBehaviour {
             // If not, instantiate the shadowcollider prefab and child it to the gameobject
             else
             {
-                GameObject shadowAdd = Instantiate(shadowColliderPrefab, hit.point, Quaternion.identity, gameObject.transform) as GameObject;
+                GameObject shadowAdd = Instantiate(shadowColliderPrefab, hit.point + transOffset, Quaternion.identity, gameObject.transform) as GameObject;
+                shadowAdd.GetComponent<ShadowCollider>().transformOffset = transOffset;
                 shadowAdd.GetComponent<ShadowCollider>().castDirection = direction;
+                shadowAdd.GetComponent<ShadowCollider>().lockedInZAxis = lockedInZ;
                 shadowAdd.GetComponent<ShadowCollider>().wallTransform = hit.collider.transform;
                 shadowColliders.Add(shadowAdd);
             }
+
+
         }
 	}
+    public bool GetLockedAxis(Vector3 castDir)
+    {
+        return castDir == GameObject.Find("Lighting_Reference").transform.forward || -1 * castDir == GameObject.Find("Lighting_Reference").transform.forward;
+    }
+
+    public Vector3 GetTransformOffset(Vector3 castDirection, bool zLocked)
+    {
+        Vector3 transOffset;
+        if (zLocked)
+        {
+            if (meshException)
+                transOffset = ((GetComponent<MeshCollider>().bounds.size.z / 2) * castDirection);
+            else if (meshType == ShadowCast.MeshType.PROPELLOR_PLATFORM)
+                transOffset = ((transform.lossyScale.z / 2) * castDirection);
+            else
+                transOffset = ((transform.lossyScale.z / 2) * castDirection);
+
+        }
+        else
+        {
+            if (meshException)
+                transOffset = ((GetComponent<MeshCollider>().bounds.size.x / 2) * castDirection);
+            else if (meshType == ShadowCast.MeshType.PROPELLOR_PLATFORM)
+                transOffset = ((transform.lossyScale.z / 2) * castDirection);
+            else
+                transOffset = ((transform.lossyScale.x / 2) * castDirection);
+        }
+        return transOffset;
+    }
 
     public void CheckShadowmeldLayerandCollision()
     {
@@ -97,7 +133,6 @@ public class ShadowCast : MonoBehaviour {
                 gameObject.layer = LayerMask.NameToLayer("Shadowmeld Ignore");
                 break;
             default:
-                Debug.Log("Ain't no layer");
                 break;
         }
     }

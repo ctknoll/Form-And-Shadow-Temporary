@@ -2,7 +2,6 @@
 
 public class MovingPlatformSpeedPressureSwitch : PressureSwitch
 {
-
 	public GameObject movingBlock;
 	public float percentSlow;
 	public bool haltWhenNotPressed;

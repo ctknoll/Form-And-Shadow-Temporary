@@ -291,6 +291,11 @@ MonoBehaviour:
   jumpSpeed: 10
   jumpTime: 0.4
   gravity: 20
+  shadowMelded: 0
+  shadowMeldTimeLeft: 0
+  shadowMeldResourceCost: 20
+  shadowMeldResourceRegen: 10
+  shadowMeldResource: 100
 --- !u!114 &114973802022037786
 MonoBehaviour:
   m_ObjectHideFlags: 1
