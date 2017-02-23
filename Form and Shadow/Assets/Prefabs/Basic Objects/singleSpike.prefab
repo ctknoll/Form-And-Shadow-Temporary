@@ -126,7 +126,7 @@ MonoBehaviour:
   shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
     type: 2}
   meshException: 0
-  meshType: 1
+  meshType: 2
   shadowColliders: []
 --- !u!114 &114840618199670932
 MonoBehaviour:

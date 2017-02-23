@@ -7,6 +7,9 @@ public class GameController : MonoBehaviour {
 	public static int score;
     public static GameObject interactText;
     public GameObject scoreText;
+
+    public static bool playerShadowMelded;
+
 	private GameObject player;
 	private GameObject playerShadow;
 

@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 23784429872947716}
   - component: {fileID: 33860614054987916}
   - component: {fileID: 64436860710271706}
+  - component: {fileID: 114265053937063934}
   m_Layer: 0
   m_Name: Toggle_Switch_Button
   m_TagString: Untagged
@@ -71,6 +72,7 @@ GameObject:
   - component: {fileID: 4862460656144684}
   - component: {fileID: 33827372204777838}
   - component: {fileID: 23762808700135102}
+  - component: {fileID: 114471288454926812}
   m_Layer: 0
   m_Name: Toggle_Switch_Body
   m_TagString: Untagged
@@ -89,6 +91,7 @@ GameObject:
   - component: {fileID: 23013128289396180}
   - component: {fileID: 33729099223105862}
   - component: {fileID: 64036168225975346}
+  - component: {fileID: 114399866654382268}
   m_Layer: 0
   m_Name: Toggle_Switch_Base
   m_TagString: Untagged
@@ -102,8 +105,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1255559147614082}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.2210104, y: 6.7344056e-17, z: 1.9670935}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.2505164, y: 0, z: 11.0649605}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4862460656144684}
@@ -319,6 +322,54 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &114265053937063934
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1129155346408040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8910c1f15da9e6469c89c251ddc80b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
+    type: 2}
+  meshException: 0
+  meshType: 0
+  shadowColliders: []
+--- !u!114 &114399866654382268
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1997404829822280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8910c1f15da9e6469c89c251ddc80b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
+    type: 2}
+  meshException: 0
+  meshType: 0
+  shadowColliders: []
+--- !u!114 &114471288454926812
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1583804764027834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8910c1f15da9e6469c89c251ddc80b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
+    type: 2}
+  meshException: 0
+  meshType: 0
+  shadowColliders: []
 --- !u!114 &114628621315691118
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -330,10 +381,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e0b630b6213c1e46b04cc066ccc2c64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canInteract: 0
   pressed: 0
   switchButton: {fileID: 1129155346408040}
   pressAnimationTime: 0.2
   timerDuration: 5
-  movingBlock: {fileID: 0}
+  movingPlatform: {fileID: 0}
   percentSlow: 100
+  haltWhenNotPressed: 0

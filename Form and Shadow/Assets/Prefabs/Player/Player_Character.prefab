@@ -142,7 +142,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1099584862315612}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 2.93, y: 5.31, z: 15.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4487168017051280}
@@ -279,19 +279,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b574224f4bd158428e230c020740a0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerShadow: {fileID: 1929564859913044, guid: f1de96659f174ef4aa74b930e7ef9a46,
-    type: 2}
-  camera: {fileID: 1763399374130896, guid: fab42186127119447a7dd5b9164a7e57, type: 2}
+  playerShadow: {fileID: 0}
+  mainCamera: {fileID: 0}
   movementReference: {fileID: 1313981167222766}
   transitionFollowPrefab: {fileID: 1506101941598320, guid: 96f053d07a717d64d8dc4a6db0ea4a06,
     type: 2}
   transitionFollow: {fileID: 0}
+  controller: {fileID: 0}
   movementSpeed: 6
   grabMovementSpeed: 3
   jumpSpeed: 10
   jumpTime: 0.4
   gravity: 20
-  controller: {fileID: 0}
 --- !u!114 &114973802022037786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -303,7 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33ad15ab4b4472e4bab20f12335ffa58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 0}
+  mainCamera: {fileID: 0}
 --- !u!143 &143736298376177622
 CharacterController:
   m_ObjectHideFlags: 1

@@ -149,10 +149,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
     type: 2}
-  meshType: 3
+  meshException: 0
+  meshType: 4
   shadowColliders:
   - {fileID: 0}
-  propellorsCreated: 0
 --- !u!114 &114175660532293890
 MonoBehaviour:
   m_ObjectHideFlags: 1
