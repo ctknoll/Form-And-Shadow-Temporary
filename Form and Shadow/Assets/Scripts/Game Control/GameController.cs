@@ -7,8 +7,11 @@ public class GameController : MonoBehaviour {
 	public static int score;
     public static GameObject interactText;
     public GameObject scoreText;
+    public GameObject shadowMeldResourceObject;
+    public static bool playerShadowMelded;
+    
 	private GameObject player;
-	private GameObject playerShadow;
+    private GameObject playerShadow;
 
 	void Start () 
 	{
@@ -20,6 +23,7 @@ public class GameController : MonoBehaviour {
     void Update()
     {
         scoreText.GetComponent<Text>().text = "Score: " + score;
+        shadowMeldResourceObject.GetComponent<Image>().fillAmount = player.GetComponent<PlayerMovement>().shadowMeldResource / 100;
     }
 
     public IEnumerator ResetLevel()
@@ -37,7 +41,6 @@ public class GameController : MonoBehaviour {
 		}
 		player.transform.position = PlayerMovement.playerStartPosition;
 		resetting = false;
-
 	}
 
     public static void SetInteractText(string intText)

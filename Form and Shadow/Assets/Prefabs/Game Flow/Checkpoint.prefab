@@ -261,10 +261,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
     type: 2}
-  shadowCollider:
-  - {fileID: 0}
-  transformOffset: {x: 0, y: 0, z: 0}
-  wallTransform: {fileID: 0}
+  meshException: 0
+  meshType: 1
+  shadowColliders: []
 --- !u!114 &114514715257649090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -278,10 +277,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
     type: 2}
-  shadowCollider:
-  - {fileID: 0}
-  transformOffset: {x: 0, y: 0, z: 0}
-  wallTransform: {fileID: 0}
+  meshException: 0
+  meshType: 1
+  shadowColliders: []
 --- !u!114 &114623684927591100
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -11,17 +11,17 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Object References")]
     public GameObject playerShadow;
-    public GameObject camera;
+    public GameObject mainCamera;
     public GameObject movementReference;
     public GameObject transitionFollowPrefab;
     public GameObject transitionFollow;
     private List<GameObject> transferPlatforms;
     private CameraControl camControl;
+    public CharacterController controller;
 
     [Header("Movement Variables")]
     public float movementSpeed;
     public float grabMovementSpeed;
-
 
     public float jumpSpeed;
     public float jumpTime;
@@ -34,7 +34,17 @@ public class PlayerMovement : MonoBehaviour
     [Header("Interaction Variables")]
     public static bool isGrabbing;
     public static GameObject grabbedObject;
+    private Vector3 pushDir;
 
+    [Header("Shadowmeld Variables")]
+    public bool shadowMelded;
+    public float shadowMeldTimeLeft;
+    public float shadowMeldResourceCost;
+    public float shadowMeldResourceRegen;
+    [HideInInspector]
+    public float shadowMeldResource;
+    private float shadowMeldMaxDuration;
+    private float shadowMeldStartTime;
 
     private Vector3 rotationDirection;
     private float playerShiftInOffset;
@@ -42,7 +52,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 cameraRelativeDirectionOffset;
     private float cameraPanInRelativeDistance;
     private int currentPlatformIndex;
-    public CharacterController controller;
 
     void Start()
     {
@@ -51,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
         in3DSpace = true;
         shiftingOut = false;
         shiftingIn = false;
-        camControl = camera.GetComponent<CameraControl>();
+        camControl = mainCamera.GetComponent<CameraControl>();
         controller = GetComponent<CharacterController>();
 
         currentPlatformIndex = 0;
@@ -62,11 +71,14 @@ public class PlayerMovement : MonoBehaviour
         // Movement Methods
         CheckPlayerMovement();
         CheckShadowshift();
+        CheckShadowMeld();
+
 
         if (shiftingOut && !CameraControl.cameraIsPanning)
         {
             ShiftingOutControl();
         }
+
         if (CameraControl.cameraIsPanning)
             FollowTransitionObject();
     }
@@ -91,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
         // Shadowshift Master Control
         if (!isGrabbing && !shiftingIn && !shiftingOut)
         {
-            if (Input.GetButtonDown("Fire3"))
+            if (Input.GetButtonDown("Shadowshift"))
             {
                 if (in3DSpace)
                     StartShadowShiftIn();
@@ -101,6 +113,57 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+    }
+
+    void CheckShadowMeld()
+    {
+        if (in3DSpace && !isGrabbing && !shiftingIn && !shiftingOut)
+        {
+            if (Input.GetButtonDown("Shadowmeld") && shadowMeldResource > 0)
+            {
+                if (!shadowMelded)
+                {
+                    EnterShadowMeld();
+                }
+                else
+                {
+                    ExitShadowMeld();
+                }
+            }
+        }
+        if (shadowMelded)
+        {
+            if(shadowMeldResource > 0)
+                shadowMeldResource -= shadowMeldResourceCost * Time.deltaTime;
+
+            if (shadowMeldResource <= 0)
+            {
+                ExitShadowMeld();
+            }
+        }
+        else
+        {
+            if(shadowMeldResource < 100)
+                shadowMeldResource += shadowMeldResourceRegen * Time.deltaTime;
+        }
+    }
+
+    void EnterShadowMeld()
+    {
+        Debug.Log("Shadowmelding");
+        shadowMelded = true;
+        shadowMeldStartTime = Time.time;
+        GameController.playerShadowMelded = true;
+        gameObject.layer = LayerMask.NameToLayer("Shadowmeld");
+
+    }
+
+    void ExitShadowMeld()
+    {
+        Debug.Log("Leaving shadowmelded");
+        shadowMelded = false;
+        GameController.playerShadowMelded = false;
+        gameObject.layer = LayerMask.NameToLayer("Form");
     }
 
     public void PlayerJumpandGravity()
@@ -159,13 +222,17 @@ public class PlayerMovement : MonoBehaviour
         // Grabbing movement
         else
         {
-            if (Input.GetAxisRaw("Vertical") > 0 && !grabbedObject.GetComponent<MoveCube>().blockedAhead)
+            if (Input.GetAxisRaw("Vertical") > 0)
             {
                 controller.Move(grabbedObject.GetComponent<MoveCube>().directionAwayFromPlayer * Time.deltaTime * grabMovementSpeed);
+                grabbedObject.GetComponent<Rigidbody>().velocity = grabbedObject.GetComponent<MoveCube>().directionAwayFromPlayer * grabMovementSpeed;
+
+
             }
             if (Input.GetAxisRaw("Vertical") < 0)
             {
                 controller.Move(-grabbedObject.GetComponent<MoveCube>().directionAwayFromPlayer * Time.deltaTime * grabMovementSpeed);
+                grabbedObject.GetComponent<Rigidbody>().velocity = -grabbedObject.GetComponent<MoveCube>().directionAwayFromPlayer * grabMovementSpeed * 1.1f;
             }
         }
     }
@@ -207,7 +274,7 @@ public class PlayerMovement : MonoBehaviour
 					Debug.Log("You can't transfer, there is a shadow in the way!");
 			}
 			else
-				Debug.Log("You can't transfer, you didn't hit a shadow wall!");
+				Debug.Log("You can't transfer, you didn't hit a shadow wall!" + hit.collider.gameObject);
 		}
 		
 	}
@@ -307,14 +374,14 @@ public class PlayerMovement : MonoBehaviour
 			transitionFollow = Instantiate(transitionFollowPrefab, start, transitionFollowPrefab.transform.rotation);
 
 		// Camera transition inwards to the targeted location
-		cameraPanInStartPos = camera.transform.position;
+		cameraPanInStartPos = mainCamera.transform.position;
 		cameraRelativeDirectionOffset = (cameraPanInStartPos - transform.position).normalized;
 
 		float panStart = Time.time;
 		while(Time.time < panStart + camControl.cameraPanDuration)
 		{
 			transitionFollow.transform.position = Vector3.Lerp(start, target, (Time.time - panStart)/camControl.cameraPanDuration);
-			camera.transform.position = Vector3.Lerp(cameraPanInStartPos, target + offset, (Time.time - panStart)/camControl.cameraPanDuration);
+			mainCamera.transform.position = Vector3.Lerp(cameraPanInStartPos, target + offset, (Time.time - panStart)/camControl.cameraPanDuration);
 			yield return null;
 		}
 		CameraControl.cameraIsPanning = false;
@@ -330,12 +397,12 @@ public class PlayerMovement : MonoBehaviour
 			transitionFollow = Instantiate(transitionFollowPrefab, start, transitionFollowPrefab.transform.rotation);
 
 		// Camera transition outwards from the wall
-		Vector3 startPos = camera.transform.position;
+		Vector3 startPos = mainCamera.transform.position;
 		float panStart = Time.time;
 		while(Time.time < panStart + camControl.cameraPanDuration)
 		{
 			transitionFollow.transform.position = Vector3.Lerp(start, target, (Time.time - panStart)/camControl.cameraPanDuration);
-			camera.transform.position = Vector3.Lerp(startPos, target + cameraRelativeDirectionOffset * camControl.distanceToPlayer3D, (Time.time - panStart)/camControl.cameraPanDuration);
+			mainCamera.transform.position = Vector3.Lerp(startPos, target + cameraRelativeDirectionOffset * camControl.distanceToPlayer3D, (Time.time - panStart)/camControl.cameraPanDuration);
 
 			yield return null;
 		}
@@ -351,13 +418,13 @@ public class PlayerMovement : MonoBehaviour
 
         if (transitionFollow == null)
             transitionFollow = Instantiate(transitionFollowPrefab, start, transitionFollowPrefab.transform.rotation);
-        Vector3 startPos = camera.transform.position;
+        Vector3 startPos = mainCamera.transform.position;
 
         float panStart = Time.time;
         while (Time.time < panStart + camControl.cameraPanDuration)
         {
             transitionFollow.transform.position = Vector3.Lerp(start, target, (Time.time - panStart) / camControl.cameraPanDuration);
-            camera.transform.position = Vector3.Lerp(startPos, target + offset, (Time.time - panStart) / camControl.cameraPanDuration);
+            mainCamera.transform.position = Vector3.Lerp(startPos, target + offset, (Time.time - panStart) / camControl.cameraPanDuration);
             yield return null;
         }
         CameraControl.cameraIsPanning = false;

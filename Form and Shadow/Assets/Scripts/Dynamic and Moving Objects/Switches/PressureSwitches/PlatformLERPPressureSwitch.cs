@@ -18,7 +18,7 @@ public class PlatformLERPPressureSwitch : PressureSwitch
 	private bool inMotion;
 
     // Use this for initialization
-    void Start()
+    new void Start()
     {
         base.Start();
 		moveTime = (directionToMove.magnitude / moveSpeed);
@@ -30,7 +30,7 @@ public class PlatformLERPPressureSwitch : PressureSwitch
     }
 
     // Update is called once per frame
-    public void Update()
+    new void Update()
     {
         Debug.Log(moveTime);
         if (pressed && !locked && !inMotion)
