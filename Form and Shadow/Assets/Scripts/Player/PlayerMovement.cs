@@ -6,25 +6,23 @@ public class PlayerMovement : MonoBehaviour
 {
     public static Vector3 playerStartPosition;
     public static bool in3DSpace;
-    public static bool shiftingOut;
-    public static bool shiftingIn;
+    public static bool shadowShiftingOut;
+    public static bool shadowShiftingIn;
 
     [Header("Object References")]
     public GameObject playerShadow;
     public GameObject mainCamera;
     public GameObject movementReference;
-    public GameObject transitionFollowPrefab;
-    public GameObject transitionFollow;
-    private List<GameObject> transferPlatforms;
+    public GameObject shadowShiftFollowObjectPrefab;
+    public GameObject shadowShiftFollowObject;
+    private List<GameObject> shadowShiftOutPlatforms;
     private CameraControl camControl;
     public CharacterController controller;
 
     [Header("Movement Variables")]
     public float movementSpeed;
     public float grabMovementSpeed;
-
     public float jumpSpeed;
-    public float jumpTime;
     public float gravity;
     public static bool grounded2D;
     public static bool grounded3D;
@@ -37,14 +35,14 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 pushDir;
 
     [Header("Shadowmeld Variables")]
-    public bool shadowMelded;
+    public GameObject shadowMeldVFX;
+    public static bool shadowMelded;
     public float shadowMeldTimeLeft;
     public float shadowMeldResourceCost;
     public float shadowMeldResourceRegen;
     [HideInInspector]
     public float shadowMeldResource;
     private float shadowMeldMaxDuration;
-    private float shadowMeldStartTime;
 
     private Vector3 rotationDirection;
     private float playerShiftInOffset;
@@ -58,8 +56,9 @@ public class PlayerMovement : MonoBehaviour
 
         playerStartPosition = transform.position;
         in3DSpace = true;
-        shiftingOut = false;
-        shiftingIn = false;
+        shadowShiftingOut = false;
+        shadowShiftingIn = false;
+        isGrabbing = false;
         camControl = mainCamera.GetComponent<CameraControl>();
         controller = GetComponent<CharacterController>();
 
@@ -68,30 +67,23 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // Movement Methods
-        CheckPlayerMovement();
-        CheckShadowshift();
-        CheckShadowMeld();
-
-
-        if (shiftingOut && !CameraControl.cameraIsPanning)
+        if(!GameController.resetting)
         {
-            ShiftingOutControl();
+            CheckPlayerMovement();
+            CheckShadowshift();
+            CheckShadowMeld();
         }
-
-        if (CameraControl.cameraIsPanning)
-            FollowTransitionObject();
     }
 
     void CheckPlayerMovement()
     {
-        if (!shiftingIn && !shiftingOut && !isGrabbing)
+        if (!shadowShiftingIn && !shadowShiftingOut && !isGrabbing)
             PlayerJumpandGravity();
 
-        if (in3DSpace && !shiftingIn && !shiftingOut)
+        if (in3DSpace && !shadowShiftingIn && !shadowShiftingOut)
             PlayerMovement3D();
 
-        else if (!in3DSpace && !shiftingIn && !shiftingOut)
+        else if (!in3DSpace && !shadowShiftingIn && !shadowShiftingOut)
         {
             PlayerMovement2D();
             FollowShadow();
@@ -101,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
     void CheckShadowshift()
     {
         // Shadowshift Master Control
-        if (!isGrabbing && !shiftingIn && !shiftingOut)
+        if (!shadowMelded && !isGrabbing && !shadowShiftingIn && !shadowShiftingOut)
         {
             if (Input.GetButtonDown("Shadowshift"))
             {
@@ -113,11 +105,18 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+        if (shadowShiftingOut && !CameraControl.cameraIsPanning)
+        {
+            ShiftingOutControl();
+        }
+
+        if (CameraControl.cameraIsPanning)
+            FollowTransitionObject();
     }
 
     void CheckShadowMeld()
     {
-        if (in3DSpace && !isGrabbing && !shiftingIn && !shiftingOut)
+        if (in3DSpace && !isGrabbing && !shadowShiftingIn && !shadowShiftingOut)
         {
             if (Input.GetButtonDown("Shadowmeld") && shadowMeldResource > 0)
             {
@@ -152,17 +151,17 @@ public class PlayerMovement : MonoBehaviour
     {
         Debug.Log("Shadowmelding");
         shadowMelded = true;
-        shadowMeldStartTime = Time.time;
-        GameController.playerShadowMelded = true;
+        shadowMeldVFX.SetActive(true);
+        GameController.ResetInteractText();
         gameObject.layer = LayerMask.NameToLayer("Shadowmeld");
 
     }
 
-    void ExitShadowMeld()
+    public void ExitShadowMeld()
     {
         Debug.Log("Leaving shadowmelded");
         shadowMelded = false;
-        GameController.playerShadowMelded = false;
+        shadowMeldVFX.SetActive(false);
         gameObject.layer = LayerMask.NameToLayer("Form");
     }
 
@@ -222,17 +221,13 @@ public class PlayerMovement : MonoBehaviour
         // Grabbing movement
         else
         {
-            if (Input.GetAxisRaw("Vertical") > 0)
+            if (Input.GetAxisRaw("Vertical") > 0 && !grabbedObject.GetComponent<MoveCube>().blockedAhead)
             {
                 controller.Move(grabbedObject.GetComponent<MoveCube>().directionAwayFromPlayer * Time.deltaTime * grabMovementSpeed);
-                grabbedObject.GetComponent<Rigidbody>().velocity = grabbedObject.GetComponent<MoveCube>().directionAwayFromPlayer * grabMovementSpeed;
-
-
             }
             if (Input.GetAxisRaw("Vertical") < 0)
             {
                 controller.Move(-grabbedObject.GetComponent<MoveCube>().directionAwayFromPlayer * Time.deltaTime * grabMovementSpeed);
-                grabbedObject.GetComponent<Rigidbody>().velocity = -grabbedObject.GetComponent<MoveCube>().directionAwayFromPlayer * grabMovementSpeed * 1.1f;
             }
         }
     }
@@ -244,7 +239,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void FollowTransitionObject()
     {
-        transform.position = transitionFollow.transform.position;
+        transform.position = shadowShiftFollowObject.transform.position;
     }
 
 	public void StartShadowShiftIn()
@@ -274,7 +269,7 @@ public class PlayerMovement : MonoBehaviour
 					Debug.Log("You can't transfer, there is a shadow in the way!");
 			}
 			else
-				Debug.Log("You can't transfer, you didn't hit a shadow wall!" + hit.collider.gameObject);
+				Debug.Log("You can't transfer, you didn't hit a shadow wall!");
 		}
 		
 	}
@@ -282,28 +277,28 @@ public class PlayerMovement : MonoBehaviour
 	public void StartShadowShiftOut()
 	{
 		ShiftOutSetup();
-		if(transferPlatforms.Count != 0)
+		if(shadowShiftOutPlatforms.Count != 0)
 		{
-			if(transferPlatforms.Count == 1)
+			if(shadowShiftOutPlatforms.Count == 1)
 			{
 				if(GetComponent<PlayerShadowCast>().lightSourceAligned.zAxisMovement)
 					StartCoroutine(CameraPanOut(playerShadow.transform.position, new Vector3(playerShadow.transform.position.x, 
-						(transferPlatforms[0].transform.position.y + transferPlatforms[0].transform.lossyScale.y / 2 + transform.lossyScale.y), 
-						transferPlatforms[0].transform.position.z), true));
+						(shadowShiftOutPlatforms[0].transform.position.y + shadowShiftOutPlatforms[0].transform.lossyScale.y / 2 + transform.lossyScale.y), 
+						shadowShiftOutPlatforms[0].transform.position.z), true));
 				else if(GetComponent<PlayerShadowCast>().lightSourceAligned.xAxisMovement)
-					StartCoroutine(CameraPanOut(playerShadow.transform.position, new Vector3(transferPlatforms[0].transform.position.x, 
-						(transferPlatforms[0].transform.position.y + transferPlatforms[0].transform.lossyScale.y / 2 + transform.lossyScale.y), 
+					StartCoroutine(CameraPanOut(playerShadow.transform.position, new Vector3(shadowShiftOutPlatforms[0].transform.position.x, 
+						(shadowShiftOutPlatforms[0].transform.position.y + shadowShiftOutPlatforms[0].transform.lossyScale.y / 2 + transform.lossyScale.y), 
 						playerShadow.transform.position.z), true));
 			}
 			else
 			{
 				if(GetComponent<PlayerShadowCast>().lightSourceAligned.zAxisMovement)
 					StartCoroutine(CameraPanOut(playerShadow.transform.position, new Vector3(playerShadow.transform.position.x, 
-						(transferPlatforms[0].transform.position.y + transferPlatforms[0].transform.lossyScale.y / 2 + transform.lossyScale.y), 
-						transferPlatforms[0].transform.position.z), false));
+						(shadowShiftOutPlatforms[0].transform.position.y + shadowShiftOutPlatforms[0].transform.lossyScale.y / 2 + transform.lossyScale.y), 
+						shadowShiftOutPlatforms[0].transform.position.z), false));
 				else if(GetComponent<PlayerShadowCast>().lightSourceAligned.xAxisMovement)
-					StartCoroutine(CameraPanOut(playerShadow.transform.position, new Vector3(transferPlatforms[0].transform.position.x, 
-						(transferPlatforms[0].transform.position.y + transferPlatforms[0].transform.lossyScale.y / 2 + transform.lossyScale.y), 
+					StartCoroutine(CameraPanOut(playerShadow.transform.position, new Vector3(shadowShiftOutPlatforms[0].transform.position.x, 
+						(shadowShiftOutPlatforms[0].transform.position.y + shadowShiftOutPlatforms[0].transform.lossyScale.y / 2 + transform.lossyScale.y), 
 						playerShadow.transform.position.z), false));
 			}
 		}
@@ -321,17 +316,17 @@ public class PlayerMovement : MonoBehaviour
 	{
 		if(Input.GetKeyDown(KeyCode.S))
 		{
-			if(currentPlatformIndex + 1 < transferPlatforms.Count)
+			if(currentPlatformIndex + 1 < shadowShiftOutPlatforms.Count)
 			{
 				currentPlatformIndex += 1;
 
 				if(GetComponent<PlayerShadowCast>().lightSourceAligned.zAxisMovement)
-					StartCoroutine(CameraPanOut(transitionFollow.transform.position, new Vector3(playerShadow.transform.position.x, 
-						(transferPlatforms[currentPlatformIndex].transform.position.y + transferPlatforms[currentPlatformIndex].transform.lossyScale.y / 2 + transform.lossyScale.y), 
-						transferPlatforms[currentPlatformIndex].transform.position.z), false));
+					StartCoroutine(CameraPanOut(shadowShiftFollowObject.transform.position, new Vector3(playerShadow.transform.position.x, 
+						(shadowShiftOutPlatforms[currentPlatformIndex].transform.position.y + shadowShiftOutPlatforms[currentPlatformIndex].transform.lossyScale.y / 2 + transform.lossyScale.y), 
+						shadowShiftOutPlatforms[currentPlatformIndex].transform.position.z), false));
 				else if(GetComponent<PlayerShadowCast>().lightSourceAligned.xAxisMovement)
-					StartCoroutine(CameraPanOut(transitionFollow.transform.position, new Vector3(transferPlatforms[currentPlatformIndex].transform.position.x, 
-						(transferPlatforms[currentPlatformIndex].transform.position.y + transferPlatforms[currentPlatformIndex].transform.lossyScale.y / 2 + transform.lossyScale.y), 
+					StartCoroutine(CameraPanOut(shadowShiftFollowObject.transform.position, new Vector3(shadowShiftOutPlatforms[currentPlatformIndex].transform.position.x, 
+						(shadowShiftOutPlatforms[currentPlatformIndex].transform.position.y + shadowShiftOutPlatforms[currentPlatformIndex].transform.lossyScale.y / 2 + transform.lossyScale.y), 
 						playerShadow.transform.position.z), false));
 			}
 		}
@@ -343,35 +338,35 @@ public class PlayerMovement : MonoBehaviour
 				currentPlatformIndex -= 1;
 
 				if(GetComponent<PlayerShadowCast>().lightSourceAligned.zAxisMovement)
-					StartCoroutine(CameraPanOut(transitionFollow.transform.position, new Vector3(playerShadow.transform.position.x, 
-						(transferPlatforms[currentPlatformIndex].transform.position.y + transferPlatforms[currentPlatformIndex].transform.lossyScale.y / 2 + transform.lossyScale.y), 
-						transferPlatforms[currentPlatformIndex].transform.position.z), false));
+					StartCoroutine(CameraPanOut(shadowShiftFollowObject.transform.position, new Vector3(playerShadow.transform.position.x, 
+						(shadowShiftOutPlatforms[currentPlatformIndex].transform.position.y + shadowShiftOutPlatforms[currentPlatformIndex].transform.lossyScale.y / 2 + transform.lossyScale.y), 
+						shadowShiftOutPlatforms[currentPlatformIndex].transform.position.z), false));
 				else if(GetComponent<PlayerShadowCast>().lightSourceAligned.xAxisMovement)
-					StartCoroutine(CameraPanOut(transitionFollow.transform.position, new Vector3(transferPlatforms[currentPlatformIndex].transform.position.x, 
-						(transferPlatforms[currentPlatformIndex].transform.position.y + transferPlatforms[currentPlatformIndex].transform.lossyScale.y / 2 + transform.lossyScale.y), 
+					StartCoroutine(CameraPanOut(shadowShiftFollowObject.transform.position, new Vector3(shadowShiftOutPlatforms[currentPlatformIndex].transform.position.x, 
+						(shadowShiftOutPlatforms[currentPlatformIndex].transform.position.y + shadowShiftOutPlatforms[currentPlatformIndex].transform.lossyScale.y / 2 + transform.lossyScale.y), 
 						playerShadow.transform.position.z), false));
 			}
 		}
 
-		if(Input.GetButtonDown("Fire3"))
+		if(Input.GetButtonDown("Shadowshift"))
 		{
 			FinishShiftOut();
 		}
 
 		if(Input.GetButtonDown("Cancel"))
 		{
-			StartCoroutine(CameraPanInMultiExit(transitionFollow.transform.position, playerShadow.transform.position, -GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection * camControl.distanceToPlayer2D));
+			StartCoroutine(CameraPanInMultiExit(shadowShiftFollowObject.transform.position, playerShadow.transform.position, -GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection * camControl.distanceToPlayer2D));
 			StartCoroutine(FinishShiftInMultiExit());
 		}
 	}
 
 	public IEnumerator CameraPanIn(Vector3 start, Vector3 target, Vector3 offset)
 	{
-		shiftingIn = true;
+		shadowShiftingIn = true;
 		CameraControl.cameraIsPanning = true;
 
-		if(transitionFollow == null)
-			transitionFollow = Instantiate(transitionFollowPrefab, start, transitionFollowPrefab.transform.rotation);
+		if(shadowShiftFollowObject == null)
+			shadowShiftFollowObject = Instantiate(shadowShiftFollowObjectPrefab, start, shadowShiftFollowObjectPrefab.transform.rotation);
 
 		// Camera transition inwards to the targeted location
 		cameraPanInStartPos = mainCamera.transform.position;
@@ -380,28 +375,28 @@ public class PlayerMovement : MonoBehaviour
 		float panStart = Time.time;
 		while(Time.time < panStart + camControl.cameraPanDuration)
 		{
-			transitionFollow.transform.position = Vector3.Lerp(start, target, (Time.time - panStart)/camControl.cameraPanDuration);
+			shadowShiftFollowObject.transform.position = Vector3.Lerp(start, target, (Time.time - panStart)/camControl.cameraPanDuration);
 			mainCamera.transform.position = Vector3.Lerp(cameraPanInStartPos, target + offset, (Time.time - panStart)/camControl.cameraPanDuration);
 			yield return null;
 		}
 		CameraControl.cameraIsPanning = false;
-		Destroy(transitionFollow);
+		Destroy(shadowShiftFollowObject);
 	}
 
 	public IEnumerator CameraPanOut(Vector3 start, Vector3 target, bool finishing)
 	{
-		shiftingOut = true;
+		shadowShiftingOut = true;
 		CameraControl.cameraIsPanning = true;
 
-		if(transitionFollow == null)
-			transitionFollow = Instantiate(transitionFollowPrefab, start, transitionFollowPrefab.transform.rotation);
+		if(shadowShiftFollowObject == null)
+			shadowShiftFollowObject = Instantiate(shadowShiftFollowObjectPrefab, start, shadowShiftFollowObjectPrefab.transform.rotation);
 
 		// Camera transition outwards from the wall
 		Vector3 startPos = mainCamera.transform.position;
 		float panStart = Time.time;
 		while(Time.time < panStart + camControl.cameraPanDuration)
 		{
-			transitionFollow.transform.position = Vector3.Lerp(start, target, (Time.time - panStart)/camControl.cameraPanDuration);
+			shadowShiftFollowObject.transform.position = Vector3.Lerp(start, target, (Time.time - panStart)/camControl.cameraPanDuration);
 			mainCamera.transform.position = Vector3.Lerp(startPos, target + cameraRelativeDirectionOffset * camControl.distanceToPlayer3D, (Time.time - panStart)/camControl.cameraPanDuration);
 
 			yield return null;
@@ -416,14 +411,14 @@ public class PlayerMovement : MonoBehaviour
     {
         CameraControl.cameraIsPanning = true;
 
-        if (transitionFollow == null)
-            transitionFollow = Instantiate(transitionFollowPrefab, start, transitionFollowPrefab.transform.rotation);
+        if (shadowShiftFollowObject == null)
+            shadowShiftFollowObject = Instantiate(shadowShiftFollowObjectPrefab, start, shadowShiftFollowObjectPrefab.transform.rotation);
         Vector3 startPos = mainCamera.transform.position;
 
         float panStart = Time.time;
         while (Time.time < panStart + camControl.cameraPanDuration)
         {
-            transitionFollow.transform.position = Vector3.Lerp(start, target, (Time.time - panStart) / camControl.cameraPanDuration);
+            shadowShiftFollowObject.transform.position = Vector3.Lerp(start, target, (Time.time - panStart) / camControl.cameraPanDuration);
             mainCamera.transform.position = Vector3.Lerp(startPos, target + offset, (Time.time - panStart) / camControl.cameraPanDuration);
             yield return null;
         }
@@ -434,7 +429,7 @@ public class PlayerMovement : MonoBehaviour
 	{
 		yield return new WaitForSeconds(camControl.cameraPanDuration);
 
-		shiftingIn = false;
+		shadowShiftingIn = false;
 		transform.parent = null;
 		playerShadow.transform.parent = null;
 		in3DSpace = false;
@@ -448,9 +443,9 @@ public class PlayerMovement : MonoBehaviour
 	public IEnumerator FinishShiftInMultiExit()
 	{
 		yield return new WaitForSeconds(camControl.cameraPanDuration);
-        Destroy(transitionFollow);
+        Destroy(shadowShiftFollowObject);
 		currentPlatformIndex = 0;
-		shiftingOut = false;
+		shadowShiftingOut = false;
 
 		transform.parent = null;
 		playerShadow.transform.parent = null;
@@ -465,9 +460,9 @@ public class PlayerMovement : MonoBehaviour
 	public void FinishShiftOut()
 	{
 		currentPlatformIndex = 0;
-		shiftingOut = false;
-		transform.position = transitionFollow.transform.position;
-		Destroy(transitionFollow);
+		shadowShiftingOut = false;
+		transform.position = shadowShiftFollowObject.transform.position;
+		Destroy(shadowShiftFollowObject);
 
 		transform.parent = null;
 		playerShadow.transform.parent = null;
@@ -481,13 +476,13 @@ public class PlayerMovement : MonoBehaviour
 	public void ShiftOutSetup()
 	{
 		// Get a list of gameobjects from the PlayerShadowCollider script on the player shadow
-		transferPlatforms = playerShadow.GetComponent<PlayerShadowCollider>().GetTransferPlatforms();
+		shadowShiftOutPlatforms = playerShadow.GetComponent<PlayerShadowCollider>().GetTransferPlatforms();
 
 		// If there are platforms to which the player can transfer out to, sort the platforms by their distance from the player
 		// and then transfer the player character to the closest one
-		if(transferPlatforms.Count != 0)
+		if(shadowShiftOutPlatforms.Count != 0)
 		{
-			transferPlatforms.Sort(delegate(GameObject t1, GameObject t2) {
+			shadowShiftOutPlatforms.Sort(delegate(GameObject t1, GameObject t2) {
 				return Vector3.Distance(t1.transform.position, playerShadow.transform.position).CompareTo(Vector3.Distance(t2.transform.position, playerShadow.transform.position));
 			});
 		}

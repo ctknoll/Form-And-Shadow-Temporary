@@ -1364,15 +1364,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4309062564736326, guid: f1de96659f174ef4aa74b930e7ef9a46, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 6
+      value: 7.86
       objectReference: {fileID: 0}
     - target: {fileID: 4309062564736326, guid: f1de96659f174ef4aa74b930e7ef9a46, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4309062564736326, guid: f1de96659f174ef4aa74b930e7ef9a46, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.5
+      value: 18.34
       objectReference: {fileID: 0}
     - target: {fileID: 4309062564736326, guid: f1de96659f174ef4aa74b930e7ef9a46, type: 2}
       propertyPath: m_LocalRotation.x
@@ -9519,6 +9519,11 @@ Transform:
   m_Father: {fileID: 255812300}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: -90.00001, z: 0}
+--- !u!1 &797387054 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1473540564990710, guid: 8b9826001ef26b94e83bef82c598e807,
+    type: 2}
+  m_PrefabInternal: {fileID: 1105714211}
 --- !u!1 &807734449
 GameObject:
   m_ObjectHideFlags: 0
@@ -15793,6 +15798,11 @@ Prefab:
       propertyPath: scoreText
       value: 
       objectReference: {fileID: 1448959109}
+    - target: {fileID: 114981474573350428, guid: 51bb5029f199bc6438c85f8250fef858,
+        type: 2}
+      propertyPath: shadowMeldResourceObject
+      value: 
+      objectReference: {fileID: 797387054}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 51bb5029f199bc6438c85f8250fef858, type: 2}
   m_IsPrefabParent: 0
@@ -23228,16 +23238,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 114282443917408160, guid: b777b85c09404584bb8ea35afae5c060,
+    - target: {fileID: 114973802022037786, guid: b777b85c09404584bb8ea35afae5c060,
         type: 2}
-      propertyPath: playerShadowCollider
+      propertyPath: mainCamera
       value: 
-      objectReference: {fileID: 1168302945}
-    - target: {fileID: 114475491659319378, guid: b777b85c09404584bb8ea35afae5c060,
-        type: 2}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 1699149152}
+      objectReference: {fileID: 316942089}
     - target: {fileID: 114802687816552978, guid: b777b85c09404584bb8ea35afae5c060,
         type: 2}
       propertyPath: playerShadow
@@ -23245,22 +23250,19 @@ Prefab:
       objectReference: {fileID: 1168302945}
     - target: {fileID: 114802687816552978, guid: b777b85c09404584bb8ea35afae5c060,
         type: 2}
-      propertyPath: camera
+      propertyPath: mainCamera
       value: 
       objectReference: {fileID: 316942089}
-    - target: {fileID: 114973802022037786, guid: b777b85c09404584bb8ea35afae5c060,
+    - target: {fileID: 114475491659319378, guid: b777b85c09404584bb8ea35afae5c060,
         type: 2}
-      propertyPath: camera
+      propertyPath: target
       value: 
-      objectReference: {fileID: 316942089}
-    - target: {fileID: 4173897930357246, guid: b777b85c09404584bb8ea35afae5c060, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4173897930357246, guid: b777b85c09404584bb8ea35afae5c060, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.6
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1699149152}
+    - target: {fileID: 114282443917408160, guid: b777b85c09404584bb8ea35afae5c060,
+        type: 2}
+      propertyPath: playerShadowCollider
+      value: 
+      objectReference: {fileID: 1168302945}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b777b85c09404584bb8ea35afae5c060, type: 2}
   m_IsPrefabParent: 0
