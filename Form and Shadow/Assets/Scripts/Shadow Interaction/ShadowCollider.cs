@@ -157,8 +157,8 @@ public class ShadowCollider : MonoBehaviour {
 		// Creates a spike deathzone the player can fall into
 		gameObject.AddComponent<BoxCollider>();
 		gameObject.AddComponent<Killzone>();
-		gameObject.GetComponent<BoxCollider>().size = gameObject.transform.parent.GetComponent<BoxCollider>().size;
-		gameObject.GetComponent<BoxCollider>().isTrigger = true;
+        gameObject.GetComponent<BoxCollider>().size = gameObject.transform.parent.GetComponent<BoxCollider>().bounds.size;
+        gameObject.GetComponent<BoxCollider>().isTrigger = true;
 	}
 
 	public void CreateBasicShadowCollider()

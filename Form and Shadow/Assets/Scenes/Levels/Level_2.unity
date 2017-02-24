@@ -4813,6 +4813,11 @@ Transform:
   m_PrefabParentObject: {fileID: 4178132589084428, guid: f80f64dd3a4874248a816f253379048e,
     type: 2}
   m_PrefabInternal: {fileID: 1552320641}
+--- !u!1 &352283779 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1473540564990710, guid: 8b9826001ef26b94e83bef82c598e807,
+    type: 2}
+  m_PrefabInternal: {fileID: 77021109}
 --- !u!4 &355388913 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4388070445815866, guid: 21fbee50eb9639940923b287375f379b,
@@ -14775,14 +14780,14 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114981474573350428, guid: 51bb5029f199bc6438c85f8250fef858,
         type: 2}
-      propertyPath: interactText
-      value: 
-      objectReference: {fileID: 1525233552}
-    - target: {fileID: 114981474573350428, guid: 51bb5029f199bc6438c85f8250fef858,
-        type: 2}
       propertyPath: scoreText
       value: 
       objectReference: {fileID: 1454463033}
+    - target: {fileID: 114981474573350428, guid: 51bb5029f199bc6438c85f8250fef858,
+        type: 2}
+      propertyPath: shadowMeldResourceObject
+      value: 
+      objectReference: {fileID: 352283779}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 51bb5029f199bc6438c85f8250fef858, type: 2}
   m_IsPrefabParent: 0
@@ -17064,11 +17069,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 425b49156c4b2e844a248daa0a442500, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1525233552 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1285322772629148, guid: 8b9826001ef26b94e83bef82c598e807,
-    type: 2}
-  m_PrefabInternal: {fileID: 77021109}
 --- !u!1001 &1533311822
 Prefab:
   m_ObjectHideFlags: 0

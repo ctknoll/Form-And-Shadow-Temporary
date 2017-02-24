@@ -38,22 +38,15 @@ public class ShadowCast : MonoBehaviour {
 
 	void Update () 
 	{
-        if (shadowCastMode != UnityEngine.Rendering.ShadowCastingMode.Off && meshType != MeshType.ENEMY_TOAD)
-            Check2DShadowsOnly();
-        else
+        if (shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.Off)
             Check2DInvisibility();
-
-        if(GameController.playerShadowMelded)
-        {
-            CheckShadowmeldLayerandCollision();
-        }
+        else if (meshType == MeshType.ENEMY_TOAD)
+            return;
         else
-        {
-            gameObject.layer = startingLayer;
-        }
-	}
+            Check2DShadowsOnly();
+    }
 
-	public void CastShadow(Vector3 direction)
+    public void CastShadow(Vector3 direction)
 	{
 		RaycastHit hit;
         if (Physics.Raycast(transform.position, direction, out hit, Mathf.Infinity, 1 << 10))
@@ -107,8 +100,10 @@ public class ShadowCast : MonoBehaviour {
         {
             if (meshException)
                 transOffset = ((GetComponent<MeshCollider>().bounds.size.z / 2) * castDirection);
-            else if (meshType == ShadowCast.MeshType.PROPELLOR_PLATFORM)
+            else if (meshType == MeshType.PROPELLOR_PLATFORM)
                 transOffset = ((transform.lossyScale.z / 2) * castDirection);
+            else if (meshType == MeshType.SPIKES)
+                transOffset = ((GetComponent<BoxCollider>().bounds.size.z / 2) * castDirection);
             else
                 transOffset = ((transform.lossyScale.z / 2) * castDirection);
 
@@ -117,29 +112,19 @@ public class ShadowCast : MonoBehaviour {
         {
             if (meshException)
                 transOffset = ((GetComponent<MeshCollider>().bounds.size.x / 2) * castDirection);
-            else if (meshType == ShadowCast.MeshType.PROPELLOR_PLATFORM)
+            else if (meshType == MeshType.PROPELLOR_PLATFORM)
                 transOffset = ((transform.lossyScale.z / 2) * castDirection);
+            else if (meshType == MeshType.SPIKES)
+                transOffset = ((GetComponent<BoxCollider>().bounds.size.x / 2) * castDirection);
             else
                 transOffset = ((transform.lossyScale.x / 2) * castDirection);
         }
         return transOffset;
     }
 
-    public void CheckShadowmeldLayerandCollision()
-    {
-        switch (meshType)
-        {
-            case MeshType.NO_SHADOW:
-                gameObject.layer = LayerMask.NameToLayer("Shadowmeld Ignore");
-                break;
-            default:
-                break;
-        }
-    }
-
 	public void Check2DShadowsOnly()
 	{
-        if (!PlayerMovement.in3DSpace && !PlayerMovement.shiftingOut)
+        if (!PlayerMovement.in3DSpace && !PlayerMovement.shadowShiftingOut)
         {
             if (singleMesh)
                 GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
@@ -169,7 +154,7 @@ public class ShadowCast : MonoBehaviour {
     }
     public void Check2DInvisibility()
     {
-        if(!PlayerMovement.in3DSpace && !PlayerMovement.shiftingOut)
+        if(!PlayerMovement.in3DSpace && !PlayerMovement.shadowShiftingOut)
         {
             if (singleMesh)
                 GetComponent<MeshRenderer>().enabled = false;

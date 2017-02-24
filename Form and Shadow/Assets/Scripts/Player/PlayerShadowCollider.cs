@@ -5,13 +5,6 @@ using System.Collections.Generic;
 public class PlayerShadowCollider : MonoBehaviour {
 	public GameObject player;
 
-	ShadowCast shadowCast;
-
-	void Start()
-	{
-		shadowCast = GetComponentInParent<ShadowCast>();
-	}
-
 	void Update()
 	{
 		// If the player is moving in the 3D space, force the shadow collider to follow the main player character

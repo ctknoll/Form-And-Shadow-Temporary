@@ -36,6 +36,22 @@ public class EnemyToad : MonoBehaviour {
         }
 	}
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            other.gameObject.transform.parent = gameObject.transform;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            other.gameObject.transform.parent = null;
+        }
+    }
+
     public Vector3 GetRelativePosition(GameObject targetObj)
     {
         Vector3 relativePosition = targetObj.transform.position + new Vector3(0, targetObj.transform.GetChild(0).transform.lossyScale.y / 2 + transform.lossyScale.y, 0);

@@ -32,7 +32,7 @@ public class PlatformLERPPressureSwitch : PressureSwitch
     // Update is called once per frame
     new void Update()
     {
-        Debug.Log(moveTime);
+
         if (pressed && !locked && !inMotion)
         {
             Debug.Log("Here");

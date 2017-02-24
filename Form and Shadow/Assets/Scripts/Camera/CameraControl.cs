@@ -52,7 +52,7 @@ public class CameraControl : MonoBehaviour
     }
     void LateUpdate()
     {
-		if(!cameraIsPanning && !PlayerMovement.shiftingOut && !PlayerMovement.shiftingIn)
+		if(!cameraIsPanning && !PlayerMovement.shadowShiftingOut && !PlayerMovement.shadowShiftingIn)
 		{
 			if (PlayerMovement.in3DSpace)
 	        {
@@ -80,13 +80,13 @@ public class CameraControl : MonoBehaviour
 		else
 		{
 			if(PlayerMovement.in3DSpace)
-				transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionFollow.transform);
+				transform.LookAt(target3D.GetComponent<PlayerMovement>().shadowShiftFollowObject.transform);
 			else if(!PlayerMovement.in3DSpace)
 			{
-				if(target3D.GetComponent<PlayerMovement>().transitionFollow)
-					transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionFollow.transform);
+				if(target3D.GetComponent<PlayerMovement>().shadowShiftFollowObject)
+					transform.LookAt(target3D.GetComponent<PlayerMovement>().shadowShiftFollowObject.transform);
 				else
-					transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionFollow.transform);
+					transform.LookAt(target3D.GetComponent<PlayerMovement>().shadowShiftFollowObject.transform);
 			}
 		}
     }
