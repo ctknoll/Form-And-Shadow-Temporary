@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3731199, g: 0.3807403, b: 0.35872707, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1279,6 +1279,16 @@ Prefab:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114802687816552978, guid: b777b85c09404584bb8ea35afae5c060,
+        type: 2}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 316942089}
+    - target: {fileID: 114973802022037786, guid: b777b85c09404584bb8ea35afae5c060,
+        type: 2}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 316942089}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b777b85c09404584bb8ea35afae5c060, type: 2}
   m_IsPrefabParent: 0
@@ -9228,7 +9238,7 @@ Prefab:
     - target: {fileID: 114139901888953992, guid: d48c8e6a75f5f284cba6b022fb3e4f82,
         type: 2}
       propertyPath: meshType
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d48c8e6a75f5f284cba6b022fb3e4f82, type: 2}
@@ -10142,7 +10152,7 @@ Prefab:
     - target: {fileID: 114139901888953992, guid: d48c8e6a75f5f284cba6b022fb3e4f82,
         type: 2}
       propertyPath: meshType
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114139901888953992, guid: d48c8e6a75f5f284cba6b022fb3e4f82,
         type: 2}
@@ -12626,7 +12636,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canInteract: 0
-  active: 0
   pressed: 0
   platforms:
   - {fileID: 99245410}
@@ -17686,7 +17695,7 @@ Prefab:
     - target: {fileID: 114139901888953992, guid: d48c8e6a75f5f284cba6b022fb3e4f82,
         type: 2}
       propertyPath: meshType
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4683592134496282, guid: d48c8e6a75f5f284cba6b022fb3e4f82, type: 2}
       propertyPath: m_LocalScale.x
@@ -19497,6 +19506,11 @@ Prefab:
       propertyPath: m_Name
       value: 4x4flatspike (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 114462174969897182, guid: 5320f0f773953974fbf1fdbdd9469426,
+        type: 2}
+      propertyPath: meshType
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5320f0f773953974fbf1fdbdd9469426, type: 2}
   m_IsPrefabParent: 0
@@ -21029,7 +21043,7 @@ Prefab:
     - target: {fileID: 114139901888953992, guid: d48c8e6a75f5f284cba6b022fb3e4f82,
         type: 2}
       propertyPath: meshType
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114139901888953992, guid: d48c8e6a75f5f284cba6b022fb3e4f82,
         type: 2}
