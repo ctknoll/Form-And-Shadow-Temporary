@@ -20,9 +20,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4741417413382588}
   - component: {fileID: 114984647711134234}
+  - component: {fileID: 114985311318582198}
+  - component: {fileID: 64742961727099290}
   - component: {fileID: 33104391105414284}
   - component: {fileID: 23108923543360952}
-  - component: {fileID: 64742961727099290}
   m_Layer: 12
   m_Name: Enemy_Toad_Mesh
   m_TagString: Untagged
@@ -39,6 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4515009982340634}
   - component: {fileID: 114459652579524722}
+  - component: {fileID: 65245226359144600}
   m_Layer: 12
   m_Name: Enemy_Toad
   m_TagString: Untagged
@@ -53,7 +55,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1346348854411718}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.44, y: 6, z: 14}
+  m_LocalPosition: {x: -3.34, y: 5, z: 7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4741417413382588}
@@ -80,7 +82,7 @@ MeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1111027752625372}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 3
   m_ReceiveShadows: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -125,6 +127,18 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: f4bb49bcbd29a8e439a933fe1a9b4c96, type: 3}
+--- !u!65 &65245226359144600
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1346348854411718}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.6, z: 2}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &114459652579524722
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -137,7 +151,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpObjects:
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -159,3 +172,15 @@ MonoBehaviour:
   meshException: 1
   meshType: 6
   shadowColliders: []
+--- !u!114 &114985311318582198
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1111027752625372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f6f985af86ce4293528b199111538, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadowMeldObjectType: 5

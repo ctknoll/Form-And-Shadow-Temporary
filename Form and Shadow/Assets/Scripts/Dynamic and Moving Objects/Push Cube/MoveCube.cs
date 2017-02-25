@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 
 public class MoveCube : MonoBehaviour {
-	public bool canInteract;
-	public bool grabbed;
-	[HideInInspector]
-	public GameObject player;
-	[HideInInspector]
-	public Vector3 directionAwayFromPlayer;
+    public bool canInteract;
+    public bool grabbed;
+    public bool blockedAhead;
+    [HideInInspector]
+    public GameObject player;
+    [HideInInspector]
+    public Vector3 directionAwayFromPlayer;
 	private Vector3 startPos;
 
 	void Start()
@@ -26,6 +27,7 @@ public class MoveCube : MonoBehaviour {
 				{
                     GameController.ResetInteractText();
                     grabbed = true;
+                    transform.parent = player.transform;
 					PlayerMovement.isGrabbing = true;
 					PlayerMovement.grabbedObject = gameObject;
 				}
@@ -34,6 +36,7 @@ public class MoveCube : MonoBehaviour {
             if (Input.GetButtonUp("Grab"))
             {
                 grabbed = false;
+                transform.parent = null;
                 PlayerMovement.isGrabbing = false;
                 PlayerMovement.grabbedObject = null;
             }
@@ -44,6 +47,7 @@ public class MoveCube : MonoBehaviour {
             GameController.ResetInteractText();
             transform.position = startPos;
 			grabbed = false;
+            transform.parent = null;
 			PlayerMovement.isGrabbing = false;
 			PlayerMovement.grabbedObject = null;
 		}

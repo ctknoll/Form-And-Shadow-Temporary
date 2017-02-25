@@ -23,7 +23,7 @@ public class ToggleSwitch : MonoBehaviour {
 	// Update is called once per frame
     void OnTriggerStay (Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if(other.gameObject.tag == "Player" && !PlayerMovement.shadowMelded && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
         {
 			if (!pressed) {
 				GameController.SetInteractText ("Press E to toggle this switch");
@@ -51,7 +51,7 @@ public class ToggleSwitch : MonoBehaviour {
 
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && !PlayerMovement.shadowMelded && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
         {
             GameController.ResetInteractText();
         }
