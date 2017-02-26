@@ -22,7 +22,7 @@ public class MovingPlatform : MonoBehaviour {
 			gameObject.transform.GetChild(0).gameObject.GetComponent<Transform>().localScale.z);
 	}
 
-	void OnTriggerStay(Collider other)
+	void OnTriggerEnter(Collider other)
 	{
 		if(other.gameObject.tag == "Player")
 		{
@@ -42,7 +42,7 @@ public class MovingPlatform : MonoBehaviour {
 
 	void FixedUpdate () 
 	{
-		if(!PlayerMovement.shiftingIn && !PlayerMovement.shiftingOut)
+		if(!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
 		{
 			personalTime += slowValue * Time.deltaTime;
 		}

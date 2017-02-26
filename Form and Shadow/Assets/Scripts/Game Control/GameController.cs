@@ -6,26 +6,40 @@ public class GameController : MonoBehaviour {
 	public static bool resetting;
 	public static int score;
     public static GameObject interactText;
-    public GameObject scoreText;
+    private GameObject scoreText;
+    private GameObject shadowMeldResourceObject;
+    
 	private GameObject player;
-	private GameObject playerShadow;
+    private GameObject playerShadow;
 
 	void Start () 
 	{
 		player = GameObject.Find("Player_Character");
 		playerShadow = GameObject.Find("Player_Shadow");
         interactText = GameObject.Find("Interact_Text");
+        scoreText = GameObject.Find("Score_Text");
+        shadowMeldResourceObject = GameObject.Find("Shadowmeld_Resource");
 	}
 
     void Update()
     {
         scoreText.GetComponent<Text>().text = "Score: " + score;
+        ShadowmeldUIControl();
+    }
+
+    void ShadowmeldUIControl()
+    {
+        if (PlayerMovement.shadowMelded)
+            shadowMeldResourceObject.GetComponent<Image>().color = Color.grey;
+        else
+            shadowMeldResourceObject.GetComponent<Image>().color = Color.white;
+
+        shadowMeldResourceObject.GetComponent<Image>().fillAmount = player.GetComponent<PlayerMovement>().shadowMeldResource / 100;
     }
 
     public IEnumerator ResetLevel()
 	{
 		resetting = true;
-		yield return new WaitForSeconds(0.01f);
 
 		// Reset the player's position
 		if(!PlayerMovement.in3DSpace)
@@ -36,8 +50,14 @@ public class GameController : MonoBehaviour {
 			player.GetComponent<PlayerMovement>().controller = player.GetComponent<CharacterController>();
 		}
 		player.transform.position = PlayerMovement.playerStartPosition;
-		resetting = false;
 
+        //player.GetComponent<PlayerMovement>().ExitShadowMeld();
+        player.GetComponent<PlayerMovement>().shadowMeldResource = 100;
+        player.GetComponent<PlayerMovement>().shadowMeldVFX.SetActive(false);
+        player.layer = LayerMask.NameToLayer("Form");
+        yield return new WaitForSeconds(1.0f);
+        resetting = false;
+        PlayerMovement.shadowMelded = false;
 	}
 
     public static void SetInteractText(string intText)
