@@ -2,6 +2,7 @@
 
 public class LightSourceControl : MonoBehaviour 
 {
+	public Quaternion lightSourceStartRotation;
 	public Vector3 lightSourceDirection;
 
 	public bool zAxisMovement;
@@ -9,7 +10,8 @@ public class LightSourceControl : MonoBehaviour
 
 	void Start ()
 	{
-        lightSourceDirection = transform.forward;
+		lightSourceStartRotation = transform.rotation;
+		lightSourceDirection = transform.forward;
 		CheckLightingDirection();
 	}
 
@@ -36,10 +38,10 @@ public class LightSourceControl : MonoBehaviour
     }
 
     //This function is suboptimal -- it casts EVERY time, creating a lot of unnecesary overhead
-	public void turnLightSource(bool turnCounterClockwise)
+	public void turnLightSource(bool turnClockwise)
     {
         
-		float clockWiseVal = (turnCounterClockwise ? -1 : 1);
+		float clockWiseVal = (turnClockwise ? -1 : 1);
 		transform.Rotate(0, clockWiseVal * 90, 0);
         lightSourceDirection = transform.forward;
         CheckLightingDirection();

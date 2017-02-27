@@ -44,6 +44,13 @@ public class ToggleSwitch : MonoBehaviour {
 					runningTime = 0;
 					if (timerDuration == -1) StartCoroutine (DepressSwitch ());		
 					GameController.ToggleInteractTooltip (false);
+					if (timerDuration == -1) 
+					{
+						pressed = false;
+						runningTime = 0;
+						StartCoroutine (DepressSwitch ());		
+						GameController.ToggleInteractTooltip (false);
+					}
 				}
 			}
         }
