@@ -5,7 +5,15 @@ using System.Collections;
 public class GameController : MonoBehaviour {
 	public static bool resetting;
 	public static int score;
-    public static GameObject interactText;
+
+    private static GameObject w_Tooltip;
+    private static GameObject a_Tooltip;
+    private static GameObject s_Tooltip;
+    private static GameObject d_Tooltip;
+    private static GameObject e_Tooltip;
+    private static GameObject space_Tooltip;
+    private static GameObject shift_Tooltip;
+
     private GameObject scoreText;
     private GameObject shadowMeldResourceObject;
     
@@ -16,8 +24,15 @@ public class GameController : MonoBehaviour {
 	{
 		player = GameObject.Find("Player_Character");
 		playerShadow = GameObject.Find("Player_Shadow");
-        interactText = GameObject.Find("Interact_Text");
         scoreText = GameObject.Find("Score_Text");
+        w_Tooltip = GameObject.Find("W_Tooltip");
+        a_Tooltip = GameObject.Find("A_Tooltip");
+        s_Tooltip = GameObject.Find("S_Tooltip");
+        d_Tooltip = GameObject.Find("D_Tooltip");
+        e_Tooltip = GameObject.Find("E_Tooltip");
+        e_Tooltip.SetActive(false);
+        space_Tooltip = GameObject.Find("Space_Tooltip");
+        shift_Tooltip = GameObject.Find("Shift_Tooltip");
         shadowMeldResourceObject = GameObject.Find("Shadowmeld_Resource");
 	}
 
@@ -29,11 +44,8 @@ public class GameController : MonoBehaviour {
 
     void ShadowmeldUIControl()
     {
-        if (PlayerMovement.shadowMelded)
-            shadowMeldResourceObject.GetComponent<Image>().color = Color.grey;
-        else
-            shadowMeldResourceObject.GetComponent<Image>().color = Color.white;
-
+        shadowMeldResourceObject.SetActive(player.GetComponent<PlayerMovement>().shadowMeldAvailable);
+        shadowMeldResourceObject.GetComponent<Image>().color = Color.magenta;
         shadowMeldResourceObject.GetComponent<Image>().fillAmount = player.GetComponent<PlayerMovement>().shadowMeldResource / 100;
     }
 
@@ -60,17 +72,56 @@ public class GameController : MonoBehaviour {
         PlayerMovement.shadowMelded = false;
 	}
 
-    public static void SetInteractText(string intText)
+    public static void Toggle3DMovementTooltips(bool on)
     {
-        interactText.GetComponent<Text>().text = intText;
+        w_Tooltip.SetActive(on);
+        a_Tooltip.SetActive(on);
+        s_Tooltip.SetActive(on);
+        d_Tooltip.SetActive(on);
+        space_Tooltip.SetActive(on);
+        shift_Tooltip.SetActive(on);
     }
 
-    public static void ResetInteractText()
+    public static void ToggleGrabbingTooltips(bool on)
     {
-        interactText.GetComponent<Text>().text = "";
+        w_Tooltip.SetActive(on);
+        s_Tooltip.SetActive(on);
+        a_Tooltip.SetActive(!on);
+        d_Tooltip.SetActive(!on);
+        e_Tooltip.SetActive(!on);
+        space_Tooltip.SetActive(!on);
+        shift_Tooltip.SetActive(!on);
     }
 
-	public static void ScoreIncrement(int amount)
+    public static void Toggle2DMovementTooltips(bool on)
+    {
+        w_Tooltip.SetActive(!on);
+        s_Tooltip.SetActive(!on);
+        a_Tooltip.SetActive(on);
+        d_Tooltip.SetActive(on);
+        space_Tooltip.SetActive(on);
+    }
+
+    public static void ToggleShadowShiftOutTooltips(bool on)
+    {
+        w_Tooltip.SetActive(on);
+        s_Tooltip.SetActive(on);
+        a_Tooltip.SetActive(!on);
+        d_Tooltip.SetActive(!on);
+        space_Tooltip.SetActive(!on);
+    }
+
+    public static void ToggleInteractTooltip(bool on)
+    {
+        e_Tooltip.SetActive(on);
+    }
+
+    public static void ToggleShadowShiftInTooltip(bool on)
+    {
+        shift_Tooltip.SetActive(on);
+    }
+
+    public static void ScoreIncrement(int amount)
 	{
 		score += amount;
 	}

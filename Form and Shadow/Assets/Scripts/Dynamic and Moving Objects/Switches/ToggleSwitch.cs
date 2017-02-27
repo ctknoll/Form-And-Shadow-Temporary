@@ -26,26 +26,30 @@ public class ToggleSwitch : MonoBehaviour {
         if(other.gameObject.tag == "Player" && !PlayerMovement.shadowMelded && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
         {
 			if (!pressed) {
-				GameController.SetInteractText ("Press E to toggle this switch");
+                GameController.ToggleInteractTooltip(true);
 				if (Input.GetButtonDown ("Grab")) 
 				{
 					pressed = true;
 					runningTime = timerDuration;
 					StartCoroutine (PressSwitch ());
 					if (timerDuration >= 0) StartCoroutine (DepressSwitch ());
-					GameController.SetInteractText ("");
+					GameController.ToggleInteractTooltip (false);
 				}
 			} 
 			else 
 			{
 				if (Input.GetButtonDown ("Grab")) 
 				{
+					pressed = false;
+					runningTime = 0;
+					if (timerDuration == -1) StartCoroutine (DepressSwitch ());		
+					GameController.ToggleInteractTooltip (false);
 					if (timerDuration == -1) 
 					{
 						pressed = false;
 						runningTime = 0;
 						StartCoroutine (DepressSwitch ());		
-						GameController.SetInteractText ("");
+						GameController.ToggleInteractTooltip (false);
 					}
 				}
 			}
@@ -56,7 +60,7 @@ public class ToggleSwitch : MonoBehaviour {
     {
         if (other.gameObject.tag == "Player" && !PlayerMovement.shadowMelded && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
         {
-            GameController.ResetInteractText();
+            GameController.ToggleInteractTooltip(false);
         }
     }
 
