@@ -4,12 +4,25 @@ using System.Collections.Generic;
 
 public class PlayerShadowCollider : MonoBehaviour {
 	public GameObject player;
+    public Vector3 transformOffset;
+    public Transform wallTransform;
+    public bool zAxisMovement;
 
-	void Update()
+    void Update()
 	{
-		// If the player is moving in the 3D space, force the shadow collider to follow the main player character
-		if(PlayerMovement.in3DSpace)
+        // If the player is moving in the 3D space, force the shadow collider to follow the main player character
+        if (PlayerMovement.in3DSpace && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
 			FollowPlayer();
+        else
+        {
+            if(wallTransform != null)
+            {
+                if (zAxisMovement)
+                    transform.position = new Vector3(transform.position.x, transform.position.y, wallTransform.position.z + transformOffset.z);
+                else
+                    transform.position = new Vector3(wallTransform.position.x + transformOffset.x, transform.position.y, transform.position.z);
+            }
+        }
 	}
 
 	public void FollowPlayer()

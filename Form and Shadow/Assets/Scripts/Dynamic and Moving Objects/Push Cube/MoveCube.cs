@@ -22,11 +22,12 @@ public class MoveCube : MonoBehaviour {
 		{
             if (!grabbed)
 			{
-                GameController.SetInteractText("Hold E to grab this cube from this side");
-                if (Input.GetButtonDown("Grab"))
-				{
-                    GameController.ResetInteractText();
+                GameController.ToggleInteractTooltip(true);
+                if (Input.GetButton("Grab"))
+                {
+                    GameController.ToggleInteractTooltip(false);
                     grabbed = true;
+                    player.transform.rotation = Quaternion.LookRotation(directionAwayFromPlayer, Vector3.up);
                     transform.parent = player.transform;
 					PlayerMovement.isGrabbing = true;
 					PlayerMovement.grabbedObject = gameObject;
@@ -44,7 +45,7 @@ public class MoveCube : MonoBehaviour {
 
 		if(GameController.resetting)
 		{
-            GameController.ResetInteractText();
+            GameController.ToggleInteractTooltip(false);
             transform.position = startPos;
 			grabbed = false;
             transform.parent = null;

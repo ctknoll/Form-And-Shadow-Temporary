@@ -8,14 +8,11 @@ public class ShadowCast : MonoBehaviour {
     public MeshType meshType;
 
     public List<GameObject> shadowColliders = new List<GameObject>();
-
-    private LayerMask startingLayer;
     private bool singleMesh;
 	private UnityEngine.Rendering.ShadowCastingMode shadowCastMode;
 
 	void Start()
 	{
-        startingLayer = gameObject.layer;
 		// Used to differentiate between 3D objects with multiple mesh renderers childed under it (like spikes)
 		// and single objects with one master mesh renderer
 		singleMesh = GetComponent<MeshRenderer>();
