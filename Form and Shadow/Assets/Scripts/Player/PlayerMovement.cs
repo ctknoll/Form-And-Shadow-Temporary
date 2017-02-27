@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class PlayerMovement : MonoBehaviour
 {
     public static Vector3 playerStartPosition;
+	public static Vector3 levelStartPosition;
     public static bool in3DSpace;
     public static bool shadowShiftingOut;
     public static bool shadowShiftingIn;
@@ -55,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
     {
 
         playerStartPosition = transform.position;
+		levelStartPosition = transform.position;
         in3DSpace = true;
         shadowShiftingOut = false;
         shadowShiftingIn = false;
@@ -72,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
             CheckPlayerMovement();
             CheckShadowshift();
             CheckShadowMeld();
+			CheckMenuAndReset();
         }
     }
 
@@ -146,6 +149,22 @@ public class PlayerMovement : MonoBehaviour
                 shadowMeldResource += shadowMeldResourceRegen * Time.deltaTime;
         }
     }
+
+	void CheckMenuAndReset()
+	{
+		if (Input.GetButtonDown ("Reset") && !shadowShiftingIn && !shadowShiftingOut) 
+		{
+			playerStartPosition = levelStartPosition;
+			foreach(Transform child in GameObject.Find("Lighting").transform)
+			{
+				LightSourceControl light = child.GetComponent<LightSourceControl>();
+				child.rotation = light.lightSourceStartRotation; 
+				light.lightSourceDirection = child.transform.forward;
+				light.CheckLightingDirection();
+			}
+			StartCoroutine(GameObject.Find ("Game_Controller").GetComponent<GameController>().ResetLevel());
+		}
+	}
 
     void EnterShadowMeld()
     {
@@ -488,4 +507,3 @@ public class PlayerMovement : MonoBehaviour
 		}
 	}
 }
-
