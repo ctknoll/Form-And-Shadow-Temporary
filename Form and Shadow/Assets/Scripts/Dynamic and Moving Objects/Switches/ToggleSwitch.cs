@@ -40,10 +40,13 @@ public class ToggleSwitch : MonoBehaviour {
 			{
 				if (Input.GetButtonDown ("Grab")) 
 				{
-					pressed = false;
-					runningTime = 0;
-					if (timerDuration == -1) StartCoroutine (DepressSwitch ());		
-					GameController.SetInteractText ("");
+					if (timerDuration == -1) 
+					{
+						pressed = false;
+						runningTime = 0;
+						StartCoroutine (DepressSwitch ());		
+						GameController.SetInteractText ("");
+					}
 				}
 			}
         }
