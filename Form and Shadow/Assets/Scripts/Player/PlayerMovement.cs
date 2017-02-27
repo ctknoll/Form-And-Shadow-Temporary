@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class PlayerMovement : MonoBehaviour
 {
+    // Static Variables
     public static Vector3 playerStartPosition;
     public static bool in3DSpace;
     public static bool shadowShiftingOut;
@@ -15,9 +16,10 @@ public class PlayerMovement : MonoBehaviour
     public GameObject movementReference;
     public GameObject shadowShiftFollowObjectPrefab;
     public GameObject shadowShiftFollowObject;
+    public CharacterController controller;
     private List<GameObject> shadowShiftOutPlatforms;
     private CameraControl camControl;
-    public CharacterController controller;
+    private GameController gameController;
 
     [Header("Movement Variables")]
     public float movementSpeed;
@@ -28,16 +30,15 @@ public class PlayerMovement : MonoBehaviour
     public static bool grounded3D;
     private float verticalVelocity;
 
-
-    [Header("Interaction Variables")]
+    // Interaction Variables
     public static bool isGrabbing;
     public static GameObject grabbedObject;
     private Vector3 pushDir;
 
     [Header("Shadowmeld Variables")]
+    public bool shadowMeldAvailable;
     public GameObject shadowMeldVFX;
     public static bool shadowMelded;
-    public float shadowMeldTimeLeft;
     public float shadowMeldResourceCost;
     public float shadowMeldResourceRegen;
     [HideInInspector]
@@ -53,7 +54,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-
         playerStartPosition = transform.position;
         in3DSpace = true;
         shadowShiftingOut = false;
@@ -61,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
         isGrabbing = false;
         camControl = mainCamera.GetComponent<CameraControl>();
         controller = GetComponent<CharacterController>();
+        gameController = GameObject.Find("Game_Controller").GetComponent<GameController>();
 
         currentPlatformIndex = 0;
     }
@@ -71,7 +72,8 @@ public class PlayerMovement : MonoBehaviour
         {
             CheckPlayerMovement();
             CheckShadowshift();
-            CheckShadowMeld();
+            if(shadowMeldAvailable)
+                CheckShadowMeld();
         }
     }
 
@@ -126,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else
                 {
-                    ExitShadowMeld();
+                    CheckShadowMeldExit();
                 }
             }
         }
@@ -137,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (shadowMeldResource <= 0)
             {
-                ExitShadowMeld();
+                CheckShadowMeldExit();
             }
         }
         else
@@ -155,6 +157,38 @@ public class PlayerMovement : MonoBehaviour
         GameController.ResetInteractText();
         gameObject.layer = LayerMask.NameToLayer("Shadowmeld");
 
+    }
+
+    void CheckShadowMeldExit()
+    {
+        Collider[] collidingObjects = Physics.OverlapCapsule(new Vector3(transform.position.x, transform.position.y - 0.4f, transform.position.z),
+            new Vector3(transform.position.x, transform.position.y + 0.4f, transform.position.z), 0.5f);
+
+        foreach (Collider collideObj in collidingObjects)
+        {
+            Debug.Log(collideObj);
+            if (collideObj.tag != "Player")
+            {
+                switch (collideObj.GetComponent<ShadowmeldObjectControl>().shadowMeldObjectType)
+                {
+                    case ShadowmeldObjectControl.ShadowMeldObjectType.GLASS:
+                        StartCoroutine(gameController.ResetLevel());
+                        ExitShadowMeld();
+                        break;
+                    case ShadowmeldObjectControl.ShadowMeldObjectType.WATER:
+                        StartCoroutine(gameController.ResetLevel());
+                        ExitShadowMeld();
+                        break;
+                    default:
+                        ExitShadowMeld();
+                        break;
+                }
+            }
+            else
+            {
+                ExitShadowMeld();
+            }
+        }
     }
 
     public void ExitShadowMeld()

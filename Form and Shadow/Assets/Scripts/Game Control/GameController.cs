@@ -29,11 +29,8 @@ public class GameController : MonoBehaviour {
 
     void ShadowmeldUIControl()
     {
-        if (PlayerMovement.shadowMelded)
-            shadowMeldResourceObject.GetComponent<Image>().color = Color.grey;
-        else
-            shadowMeldResourceObject.GetComponent<Image>().color = Color.white;
-
+        shadowMeldResourceObject.SetActive(player.GetComponent<PlayerMovement>().shadowMeldAvailable);
+        shadowMeldResourceObject.GetComponent<Image>().color = Color.magenta;
         shadowMeldResourceObject.GetComponent<Image>().fillAmount = player.GetComponent<PlayerMovement>().shadowMeldResource / 100;
     }
 

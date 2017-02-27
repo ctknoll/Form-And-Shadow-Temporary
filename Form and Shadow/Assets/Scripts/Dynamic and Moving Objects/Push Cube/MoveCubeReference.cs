@@ -5,9 +5,8 @@ public class MoveCubeReference : MonoBehaviour
 	private MoveCube moveCube;
 	private GameObject moveCubeMesh;
     public GameObject acrossReference;
-    //[HideInInspector]
+    
     public bool blocked;
-    //[HideInInspector]
 
 	void Start()
 	{
