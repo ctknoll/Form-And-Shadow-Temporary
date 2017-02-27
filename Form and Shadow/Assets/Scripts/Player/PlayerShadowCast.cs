@@ -44,6 +44,7 @@ public class PlayerShadowCast : MonoBehaviour {
 			}
 			
 			playerShadow.transform.position = hit.point + transformOffset;
+            playerShadow.transform.rotation = Quaternion.LookRotation(hit.normal);
             playerShadow.GetComponent<PlayerShadowCollider>().zAxisMovement = lightSourceAligned.zAxisMovement;
             playerShadow.GetComponent<PlayerShadowCollider>().transformOffset = transformOffset;
             playerShadow.GetComponent<PlayerShadowCollider>().wallTransform = hit.collider.transform;

@@ -4,20 +4,22 @@ using System.Collections;
 public class ToggleSwitch : MonoBehaviour {
 
 	public bool pressed;
-    public GameObject switchButton;
+    public GameObject leverArm;
     public float pressAnimationTime;
 	public float timerDuration;
+    public AudioSource timerAudioSource;
+    public AudioSource switchAudioSource;
 
-    private Vector3 highLerpPosition;
-    private Vector3 lowLerpPosition;
+    private Vector3 startLerpRotation;
+    private Vector3 endLerpRotation;
 	protected float runningTime = 0;
 
 
 	public void Start()
 	{
         pressed = false;
-        highLerpPosition = switchButton.transform.position;
-        lowLerpPosition = switchButton.transform.position - new Vector3(0, 0.1f, 0);
+        startLerpRotation = leverArm.transform.eulerAngles;
+        endLerpRotation = leverArm.transform.eulerAngles + new Vector3(0, 0, 90);
     }
 
 	// Update is called once per frame
@@ -32,27 +34,21 @@ public class ToggleSwitch : MonoBehaviour {
 					pressed = true;
 					runningTime = timerDuration;
 					StartCoroutine (PressSwitch ());
-					if (timerDuration >= 0) StartCoroutine (DepressSwitch ());
+                    if (timerDuration >= 0) StartCoroutine(DepressSwitch());
 					GameController.ToggleInteractTooltip (false);
-				}
-			} 
-			else 
-			{
-				if (Input.GetButtonDown ("Grab")) 
-				{
-					pressed = false;
-					runningTime = 0;
-					if (timerDuration == -1) StartCoroutine (DepressSwitch ());		
-					GameController.ToggleInteractTooltip (false);
-					if (timerDuration == -1) 
-					{
-						pressed = false;
-						runningTime = 0;
-						StartCoroutine (DepressSwitch ());		
-						GameController.ToggleInteractTooltip (false);
-					}
 				}
 			}
+            //else
+            //{
+            //    if (Input.GetButtonDown("Grab"))
+            //    {
+            //        pressed = false;
+            //        GetComponent<AudioSource>().Stop();
+            //        runningTime = 0;
+            //        StartCoroutine(DepressSwitch());
+            //        GameController.ToggleInteractTooltip(false);
+            //    }
+            //}
         }
     }
 
@@ -70,7 +66,7 @@ public class ToggleSwitch : MonoBehaviour {
 		{
 			runningTime -= Time.deltaTime;
 		} 
-		else if (runningTime <= 0 && runningTime > -1) 
+		else if (runningTime <= 0 && runningTime > -1)
 		{
 			pressed = false;
             runningTime = 0;
@@ -80,9 +76,13 @@ public class ToggleSwitch : MonoBehaviour {
     public IEnumerator PressSwitch()
     {
         float panStart = Time.time;
+
+        switchAudioSource.Play();
+        timerAudioSource.Play();
+
         while (Time.time < panStart + pressAnimationTime)
         {
-            switchButton.transform.position = Vector3.Lerp(highLerpPosition, lowLerpPosition, (Time.time - panStart) / pressAnimationTime);
+            leverArm.transform.eulerAngles = Vector3.Lerp(startLerpRotation, endLerpRotation, (Time.time - panStart) / pressAnimationTime);
             yield return null;
         }
     }
@@ -91,11 +91,15 @@ public class ToggleSwitch : MonoBehaviour {
     {
 		if (timerDuration >= 0) yield return new WaitForSeconds(timerDuration);
 
+        switchAudioSource.Play();
+        timerAudioSource.Stop();
+
         float panStart = Time.time;
         while (Time.time < panStart + pressAnimationTime)
         {
-            switchButton.transform.position = Vector3.Lerp(lowLerpPosition, highLerpPosition, (Time.time - panStart) / pressAnimationTime);
+            leverArm.transform.eulerAngles = Vector3.Lerp(endLerpRotation, startLerpRotation, (Time.time - panStart) / pressAnimationTime);
             yield return null;
         }
+        pressed = false;
     }
 }
