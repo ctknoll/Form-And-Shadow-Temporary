@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 4538565757848870}
   - component: {fileID: 33119430849277774}
   - component: {fileID: 23074553275843358}
+  - component: {fileID: 114186312331714658}
   m_Layer: 0
   m_Name: Toggle_Switch_Body
   m_TagString: Untagged
@@ -89,6 +90,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4556182672812150}
+  - component: {fileID: 114962418179788280}
   m_Layer: 0
   m_Name: Toggle_Switch_Mesh
   m_TagString: Untagged
@@ -337,4 +339,35 @@ MonoBehaviour:
   platforms: []
   moveSpeed: 0
   directionToMove: {x: 0, y: 0, z: 0}
-  moveTime: 0
+--- !u!114 &114186312331714658
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1599372327329188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8910c1f15da9e6469c89c251ddc80b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
+    type: 2}
+  meshException: 0
+  meshType: 0
+  shadowColliders: []
+--- !u!114 &114962418179788280
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1872772309174858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8910c1f15da9e6469c89c251ddc80b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
+    type: 2}
+  meshException: 0
+  meshType: 0
+  shadowColliders: []
