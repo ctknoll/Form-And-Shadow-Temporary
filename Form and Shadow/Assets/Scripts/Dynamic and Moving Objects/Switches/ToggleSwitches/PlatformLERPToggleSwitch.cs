@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class PlatformLERPToggleSwitch : ToggleSwitch
 {
+	public lerpPlatform[] platforms;
 
-	public GameObject[] platforms;
-	public float moveSpeed;
-	public Vector3 directionToMove;
-
-	private GameObject platObj;
 	private List<Vector3> startPos;
 	private List<Vector3> endPos;
 	private List<Vector3> currentPos;
@@ -18,6 +14,14 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
 	private List<float> moveTime;
 	private bool locked;
 	private bool moving;
+
+    [System.Serializable]
+    public class lerpPlatform
+    {
+        public GameObject platformObject;
+        public Vector3 directionToMove;
+        public float moveSpeed;
+    };
 
 	// Use this for initialization
 	new void Start()
@@ -35,19 +39,17 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
     // Update is called once per frame
 	new void Update()
 	{
-
 		if (pressed && !locked && !moving)
 		{
 			locked = true;
 			moving = true;
 			int i = 0;
 			currentPos.Clear();
-			foreach (GameObject platform in platforms)
+			foreach (lerpPlatform platform in platforms)
 			{
-				Debug.Log(platform);
-				if(startPos.Count < platforms.Length) startPos.Add(platform.transform.position);
-				if(endPos.Count < platforms.Length) endPos.Add(platform.transform.position + directionToMove);
-				moveTime.Add((directionToMove.magnitude / moveSpeed));
+				if(startPos.Count < platforms.Length) startPos.Add(platform.platformObject.transform.position);
+				if(endPos.Count < platforms.Length) endPos.Add(platform.platformObject.transform.position + platform.directionToMove);
+				moveTime.Add((platform.directionToMove.magnitude / platform.moveSpeed));
 				IEnumerator ienum = MoveOut(platform, i);
 				moveTowards.Add(ienum);
 				StartCoroutine(ienum);
@@ -60,7 +62,7 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
 			moving = true;
 			int i = 0;
 			currentPos.Clear();
-			foreach (GameObject platform in platforms)
+			foreach (lerpPlatform platform in platforms)
 			{
 				IEnumerator ienum = MoveBack(platform, i);
 				moveReturn.Add(ienum);
@@ -72,28 +74,28 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
 		base.Update();
 	}
 
-	public IEnumerator MoveOut(GameObject platform, int index)
+	public IEnumerator MoveOut(lerpPlatform platform, int index)
 	{
 		float panStart = Time.time;
-		currentPos.Add(platform.transform.position);
-		moveTime[index] = ((currentPos[index] - endPos[index]).magnitude / moveSpeed);
+		currentPos.Add(platform.platformObject.transform.position);
+		moveTime[index] = ((currentPos[index] - endPos[index]).magnitude / platform.moveSpeed);
 		while ((Time.time < panStart + moveTime[index]) && pressed)
 		{
-			platform.transform.position = Vector3.Lerp(currentPos[index], endPos[index], (Time.time - panStart) / moveTime[index]);
+			platform.platformObject.transform.position = Vector3.Lerp(currentPos[index], endPos[index], (Time.time - panStart) / moveTime[index]);
 			yield return null;
 		}
 		moving = false;
 	}
 
-	public IEnumerator MoveBack(GameObject platform, int index)
+	public IEnumerator MoveBack(lerpPlatform platform, int index)
 	{
 		
 		float panStart = Time.time;
-		currentPos.Add(platform.transform.position);
-		moveTime[index] = ((currentPos[index] - startPos[index]).magnitude / moveSpeed);
+		currentPos.Add(platform.platformObject.transform.position);
+		moveTime[index] = ((currentPos[index] - startPos[index]).magnitude / platform.moveSpeed);
 		while (Time.time < panStart + moveTime[index] && !pressed)
 		{
-			platform.transform.position = Vector3.Lerp(currentPos[index], startPos[index], (Time.time - panStart) / moveTime[index]);
+			platform.platformObject.transform.position = Vector3.Lerp(currentPos[index], startPos[index], (Time.time - panStart) / moveTime[index]);
 			yield return null;
 		}
 		moveTime.Clear();

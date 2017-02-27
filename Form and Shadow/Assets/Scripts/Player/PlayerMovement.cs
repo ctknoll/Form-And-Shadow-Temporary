@@ -128,6 +128,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (in3DSpace && !isGrabbing && !shadowShiftingIn && !shadowShiftingOut)
         {
+            Debug.Log("Yeet");
             if (Input.GetButtonDown("Shadowmeld") && shadowMeldResource > 0)
             {
                 if (!shadowMelded)
