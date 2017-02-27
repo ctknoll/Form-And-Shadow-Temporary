@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
 
 public class PlayerShadowCast : MonoBehaviour {
-	public GameObject playerShadow;
+	private GameObject playerShadow;
 
 	[HideInInspector]
 	public Vector3 transformOffset;
 	[SerializeField]
 	public LightSourceControl lightSourceAligned;
 
+    void Start()
+    {
+        playerShadow = GameObject.Find("Player_Shadow");
+    }
 	void Update () 
 	{
 		Check2DInvisibility();

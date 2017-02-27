@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 33338404194301674}
   - component: {fileID: 135873227470278792}
   - component: {fileID: 23641928338471708}
-  - component: {fileID: 114367754757474116}
   m_Layer: 12
   m_Name: Eye_1
   m_TagString: Untagged
@@ -40,7 +39,7 @@ GameObject:
   - component: {fileID: 4710416165020350}
   - component: {fileID: 114802687816552978}
   - component: {fileID: 143736298376177622}
-  - component: {fileID: 114282443917408160}
+  - component: {fileID: 114343123089648322}
   m_Layer: 12
   m_Name: Player_Character
   m_TagString: Player
@@ -75,7 +74,6 @@ GameObject:
   - component: {fileID: 33504965088740506}
   - component: {fileID: 135212456095822434}
   - component: {fileID: 23199447132724074}
-  - component: {fileID: 114169438551248162}
   m_Layer: 12
   m_Name: Eye_2
   m_TagString: Untagged
@@ -238,8 +236,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1099584862315612}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.93, y: 1.31, z: 15.3}
-  m_LocalPosition: {x: 6.09, y: 1.74, z: 4.99}
+  m_LocalPosition: {x: 7.87, y: 2.3, z: 18.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4487168017051280}
@@ -404,23 +401,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114169438551248162
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1339014265202880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8910c1f15da9e6469c89c251ddc80b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
-    type: 2}
-  meshException: 0
-  meshType: 0
-  shadowColliders: []
---- !u!114 &114282443917408160
+--- !u!114 &114343123089648322
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -431,26 +412,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04099a58a0c8cda4293e45a60b7cffda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerShadowCollider: {fileID: 0}
   transformOffset: {x: 0, y: 0, z: 0}
-  wallTransform: {fileID: 0}
   lightSourceAligned: {fileID: 0}
---- !u!114 &114367754757474116
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1061279864574602}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8910c1f15da9e6469c89c251ddc80b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
-    type: 2}
-  meshException: 0
-  meshType: 0
-  shadowColliders: []
 --- !u!114 &114475491659319378
 MonoBehaviour:
   m_ObjectHideFlags: 1

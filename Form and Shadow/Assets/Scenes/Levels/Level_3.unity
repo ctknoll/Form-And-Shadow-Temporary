@@ -13079,12 +13079,12 @@ Prefab:
     - target: {fileID: 224506598693046850, guid: 8b9826001ef26b94e83bef82c598e807,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -204
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224506598693046850, guid: 8b9826001ef26b94e83bef82c598e807,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -71.6
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8b9826001ef26b94e83bef82c598e807, type: 2}
@@ -23299,11 +23299,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 114973802022037786, guid: b777b85c09404584bb8ea35afae5c060,
+    - target: {fileID: 114475491659319378, guid: b777b85c09404584bb8ea35afae5c060,
         type: 2}
-      propertyPath: mainCamera
+      propertyPath: target
       value: 
-      objectReference: {fileID: 316942089}
+      objectReference: {fileID: 1699149152}
     - target: {fileID: 114802687816552978, guid: b777b85c09404584bb8ea35afae5c060,
         type: 2}
       propertyPath: playerShadow
@@ -23314,16 +23314,6 @@ Prefab:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 316942089}
-    - target: {fileID: 114475491659319378, guid: b777b85c09404584bb8ea35afae5c060,
-        type: 2}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 1699149152}
-    - target: {fileID: 114282443917408160, guid: b777b85c09404584bb8ea35afae5c060,
-        type: 2}
-      propertyPath: playerShadowCollider
-      value: 
-      objectReference: {fileID: 1168302945}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b777b85c09404584bb8ea35afae5c060, type: 2}
   m_IsPrefabParent: 0

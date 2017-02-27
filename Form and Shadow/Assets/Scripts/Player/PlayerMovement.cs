@@ -78,8 +78,6 @@ public class PlayerMovement : MonoBehaviour
             CheckShadowshift();
             if (shadowMeldAvailable)
                 CheckShadowMeld();
-
-            CheckShadowMeld();
 			CheckMenuAndReset();
         }
     }
