@@ -1,18 +1,17 @@
 ﻿using UnityEngine;
 
 public class PlayerShadowCast : MonoBehaviour {
-	public GameObject playerShadowCollider;
+	public GameObject playerShadow;
 
 	[HideInInspector]
 	public Vector3 transformOffset;
 	[SerializeField]
-	public Transform wallTransform;
 	public LightSourceControl lightSourceAligned;
 
 	void Update () 
 	{
 		Check2DInvisibility();
-		lightSourceAligned = checkLightSourceAligned().GetComponent<LightSourceControl>();
+		lightSourceAligned = CheckLightSourceAligned().GetComponent<LightSourceControl>();
 	}
 
 	public void CastShadow()
@@ -40,21 +39,34 @@ public class PlayerShadowCast : MonoBehaviour {
 				transformOffset = ((transform.lossyScale.x / 1.9f) * lightSourceAligned.lightSourceDirection);
 			}
 			
-			wallTransform = hit.collider.transform;
-			GetComponent<PlayerMovement>().playerShadow.transform.position = hit.point + transformOffset;
-			GetComponent<PlayerMovement>().playerShadow.transform.rotation = Quaternion.LookRotation(hit.normal);
+			playerShadow.transform.position = hit.point + transformOffset;
+            playerShadow.GetComponent<PlayerShadowCollider>().zAxisMovement = lightSourceAligned.zAxisMovement;
+            playerShadow.GetComponent<PlayerShadowCollider>().transformOffset = transformOffset;
+            playerShadow.GetComponent<PlayerShadowCollider>().wallTransform = hit.collider.transform;
 		}
 	}
 
 	public void Check2DInvisibility()
 	{
 		if(!PlayerMovement.in3DSpace || PlayerMovement.shadowShiftingIn)
-			GetComponentInChildren<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-		else
-			GetComponentInChildren<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-	}
+        {
+            MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
+            foreach (MeshRenderer meshRend in meshRenderers)
+            {
+                meshRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            }
+        }
+        else
+        {
+            MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
+            foreach (MeshRenderer meshRend in meshRenderers)
+            {
+                meshRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            }
+        }
+    }
 
-	public GameObject checkLightSourceAligned()
+	public GameObject CheckLightSourceAligned()
 	{
 		GameObject nearest = null;
 		float distance = float.MaxValue;

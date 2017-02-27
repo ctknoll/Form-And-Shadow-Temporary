@@ -15,7 +15,9 @@ public class PlayerMovement : MonoBehaviour
     public GameObject mainCamera;
     public GameObject movementReference;
     public GameObject shadowShiftFollowObjectPrefab;
+    [HideInInspector]
     public GameObject shadowShiftFollowObject;
+    [HideInInspector]
     public CharacterController controller;
     private List<GameObject> shadowShiftOutPlatforms;
     private CameraControl camControl;
@@ -68,11 +70,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if(!GameController.resetting)
+        if (!GameController.resetting)
         {
             CheckPlayerMovement();
             CheckShadowshift();
-            if(shadowMeldAvailable)
+            if (shadowMeldAvailable)
                 CheckShadowMeld();
         }
     }
@@ -83,10 +85,13 @@ public class PlayerMovement : MonoBehaviour
             PlayerJumpandGravity();
 
         if (in3DSpace && !shadowShiftingIn && !shadowShiftingOut)
+        {
             PlayerMovement3D();
+        }
 
         else if (!in3DSpace && !shadowShiftingIn && !shadowShiftingOut)
         {
+            GameController.Toggle2DMovementTooltips(true);
             PlayerMovement2D();
             FollowShadow();
         }
@@ -154,7 +159,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("Shadowmelding");
         shadowMelded = true;
         shadowMeldVFX.SetActive(true);
-        GameController.ResetInteractText();
+        GameController.ToggleInteractTooltip(false);
         gameObject.layer = LayerMask.NameToLayer("Shadowmeld");
 
     }
@@ -233,6 +238,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isGrabbing)
         {
+            GameController.Toggle3DMovementTooltips(true);
             rotationDirection = new Vector3(movementReference.transform.forward.x, 0, movementReference.transform.forward.z);
             transform.rotation = Quaternion.LookRotation(rotationDirection, Vector3.up);
             if (Input.GetAxisRaw("Horizontal") > 0)
@@ -255,6 +261,7 @@ public class PlayerMovement : MonoBehaviour
         // Grabbing movement
         else
         {
+            GameController.ToggleGrabbingTooltips(true);
             if (Input.GetAxisRaw("Vertical") > 0 && !grabbedObject.GetComponent<MoveCube>().blockedAhead)
             {
                 controller.Move(grabbedObject.GetComponent<MoveCube>().directionAwayFromPlayer * Time.deltaTime * grabMovementSpeed);
@@ -296,7 +303,9 @@ public class PlayerMovement : MonoBehaviour
                         playerShiftInOffset = transform.position.z;
                     else if (GetComponent<PlayerShadowCast>().lightSourceAligned.xAxisMovement)
                         playerShiftInOffset = transform.position.x;
-					StartCoroutine(CameraPanIn(transform.position, hit.point, -GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection * camControl.distanceToPlayer2D));
+                    GetComponent<CharacterController>().enabled = false;
+
+                    StartCoroutine(CameraPanIn(transform.position, hit.point, -GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection * camControl.distanceToPlayer2D));
 					StartCoroutine(FinishShiftIn());
 				}
 				else
@@ -348,6 +357,7 @@ public class PlayerMovement : MonoBehaviour
 
 	public void ShiftingOutControl()
 	{
+        GameController.ToggleShadowShiftOutTooltips(true);
 		if(Input.GetKeyDown(KeyCode.S))
 		{
 			if(currentPlatformIndex + 1 < shadowShiftOutPlatforms.Count)
@@ -464,14 +474,13 @@ public class PlayerMovement : MonoBehaviour
 		yield return new WaitForSeconds(camControl.cameraPanDuration);
 
 		shadowShiftingIn = false;
-		transform.parent = null;
+        in3DSpace = false;
+        transform.parent = null;
 		playerShadow.transform.parent = null;
-		in3DSpace = false;
-		GetComponent<CharacterController>().enabled = false;
 		playerShadow.GetComponent<CharacterController>().enabled = true;
 		controller = playerShadow.GetComponent<CharacterController>();
-		GetComponent<PlayerShadowCast>().CastShadow();
-		Debug.Log("In Wall");
+        GetComponent<PlayerShadowCast>().CastShadow();
+        Debug.Log("In Wall");
 	}
 
 	public IEnumerator FinishShiftInMultiExit()
@@ -488,7 +497,8 @@ public class PlayerMovement : MonoBehaviour
 		playerShadow.GetComponent<CharacterController>().enabled = true;
 		controller = playerShadow.GetComponent<CharacterController>();
 		GetComponent<PlayerShadowCast>().CastShadow();
-		Debug.Log("In Wall");
+        GameController.ToggleShadowShiftOutTooltips(false);
+        Debug.Log("In Wall");
 	}
 		
 	public void FinishShiftOut()
@@ -504,6 +514,7 @@ public class PlayerMovement : MonoBehaviour
 		playerShadow.GetComponent<CharacterController>().enabled = false;
 		GetComponent<CharacterController>().enabled = true;
 		controller = GetComponent<CharacterController>();
+        GameController.ToggleShadowShiftOutTooltips(false);
 		Debug.Log("Out of wall");
 	}
 
