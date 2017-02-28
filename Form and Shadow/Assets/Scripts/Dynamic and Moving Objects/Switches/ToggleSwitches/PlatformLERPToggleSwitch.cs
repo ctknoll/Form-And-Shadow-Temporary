@@ -69,7 +69,8 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
 				StartCoroutine(ienum);
 				i++;
 			}
-		}
+            StartCoroutine(Clear());
+        }
 
 		base.Update();
 	}
@@ -89,18 +90,28 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
 
 	public IEnumerator MoveBack(lerpPlatform platform, int index)
 	{
-		
-		float panStart = Time.time;
+        float panStart = Time.time;
 		currentPos.Add(platform.platformObject.transform.position);
 		moveTime[index] = ((currentPos[index] - startPos[index]).magnitude / platform.moveSpeed);
-		while (Time.time < panStart + moveTime[index] && !pressed)
+		while (Time.time < panStart + moveTime[index] && !pressed && index < moveReturn.Count)
 		{
 			platform.platformObject.transform.position = Vector3.Lerp(currentPos[index], startPos[index], (Time.time - panStart) / moveTime[index]);
 			yield return null;
 		}
-		moveTime.Clear();
-		moveTowards.Clear();
-		moveReturn.Clear();
-		moving = false;
 	}
+
+    public IEnumerator Clear()
+    {
+        float max = 0;
+        foreach(float f in moveTime)
+        {
+            if (f > max)
+                max = f;
+        }
+        yield return new WaitForSeconds(max);
+        moveTime.Clear();
+        moveTowards.Clear();
+        moveReturn.Clear();
+        moving = false;
+    }
 }

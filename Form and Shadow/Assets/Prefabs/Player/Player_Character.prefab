@@ -287,7 +287,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1099584862315612}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 19.1, y: 3.805, z: 6.99}
+  m_LocalPosition: {x: 4.65, y: 15.32, z: 2.72}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4487168017051280}
@@ -598,7 +598,7 @@ MonoBehaviour:
   movementSpeed: 6
   grabMovementSpeed: 3
   jumpSpeed: 10
-  gravity: 15
+  gravity: 20
   shadowMeldAvailable: 0
   shadowMeldVFX: {fileID: 1758487694470666}
   shadowMeldResourceCost: 20

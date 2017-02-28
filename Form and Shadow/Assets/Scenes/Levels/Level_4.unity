@@ -959,17 +959,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 143736298376177622, guid: b777b85c09404584bb8ea35afae5c060,
-        type: 2}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 13400000, guid: 92d0e4915b1b2e0498c506aa3ec14385,
-        type: 2}
-    - target: {fileID: 114282443917408160, guid: b777b85c09404584bb8ea35afae5c060,
-        type: 2}
-      propertyPath: playerShadowCollider
-      value: 
-      objectReference: {fileID: 1168302945}
     - target: {fileID: 114475491659319378, guid: b777b85c09404584bb8ea35afae5c060,
         type: 2}
       propertyPath: target
@@ -985,6 +974,12 @@ Prefab:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 316942089}
+    - target: {fileID: 143736298376177622, guid: b777b85c09404584bb8ea35afae5c060,
+        type: 2}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 92d0e4915b1b2e0498c506aa3ec14385,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b777b85c09404584bb8ea35afae5c060, type: 2}
   m_IsPrefabParent: 0
@@ -1709,7 +1704,7 @@ Prefab:
     - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
         type: 2}
       propertyPath: timerDuration
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
         type: 2}
@@ -1726,6 +1721,16 @@ Prefab:
       propertyPath: platforms.Array.data[0].platformObject
       value: 
       objectReference: {fileID: 337530432}
+    - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
+        type: 2}
+      propertyPath: timerToggleSwitch
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
+        type: 2}
+      propertyPath: lerpToggleSwitch
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4b6f01473649f6a44aa70455c534d6f9, type: 2}
   m_IsPrefabParent: 0
@@ -11354,7 +11359,7 @@ Prefab:
     - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
         type: 2}
       propertyPath: timerDuration
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1596080238362368, guid: 4b6f01473649f6a44aa70455c534d6f9, type: 2}
       propertyPath: m_Name
@@ -11374,6 +11379,16 @@ Prefab:
         type: 2}
       propertyPath: platforms.Array.data[0].moveSpeed
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
+        type: 2}
+      propertyPath: timerToggleSwitch
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
+        type: 2}
+      propertyPath: lerpToggleSwitch
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4b6f01473649f6a44aa70455c534d6f9, type: 2}
@@ -12038,7 +12053,7 @@ Prefab:
     - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
         type: 2}
       propertyPath: timerDuration
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
         type: 2}
@@ -12069,6 +12084,16 @@ Prefab:
         type: 2}
       propertyPath: platforms.Array.data[1].moveSpeed
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
+        type: 2}
+      propertyPath: timerToggleSwitch
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
+        type: 2}
+      propertyPath: lerpToggleSwitch
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4b6f01473649f6a44aa70455c534d6f9, type: 2}
