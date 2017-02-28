@@ -130,6 +130,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (in3DSpace && !isGrabbing && !shadowShiftingIn && !shadowShiftingOut)
         {
+			GameController.ToggleShadowMeldTooltip(true);
             if (Input.GetButtonDown("Shadowmeld") && shadowMeldResource > 0)
             {
                 if (!shadowMelded)
@@ -234,6 +235,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         verticalVelocity -= gravity * Time.deltaTime;
+        if (verticalVelocity < -gravity * .75f) verticalVelocity = -gravity * .75f;
         Vector3 moveVector = new Vector3(0, verticalVelocity, 0);
         controller.Move(moveVector * Time.deltaTime);
     }
