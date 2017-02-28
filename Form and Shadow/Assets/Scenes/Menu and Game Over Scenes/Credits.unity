@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.21323532, g: 0.21323532, b: 0.21323532, a: 0.5}
-  m_EffectDistance: {x: 5, y: -1}
+  m_EffectDistance: {x: 3, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!114 &103024880
 MonoBehaviour:
@@ -162,7 +162,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 95862bb7cd8eff94da2462f385fe3011, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
@@ -341,7 +341,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 95862bb7cd8eff94da2462f385fe3011, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -372,7 +372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.21323532, g: 0.21323532, b: 0.21323532, a: 0.5}
-  m_EffectDistance: {x: 5, y: -1}
+  m_EffectDistance: {x: 3, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!114 &245371196
 MonoBehaviour:
@@ -562,7 +562,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.21323532, g: 0.21323532, b: 0.21323532, a: 0.5}
-  m_EffectDistance: {x: 5, y: -1}
+  m_EffectDistance: {x: 3, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!114 &527665244
 MonoBehaviour:
@@ -625,7 +625,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 95862bb7cd8eff94da2462f385fe3011, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -693,7 +693,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.21323532, g: 0.21323532, b: 0.21323532, a: 0.5}
-  m_EffectDistance: {x: 5, y: -1}
+  m_EffectDistance: {x: 3, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!114 &530651610
 MonoBehaviour:
@@ -756,7 +756,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 95862bb7cd8eff94da2462f385fe3011, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -824,7 +824,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.21323532, g: 0.21323532, b: 0.21323532, a: 0.5}
-  m_EffectDistance: {x: 5, y: -1}
+  m_EffectDistance: {x: 3, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!114 &563638813
 MonoBehaviour:
@@ -887,7 +887,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 95862bb7cd8eff94da2462f385fe3011, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -955,7 +955,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.21323532, g: 0.21323532, b: 0.21323532, a: 0.5}
-  m_EffectDistance: {x: 5, y: -1}
+  m_EffectDistance: {x: 3, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!114 &1236461834
 MonoBehaviour:
@@ -1029,7 +1029,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 95862bb7cd8eff94da2462f385fe3011, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -1097,7 +1097,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.21323532, g: 0.21323532, b: 0.21323532, a: 0.5}
-  m_EffectDistance: {x: 5, y: -1}
+  m_EffectDistance: {x: 3, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!114 &1508157568
 MonoBehaviour:
@@ -1160,7 +1160,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 95862bb7cd8eff94da2462f385fe3011, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -1228,7 +1228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.21323532, g: 0.21323532, b: 0.21323532, a: 0.5}
-  m_EffectDistance: {x: 5, y: -1}
+  m_EffectDistance: {x: 3, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!114 &1569527939
 MonoBehaviour:
@@ -1291,7 +1291,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 95862bb7cd8eff94da2462f385fe3011, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -1461,7 +1461,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.21323532, g: 0.21323532, b: 0.21323532, a: 0.5}
-  m_EffectDistance: {x: 5, y: -1}
+  m_EffectDistance: {x: 3, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!114 &1801505930
 MonoBehaviour:
@@ -1524,7 +1524,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 95862bb7cd8eff94da2462f385fe3011, type: 3}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0

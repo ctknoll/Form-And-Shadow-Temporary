@@ -12,7 +12,7 @@ public class ToggleSwitch : MonoBehaviour {
 
     private Vector3 startLerpRotation;
     private Vector3 endLerpRotation;
-	protected float runningTime = 0;
+	public float runningTime = 0;
 
 
 	public void Start()
@@ -78,7 +78,6 @@ public class ToggleSwitch : MonoBehaviour {
         float panStart = Time.time;
 
         switchAudioSource.Play();
-        timerAudioSource.Play();
 
         while (Time.time < panStart + pressAnimationTime)
         {
@@ -89,8 +88,8 @@ public class ToggleSwitch : MonoBehaviour {
 
     public IEnumerator DepressSwitch()
     {
-		if (timerDuration >= 0) yield return new WaitForSeconds(timerDuration);
-
+        timerAudioSource.Play();
+        if (timerDuration >= 0) yield return new WaitForSeconds(timerDuration);
         switchAudioSource.Play();
         timerAudioSource.Stop();
 
