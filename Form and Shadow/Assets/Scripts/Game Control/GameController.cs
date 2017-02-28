@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour {
     private static GameObject s_Tooltip;
     private static GameObject d_Tooltip;
     private static GameObject e_Tooltip;
+	private static GameObject f_Tooltip;
     private static GameObject space_Tooltip;
     private static GameObject shift_Tooltip;
 
@@ -30,7 +31,9 @@ public class GameController : MonoBehaviour {
         s_Tooltip = GameObject.Find("S_Tooltip");
         d_Tooltip = GameObject.Find("D_Tooltip");
         e_Tooltip = GameObject.Find("E_Tooltip");
+		f_Tooltip = GameObject.Find("F_Tooltip");
         e_Tooltip.SetActive(false);
+		f_Tooltip.SetActive(false);
         space_Tooltip = GameObject.Find("Space_Tooltip");
         shift_Tooltip = GameObject.Find("Shift_Tooltip");
         shadowMeldResourceObject = GameObject.Find("Shadowmeld_Resource");
@@ -89,6 +92,7 @@ public class GameController : MonoBehaviour {
         a_Tooltip.SetActive(!on);
         d_Tooltip.SetActive(!on);
         e_Tooltip.SetActive(!on);
+		f_Tooltip.SetActive(!on);
         space_Tooltip.SetActive(!on);
         shift_Tooltip.SetActive(!on);
     }
@@ -115,6 +119,11 @@ public class GameController : MonoBehaviour {
     {
         e_Tooltip.SetActive(on);
     }
+
+	public static void ToggleShadowMeldTooltip(bool on)
+	{
+		f_Tooltip.SetActive(on);
+	}
 
     public static void ToggleShadowShiftInTooltip(bool on)
     {
