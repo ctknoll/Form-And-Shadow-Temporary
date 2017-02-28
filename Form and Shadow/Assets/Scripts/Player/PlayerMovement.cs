@@ -130,6 +130,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (in3DSpace && !isGrabbing && !shadowShiftingIn && !shadowShiftingOut)
         {
+			GameController.ToggleShadowMeldTooltip(true);
             if (Input.GetButtonDown("Shadowmeld") && shadowMeldResource > 0)
             {
                 if (!shadowMelded)
