@@ -14,9 +14,18 @@ public class MoveCubeReference : MonoBehaviour
 		moveCubeMesh = transform.parent.GetComponentInChildren<ShadowCast>().gameObject;
 	}
 
+    void Update()
+    {
+        if (!PlayerMovement.in3DSpace)
+        {
+            moveCube.canInteract = false;
+            GameController.ToggleInteractTooltip(false);
+        }
+    }
+
 	void OnTriggerStay(Collider other)
 	{
-		if(other.gameObject.tag == "Player" && !PlayerMovement.shadowMelded && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
+		if(other.gameObject.tag == "Player" && !PlayerMovement.shadowMelded && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && PlayerMovement.in3DSpace)
 		{
 			moveCube.canInteract = true;
 			moveCube.directionAwayFromPlayer = (moveCubeMesh.transform.position - transform.position).normalized;
@@ -33,7 +42,7 @@ public class MoveCubeReference : MonoBehaviour
 
 	void OnTriggerExit(Collider other)
 	{
-		if(other.gameObject.tag == "Player")
+		if(other.gameObject.tag == "Player" && !PlayerMovement.isGrabbing)
 		{
             GameController.ToggleInteractTooltip(false);
             moveCube.canInteract = false;
@@ -42,8 +51,7 @@ public class MoveCubeReference : MonoBehaviour
 			PlayerMovement.isGrabbing = false;
 			PlayerMovement.grabbedObject = null;
 		}
-        else
-            blocked = false;
+        blocked = false;
 	}
 }
 
