@@ -425,16 +425,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e02428b1335ce34d9debcc10ef49b79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pressed: 0
   leverArm: {fileID: 1967698092441924}
-  pressAnimationTime: 0.5
+  timerToggleSwitch: 1
   timerDuration: 15
+  pressed: 0
+  switchFlipAnimationTime: 0.75
   timerAudioSource: {fileID: 82253870207479100}
-  switchAudioSource: {fileID: 82540359561123120}
+  switchFlipAudioSource: {fileID: 82540359561123120}
   platforms:
   - platformObject: {fileID: 0}
     directionToMove: {x: 0, y: 15, z: 0}
-    moveSpeed: 3
+    moveSpeed: 3.5
   - platformObject: {fileID: 0}
     directionToMove: {x: 0, y: -7.5, z: 0}
     moveSpeed: 1.5
