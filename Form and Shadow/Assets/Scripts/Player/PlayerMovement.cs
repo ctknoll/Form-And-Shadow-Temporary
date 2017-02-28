@@ -85,8 +85,10 @@ public class PlayerMovement : MonoBehaviour
     void CheckPlayerMovement()
     {
         if (!shadowShiftingIn && !shadowShiftingOut && !isGrabbing)
+        {
             PlayerJumpandGravity();
-
+        }
+    
         if (in3DSpace && !shadowShiftingIn && !shadowShiftingOut)
         {
             PlayerMovement3D();
@@ -128,7 +130,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (in3DSpace && !isGrabbing && !shadowShiftingIn && !shadowShiftingOut)
         {
-            Debug.Log("Yeet");
             if (Input.GetButtonDown("Shadowmeld") && shadowMeldResource > 0)
             {
                 if (!shadowMelded)
@@ -191,7 +192,6 @@ public class PlayerMovement : MonoBehaviour
 
         foreach (Collider collideObj in collidingObjects)
         {
-            Debug.Log(collideObj);
             if (collideObj.tag != "Player")
             {
                 switch (collideObj.GetComponent<ShadowmeldObjectControl>().shadowMeldObjectType)
@@ -233,10 +233,7 @@ public class PlayerMovement : MonoBehaviour
                 verticalVelocity = jumpSpeed;
             }
         }
-        else
-        {
-            verticalVelocity -= gravity * Time.deltaTime;
-        }
+        verticalVelocity -= gravity * Time.deltaTime;
         Vector3 moveVector = new Vector3(0, verticalVelocity, 0);
         controller.Move(moveVector * Time.deltaTime);
     }
