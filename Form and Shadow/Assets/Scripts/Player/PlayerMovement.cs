@@ -235,6 +235,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         verticalVelocity -= gravity * Time.deltaTime;
+        if (verticalVelocity < -gravity * .75f) verticalVelocity = -gravity * .75f;
         Vector3 moveVector = new Vector3(0, verticalVelocity, 0);
         controller.Move(moveVector * Time.deltaTime);
     }
