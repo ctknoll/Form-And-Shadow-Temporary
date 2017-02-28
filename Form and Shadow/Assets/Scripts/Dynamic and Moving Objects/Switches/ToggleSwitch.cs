@@ -1,7 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ToggleSwitch : MonoBehaviour {
+/*
+
+--Toggle Switch--
+Abstract Class meant for all Toggle Switches to inherit from.
+NOTE: DO NOT INSTANTIATE
+
+*/
+
+public abstract class ToggleSwitch : MonoBehaviour {
     public GameObject leverArm;
 
     public bool timerToggleSwitch;
