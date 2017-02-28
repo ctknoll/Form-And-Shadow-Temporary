@@ -44,7 +44,6 @@ public class PlatformLERPPressureSwitch : PressureSwitch
 			currentPos.Clear();
 			foreach (GameObject platform in platforms)
 			{
-				Debug.Log(platform);
 				if(startPos.Count < platforms.Length) startPos.Add(platform.transform.position);
 				if(endPos.Count < platforms.Length) endPos.Add(platform.transform.position + directionToMove);
 				moveTime.Add((directionToMove.magnitude / moveSpeed));
