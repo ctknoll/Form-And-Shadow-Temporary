@@ -4,7 +4,9 @@ using System.Collections.Generic;
 
 public class PlayerMovement : MonoBehaviour
 {
+    // Static Variables
     public static Vector3 playerStartPosition;
+	public static Vector3 levelStartPosition;
     public static bool in3DSpace;
     public static bool shadowShiftingOut;
     public static bool shadowShiftingIn;
@@ -14,10 +16,13 @@ public class PlayerMovement : MonoBehaviour
     public GameObject mainCamera;
     public GameObject movementReference;
     public GameObject shadowShiftFollowObjectPrefab;
+    [HideInInspector]
     public GameObject shadowShiftFollowObject;
+    [HideInInspector]
+    public CharacterController controller;
     private List<GameObject> shadowShiftOutPlatforms;
     private CameraControl camControl;
-    public CharacterController controller;
+    private GameController gameController;
 
     [Header("Movement Variables")]
     public float movementSpeed;
@@ -28,16 +33,15 @@ public class PlayerMovement : MonoBehaviour
     public static bool grounded3D;
     private float verticalVelocity;
 
-
-    [Header("Interaction Variables")]
+    // Interaction Variables
     public static bool isGrabbing;
     public static GameObject grabbedObject;
     private Vector3 pushDir;
 
     [Header("Shadowmeld Variables")]
+    public bool shadowMeldAvailable;
     public GameObject shadowMeldVFX;
     public static bool shadowMelded;
-    public float shadowMeldTimeLeft;
     public float shadowMeldResourceCost;
     public float shadowMeldResourceRegen;
     [HideInInspector]
@@ -53,38 +57,46 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-
         playerStartPosition = transform.position;
+		levelStartPosition = transform.position;
         in3DSpace = true;
         shadowShiftingOut = false;
         shadowShiftingIn = false;
         isGrabbing = false;
         camControl = mainCamera.GetComponent<CameraControl>();
         controller = GetComponent<CharacterController>();
+        gameController = GameObject.Find("Game_Controller").GetComponent<GameController>();
 
         currentPlatformIndex = 0;
     }
 
     void Update()
     {
-        if(!GameController.resetting)
+        if (!GameController.resetting)
         {
             CheckPlayerMovement();
             CheckShadowshift();
-            CheckShadowMeld();
+            if (shadowMeldAvailable)
+                CheckShadowMeld();
+			CheckMenuAndReset();
         }
     }
 
     void CheckPlayerMovement()
     {
         if (!shadowShiftingIn && !shadowShiftingOut && !isGrabbing)
+        {
             PlayerJumpandGravity();
-
+        }
+    
         if (in3DSpace && !shadowShiftingIn && !shadowShiftingOut)
+        {
             PlayerMovement3D();
+        }
 
         else if (!in3DSpace && !shadowShiftingIn && !shadowShiftingOut)
         {
+            GameController.Toggle2DMovementTooltips(true);
             PlayerMovement2D();
             FollowShadow();
         }
@@ -118,6 +130,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (in3DSpace && !isGrabbing && !shadowShiftingIn && !shadowShiftingOut)
         {
+			GameController.ToggleShadowMeldTooltip(true);
             if (Input.GetButtonDown("Shadowmeld") && shadowMeldResource > 0)
             {
                 if (!shadowMelded)
@@ -126,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else
                 {
-                    ExitShadowMeld();
+                    CheckShadowMeldExit();
                 }
             }
         }
@@ -137,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (shadowMeldResource <= 0)
             {
-                ExitShadowMeld();
+                CheckShadowMeldExit();
             }
         }
         else
@@ -147,14 +160,61 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+	void CheckMenuAndReset()
+	{
+		if (Input.GetButtonDown ("Reset") && !shadowShiftingIn && !shadowShiftingOut) 
+		{
+			playerStartPosition = levelStartPosition;
+			foreach(Transform child in GameObject.Find("Lighting").transform)
+			{
+				LightSourceControl light = child.GetComponent<LightSourceControl>();
+				child.rotation = light.lightSourceStartRotation; 
+				light.lightSourceDirection = child.transform.forward;
+				light.CheckLightingDirection();
+			}
+			StartCoroutine(GameObject.Find ("Game_Controller").GetComponent<GameController>().ResetLevel());
+		}
+	}
+
     void EnterShadowMeld()
     {
         Debug.Log("Shadowmelding");
         shadowMelded = true;
         shadowMeldVFX.SetActive(true);
-        GameController.ResetInteractText();
+        GameController.ToggleInteractTooltip(false);
         gameObject.layer = LayerMask.NameToLayer("Shadowmeld");
 
+    }
+
+    void CheckShadowMeldExit()
+    {
+        Collider[] collidingObjects = Physics.OverlapCapsule(new Vector3(transform.position.x, transform.position.y - 0.4f, transform.position.z),
+            new Vector3(transform.position.x, transform.position.y + 0.4f, transform.position.z), 0.5f);
+
+        foreach (Collider collideObj in collidingObjects)
+        {
+            if (collideObj.tag != "Player")
+            {
+                switch (collideObj.GetComponent<ShadowmeldObjectControl>().shadowMeldObjectType)
+                {
+                    case ShadowmeldObjectControl.ShadowMeldObjectType.GLASS:
+                        StartCoroutine(gameController.ResetLevel());
+                        ExitShadowMeld();
+                        break;
+                    case ShadowmeldObjectControl.ShadowMeldObjectType.WATER:
+                        StartCoroutine(gameController.ResetLevel());
+                        ExitShadowMeld();
+                        break;
+                    default:
+                        ExitShadowMeld();
+                        break;
+                }
+            }
+            else
+            {
+                ExitShadowMeld();
+            }
+        }
     }
 
     public void ExitShadowMeld()
@@ -174,10 +234,8 @@ public class PlayerMovement : MonoBehaviour
                 verticalVelocity = jumpSpeed;
             }
         }
-        else
-        {
-            verticalVelocity -= gravity * Time.deltaTime;
-        }
+        verticalVelocity -= gravity * Time.deltaTime;
+        if (verticalVelocity < -gravity * .75f) verticalVelocity = -gravity * .75f;
         Vector3 moveVector = new Vector3(0, verticalVelocity, 0);
         controller.Move(moveVector * Time.deltaTime);
     }
@@ -199,6 +257,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isGrabbing)
         {
+            GameController.Toggle3DMovementTooltips(true);
             rotationDirection = new Vector3(movementReference.transform.forward.x, 0, movementReference.transform.forward.z);
             transform.rotation = Quaternion.LookRotation(rotationDirection, Vector3.up);
             if (Input.GetAxisRaw("Horizontal") > 0)
@@ -221,6 +280,7 @@ public class PlayerMovement : MonoBehaviour
         // Grabbing movement
         else
         {
+            GameController.ToggleGrabbingTooltips(true);
             if (Input.GetAxisRaw("Vertical") > 0 && !grabbedObject.GetComponent<MoveCube>().blockedAhead)
             {
                 controller.Move(grabbedObject.GetComponent<MoveCube>().directionAwayFromPlayer * Time.deltaTime * grabMovementSpeed);
@@ -262,7 +322,9 @@ public class PlayerMovement : MonoBehaviour
                         playerShiftInOffset = transform.position.z;
                     else if (GetComponent<PlayerShadowCast>().lightSourceAligned.xAxisMovement)
                         playerShiftInOffset = transform.position.x;
-					StartCoroutine(CameraPanIn(transform.position, hit.point, -GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection * camControl.distanceToPlayer2D));
+                    GetComponent<CharacterController>().enabled = false;
+
+                    StartCoroutine(CameraPanIn(transform.position, hit.point, -GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection * camControl.distanceToPlayer2D));
 					StartCoroutine(FinishShiftIn());
 				}
 				else
@@ -314,6 +376,7 @@ public class PlayerMovement : MonoBehaviour
 
 	public void ShiftingOutControl()
 	{
+        GameController.ToggleShadowShiftOutTooltips(true);
 		if(Input.GetKeyDown(KeyCode.S))
 		{
 			if(currentPlatformIndex + 1 < shadowShiftOutPlatforms.Count)
@@ -430,14 +493,13 @@ public class PlayerMovement : MonoBehaviour
 		yield return new WaitForSeconds(camControl.cameraPanDuration);
 
 		shadowShiftingIn = false;
-		transform.parent = null;
+        in3DSpace = false;
+        transform.parent = null;
 		playerShadow.transform.parent = null;
-		in3DSpace = false;
-		GetComponent<CharacterController>().enabled = false;
 		playerShadow.GetComponent<CharacterController>().enabled = true;
 		controller = playerShadow.GetComponent<CharacterController>();
-		GetComponent<PlayerShadowCast>().CastShadow();
-		Debug.Log("In Wall");
+        GetComponent<PlayerShadowCast>().CastShadow();
+        Debug.Log("In Wall");
 	}
 
 	public IEnumerator FinishShiftInMultiExit()
@@ -454,7 +516,8 @@ public class PlayerMovement : MonoBehaviour
 		playerShadow.GetComponent<CharacterController>().enabled = true;
 		controller = playerShadow.GetComponent<CharacterController>();
 		GetComponent<PlayerShadowCast>().CastShadow();
-		Debug.Log("In Wall");
+        GameController.ToggleShadowShiftOutTooltips(false);
+        Debug.Log("In Wall");
 	}
 		
 	public void FinishShiftOut()
@@ -470,6 +533,7 @@ public class PlayerMovement : MonoBehaviour
 		playerShadow.GetComponent<CharacterController>().enabled = false;
 		GetComponent<CharacterController>().enabled = true;
 		controller = GetComponent<CharacterController>();
+        GameController.ToggleShadowShiftOutTooltips(false);
 		Debug.Log("Out of wall");
 	}
 
@@ -488,4 +552,3 @@ public class PlayerMovement : MonoBehaviour
 		}
 	}
 }
-

@@ -5,9 +5,8 @@ public class MoveCubeReference : MonoBehaviour
 	private MoveCube moveCube;
 	private GameObject moveCubeMesh;
     public GameObject acrossReference;
-    //[HideInInspector]
+    
     public bool blocked;
-    //[HideInInspector]
 
 	void Start()
 	{
@@ -36,7 +35,7 @@ public class MoveCubeReference : MonoBehaviour
 	{
 		if(other.gameObject.tag == "Player")
 		{
-            GameController.ResetInteractText();
+            GameController.ToggleInteractTooltip(false);
             moveCube.canInteract = false;
 			moveCube.grabbed = false;
             moveCube.transform.parent = null;
