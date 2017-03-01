@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class GameController : MonoBehaviour {
@@ -43,6 +44,11 @@ public class GameController : MonoBehaviour {
     {
         scoreText.GetComponent<Text>().text = "Score: " + score;
         ShadowmeldUIControl();
+
+        if(Input.GetButtonDown("Quit"))
+        {
+            SceneManager.LoadScene("Menu_Title");
+        }
     }
 
     void ShadowmeldUIControl()

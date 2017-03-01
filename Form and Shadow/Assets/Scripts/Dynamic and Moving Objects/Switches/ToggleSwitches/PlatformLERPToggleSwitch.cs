@@ -13,7 +13,7 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
 	private List<IEnumerator> moveReturn;
 	private List<float> moveTime;
 	private bool locked;
-	private bool moving;
+	private bool animating;
 
     [System.Serializable]
     public class lerpPlatform
@@ -39,10 +39,10 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
     // Update is called once per frame
 	new void Update()
 	{
-		if (pressed && !locked && !moving)
+		if (pressed && !locked && !animating)
 		{
 			locked = true;
-			moving = true;
+			
 			int i = 0;
 			currentPos.Clear();
 			foreach (lerpPlatform platform in platforms)
@@ -56,10 +56,10 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
 				i++;
 			}
 		} 
-		else if (!pressed && locked && !moving) 
+		else if (!pressed && locked && !animating) 
 		{
 			locked = false;
-			moving = true;
+			animating = true;
 			int i = 0;
 			currentPos.Clear();
 			foreach (lerpPlatform platform in platforms)
@@ -78,24 +78,27 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
 	public IEnumerator MoveOut(lerpPlatform platform, int index)
 	{
 		float panStart = Time.time;
+		float localTime = Time.time;
 		currentPos.Add(platform.platformObject.transform.position);
 		moveTime[index] = ((currentPos[index] - endPos[index]).magnitude / platform.moveSpeed);
-		while ((Time.time < panStart + moveTime[index]) && pressed)
+		while ((((!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut) ? localTime += Time.deltaTime : localTime) < (panStart + moveTime[index]) + Time.time - localTime) && pressed)
 		{
-			platform.platformObject.transform.position = Vector3.Lerp(currentPos[index], endPos[index], (Time.time - panStart) / moveTime[index]);
+			platform.platformObject.transform.position = Vector3.Lerp(currentPos[index], endPos[index], (localTime - panStart) / moveTime[index]);
 			yield return null;
 		}
-		moving = false;
+		animating = false;
 	}
 
+	//((!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut) ? localTime += Time.deltaTime : localTime)
 	public IEnumerator MoveBack(lerpPlatform platform, int index)
 	{
         float panStart = Time.time;
+		float localTime = Time.time;
 		currentPos.Add(platform.platformObject.transform.position);
 		moveTime[index] = ((currentPos[index] - startPos[index]).magnitude / platform.moveSpeed);
-		while (Time.time < panStart + moveTime[index] && !pressed && index < moveReturn.Count)
+		while (((!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut) ? localTime += Time.deltaTime : localTime) < (panStart + moveTime[index] + (Time.time - localTime)) && !pressed && index < moveReturn.Count)
 		{
-			platform.platformObject.transform.position = Vector3.Lerp(currentPos[index], startPos[index], (Time.time - panStart) / moveTime[index]);
+			platform.platformObject.transform.position = Vector3.Lerp(currentPos[index], startPos[index], (localTime - panStart) / moveTime[index]);
 			yield return null;
 		}
 	}
@@ -112,6 +115,6 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
         moveTime.Clear();
         moveTowards.Clear();
         moveReturn.Clear();
-        moving = false;
+        animating = false;
     }
 }
