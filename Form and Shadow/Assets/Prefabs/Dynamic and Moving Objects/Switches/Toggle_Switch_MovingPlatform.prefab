@@ -457,12 +457,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e0b630b6213c1e46b04cc066ccc2c64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pressed: 0
   leverArm: {fileID: 1239937614323532}
-  pressAnimationTime: 0.5
+  timerToggleSwitch: 1
+  lerpToggleSwitch: 0
   timerDuration: 15
+  pressed: 0
+  switchFlipAnimationTime: 0.75
   timerAudioSource: {fileID: 82096038790208902}
-  switchAudioSource: {fileID: 82593030849797782}
+  switchFlipAudioSource: {fileID: 82593030849797782}
   movingPlatform: {fileID: 0}
   percentSlow: 100
   haltWhenNotPressed: 0

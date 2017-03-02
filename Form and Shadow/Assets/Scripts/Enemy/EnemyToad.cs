@@ -25,7 +25,7 @@ public class EnemyToad : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if(!jumping)
+        if(!jumping && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
         {
             personalTimer += Time.deltaTime;
             if (personalTimer >= jumpStart + jumpCooldown)
@@ -63,6 +63,7 @@ public class EnemyToad : MonoBehaviour {
     {
         jumping = true;
         float panStart = Time.time;
+        float jumpPersonalTimer = panStart;
         Vector3 startPos = transform.position;
 
         if (currentJumpLocationIndex + 1 < jumpObjects.Count)
@@ -77,9 +78,13 @@ public class EnemyToad : MonoBehaviour {
         transform.rotation = Quaternion.LookRotation(transform.position - new Vector3(jumpObjects[currentJumpLocationIndex].transform.position.x, 
             transform.position.y, jumpObjects[currentJumpLocationIndex].transform.position.z), Vector3.up);
 
-        while (Time.time < panStart + jumpDuration)
+        while (jumpPersonalTimer < panStart + jumpDuration)
         {
-            transform.position = Vector3.Lerp(startPos, GetRelativePosition(jumpObjects[currentJumpLocationIndex]), (Time.time - panStart) / jumpDuration);
+            if(!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
+            {
+                jumpPersonalTimer += Time.deltaTime;
+            }
+            transform.position = Vector3.Lerp(startPos, GetRelativePosition(jumpObjects[currentJumpLocationIndex]), (jumpPersonalTimer - panStart) / jumpDuration);
             yield return null;
         }
         jumping = false;

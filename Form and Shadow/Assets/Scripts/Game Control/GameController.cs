@@ -88,7 +88,6 @@ public class GameController : MonoBehaviour {
         s_Tooltip.SetActive(on);
         d_Tooltip.SetActive(on);
         space_Tooltip.SetActive(on);
-        shift_Tooltip.SetActive(on);
     }
 
     public static void ToggleGrabbingTooltips(bool on)

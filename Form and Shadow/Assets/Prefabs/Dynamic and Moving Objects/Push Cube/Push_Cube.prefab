@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 54965435006355884}
   - component: {fileID: 114980936451896360}
   m_Layer: 12
-  m_Name: Push Cube
+  m_Name: Push_Cube
   m_TagString: Push Cube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -459,3 +459,4 @@ MonoBehaviour:
   blockedAhead: 0
   player: {fileID: 0}
   directionAwayFromPlayer: {x: 0, y: 0, z: 0}
+  startPos: {x: 0, y: 0, z: 0}

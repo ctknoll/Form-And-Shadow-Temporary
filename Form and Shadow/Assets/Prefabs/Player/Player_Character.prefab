@@ -287,7 +287,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1099584862315612}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.65, y: 15.32, z: 2.72}
+  m_LocalPosition: {x: 2.93, y: 1.31, z: 15.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4487168017051280}
@@ -552,7 +552,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04099a58a0c8cda4293e45a60b7cffda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transformOffset: {x: 0, y: 0, z: 0}
   lightSourceAligned: {fileID: 0}
 --- !u!114 &114475491659319378
 MonoBehaviour:
@@ -588,22 +587,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b574224f4bd158428e230c020740a0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerShadow: {fileID: 0}
-  mainCamera: {fileID: 0}
-  movementReference: {fileID: 1313981167222766}
-  shadowShiftFollowObjectPrefab: {fileID: 1506101941598320, guid: 96f053d07a717d64d8dc4a6db0ea4a06,
-    type: 2}
-  shadowShiftFollowObject: {fileID: 0}
-  controller: {fileID: 143736298376177622}
   movementSpeed: 6
   grabMovementSpeed: 3
   jumpSpeed: 10
   gravity: 20
+  shadowShiftFollowObjectPrefab: {fileID: 1506101941598320, guid: 96f053d07a717d64d8dc4a6db0ea4a06,
+    type: 2}
+  shadowShiftPanDuration: 1
+  shadowShiftFollowObject: {fileID: 0}
   shadowMeldAvailable: 0
   shadowMeldVFX: {fileID: 1758487694470666}
   shadowMeldResourceCost: 20
   shadowMeldResourceRegen: 10
   shadowMeldResource: 100
+  controller: {fileID: 143736298376177622}
+  mainCamera: {fileID: 0}
 --- !u!114 &114973802022037786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -676,7 +674,7 @@ CharacterController:
   m_Height: 2
   m_Radius: 0.5
   m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_StepOffset: 0
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
