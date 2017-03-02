@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class MoveCube : MonoBehaviour {
+public class PushCube : MonoBehaviour {
     public bool canInteract;
     public bool grabbed;
     public bool blockedAhead;
@@ -8,7 +8,8 @@ public class MoveCube : MonoBehaviour {
     public GameObject player;
     [HideInInspector]
     public Vector3 directionAwayFromPlayer;
-	private Vector3 startPos;
+    [HideInInspector]
+	public Vector3 startPos;
 
 	void Start()
 	{
