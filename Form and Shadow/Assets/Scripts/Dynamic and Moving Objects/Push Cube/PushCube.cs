@@ -23,10 +23,10 @@ public class PushCube : MonoBehaviour {
 		{
             if (!grabbed)
 			{
-                GameController.ToggleInteractTooltip(true);
+                GameController.CheckInteractToolip(true);
                 if (Input.GetButton("Grab"))
                 {
-                    GameController.ToggleInteractTooltip(false);
+                    GameController.CheckInteractToolip(false);
                     grabbed = true;
                     player.transform.rotation = Quaternion.LookRotation(directionAwayFromPlayer, Vector3.up);
                     transform.parent = player.transform;
@@ -46,7 +46,7 @@ public class PushCube : MonoBehaviour {
 
 		if(GameController.resetting)
 		{
-            GameController.ToggleInteractTooltip(false);
+            GameController.CheckInteractToolip(false);
             transform.position = startPos;
 			grabbed = false;
             transform.parent = null;

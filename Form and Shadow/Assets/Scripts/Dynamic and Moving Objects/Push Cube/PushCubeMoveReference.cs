@@ -19,7 +19,7 @@ public class PushCubeMoveReference : MonoBehaviour
         if (!PlayerMovement.in3DSpace)
         {
             pushCube.canInteract = false;
-            GameController.ToggleInteractTooltip(false);
+            GameController.CheckInteractToolip(false);
         }
     }
 
@@ -44,7 +44,7 @@ public class PushCubeMoveReference : MonoBehaviour
 	{
 		if(other.gameObject.tag == "Player" && !PlayerMovement.isGrabbing)
 		{
-            GameController.ToggleInteractTooltip(false);
+            GameController.CheckInteractToolip(false);
             pushCube.canInteract = false;
 			pushCube.grabbed = false;
             pushCube.transform.parent = null;
