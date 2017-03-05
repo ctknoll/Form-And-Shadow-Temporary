@@ -38,9 +38,11 @@ public class ConveyorBelt : MonoBehaviour {
 
     public void OnTriggerStay(Collider other)
     {
-        if(other.GetComponent<Collider>() != null && !other.GetComponent<Collider>().isTrigger)
+        if (other.tag == "Player" && PlayerMovement.shadowMelded) return;
+        if (other.GetComponent<Collider>() != null && !other.GetComponent<Collider>().isTrigger)
         {
-            if(moveDirection == MoveDirection.Forward)
+
+            if (moveDirection == MoveDirection.Forward)
             {
                 other.transform.position += moveSpeed * Time.deltaTime * transform.forward;
             }
