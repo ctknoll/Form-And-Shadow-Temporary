@@ -41,28 +41,32 @@ public class PlayerShadowCollider : MonoBehaviour {
 
 	public List<GameObject> GetTransferPlatforms()
 	{
-		// Cast a ray down from the player shadow and store all shadow colliders hit in an array of RaycastHits
-		RaycastHit [] hits;
-        hits = Physics.SphereCastAll(transform.position, 0.5f, Vector3.down, GetComponent<CharacterController>().height * 1.5f, 1 << 11);
+        List<GameObject> transferPlatforms = new List<GameObject>();
+        // Cast a ray down from the player shadow and store all shadow colliders hit in an array of RaycastHits
+        RaycastHit firstPlatformHit;
+        if(Physics.SphereCast(transform.position, 0.5f, Vector3.down, out firstPlatformHit, 1 << 11))
+        {
+            RaycastHit[] hits;
+            hits = Physics.SphereCastAll(firstPlatformHit.transform.position, 0.5f, Vector3.down, GetComponent<CharacterController>().height, 1 << 11);
 
-        // Then, create a list of gameobjects and for each RaycastHit in hits, add the hit collider's gameobject to the list of transferPlatforms
-        List <GameObject> transferPlatforms = new List<GameObject>();
-		foreach (RaycastHit hit in hits)
-		{
-            // If the shadowcollider follows regular behavior and does not have an exception parent
-			if(hit.collider.gameObject.GetComponent<ShadowCollider>().exceptionParent == null)
+            // Then, create a list of gameobjects and for each RaycastHit in hits, add the hit collider's gameobject to the list of transferPlatforms
+            foreach (RaycastHit hit in hits)
             {
-                // Prevent spikes from being added as shadow collider objects
-                if (hit.collider.gameObject.transform.parent.gameObject.tag != "Spikes")
-                    transferPlatforms.Add(hit.collider.gameObject.transform.parent.gameObject);
+                // If the shadowcollider follows regular behavior and does not have an exception parent
+                if (hit.collider.gameObject.GetComponent<ShadowCollider>().exceptionParent == null)
+                {
+                    // Prevent spikes from being added as shadow collider objects
+                    if (hit.collider.gameObject.transform.parent.gameObject.tag != "Spikes")
+                        transferPlatforms.Add(hit.collider.gameObject.transform.parent.gameObject);
+                }
+                // If it does have an exception parent
+                else
+                {
+                    transferPlatforms.Add(hit.collider.gameObject.GetComponent<ShadowCollider>().exceptionParent);
+                }
             }
-            // If it does have an exception parent
-			else
-            {
-                transferPlatforms.Add(hit.collider.gameObject.GetComponent<ShadowCollider>().exceptionParent);
-            }
-				
-		}
+        }
+		
 		// Then, return a list of gameobjects equal to all the shadow colliders below the player when called
 		return transferPlatforms;
 	}

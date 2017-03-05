@@ -44,7 +44,7 @@ public abstract class ToggleSwitch : MonoBehaviour {
         {
             if(!animating)
             {
-                GameController.ToggleInteractTooltip(true);
+                GameController.CheckInteractToolip(true);
                 if (Input.GetButtonDown("Grab"))
                 {
                     if (timerToggleSwitch)
@@ -53,13 +53,13 @@ public abstract class ToggleSwitch : MonoBehaviour {
                         runningTime = timerDuration;
                         StartCoroutine(PressSwitchTimer());
                         StartCoroutine(DepressSwitchTimer());
-                        GameController.ToggleInteractTooltip(false);
+                        GameController.CheckInteractToolip(false);
                     }
                     else
                     {
                         pressed = true;
                         StartCoroutine(PressSwitchToggle());
-                        GameController.ToggleInteractTooltip(false);
+                        GameController.CheckInteractToolip(false);
                     }
                 }
             }
@@ -70,7 +70,7 @@ public abstract class ToggleSwitch : MonoBehaviour {
     {
         if (other.gameObject.tag == "Player" && !PlayerMovement.shadowMelded && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
         {
-            GameController.ToggleInteractTooltip(false);
+            GameController.CheckInteractToolip(false);
         }
     }
 

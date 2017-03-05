@@ -16,16 +16,23 @@ public class GameController : MonoBehaviour {
     private static GameObject space_Tooltip;
     private static GameObject shift_Tooltip;
 
+    public static bool e_First_Time_Used;
+    public static bool shift_First_Time_Used;
+    public static bool f_First_Time_Used;
+
     private GameObject scoreText;
     private GameObject shadowMeldResourceObject;
     
 	private GameObject player;
     private GameObject playerShadow;
+    [HideInInspector]
+    public static GameController instance;
 
 	void Start () 
 	{
 		player = GameObject.Find("Player_Character");
 		playerShadow = GameObject.Find("Player_Shadow");
+        instance = GetComponent<GameController>();
         scoreText = GameObject.Find("Score_Text");
         w_Tooltip = GameObject.Find("W_Tooltip");
         a_Tooltip = GameObject.Find("A_Tooltip");
@@ -33,8 +40,13 @@ public class GameController : MonoBehaviour {
         d_Tooltip = GameObject.Find("D_Tooltip");
         e_Tooltip = GameObject.Find("E_Tooltip");
 		f_Tooltip = GameObject.Find("F_Tooltip");
+        e_First_Time_Used = false;
+        f_First_Time_Used = false;
+        shift_First_Time_Used = false;
+
         e_Tooltip.SetActive(false);
 		f_Tooltip.SetActive(false);
+
         space_Tooltip = GameObject.Find("Space_Tooltip");
         shift_Tooltip = GameObject.Find("Shift_Tooltip");
         shadowMeldResourceObject = GameObject.Find("Shadowmeld_Resource");
@@ -120,15 +132,47 @@ public class GameController : MonoBehaviour {
         space_Tooltip.SetActive(!on);
     }
 
-    public static void ToggleInteractTooltip(bool on)
+    public static void CheckInteractToolip(bool on)
     {
-        e_Tooltip.SetActive(on);
+        instance.StartCoroutine(instance.ToggleInteractTooltip(on));
     }
 
-	public static void ToggleShadowMeldTooltip(bool on)
+    public IEnumerator ToggleInteractTooltip(bool on)
+    {
+        if (!e_First_Time_Used)
+        {
+            e_Tooltip.GetComponent<Image>().color = Color.yellow;
+            e_Tooltip.SetActive(on);
+            e_First_Time_Used = true;
+            yield return new WaitForSeconds(2f);
+            e_Tooltip.GetComponent<Image>().color = Color.white;
+        }
+        else
+        {
+            e_Tooltip.SetActive(on);
+        }
+    }
+
+    public static void CheckShadowMeldTooltip(bool on)
 	{
 		f_Tooltip.SetActive(on);
 	}
+
+    public IEnumerator ToggleShadowMeldTooltip(bool on)
+    {
+        if (!f_First_Time_Used)
+        {
+            f_Tooltip.GetComponent<Image>().color = Color.yellow;
+            f_Tooltip.SetActive(on);
+            f_First_Time_Used = true;
+            yield return new WaitForSeconds(2f);
+            f_Tooltip.GetComponent<Image>().color = Color.white;
+        }
+        else
+        {
+            f_Tooltip.SetActive(on);
+        }
+    }
 
     public static void ToggleShadowShiftInTooltip(bool on)
     {

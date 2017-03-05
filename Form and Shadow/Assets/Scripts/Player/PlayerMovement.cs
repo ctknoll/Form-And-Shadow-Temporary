@@ -216,7 +216,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (in3DSpace && !isGrabbing && !shadowShiftingIn && !shadowShiftingOut)
         {
-			GameController.ToggleShadowMeldTooltip(true);
+			GameController.CheckShadowMeldTooltip(true);
             if (Input.GetButtonDown("Shadowmeld") && shadowMeldResource > 0)
             {
                 if (!shadowMelded)
@@ -251,7 +251,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("Shadowmelding");
         shadowMelded = true;
         shadowMeldVFX.SetActive(true);
-        GameController.ToggleInteractTooltip(false);
+        GameController.CheckInteractToolip(false);
         gameObject.layer = LayerMask.NameToLayer("Shadowmeld");
 
     }
@@ -345,7 +345,6 @@ public class PlayerMovement : MonoBehaviour
 			{
 				// If so, cast a ray offset 0.2 upwards and downwards in the y and see if it collides with any shadow colliders
 				// behind the wall. If not, shift the player into the wall
-
 				if(!Physics.Raycast(hit.point + new Vector3(0, transform.lossyScale.y * 1/3, 0), GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection, 1f, 1 << 11) && 
 					!Physics.Raycast(hit.point - new Vector3(0,transform.lossyScale.y * 2/3, 0), GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection, 1f, 1 << 11) && 
 					!Physics.Raycast(hit.point, GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection, 1f, 1 << 11))
