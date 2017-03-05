@@ -141,7 +141,7 @@ public class GameController : MonoBehaviour {
     {
         if (!e_First_Time_Used)
         {
-            e_Tooltip.GetComponent<Image>().color = Color.yellow;
+            e_Tooltip.GetComponent<Image>().color = Color.magenta;
             e_Tooltip.SetActive(on);
             e_First_Time_Used = true;
             yield return new WaitForSeconds(2f);
@@ -155,14 +155,14 @@ public class GameController : MonoBehaviour {
 
     public static void CheckShadowMeldTooltip(bool on)
 	{
-		f_Tooltip.SetActive(on);
+        instance.StartCoroutine(instance.ToggleShadowMeldTooltip(on));
 	}
 
     public IEnumerator ToggleShadowMeldTooltip(bool on)
     {
         if (!f_First_Time_Used)
         {
-            f_Tooltip.GetComponent<Image>().color = Color.yellow;
+            f_Tooltip.GetComponent<Image>().color = Color.magenta;
             f_Tooltip.SetActive(on);
             f_First_Time_Used = true;
             yield return new WaitForSeconds(2f);

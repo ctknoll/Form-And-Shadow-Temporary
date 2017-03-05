@@ -80,11 +80,13 @@ public class EnemyToad : MonoBehaviour {
 
         while (jumpPersonalTimer < panStart + jumpDuration)
         {
+            Vector3 currentPos;
             if(!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
             {
                 jumpPersonalTimer += Time.deltaTime;
             }
-            transform.position = Vector3.Lerp(startPos, GetRelativePosition(jumpObjects[currentJumpLocationIndex]), (jumpPersonalTimer - panStart) / jumpDuration);
+            currentPos = Vector3.Lerp(startPos, GetRelativePosition(jumpObjects[currentJumpLocationIndex]), (jumpPersonalTimer - panStart) / jumpDuration);
+            transform.position = currentPos;
             yield return null;
         }
         jumping = false;
