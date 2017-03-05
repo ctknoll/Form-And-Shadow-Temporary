@@ -282,7 +282,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                continue;
+                ExitShadowMeld();
             }
         }
     }
