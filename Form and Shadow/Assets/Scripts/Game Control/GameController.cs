@@ -141,7 +141,7 @@ public class GameController : MonoBehaviour {
     {
         if (!e_First_Time_Used)
         {
-            e_Tooltip.GetComponent<Image>().color = Color.magenta;
+            e_Tooltip.GetComponent<Image>().color = Color.yellow;
             e_Tooltip.SetActive(on);
             e_First_Time_Used = true;
             yield return new WaitForSeconds(2f);
