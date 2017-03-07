@@ -2,20 +2,19 @@
 
 public class MovingPlatformSpeedPressureSwitch : PressureSwitch
 {
-
 	public GameObject movingBlock;
 	public float percentSlow;
 	public bool haltWhenNotPressed;
 	private bool locked;
 
 	// Use this for initialization
-	void Start () 
+	new void Start () 
 	{
 		base.Start();
 	}
 	
 	// Update is called once per frame
-	public void Update () 
+	new void Update () 
 	{
         //base.Update();
 		if (haltWhenNotPressed) movingBlock.GetComponent<MovingPlatform>().slowValue = 0;

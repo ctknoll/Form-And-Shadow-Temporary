@@ -1,60 +1,92 @@
 ﻿using UnityEngine;
 
+/*
+    Written by: Daniel Colina and Chris Knoll
+    --PlayerShadowCast--
+    This script handles all logic of throwing the player
+    shadow into the wall through Shadowshift, making the 
+    player character's mesh invisible when the player is
+    in the world, and finding aligned light sources
+
+*/
+
 public class PlayerShadowCast : MonoBehaviour {
-	public GameObject playerShadowCollider;
+	private GameObject playerShadow;
 
 	[HideInInspector]
-	public Vector3 transformOffset;
 	[SerializeField]
-	public Transform wallTransform;
 	public LightSourceControl lightSourceAligned;
+
+    void Start()
+    {
+        playerShadow = GameObject.Find("Player_Shadow");
+    }
 
 	void Update () 
 	{
 		Check2DInvisibility();
-		lightSourceAligned = checkLightSourceAligned().GetComponent<LightSourceControl>();
+		lightSourceAligned = CheckLightSourceAligned().GetComponent<LightSourceControl>();
+        if(PlayerMovement.in3DSpace && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
+            GameController.ToggleShadowShiftInTooltip(lightSourceAligned.gameObject.activeSelf == true);
 	}
 
+    // Similar to the CastShadow method in Shadowcast, this method throws the player's shadow onto by casting a ray
+    // in the direction of whichever lightsource most aligned with the way the camera is currently rotated around 
+    // the player, and then changes various variables on the PlayerShadowCollider script related to which wall it
+    // should be attached to.
 	public void CastShadow()
 	{
 		RaycastHit hit;
 		if(Physics.Raycast(transform.position, lightSourceAligned.lightSourceDirection, out hit, Mathf.Infinity, 1 << 10))
 		{
-			/* To explain this, first one must know that there is a game object called Lighting Reference in the scene
-			 * that is always rotated to (0, 0, 0) and that all objects in the scene that will cast shadows must have
-			 * their parent objects rotated the same. This basically checks if the light source direction in relativity
-			 * to said lighting reference, and then sets the transform offset of the shadow collider (whether it be the
-			 * player's shadow collider or an object's) relative to said direction. So, if the light source direction is
-			 * equal to the reference's -transform.right (left), then all shadows are offset a little more than their size
-			 * behind the respective wall the previous Raycast hits.
-			*/
 
-			// Is the light source projecting forward or backward?
+            Vector3 transformOffset = new Vector3();
+
 			if (lightSourceAligned.zAxisMovement) 
 			{
 				transformOffset = ((transform.lossyScale.z / 1.9f) * lightSourceAligned.lightSourceDirection);
 			}
-			// Is the light source projecting left or right?
 			else if (lightSourceAligned.xAxisMovement) 
 			{
 				transformOffset = ((transform.lossyScale.x / 1.9f) * lightSourceAligned.lightSourceDirection);
 			}
 			
-			wallTransform = hit.collider.transform;
-			GetComponent<PlayerMovement>().playerShadow.transform.position = hit.point + transformOffset;
-			GetComponent<PlayerMovement>().playerShadow.transform.rotation = Quaternion.LookRotation(hit.normal);
+			playerShadow.transform.position = hit.point + transformOffset;
+            playerShadow.transform.rotation = Quaternion.LookRotation(hit.normal);
+            playerShadow.GetComponent<PlayerShadowCollider>().zAxisMovement = lightSourceAligned.zAxisMovement;
+            playerShadow.GetComponent<PlayerShadowCollider>().transformOffset = transformOffset;
+            playerShadow.GetComponent<PlayerShadowCollider>().wallTransform = hit.collider.transform;
 		}
 	}
 
+    // Similar to many other Check2DInvisibility method in Shadowcast, this method
+    // turns off or changes the shadowcasting modes of the various mesh renderers
+    // that compose the player's mesh when the player is currently in 2D space
 	public void Check2DInvisibility()
 	{
-		if(!PlayerMovement.in3DSpace || PlayerMovement.shiftingIn)
-			GetComponentInChildren<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-		else
-			GetComponentInChildren<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-	}
-
-	public GameObject checkLightSourceAligned()
+		if(!PlayerMovement.in3DSpace || PlayerMovement.shadowShiftingIn)
+        {
+            MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
+            foreach (MeshRenderer meshRend in meshRenderers)
+            {
+                meshRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            }
+        }
+        else
+        {
+            MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
+            foreach (MeshRenderer meshRend in meshRenderers)
+            {
+                meshRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            }
+        }
+    }
+    
+    // This method checks all light sources in the "Lighting" gameobject and finds
+    // the most closely aligned light source to the camera's rotation, or not if
+    // there is current not one, and then returns it and places it inside the 
+    // lightSourceAligned object's locations.
+	public GameObject CheckLightSourceAligned()
 	{
 		GameObject nearest = null;
 		float distance = float.MaxValue;

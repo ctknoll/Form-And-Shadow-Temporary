@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 114619173523154046}
   - component: {fileID: 20218619177331758}
   - component: {fileID: 92584182116722388}
+  - component: {fileID: 81246219108444362}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -41,7 +42,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 0}
+  m_LocalEulerAnglesHint: {x: 19.923, y: -37.673, z: 7.9530005}
 --- !u!20 &20218619177331758
 Camera:
   m_ObjectHideFlags: 1
@@ -76,6 +77,13 @@ Camera:
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
   m_StereoMirrorMode: 0
+--- !u!81 &81246219108444362
+AudioListener:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1763399374130896}
+  m_Enabled: 1
 --- !u!92 &92584182116722388
 Behaviour:
   m_ObjectHideFlags: 1
@@ -97,10 +105,9 @@ MonoBehaviour:
   target2D: {fileID: 0}
   target3D: {fileID: 0}
   distanceToPlayer3D: 8
-  xSpeed: 60
-  ySpeed: 60
-  yMinLimit: 10
-  yMaxLimit: 50
-  smoothSpeed: 0.125
+  xMouseRotationSpeed: 40
+  yMouseRotationSpeed: 40
+  yMinPanLimit: 10
+  yMaxPanLimit: 50
   distanceToPlayer2D: 10
-  cameraPanDuration: 1
+  smoothSpeed: 0.125

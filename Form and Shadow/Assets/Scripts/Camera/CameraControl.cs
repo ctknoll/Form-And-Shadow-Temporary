@@ -2,27 +2,37 @@
 
 public class CameraControl : MonoBehaviour
 {
-	[Header("Player Target")]
+    /*
+
+    --Camera Control--
+    Basic master control for the Main_Camera prefab, handling all logic of camera movement
+    and looking, outside of the camera pan functions in PlayerMovement that handle the shadowshift
+    enter, exit, and multiexit camera panning methods.
+
+    */
+
+	[Header("Player Target 2D and 3D")]
     public Transform target2D;
 	public Transform target3D;
 
 	[Header("3D Camera Variables")]
+    // Camera follow distance
 	public float distanceToPlayer3D;
+    // Camera rotation speeds
+    public float xMouseRotationSpeed;
+    public float yMouseRotationSpeed;
+    // Camera pan limits
+    public float yMinPanLimit;
+    public float yMaxPanLimit;
+
     private float currentDistanceToPlayer3D;
-    public float xSpeed;
-    public float ySpeed;
-
-    public float yMinLimit;
-    public float yMaxLimit;
-
-    float x = 0.0f;
-    float y = 0.0f;
+    private float x = 0.0f;
+    private float y = 0.0f;
 
 	[Header("2D Camera Variables")]
-	public float smoothSpeed = 0.125f;
-	public float distanceToPlayer2D;
+    public float distanceToPlayer2D;
+    public float smoothSpeed = 0.125f;
 
-	public float cameraPanDuration;
 	[HideInInspector]
 	public static bool cameraIsPanning;
 
@@ -39,7 +49,6 @@ public class CameraControl : MonoBehaviour
 
     void Update()
     {
-
         //Updating camera distance on every frame
         currentDistanceToPlayer3D = RaycastToCamera.distance;
 
@@ -52,14 +61,14 @@ public class CameraControl : MonoBehaviour
     }
     void LateUpdate()
     {
-		if(!cameraIsPanning && !PlayerMovement.shiftingOut && !PlayerMovement.shiftingIn)
+		if(!cameraIsPanning && !PlayerMovement.shadowShiftingOut && !PlayerMovement.shadowShiftingIn)
 		{
 			if (PlayerMovement.in3DSpace)
 	        {
-	            x += Input.GetAxis("Mouse X") * xSpeed * distanceToPlayer3D * 0.02f;
-	            y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
+                x += Input.GetAxis("Mouse X") * xMouseRotationSpeed * distanceToPlayer3D * 0.02f;
+	            y -= Input.GetAxis("Mouse Y") * yMouseRotationSpeed * 0.02f;
 
-	            y = ClampAngle(y, yMinLimit, yMaxLimit);
+	            y = ClampAngle(y, yMinPanLimit, yMaxPanLimit);
 
 	            Quaternion rotation = Quaternion.Euler(y, x, 0);
 
@@ -80,13 +89,13 @@ public class CameraControl : MonoBehaviour
 		else
 		{
 			if(PlayerMovement.in3DSpace)
-				transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionFollow.transform);
+				transform.LookAt(target3D.GetComponent<PlayerMovement>().shadowShiftFollowObject.transform);
 			else if(!PlayerMovement.in3DSpace)
 			{
-				if(target3D.GetComponent<PlayerMovement>().transitionFollow)
-					transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionFollow.transform);
+				if(target3D.GetComponent<PlayerMovement>().shadowShiftFollowObject)
+					transform.LookAt(target3D.GetComponent<PlayerMovement>().shadowShiftFollowObject.transform);
 				else
-					transform.LookAt(target3D.GetComponent<PlayerMovement>().transitionFollow.transform);
+					transform.LookAt(target3D.GetComponent<PlayerMovement>().shadowShiftFollowObject.transform);
 			}
 		}
     }

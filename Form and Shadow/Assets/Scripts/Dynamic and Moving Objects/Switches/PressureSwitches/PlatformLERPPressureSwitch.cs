@@ -6,58 +6,64 @@ public class PlatformLERPPressureSwitch : PressureSwitch
 {
 
     public GameObject[] platforms;
+	public float moveSpeed;
+	public Vector3 directionToMove;
+
 	private GameObject platObj;
 	private List<Vector3> startPos;
 	private List<Vector3> endPos;
     private List<Vector3> currentPos;
-    public float moveSpeed;
-	public Vector3 directionToMove;
-    private bool locked;
-	private float moveTime;
-	private bool atPeak;
-	private bool inMotion;
+	private List<IEnumerator> moveTowards;
+	private List<IEnumerator> moveReturn;
+	private List<float> moveTime;
+	private bool locked;
+	private bool moving;
 
     // Use this for initialization
-    void Start()
+    new void Start()
     {
         base.Start();
-		moveTime = (directionToMove.magnitude / moveSpeed);
-		inMotion = false;
         locked = false;
+		moveTime = new List<float>();
         startPos = new List<Vector3>();
         endPos = new List<Vector3>();
         currentPos = new List<Vector3>();
+		moveTowards = new List<IEnumerator>();
+		moveReturn = new List<IEnumerator>();
     }
 
     // Update is called once per frame
-    public void Update()
+    new void Update()
     {
-        Debug.Log(moveTime);
-        if (pressed && !locked && !inMotion)
+
+        if (pressed && !locked && !moving)
         {
-            Debug.Log("Here");
-            foreach (GameObject platform in platforms)
-			{
-                Debug.Log(platform);
-				inMotion = true;
-				startPos.Add(platform.transform.position);
-                endPos.Add(platform.transform.position + directionToMove);
-				StartCoroutine(MoveOut(platform, startPos.Count - 1));
-				inMotion = false;
-				atPeak = true;
-			}
 			locked = true;
+			moving = true;
+			int i = 0;
+			currentPos.Clear();
+			foreach (GameObject platform in platforms)
+			{
+				if(startPos.Count < platforms.Length) startPos.Add(platform.transform.position);
+				if(endPos.Count < platforms.Length) endPos.Add(platform.transform.position + directionToMove);
+				moveTime.Add((directionToMove.magnitude / moveSpeed));
+				IEnumerator ienum = MoveOut(platform, i);
+				moveTowards.Add(ienum);
+				StartCoroutine(ienum);
+				i++;
+			}
 		} 
-		else if (!pressed && locked) 
+		else if (!pressed && locked && !moving) 
 		{
 			locked = false;
-			atPeak = false;
-            int i = 0;
+			moving = true;
+			int i = 0;
+			currentPos.Clear();
             foreach (GameObject platform in platforms)
             {
-                currentPos.Add(platform.transform.position);
-                moveTime = ((currentPos[i] - startPos[i]).magnitude / moveSpeed);
-                StartCoroutine(MoveBack(platform, i));
+				IEnumerator ienum = MoveBack(platform, i);
+				moveReturn.Add(ienum);
+				StartCoroutine(ienum);
                 i++;
             }
         }
@@ -68,23 +74,29 @@ public class PlatformLERPPressureSwitch : PressureSwitch
 	public IEnumerator MoveOut(GameObject platform, int index)
 	{
 		float panStart = Time.time;
-		while (Time.time < panStart + moveTime && pressed)
+		currentPos.Add(platform.transform.position);
+		moveTime[index] = ((currentPos[index] - endPos[index]).magnitude / moveSpeed);
+		while ((Time.time < panStart + moveTime[index]) && pressed)
 		{
-            platform.transform.position = Vector3.Lerp(startPos[index], endPos[index], (Time.time - panStart) / moveTime);
+			platform.transform.position = Vector3.Lerp(currentPos[index], endPos[index], (Time.time - panStart) / moveTime[index]);
 			yield return null;
 		}
+		moving = false;
 	}
 
 	public IEnumerator MoveBack(GameObject platform, int index)
 	{
-		atPeak = false;
-		inMotion = true;
 		float panStart = Time.time;
-		while (Time.time < panStart + moveTime)
+		currentPos.Add(platform.transform.position);
+		moveTime[index] = ((currentPos[index] - startPos[index]).magnitude / moveSpeed);
+		while (Time.time < panStart + moveTime[index] && !pressed)
 		{
-			platform.transform.position = Vector3.Lerp(currentPos[index], startPos[index], (Time.time - panStart) / moveTime);
+			platform.transform.position = Vector3.Lerp(currentPos[index], startPos[index], (Time.time - panStart) / moveTime[index]);
 			yield return null;
 		}
-		inMotion = false;
+		moveTime.Clear();
+		moveTowards.Clear();
+		moveReturn.Clear();
+		moving = false;
 	}
 }

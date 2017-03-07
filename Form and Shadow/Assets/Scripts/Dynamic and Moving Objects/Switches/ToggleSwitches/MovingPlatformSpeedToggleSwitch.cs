@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MovingPlatformSpeedToggleSwitch : ToggleSwitch
 {
@@ -12,13 +10,13 @@ public class MovingPlatformSpeedToggleSwitch : ToggleSwitch
     private bool locked;
 
     // Use this for initialization
-    void Start()
+    new void Start()
     {
         base.Start();
     }
 
     // Update is called once per frame
-    public void Update()
+    new void Update()
     {
         if (haltWhenNotPressed) movingPlatform.GetComponent<MovingPlatform>().slowValue = 0;
         if (pressed)

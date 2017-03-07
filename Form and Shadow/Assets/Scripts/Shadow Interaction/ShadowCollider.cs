@@ -37,7 +37,7 @@ public class ShadowCollider : MonoBehaviour {
                     break;
                 case ShadowCast.MeshType.BASIC_CUBE:
                     gameObject.name = "Basic_Cube_Shadow_Collider";
-                    CreateBasicCollider();
+                    CreateBasicShadowCollider();
                     break;
                 default:
                     Debug.Log("You didn't assign a meshtype on my parent!");
@@ -56,16 +56,17 @@ public class ShadowCollider : MonoBehaviour {
                     break;
                 case ShadowCast.MeshType.ENEMY_TOAD:
                     gameObject.name = "Enemy_Toad_Shadow_Collider";
-                    CreateEnemyToadCollider();
+                    CreateEnemyToadShadowCollider();
+                    break;
+                case ShadowCast.MeshType.PUSH_CUBE:
+                    gameObject.name = "Push_Cube_Shadow_Collider";
+                    CreatePushCubeShadowCollider();
                     break;
                 default:
                     Debug.Log("You didn't assign a meshtype on my exception parent!");
                     break;
             }
         }
-
-        GetLockedAxis();
-        GetTransformOffset();
 	}
 	
 	void FixedUpdate () 
@@ -77,42 +78,6 @@ public class ShadowCollider : MonoBehaviour {
             FollowExceptionParent();
         }
 	}
-
-    public void GetLockedAxis()
-    {
-        if (castDirection == GameObject.Find("Lighting_Reference").transform.forward ||
-            -1 * castDirection == GameObject.Find("Lighting_Reference").transform.forward)
-        {
-            lockedInZAxis = true;
-        }
-        else
-        {
-            lockedInZAxis = false;
-        }
-    }
-
-    public void GetTransformOffset()
-    {
-        if (lockedInZAxis)
-        {
-            if (shadowCast.meshException)
-                transformOffset = ((shadowCast.GetComponent<MeshCollider>().bounds.size.z / 2) * castDirection);
-            else if (shadowCast.meshType == ShadowCast.MeshType.PROPELLOR_PLATFORM)
-                transformOffset = ((shadowCast.transform.lossyScale.z / 2) * castDirection);
-            else
-                transformOffset = ((shadowCast.transform.lossyScale.z / 2) * castDirection);
-
-        }
-        else
-        {
-            if (shadowCast.meshException)
-                transformOffset = ((shadowCast.GetComponent<MeshCollider>().bounds.size.x / 2) * castDirection);
-            else if (shadowCast.meshType == ShadowCast.MeshType.PROPELLOR_PLATFORM)
-                transformOffset = ((shadowCast.transform.lossyScale.z / 2) * castDirection);
-            else
-                transformOffset = ((shadowCast.transform.lossyScale.x / 2) * castDirection);
-        }
-    }
 
     public void LockMovementAxis()
 	{
@@ -162,26 +127,17 @@ public class ShadowCollider : MonoBehaviour {
 		gameObject.AddComponent<TransformLock>();
 		gameObject.AddComponent<BoxCollider>();
 		gameObject.GetComponent<BoxCollider>().isTrigger = true;
-
-        if (lockedInZAxis)
-        {
-            gameObject.transform.localScale = new Vector3(exceptionParent.transform.lossyScale.z, exceptionParent.transform.lossyScale.y, exceptionParent.transform.lossyScale.x);
-        }
-        else
-        {
-            gameObject.transform.localScale = exceptionParent.transform.lossyScale;
-        }
+        gameObject.transform.localScale = exceptionParent.transform.lossyScale;
 
         GameObject propellorShadowCollider = new GameObject("Propellor_Platform_Shadow_Collider");
 		propellorShadowCollider.transform.position = transform.position;
         propellorShadowCollider.transform.parent = gameObject.transform;
-        		
 		propellorShadowCollider.AddComponent<BoxCollider>();
 		propellorShadowCollider.AddComponent<PropellorPlatformShadowCollider>();
 		propellorShadowCollider.GetComponent<PropellorPlatformShadowCollider> ().propellor = exceptionParent.transform.parent.gameObject;
     }
 
-    public void CreateEnemyToadCollider()
+    public void CreateEnemyToadShadowCollider()
     {
         gameObject.AddComponent<BoxCollider>();
         gameObject.AddComponent<Killzone>();
@@ -190,17 +146,28 @@ public class ShadowCollider : MonoBehaviour {
 
     }
 
+    public void CreatePushCubeShadowCollider()
+    {
+        gameObject.AddComponent<BoxCollider>();
+        gameObject.GetComponent<BoxCollider>().size = exceptionParent.transform.parent.GetComponent<BoxCollider>().size;
+    }
+
     public void CreateSpikesShadowCollider()
 	{
 		// Creates a spike deathzone the player can fall into
 		gameObject.AddComponent<BoxCollider>();
-		gameObject.AddComponent<Killzone>();
-		gameObject.GetComponent<BoxCollider>().size = gameObject.transform.parent.GetComponent<BoxCollider>().size;
-		gameObject.GetComponent<BoxCollider>().isTrigger = true;
+        gameObject.GetComponent<BoxCollider>().size = gameObject.transform.parent.GetComponent<BoxCollider>().size;
+
+        if (!gameObject.transform.parent.GetComponent<ShadowmeldObjectControl>())
+        {
+            gameObject.AddComponent<Killzone>();
+            gameObject.GetComponent<BoxCollider>().isTrigger = true;
+        }
 	}
 
-	public void CreateBasicCollider()
+	public void CreateBasicShadowCollider()
 	{
 		gameObject.AddComponent<BoxCollider>();
-	}
+        gameObject.GetComponent<BoxCollider>().size = gameObject.transform.parent.GetComponent<BoxCollider>().size;
+    }
 }

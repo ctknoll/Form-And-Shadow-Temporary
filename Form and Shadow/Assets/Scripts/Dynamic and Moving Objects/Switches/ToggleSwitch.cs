@@ -1,59 +1,76 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ToggleSwitch : MonoBehaviour {
+/*
 
-	public bool pressed;
-    public GameObject switchButton;
-    public float pressAnimationTime;
-	public float timerDuration;
+--Toggle Switch--
+Abstract Class meant for all Toggle Switches to inherit from.
+NOTE: DO NOT INSTANTIATE
 
-    private Vector3 highLerpPosition;
-    private Vector3 lowLerpPosition;
-	protected float runningTime = 0;
+*/
+
+public abstract class ToggleSwitch : MonoBehaviour {
+    public GameObject leverArm;
+
+    public bool timerToggleSwitch;
+    public bool lerpToggleSwitch;
+    public float timerDuration;
+
+    public bool pressed;
+    public float switchFlipAnimationTime;
+    public AudioSource timerAudioSource;
+    public AudioSource switchFlipAudioSource;
+
+    private bool animating;
+    private float runningTime = 0;
+    private bool toggledOn;
+    private Vector3 startLerpRotation;
+    private Vector3 endLerpRotation;
 
 
 	public void Start()
 	{
+        animating = false;
+        toggledOn = false;
         pressed = false;
-        highLerpPosition = switchButton.transform.position;
-        lowLerpPosition = switchButton.transform.position - new Vector3(0, 0.1f, 0);
+        startLerpRotation = leverArm.transform.eulerAngles;
+        endLerpRotation = leverArm.transform.eulerAngles + new Vector3(0, 0, 90);
     }
 
 	// Update is called once per frame
     void OnTriggerStay (Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if(other.gameObject.tag == "Player" && !PlayerMovement.shadowMelded && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
         {
-			if (!pressed) {
-				GameController.SetInteractText ("Press E to toggle this switch");
-				if (Input.GetButtonDown ("Grab")) 
-				{
-					pressed = true;
-					runningTime = timerDuration;
-					StartCoroutine (PressSwitch ());
-					if (timerDuration >= 0) StartCoroutine (DepressSwitch ());
-					GameController.SetInteractText ("");
-				}
-			} 
-			else 
-			{
-				if (Input.GetButtonDown ("Grab")) 
-				{
-					pressed = false;
-					runningTime = 0;
-					if (timerDuration == -1) StartCoroutine (DepressSwitch ());		
-					GameController.SetInteractText ("");
-				}
-			}
+            if(!animating)
+            {
+                GameController.CheckInteractToolip(true);
+                if (Input.GetButtonDown("Grab"))
+                {
+                    if (timerToggleSwitch)
+                    {
+                        pressed = true;
+                        runningTime = timerDuration;
+                        StartCoroutine(PressSwitchTimer());
+                        StartCoroutine(DepressSwitchTimer());
+                        GameController.CheckInteractToolip(false);
+                    }
+                    else
+                    {
+                        pressed = true;
+                        StartCoroutine(PressSwitchToggle());
+                        GameController.CheckInteractToolip(false);
+                    }
+                }
+            }
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && !PlayerMovement.shadowMelded && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
         {
-            GameController.ResetInteractText();
+            GameController.CheckInteractToolip(false);
         }
     }
 
@@ -63,32 +80,66 @@ public class ToggleSwitch : MonoBehaviour {
 		{
 			runningTime -= Time.deltaTime;
 		} 
-		else if (runningTime <= 0 && runningTime > -1) 
+		else if (runningTime <= 0 && runningTime > -1)
 		{
-			pressed = false;
             runningTime = 0;
 		}
 	}
 
-    public IEnumerator PressSwitch()
+    public IEnumerator PressSwitchTimer()
     {
+        switchFlipAudioSource.Play();
+        animating = true;
         float panStart = Time.time;
-        while (Time.time < panStart + pressAnimationTime)
+        while (Time.time < panStart + switchFlipAnimationTime)
         {
-            switchButton.transform.position = Vector3.Lerp(highLerpPosition, lowLerpPosition, (Time.time - panStart) / pressAnimationTime);
+            leverArm.transform.eulerAngles = Vector3.Lerp(startLerpRotation, endLerpRotation, (Time.time - panStart) / switchFlipAnimationTime);
             yield return null;
         }
     }
 
-    public IEnumerator DepressSwitch()
+    public IEnumerator PressSwitchToggle()
     {
-		if (timerDuration >= 0) yield return new WaitForSeconds(timerDuration);
-
+        switchFlipAudioSource.Play();
+        animating = true;
         float panStart = Time.time;
-        while (Time.time < panStart + pressAnimationTime)
+        while (Time.time < panStart + switchFlipAnimationTime)
         {
-            switchButton.transform.position = Vector3.Lerp(lowLerpPosition, highLerpPosition, (Time.time - panStart) / pressAnimationTime);
+            if (!toggledOn)
+                leverArm.transform.eulerAngles = Vector3.Lerp(startLerpRotation, endLerpRotation, (Time.time - panStart) / switchFlipAnimationTime);
+            else
+                leverArm.transform.eulerAngles = Vector3.Lerp(endLerpRotation, startLerpRotation, (Time.time - panStart) / switchFlipAnimationTime);
             yield return null;
         }
+        if (!toggledOn)
+            toggledOn = true;
+        else
+            toggledOn = false;
+        if (lerpToggleSwitch)
+        {
+            if (!toggledOn)
+                pressed = false;
+        }
+        else
+            pressed = false;
+        animating = false;
+    }
+
+    public IEnumerator DepressSwitchTimer()
+    {
+        timerAudioSource.Play();
+        animating = true;
+        if (timerDuration >= 0) yield return new WaitForSeconds(timerDuration);
+        switchFlipAudioSource.Play();
+        timerAudioSource.Stop();
+
+        float panStart = Time.time;
+        while (Time.time < panStart + switchFlipAnimationTime)
+        {
+            leverArm.transform.eulerAngles = Vector3.Lerp(endLerpRotation, startLerpRotation, (Time.time - panStart) / switchFlipAnimationTime);
+            yield return null;
+        }
+        pressed = false;
+        animating = false;
     }
 }

@@ -4,72 +4,117 @@ using UnityEngine;
 
 public class PlatformLERPToggleSwitch : ToggleSwitch
 {
+	public lerpPlatform[] platforms;
 
-    public GameObject[] platforms;
-	private GameObject platObj;
-    private List<Vector3> startPos;
-    private List<Vector3> endPos;
-    private List<Vector3> currentPos;
-    public float moveSpeed;
-	public Vector3 directionToMove;
-    private bool locked;
-	private float moveTime;
+	private List<Vector3> startPos;
+	private List<Vector3> endPos;
+	private List<Vector3> currentPos;
+	private List<IEnumerator> moveTowards;
+	private List<IEnumerator> moveReturn;
+	private List<float> moveTime;
+	private bool locked;
+	private bool animating;
 
-    // Use this for initialization
-    void Start()
+    [System.Serializable]
+    public class lerpPlatform
     {
-        base.Start();
-		moveTime = (directionToMove.magnitude / moveSpeed);
-        startPos = new List<Vector3>();
-        endPos = new List<Vector3>();
-        currentPos = new List<Vector3>();
-    }
+        public GameObject platformObject;
+        public Vector3 directionToMove;
+        public float moveSpeed;
+    };
+
+	// Use this for initialization
+	new void Start()
+	{
+		base.Start();
+		locked = false;
+		moveTime = new List<float>();
+		startPos = new List<Vector3>();
+		endPos = new List<Vector3>();
+		currentPos = new List<Vector3>();
+		moveTowards = new List<IEnumerator>();
+		moveReturn = new List<IEnumerator>();
+	}
 
     // Update is called once per frame
-    public void Update()
-    {
-		if (pressed && !locked) {
-			foreach (GameObject platform in platforms)
-			{
-                startPos.Add(platform.transform.position);
-                endPos.Add(platform.transform.position + directionToMove);
-                StartCoroutine(MoveOut(platform, startPos.Count - 1));
-			}
+	new void Update()
+	{
+		if (pressed && !locked && !animating)
+		{
 			locked = true;
+			
+			int i = 0;
+			currentPos.Clear();
+			foreach (lerpPlatform platform in platforms)
+			{
+				if(startPos.Count < platforms.Length) startPos.Add(platform.platformObject.transform.position);
+				if(endPos.Count < platforms.Length) endPos.Add(platform.platformObject.transform.position + platform.directionToMove);
+				moveTime.Add((platform.directionToMove.magnitude / platform.moveSpeed));
+				IEnumerator ienum = MoveOut(platform, i);
+				moveTowards.Add(ienum);
+				StartCoroutine(ienum);
+				i++;
+			}
 		} 
-		else if (!pressed && locked) 
+		else if (!pressed && locked && !animating) 
 		{
-            locked = false;
-            int i = 0;
-            foreach (GameObject platform in platforms)
-            {
-                currentPos.Add(platform.transform.position);
-                moveTime = ((currentPos[i] - startPos[i]).magnitude / moveSpeed);
-                StartCoroutine(MoveBack(platform, i));
-                i++;
-            }
+			locked = false;
+			animating = true;
+			int i = 0;
+			currentPos.Clear();
+			foreach (lerpPlatform platform in platforms)
+			{
+				IEnumerator ienum = MoveBack(platform, i);
+				moveReturn.Add(ienum);
+				StartCoroutine(ienum);
+				i++;
+			}
+            StartCoroutine(Clear());
         }
 
-        base.Update();
+		base.Update();
+	}
+
+	public IEnumerator MoveOut(lerpPlatform platform, int index)
+	{
+		float panStart = Time.time;
+		float localTime = Time.time;
+		currentPos.Add(platform.platformObject.transform.position);
+		moveTime[index] = ((currentPos[index] - endPos[index]).magnitude / platform.moveSpeed);
+		while ((((!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut) ? localTime += Time.deltaTime : localTime) < (panStart + moveTime[index]) + Time.time - localTime) && pressed)
+		{
+			platform.platformObject.transform.position = Vector3.Lerp(currentPos[index], endPos[index], (localTime - panStart) / moveTime[index]);
+			yield return null;
+		}
+		animating = false;
+	}
+
+	//((!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut) ? localTime += Time.deltaTime : localTime)
+	public IEnumerator MoveBack(lerpPlatform platform, int index)
+	{
+        float panStart = Time.time;
+		float localTime = Time.time;
+		currentPos.Add(platform.platformObject.transform.position);
+		moveTime[index] = ((currentPos[index] - startPos[index]).magnitude / platform.moveSpeed);
+		while (((!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut) ? localTime += Time.deltaTime : localTime) < (panStart + moveTime[index] + (Time.time - localTime)) && !pressed && index < moveReturn.Count)
+		{
+			platform.platformObject.transform.position = Vector3.Lerp(currentPos[index], startPos[index], (localTime - panStart) / moveTime[index]);
+			yield return null;
+		}
+	}
+
+    public IEnumerator Clear()
+    {
+        float max = 0;
+        foreach(float f in moveTime)
+        {
+            if (f > max)
+                max = f;
+        }
+        yield return new WaitForSeconds(max);
+        moveTime.Clear();
+        moveTowards.Clear();
+        moveReturn.Clear();
+        animating = false;
     }
-
-	public IEnumerator MoveOut(GameObject platform, int index)
-	{
-		float panStart = Time.time;
-		while (Time.time < panStart + moveTime)
-		{
-            platform.transform.position = Vector3.Lerp(startPos[index], endPos[index], (Time.time - panStart) / moveTime);
-            yield return null;
-        }
-	}
-
-	public IEnumerator MoveBack(GameObject platform, int index)
-	{
-		float panStart = Time.time;
-		while (Time.time < panStart + moveTime)
-		{
-            platform.transform.position = Vector3.Lerp(currentPos[index], startPos[index], (Time.time - panStart) / moveTime);
-            yield return null;
-        }
-	}
 }
