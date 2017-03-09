@@ -42,6 +42,12 @@ public class ShadowmeldObjectControl : MonoBehaviour {
             case ShadowMeldObjectType.WATER:
                 gameObject.layer = LayerMask.NameToLayer("Shadowmeld Ignore");
                 break;
+            case ShadowMeldObjectType.ACID_POOL:
+                gameObject.layer = LayerMask.NameToLayer("Shadowmeld Ignore");
+                break;
+            case ShadowMeldObjectType.CONVEYOR_BELT:
+                gameObject.layer = LayerMask.NameToLayer("Shadowmeld Ignore");
+                break;
             case ShadowMeldObjectType.FLAT_SPIKES:
                 gameObject.layer = LayerMask.NameToLayer("Shadowmeld Collide");
                 GetComponent<BoxCollider>().isTrigger = false;
@@ -62,10 +68,6 @@ public class ShadowmeldObjectControl : MonoBehaviour {
         gameObject.layer = startingLayer;
         switch (shadowMeldObjectType)
         {
-            case ShadowMeldObjectType.GLASS:
-                break;
-            case ShadowMeldObjectType.WATER:
-                break;
             case ShadowMeldObjectType.FLAT_SPIKES:
                 GetComponent<BoxCollider>().isTrigger = true;
                 break;

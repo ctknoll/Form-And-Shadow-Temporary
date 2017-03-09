@@ -25,16 +25,21 @@ public class PushCubeMoveReference : MonoBehaviour
 
 	void OnTriggerStay(Collider other)
 	{
-		if(other.gameObject.tag == "Player" && !PlayerMovement.shadowMelded && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && PlayerMovement.in3DSpace)
+		if(other.gameObject.tag == "Player")
 		{
-			pushCube.canInteract = true;
-			pushCube.directionAwayFromPlayer = (moveCubeMesh.transform.position - transform.position).normalized;
-            if (acrossReference.GetComponent<PushCubeMoveReference>().blocked)
-                pushCube.blockedAhead = true;
+            if (!PlayerMovement.shadowMelded && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && PlayerMovement.in3DSpace)
+            {
+                pushCube.canInteract = true;
+                pushCube.directionAwayFromPlayer = (moveCubeMesh.transform.position - transform.position).normalized;
+                if (acrossReference.GetComponent<PushCubeMoveReference>().blocked)
+                    pushCube.blockedAhead = true;
+                else
+                    pushCube.blockedAhead = false;
+            }
             else
-                pushCube.blockedAhead = false;
+                pushCube.canInteract = false;
 		}
-        else
+        else if(other.gameObject.tag != "Conveyor Belt")
         {
             blocked = true;
         }
@@ -42,7 +47,7 @@ public class PushCubeMoveReference : MonoBehaviour
 
 	void OnTriggerExit(Collider other)
 	{
-		if(other.gameObject.tag == "Player" && !PlayerMovement.isGrabbing)
+		if(other.gameObject.tag == "Player")
 		{
             GameController.CheckInteractToolip(false);
             pushCube.canInteract = false;

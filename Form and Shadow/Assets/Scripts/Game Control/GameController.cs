@@ -3,6 +3,15 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
+
+/*
+
+    Written by: Daniel Colina and Chris Knoll
+    --GameController--
+    A master control script for handling UI, resetting the level, and score.
+    Attached to the GameController prefab in each scene.
+
+*/
 public class GameController : MonoBehaviour {
 	public static bool resetting;
 	public static int score;
@@ -54,7 +63,7 @@ public class GameController : MonoBehaviour {
 
     void Update()
     {
-        scoreText.GetComponent<Text>().text = "Score: " + score;
+        ScoreUIControl();
         ShadowmeldUIControl();
 
         if(Input.GetButtonDown("Quit"))
@@ -63,36 +72,22 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    #region UI Control
+    void ScoreUIControl()
+    {
+        scoreText.GetComponent<Text>().text = "Score: " + score;
+
+    }
+
     void ShadowmeldUIControl()
     {
         shadowMeldResourceObject.SetActive(player.GetComponent<PlayerMovement>().shadowMeldAvailable);
         shadowMeldResourceObject.GetComponent<Image>().color = Color.magenta;
         shadowMeldResourceObject.GetComponent<Image>().fillAmount = player.GetComponent<PlayerMovement>().shadowMeldResource / 100;
     }
+    #endregion
 
-    public IEnumerator ResetLevel()
-	{
-		resetting = true;
-
-		// Reset the player's position
-		if(!PlayerMovement.in3DSpace)
-		{
-			PlayerMovement.in3DSpace = true;
-			playerShadow.GetComponent<CharacterController>().enabled = false;
-			player.GetComponent<CharacterController>().enabled = true;
-			player.GetComponent<PlayerMovement>().controller = player.GetComponent<CharacterController>();
-		}
-		player.transform.position = PlayerMovement.playerStartPosition;
-
-        //player.GetComponent<PlayerMovement>().ExitShadowMeld();
-        player.GetComponent<PlayerMovement>().shadowMeldResource = 100;
-        player.GetComponent<PlayerMovement>().shadowMeldVFX.SetActive(false);
-        player.layer = LayerMask.NameToLayer("Form");
-        yield return new WaitForSeconds(1.0f);
-        resetting = false;
-        PlayerMovement.shadowMelded = false;
-	}
-
+    #region Tooltip Control
     public static void Toggle3DMovementTooltips(bool on)
     {
         w_Tooltip.SetActive(on);
@@ -109,7 +104,7 @@ public class GameController : MonoBehaviour {
         a_Tooltip.SetActive(!on);
         d_Tooltip.SetActive(!on);
         e_Tooltip.SetActive(!on);
-		f_Tooltip.SetActive(!on);
+        f_Tooltip.SetActive(!on);
         space_Tooltip.SetActive(!on);
         shift_Tooltip.SetActive(!on);
     }
@@ -154,9 +149,9 @@ public class GameController : MonoBehaviour {
     }
 
     public static void CheckShadowMeldTooltip(bool on)
-	{
+    {
         instance.StartCoroutine(instance.ToggleShadowMeldTooltip(on));
-	}
+    }
 
     public IEnumerator ToggleShadowMeldTooltip(bool on)
     {
@@ -178,6 +173,39 @@ public class GameController : MonoBehaviour {
     {
         shift_Tooltip.SetActive(on);
     }
+    #endregion
+
+    // Method invoked by other classes that resets the level
+    // as a whole by resetting player position to the 3D start
+    // position (in the case that the player is in 2D, manually
+    // removes player from 2D and resets, and flips a global static
+    // boolean called 'Resetting' on that all dynamic objects (push cube)
+    // check in update to see if they need to reset to their start position
+    public IEnumerator ResetLevel()
+	{
+        // Turn resetting on
+		resetting = true;
+        // Check if the player is in 2D space
+		if(!PlayerMovement.in3DSpace)
+		{
+            // If so, remove them from 2D space first
+			PlayerMovement.in3DSpace = true;
+			playerShadow.GetComponent<CharacterController>().enabled = false;
+			player.GetComponent<CharacterController>().enabled = true;
+			player.GetComponent<PlayerMovement>().controller = player.GetComponent<CharacterController>();
+		}
+        // Then, reset the player's position to the start position
+		player.transform.position = PlayerMovement.playerStartPosition;
+
+        player.GetComponent<PlayerMovement>().shadowMeldResource = 100;
+        player.GetComponent<PlayerMovement>().shadowMeldVFX.SetActive(false);
+        player.layer = LayerMask.NameToLayer("Form");
+        yield return new WaitForSeconds(1.0f);
+        resetting = false;
+        PlayerMovement.shadowMelded = false;
+	}
+
+    
 
     public static void ScoreIncrement(int amount)
 	{

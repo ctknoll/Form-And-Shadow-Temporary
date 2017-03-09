@@ -6,23 +6,22 @@ public class EnemyToad : MonoBehaviour {
     public List<GameObject> jumpObjects;
     public float jumpDuration;
     public float jumpCooldown;
+    public GameObject acidPoolPrefab;
 
     private bool jumping;
     private int currentJumpLocationIndex;
     private float jumpStart;
     private float personalTimer;
 
-	// Use this for initialization
 	void Start ()
     {
-        transform.position = GetRelativePosition(jumpObjects[0]);
+        transform.position = GetRelativeJumpPosition(jumpObjects[0]);
         currentJumpLocationIndex = 0;
         jumpStart = 0;
         personalTimer = 0;
         jumping = false;
 	}
 	
-	// Update is called once per frame
 	void Update ()
     {
         if(!jumping && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
@@ -52,9 +51,16 @@ public class EnemyToad : MonoBehaviour {
         }
     }
 
-    public Vector3 GetRelativePosition(GameObject targetObj)
+    public Vector3 GetRelativeJumpPosition(GameObject targetObj)
     {
         Vector3 relativePosition = targetObj.transform.position + new Vector3(0, targetObj.transform.GetChild(0).transform.lossyScale.y / 2 + transform.lossyScale.y, 0);
+
+        return relativePosition;
+    }
+
+    public Vector3 GetRelativeAcidPoolPosition(GameObject targetObj)
+    {
+        Vector3 relativePosition = targetObj.transform.position + new Vector3(0, targetObj.transform.GetChild(0).transform.lossyScale.y / 2, 0);
 
         return relativePosition;
     }
@@ -85,7 +91,7 @@ public class EnemyToad : MonoBehaviour {
             {
                 jumpPersonalTimer += Time.deltaTime;
             }
-            currentPos = Vector3.Lerp(startPos, GetRelativePosition(jumpObjects[currentJumpLocationIndex]), (jumpPersonalTimer - panStart) / jumpDuration);
+            currentPos = Vector3.Lerp(startPos, GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]), (jumpPersonalTimer - panStart) / jumpDuration);
             transform.position = currentPos;
             yield return null;
         }
@@ -95,6 +101,6 @@ public class EnemyToad : MonoBehaviour {
 
     public void SpawnAcidPool()
     {
-        Debug.Log("Will spawn acid pool now, WIP");
+        Instantiate(acidPoolPrefab, GetRelativeAcidPoolPosition(jumpObjects[currentJumpLocationIndex]), Quaternion.identity); 
     }
 }
