@@ -14,6 +14,7 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
 	private List<float> moveTime;
 	private bool locked;
 	private bool animating;
+	private float clearBuffer;
 
     [System.Serializable]
     public class lerpPlatform
@@ -34,6 +35,7 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
 		currentPos = new List<Vector3>();
 		moveTowards = new List<IEnumerator>();
 		moveReturn = new List<IEnumerator>();
+		clearBuffer = 0;
 	}
 
     // Update is called once per frame
@@ -93,12 +95,20 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
 	public IEnumerator MoveBack(lerpPlatform platform, int index)
 	{
         float panStart = Time.time;
-		float localTime = Time.time;
+		float personalTime = panStart;
 		currentPos.Add(platform.platformObject.transform.position);
 		moveTime[index] = ((currentPos[index] - startPos[index]).magnitude / platform.moveSpeed);
-		while (((!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut) ? localTime += Time.deltaTime : localTime) < (panStart + moveTime[index] + (Time.time - localTime)) && !pressed && index < moveReturn.Count)
+		while ((personalTime - panStart) < moveTime[index] && !pressed)
 		{
-			platform.platformObject.transform.position = Vector3.Lerp(currentPos[index], startPos[index], (localTime - panStart) / moveTime[index]);
+			if ((!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)) 
+			{
+				personalTime += Time.deltaTime;
+			} 
+			else 
+			{
+				clearBuffer += Time.deltaTime / platforms.Length;
+			}
+			platform.platformObject.transform.position = Vector3.Lerp(currentPos[index], startPos[index], (personalTime - panStart) / moveTime[index]);
 			yield return null;
 		}
 	}
@@ -112,9 +122,15 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
                 max = f;
         }
         yield return new WaitForSeconds(max);
+		while (clearBuffer > 0) 
+		{
+			clearBuffer -= Time.deltaTime;
+			yield return new WaitForSeconds(Time.deltaTime);
+		}
         moveTime.Clear();
         moveTowards.Clear();
         moveReturn.Clear();
         animating = false;
+		clearBuffer = 0;
     }
 }
