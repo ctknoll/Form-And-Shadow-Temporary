@@ -44,7 +44,7 @@ public class LightDirectionToggleSwitch : ToggleSwitch
 				}
 			}
         }
-		lightDirectionPointer.transform.eulerAngles = new Vector3(startRotation.x, lightSources[0].transform.eulerAngles.y + 90, startRotation.z);
+		lightDirectionPointer.transform.eulerAngles = new Vector3(startRotation.x, lightSources[0].transform.eulerAngles.y - 90, startRotation.z);
         base.Update();
     }
 }
