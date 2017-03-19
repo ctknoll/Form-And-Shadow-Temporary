@@ -8,6 +8,7 @@ TagManager:
   - Push Cube
   - Move Platform
   - MainCameraReference
+  - Conveyor Belt
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Player
   - Main Camera Clip
   - Shadow Wall
   - Shadow

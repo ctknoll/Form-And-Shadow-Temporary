@@ -1,7 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ToggleSwitch : MonoBehaviour {
+/*
+
+--Toggle Switch--
+Abstract Class meant for all Toggle Switches to inherit from.
+NOTE: DO NOT INSTANTIATE
+
+*/
+
+public abstract class ToggleSwitch : MonoBehaviour {
     public GameObject leverArm;
 
     public bool timerToggleSwitch;
@@ -36,7 +44,7 @@ public class ToggleSwitch : MonoBehaviour {
         {
             if(!animating)
             {
-                GameController.ToggleInteractTooltip(true);
+                GameController.CheckInteractToolip(true);
                 if (Input.GetButtonDown("Grab"))
                 {
                     if (timerToggleSwitch)
@@ -45,13 +53,13 @@ public class ToggleSwitch : MonoBehaviour {
                         runningTime = timerDuration;
                         StartCoroutine(PressSwitchTimer());
                         StartCoroutine(DepressSwitchTimer());
-                        GameController.ToggleInteractTooltip(false);
+                        GameController.CheckInteractToolip(false);
                     }
                     else
                     {
                         pressed = true;
                         StartCoroutine(PressSwitchToggle());
-                        GameController.ToggleInteractTooltip(false);
+                        GameController.CheckInteractToolip(false);
                     }
                 }
             }
@@ -62,7 +70,7 @@ public class ToggleSwitch : MonoBehaviour {
     {
         if (other.gameObject.tag == "Player" && !PlayerMovement.shadowMelded && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
         {
-            GameController.ToggleInteractTooltip(false);
+            GameController.CheckInteractToolip(false);
         }
     }
 
