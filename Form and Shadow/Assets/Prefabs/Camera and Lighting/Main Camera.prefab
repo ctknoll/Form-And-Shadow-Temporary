@@ -36,8 +36,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1763399374130896}
-  m_LocalRotation: {x: 0.14128014, y: -0.32858664, z: 0.12035888, w: 0.9260586}
-  m_LocalPosition: {x: 17.02, y: 28.98, z: -11.91}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000029653306}
+  m_LocalPosition: {x: 5, y: 2, z: 11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -105,10 +105,9 @@ MonoBehaviour:
   target2D: {fileID: 0}
   target3D: {fileID: 0}
   distanceToPlayer3D: 8
-  xSpeed: 60
-  ySpeed: 60
-  yMinLimit: 10
-  yMaxLimit: 50
-  smoothSpeed: 0.125
+  xMouseRotationSpeed: 40
+  yMouseRotationSpeed: 40
+  yMinPanLimit: 10
+  yMaxPanLimit: 50
   distanceToPlayer2D: 10
-  cameraPanDuration: 1
+  smoothSpeed: 0.125

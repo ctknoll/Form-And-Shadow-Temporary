@@ -2,52 +2,64 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/*
+
+--Player Movement--
+    Basic master control for the Player_Character and Player_Shadow prefab, handles
+    all logic for player movement, shadow shifting, shadowmeld, and physics. Attached
+    to the Player_Character prefab at the highest level.
+
+*/
+
 public class PlayerMovement : MonoBehaviour
 {
-    // Static Variables
-    public static Vector3 playerStartPosition;
-	public static Vector3 levelStartPosition;
-    public static bool in3DSpace;
-    public static bool shadowShiftingOut;
-    public static bool shadowShiftingIn;
-
-    [Header("Object References")]
-    public GameObject playerShadow;
-    public GameObject mainCamera;
-    public GameObject movementReference;
-    public GameObject shadowShiftFollowObjectPrefab;
-    [HideInInspector]
-    public GameObject shadowShiftFollowObject;
-    [HideInInspector]
-    public CharacterController controller;
-    private List<GameObject> shadowShiftOutPlatforms;
-    private CameraControl camControl;
-    private GameController gameController;
-
+    // Mostly public variables, easily modified
+    // by designers to manipulate game systems
     [Header("Movement Variables")]
     public float movementSpeed;
     public float grabMovementSpeed;
     public float jumpSpeed;
     public float gravity;
-    public static bool grounded2D;
-    public static bool grounded3D;
     private float verticalVelocity;
 
-    // Interaction Variables
-    public static bool isGrabbing;
-    public static GameObject grabbedObject;
-    private Vector3 pushDir;
+    [Header("Shadow Shift Variables")]
+    public GameObject shadowShiftFollowObjectPrefab;
+    public float shadowShiftPanDuration;
+    [HideInInspector]
+    public GameObject shadowShiftFollowObject;
 
     [Header("Shadowmeld Variables")]
     public bool shadowMeldAvailable;
     public GameObject shadowMeldVFX;
-    public static bool shadowMelded;
     public float shadowMeldResourceCost;
     public float shadowMeldResourceRegen;
-    [HideInInspector]
     public float shadowMeldResource;
-    private float shadowMeldMaxDuration;
 
+    // Static Variables/Object references
+    public static Vector3 playerStartPosition;
+    public static Vector3 levelStartPosition;
+    public static bool in3DSpace;
+    public static bool grounded2D;
+    public static bool grounded3D;
+    public static bool shadowShiftingOut;
+    public static bool shadowShiftingIn;
+    public static bool shadowMelded;
+    public static bool isGrabbing;
+    public static GameObject grabbedObject;
+
+    // Various object references, all are set at start
+    // or through other places in code.
+    [HideInInspector]
+    public CharacterController controller;
+    [HideInInspector]
+    public GameObject mainCamera;
+    private GameObject playerShadow;
+    private GameObject movementReference;
+    private List<GameObject> shadowShiftOutPlatforms;
+    private GameController gameController;
+
+    // Various private variables used in shadow shift
+    // enter and exit
     private Vector3 rotationDirection;
     private float playerShiftInOffset;
     private Vector3 cameraPanInStartPos;
@@ -62,14 +74,21 @@ public class PlayerMovement : MonoBehaviour
         in3DSpace = true;
         shadowShiftingOut = false;
         shadowShiftingIn = false;
+        shadowMelded = false;
         isGrabbing = false;
-        camControl = mainCamera.GetComponent<CameraControl>();
-        controller = GetComponent<CharacterController>();
+
+        movementReference = GetComponentInChildren<MovementReference>().gameObject;
+        playerShadow = GameObject.Find("Player_Shadow");
         gameController = GameObject.Find("Game_Controller").GetComponent<GameController>();
+        controller = GetComponent<CharacterController>();
 
         currentPlatformIndex = 0;
     }
 
+    // Update handles the calling of various checks for player system like
+    // movement, shadowshift, and shadowmeld system, all following boolean
+    // flow control based on various player or game states, like shadow
+    // shifting in, out, and where the player is currently located (3D or 2D)
     void Update()
     {
         if (!GameController.resetting)
@@ -81,7 +100,27 @@ public class PlayerMovement : MonoBehaviour
 			CheckMenuAndReset();
         }
     }
+    #region Game Control Methods
+    void CheckMenuAndReset()
+    {
+        if (Input.GetButtonDown("Reset") && !shadowShiftingIn && !shadowShiftingOut)
+        {
+            playerStartPosition = levelStartPosition;
+            foreach (Transform child in GameObject.Find("Lighting").transform)
+            {
+                LightSourceControl light = child.GetComponent<LightSourceControl>();
+                child.rotation = light.lightSourceStartRotation;
+                light.lightSourceDirection = child.transform.forward;
+                light.CheckLightingDirection();
+            }
+            StartCoroutine(GameObject.Find("Game_Controller").GetComponent<GameController>().ResetLevel());
+        }
+    }
+    #endregion
 
+    #region Player Movement Methods
+    // As mentioned above, handles player movement method calling based 
+    // on various boolean logical flow values.
     void CheckPlayerMovement()
     {
         if (!shadowShiftingIn && !shadowShiftingOut && !isGrabbing)
@@ -100,129 +139,6 @@ public class PlayerMovement : MonoBehaviour
             PlayerMovement2D();
             FollowShadow();
         }
-    }
-
-    void CheckShadowshift()
-    {
-        // Shadowshift Master Control
-        if (!shadowMelded && !isGrabbing && !shadowShiftingIn && !shadowShiftingOut)
-        {
-            if (Input.GetButtonDown("Shadowshift"))
-            {
-                if (in3DSpace)
-                    StartShadowShiftIn();
-                else
-                {
-                    StartShadowShiftOut();
-                }
-            }
-        }
-        if (shadowShiftingOut && !CameraControl.cameraIsPanning)
-        {
-            ShiftingOutControl();
-        }
-
-        if (CameraControl.cameraIsPanning)
-            FollowTransitionObject();
-    }
-
-    void CheckShadowMeld()
-    {
-        if (in3DSpace && !isGrabbing && !shadowShiftingIn && !shadowShiftingOut)
-        {
-			GameController.ToggleShadowMeldTooltip(true);
-            if (Input.GetButtonDown("Shadowmeld") && shadowMeldResource > 0)
-            {
-                if (!shadowMelded)
-                {
-                    EnterShadowMeld();
-                }
-                else
-                {
-                    CheckShadowMeldExit();
-                }
-            }
-        }
-        if (shadowMelded)
-        {
-            if(shadowMeldResource > 0)
-                shadowMeldResource -= shadowMeldResourceCost * Time.deltaTime;
-
-            if (shadowMeldResource <= 0)
-            {
-                CheckShadowMeldExit();
-            }
-        }
-        else
-        {
-            if(shadowMeldResource < 100)
-                shadowMeldResource += shadowMeldResourceRegen * Time.deltaTime;
-        }
-    }
-
-	void CheckMenuAndReset()
-	{
-		if (Input.GetButtonDown ("Reset") && !shadowShiftingIn && !shadowShiftingOut) 
-		{
-			playerStartPosition = levelStartPosition;
-			foreach(Transform child in GameObject.Find("Lighting").transform)
-			{
-				LightSourceControl light = child.GetComponent<LightSourceControl>();
-				child.rotation = light.lightSourceStartRotation; 
-				light.lightSourceDirection = child.transform.forward;
-				light.CheckLightingDirection();
-			}
-			StartCoroutine(GameObject.Find ("Game_Controller").GetComponent<GameController>().ResetLevel());
-		}
-	}
-
-    void EnterShadowMeld()
-    {
-        Debug.Log("Shadowmelding");
-        shadowMelded = true;
-        shadowMeldVFX.SetActive(true);
-        GameController.ToggleInteractTooltip(false);
-        gameObject.layer = LayerMask.NameToLayer("Shadowmeld");
-
-    }
-
-    void CheckShadowMeldExit()
-    {
-        Collider[] collidingObjects = Physics.OverlapCapsule(new Vector3(transform.position.x, transform.position.y - 0.4f, transform.position.z),
-            new Vector3(transform.position.x, transform.position.y + 0.4f, transform.position.z), 0.5f);
-
-        foreach (Collider collideObj in collidingObjects)
-        {
-            if (collideObj.tag != "Player")
-            {
-                switch (collideObj.GetComponent<ShadowmeldObjectControl>().shadowMeldObjectType)
-                {
-                    case ShadowmeldObjectControl.ShadowMeldObjectType.GLASS:
-                        StartCoroutine(gameController.ResetLevel());
-                        ExitShadowMeld();
-                        break;
-                    case ShadowmeldObjectControl.ShadowMeldObjectType.WATER:
-                        StartCoroutine(gameController.ResetLevel());
-                        ExitShadowMeld();
-                        break;
-                    default:
-                        ExitShadowMeld();
-                        break;
-                }
-            }
-            else
-            {
-                ExitShadowMeld();
-            }
-        }
-    }
-
-    public void ExitShadowMeld()
-    {
-        Debug.Log("Leaving shadowmelded");
-        shadowMelded = false;
-        shadowMeldVFX.SetActive(false);
-        gameObject.layer = LayerMask.NameToLayer("Form");
     }
 
     public void PlayerJumpandGravity()
@@ -281,28 +197,144 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             GameController.ToggleGrabbingTooltips(true);
-            if (Input.GetAxisRaw("Vertical") > 0 && !grabbedObject.GetComponent<MoveCube>().blockedAhead)
+            if (Input.GetAxisRaw("Vertical") > 0 && !grabbedObject.GetComponent<PushCube>().blockedAhead)
             {
-                controller.Move(grabbedObject.GetComponent<MoveCube>().directionAwayFromPlayer * Time.deltaTime * grabMovementSpeed);
+                controller.Move(grabbedObject.GetComponent<PushCube>().directionAwayFromPlayer * Time.deltaTime * grabMovementSpeed);
             }
             if (Input.GetAxisRaw("Vertical") < 0)
             {
-                controller.Move(-grabbedObject.GetComponent<MoveCube>().directionAwayFromPlayer * Time.deltaTime * grabMovementSpeed);
+                controller.Move(-grabbedObject.GetComponent<PushCube>().directionAwayFromPlayer * Time.deltaTime * grabMovementSpeed);
+            }
+        }
+    }
+    #endregion
+
+    #region Shadowmeld Methods
+    // Handles checking Shadowmeld input, and calling various subsequent methods
+    // that deal with shadowmelding, 
+    void CheckShadowMeld()
+    {
+        if (in3DSpace && !isGrabbing && !shadowShiftingIn && !shadowShiftingOut)
+        {
+			GameController.CheckShadowMeldTooltip(true);
+            if (Input.GetButtonDown("Shadowmeld") && shadowMeldResource > 0)
+            {
+                if (!shadowMelded)
+                {
+                    EnterShadowMeld();
+                }
+                else
+                {
+                    CheckShadowMeldExit();
+                }
+            }
+        }
+        if (shadowMelded)
+        {
+            if(shadowMeldResource > 0)
+                shadowMeldResource -= shadowMeldResourceCost * Time.deltaTime;
+
+            if (shadowMeldResource <= 0)
+            {
+                CheckShadowMeldExit();
+            }
+        }
+        else
+        {
+            if(shadowMeldResource < 100)
+                shadowMeldResource += shadowMeldResourceRegen * Time.deltaTime;
+        }
+    }
+
+    void EnterShadowMeld()
+    {
+        Debug.Log("Shadowmelding");
+        shadowMelded = true;
+        shadowMeldVFX.SetActive(true);
+        GameController.CheckInteractToolip(false);
+        gameObject.layer = LayerMask.NameToLayer("Shadowmeld");
+
+    }
+
+    void CheckShadowMeldExit()
+    {
+        Collider[] collidingObjects = Physics.OverlapCapsule(new Vector3(transform.position.x, transform.position.y - 0.4f, transform.position.z),
+            new Vector3(transform.position.x, transform.position.y + 0.4f, transform.position.z), 0.5f);
+
+        foreach (Collider collideObj in collidingObjects)
+        {
+            if (collideObj.tag != "Player")
+            {
+                switch (collideObj.GetComponent<ShadowmeldObjectControl>().shadowMeldObjectType)
+                {
+                    case ShadowmeldObjectControl.ShadowMeldObjectType.GLASS:
+                        StartCoroutine(gameController.ResetLevel());
+                        ExitShadowMeld();
+                        break;
+                    case ShadowmeldObjectControl.ShadowMeldObjectType.WATER:
+                        StartCoroutine(gameController.ResetLevel());
+                        ExitShadowMeld();
+                        break;
+                    default:
+                        ExitShadowMeld();
+                        break;
+                }
+            }
+            else
+            {
+                ExitShadowMeld();
             }
         }
     }
 
+    public void ExitShadowMeld()
+    {
+        Debug.Log("Leaving shadowmelded");
+        shadowMelded = false;
+        shadowMeldVFX.SetActive(false);
+        gameObject.layer = LayerMask.NameToLayer("Form");
+    }
+    #endregion
+
+    #region Follow Methods
     public void FollowShadow()
     {
-        transform.position = playerShadow.transform.position + -GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection * camControl.distanceToPlayer2D;
+        transform.position = playerShadow.transform.position + -GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection * mainCamera.GetComponent<CameraControl>().distanceToPlayer2D;
     }
 
     public void FollowTransitionObject()
     {
         transform.position = shadowShiftFollowObject.transform.position;
     }
+    #endregion
 
-	public void StartShadowShiftIn()
+    #region Shadowshift Methods
+    // Handles checking Shadowshift input, and calling various subsequent methods
+    // that deal with shifting in (both vector math and animations/VFX) and shifting out
+    void CheckShadowshift()
+    {
+        if (!shadowMelded && !isGrabbing && !shadowShiftingIn && !shadowShiftingOut)
+        {
+            if (Input.GetButtonDown("Shadowshift"))
+            {
+                if (in3DSpace)
+                    StartShadowShiftIn();
+                else
+                {
+                    StartShadowShiftOut();
+                }
+            }
+        }
+        if (shadowShiftingOut && !CameraControl.cameraIsPanning)
+        {
+            ShiftingOutControl();
+        }
+
+        if (CameraControl.cameraIsPanning)
+            FollowTransitionObject();
+    }
+
+    public void StartShadowShiftIn()
 	{
 		RaycastHit hit;
 		// Cast a ray in the direction of the light source and see if it hits a shadow wall
@@ -313,7 +345,6 @@ public class PlayerMovement : MonoBehaviour
 			{
 				// If so, cast a ray offset 0.2 upwards and downwards in the y and see if it collides with any shadow colliders
 				// behind the wall. If not, shift the player into the wall
-
 				if(!Physics.Raycast(hit.point + new Vector3(0, transform.lossyScale.y * 1/3, 0), GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection, 1f, 1 << 11) && 
 					!Physics.Raycast(hit.point - new Vector3(0,transform.lossyScale.y * 2/3, 0), GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection, 1f, 1 << 11) && 
 					!Physics.Raycast(hit.point, GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection, 1f, 1 << 11))
@@ -324,7 +355,7 @@ public class PlayerMovement : MonoBehaviour
                         playerShiftInOffset = transform.position.x;
                     GetComponent<CharacterController>().enabled = false;
 
-                    StartCoroutine(CameraPanIn(transform.position, hit.point, -GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection * camControl.distanceToPlayer2D));
+                    StartCoroutine(CameraPanIn(transform.position, hit.point, -GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection * mainCamera.GetComponent<CameraControl>().distanceToPlayer2D));
 					StartCoroutine(FinishShiftIn());
 				}
 				else
@@ -418,7 +449,7 @@ public class PlayerMovement : MonoBehaviour
 
 		if(Input.GetButtonDown("Cancel"))
 		{
-			StartCoroutine(CameraPanInMultiExit(shadowShiftFollowObject.transform.position, playerShadow.transform.position, -GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection * camControl.distanceToPlayer2D));
+			StartCoroutine(CameraPanInMultiExit(shadowShiftFollowObject.transform.position, playerShadow.transform.position, -GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection * mainCamera.GetComponent<CameraControl>().distanceToPlayer2D));
 			StartCoroutine(FinishShiftInMultiExit());
 		}
 	}
@@ -436,10 +467,10 @@ public class PlayerMovement : MonoBehaviour
 		cameraRelativeDirectionOffset = (cameraPanInStartPos - transform.position).normalized;
 
 		float panStart = Time.time;
-		while(Time.time < panStart + camControl.cameraPanDuration)
+		while(Time.time < panStart + shadowShiftPanDuration)
 		{
-			shadowShiftFollowObject.transform.position = Vector3.Lerp(start, target, (Time.time - panStart)/camControl.cameraPanDuration);
-			mainCamera.transform.position = Vector3.Lerp(cameraPanInStartPos, target + offset, (Time.time - panStart)/camControl.cameraPanDuration);
+			shadowShiftFollowObject.transform.position = Vector3.Lerp(start, target, (Time.time - panStart)/shadowShiftPanDuration);
+			mainCamera.transform.position = Vector3.Lerp(cameraPanInStartPos, target + offset, (Time.time - panStart)/shadowShiftPanDuration);
 			yield return null;
 		}
 		CameraControl.cameraIsPanning = false;
@@ -457,10 +488,10 @@ public class PlayerMovement : MonoBehaviour
 		// Camera transition outwards from the wall
 		Vector3 startPos = mainCamera.transform.position;
 		float panStart = Time.time;
-		while(Time.time < panStart + camControl.cameraPanDuration)
+		while(Time.time < panStart + shadowShiftPanDuration)
 		{
-			shadowShiftFollowObject.transform.position = Vector3.Lerp(start, target, (Time.time - panStart)/camControl.cameraPanDuration);
-			mainCamera.transform.position = Vector3.Lerp(startPos, target + cameraRelativeDirectionOffset * camControl.distanceToPlayer3D, (Time.time - panStart)/camControl.cameraPanDuration);
+			shadowShiftFollowObject.transform.position = Vector3.Lerp(start, target, (Time.time - panStart)/shadowShiftPanDuration);
+			mainCamera.transform.position = Vector3.Lerp(startPos, target + cameraRelativeDirectionOffset * mainCamera.GetComponent<CameraControl>().distanceToPlayer3D, (Time.time - panStart)/shadowShiftPanDuration);
 
 			yield return null;
 		}
@@ -479,10 +510,10 @@ public class PlayerMovement : MonoBehaviour
         Vector3 startPos = mainCamera.transform.position;
 
         float panStart = Time.time;
-        while (Time.time < panStart + camControl.cameraPanDuration)
+        while (Time.time < panStart + shadowShiftPanDuration)
         {
-            shadowShiftFollowObject.transform.position = Vector3.Lerp(start, target, (Time.time - panStart) / camControl.cameraPanDuration);
-            mainCamera.transform.position = Vector3.Lerp(startPos, target + offset, (Time.time - panStart) / camControl.cameraPanDuration);
+            shadowShiftFollowObject.transform.position = Vector3.Lerp(start, target, (Time.time - panStart) / shadowShiftPanDuration);
+            mainCamera.transform.position = Vector3.Lerp(startPos, target + offset, (Time.time - panStart) / shadowShiftPanDuration);
             yield return null;
         }
         CameraControl.cameraIsPanning = false;
@@ -490,7 +521,7 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator FinishShiftIn()
 	{
-		yield return new WaitForSeconds(camControl.cameraPanDuration);
+		yield return new WaitForSeconds(shadowShiftPanDuration);
 
 		shadowShiftingIn = false;
         in3DSpace = false;
@@ -504,7 +535,7 @@ public class PlayerMovement : MonoBehaviour
 
 	public IEnumerator FinishShiftInMultiExit()
 	{
-		yield return new WaitForSeconds(camControl.cameraPanDuration);
+		yield return new WaitForSeconds(shadowShiftPanDuration);
         Destroy(shadowShiftFollowObject);
 		currentPlatformIndex = 0;
 		shadowShiftingOut = false;
@@ -551,4 +582,5 @@ public class PlayerMovement : MonoBehaviour
 			});
 		}
 	}
+    #endregion
 }

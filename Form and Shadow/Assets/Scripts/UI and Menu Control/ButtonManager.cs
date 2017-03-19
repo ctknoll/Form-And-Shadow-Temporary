@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/*
+    Written by: SpeedTutor on Youtube, see https://www.youtube.com/watch?v=FrJogRBSzFo&t=698s
+                Partially tweaked and edited for game by Daniel Colina
+    --ButtonManager--
+    Handles logic of buttons in various menu screens, not actually instanced.
+*/
 public class ButtonManager : MonoBehaviour
 {
     public bool hasPlayedTutorial;
@@ -12,8 +18,6 @@ public class ButtonManager : MonoBehaviour
 
     public void LoadLevelByName(string newGameLevel)
     {
-        //if (newGameLevel == "Level_1") hasPlayedTutorial = true;
-        //if (newGameLevel == "Level_Select" && !hasPlayedTutorial) return;
         SceneManager.LoadScene(newGameLevel);
     }
 

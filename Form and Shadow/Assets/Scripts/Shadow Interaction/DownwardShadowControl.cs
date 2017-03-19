@@ -2,11 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DownwardShadowControl : MonoBehaviour {
-	
+/*
+
+-- Downward Shadow Control --
+Attached to a downward facing light in the scene, lighting the level.
+It's active when the player is not in 2D.
+
+*/
+
+public class DownwardShadowControl : MonoBehaviour 
+{
 	void Update ()
     {
-        if (PlayerMovement.shadowShiftingOut || PlayerMovement.in3DSpace)
+		if (PlayerMovement.shadowShiftingIn || PlayerMovement.shadowShiftingOut || PlayerMovement.in3DSpace)
         {
             gameObject.GetComponent<Light>().enabled = true;
         }
