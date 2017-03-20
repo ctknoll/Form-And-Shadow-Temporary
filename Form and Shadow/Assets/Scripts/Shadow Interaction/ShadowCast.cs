@@ -86,25 +86,25 @@ public class ShadowCast : MonoBehaviour {
         if (zLocked)
         {
             if (meshException)
-                transOffset = ((GetComponent<MeshCollider>().bounds.size.z / 1.9f) * castDirection);
+                transOffset = ((GetComponent<MeshCollider>().bounds.size.z / 1.95f) * castDirection);
             else if (meshType == MeshType.PROPELLOR_PLATFORM)
-                transOffset = ((transform.lossyScale.z / 1.9f) * castDirection);
+                transOffset = ((transform.lossyScale.z / 1.95f) * castDirection);
             else if (meshType == MeshType.SPIKES)
-                transOffset = ((GetComponent<BoxCollider>().bounds.size.z / 1.9f) * castDirection);
+                transOffset = ((GetComponent<BoxCollider>().bounds.size.z / 1.95f) * castDirection);
             else
-                transOffset = ((transform.lossyScale.z / 1.9f) * castDirection);
+                transOffset = ((transform.lossyScale.z / 1.95f) * castDirection);
 
         }
         else
         {
             if (meshException)
-                transOffset = ((GetComponent<MeshCollider>().bounds.size.x / 1.9f) * castDirection);
+                transOffset = ((GetComponent<MeshCollider>().bounds.size.x / 1.95f) * castDirection);
             else if (meshType == MeshType.PROPELLOR_PLATFORM)
-                transOffset = ((transform.lossyScale.z / 1.9f) * castDirection);
+                transOffset = ((transform.lossyScale.z / 1.95f) * castDirection);
             else if (meshType == MeshType.SPIKES)
-                transOffset = ((GetComponent<BoxCollider>().bounds.size.x / 1.9f) * castDirection);
+                transOffset = ((GetComponent<BoxCollider>().bounds.size.x / 1.95f) * castDirection);
             else
-                transOffset = ((transform.lossyScale.x / 1.9f) * castDirection);
+                transOffset = ((transform.lossyScale.x / 1.95f) * castDirection);
         }
         return transOffset;
     }
