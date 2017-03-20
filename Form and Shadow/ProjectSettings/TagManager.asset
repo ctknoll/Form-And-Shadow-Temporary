@@ -8,6 +8,7 @@ TagManager:
   - Push Cube
   - Move Platform
   - MainCameraReference
+  - Conveyor Belt
   layers:
   - Default
   - TransparentFX

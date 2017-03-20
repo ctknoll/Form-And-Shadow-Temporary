@@ -11,9 +11,9 @@ public class Killzone : MonoBehaviour
 
 	void OnTriggerEnter(Collider other)
 	{
-		if(other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
 		{
-			StartCoroutine(gameController.ResetLevel());
+            StartCoroutine(gameController.ResetLevel());
 		}
 	}
 }
