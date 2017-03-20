@@ -330,7 +330,7 @@ public class PlayerMovement : MonoBehaviour
             ShiftingOutControl();
         }
 
-        if (CameraControl.cameraIsPanning)
+        if (shadowShiftingOut)
             FollowTransitionObject();
     }
 
