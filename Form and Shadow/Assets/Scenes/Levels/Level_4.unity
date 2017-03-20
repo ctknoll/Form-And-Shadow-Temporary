@@ -1234,6 +1234,11 @@ Prefab:
       value: 
       objectReference: {fileID: 13400000, guid: 92d0e4915b1b2e0498c506aa3ec14385,
         type: 2}
+    - target: {fileID: 114802687816552978, guid: b777b85c09404584bb8ea35afae5c060,
+        type: 2}
+      propertyPath: shadowMeldAvailable
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b777b85c09404584bb8ea35afae5c060, type: 2}
   m_IsPrefabParent: 0
