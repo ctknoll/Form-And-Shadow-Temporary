@@ -13,7 +13,10 @@ public class Killzone : MonoBehaviour
 	{
         if (other.gameObject.tag == "Player")
 		{
-            StartCoroutine(gameController.ResetLevel());
+            if(!GameController.resetting)
+            {
+                StartCoroutine(gameController.ResetLevel());
+            }
 		}
 	}
 }

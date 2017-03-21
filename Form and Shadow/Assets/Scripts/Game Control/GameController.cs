@@ -200,7 +200,7 @@ public class GameController : MonoBehaviour {
         player.GetComponent<PlayerMovement>().shadowMeldResource = 100;
         player.GetComponent<PlayerMovement>().shadowMeldVFX.SetActive(false);
         player.layer = LayerMask.NameToLayer("Form");
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
         resetting = false;
         PlayerMovement.shadowMelded = false;
 	}
