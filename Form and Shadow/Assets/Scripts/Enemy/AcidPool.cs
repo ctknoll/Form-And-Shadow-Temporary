@@ -4,6 +4,7 @@ using System.Collections;
 public class AcidPool : MonoBehaviour {
     public float acidPoolDuration;
     public float acidPoolGrowScale;
+	public bool destroySelf;
 
 	void Start ()
     {
@@ -24,8 +25,17 @@ public class AcidPool : MonoBehaviour {
                 growPersonalTimer += Time.deltaTime;
             }
             transform.localScale = Vector3.Lerp(startScale, endScale, (growPersonalTimer - growStartTime) / acidPoolDuration);
-            yield return null;
+			yield return null;
         }
-        Destroy(gameObject);
+		if(destroySelf) StartCoroutine(removeAcidPool());		 
     }
+
+	IEnumerator removeAcidPool()
+	{
+		while (GameController.resetting) 
+		{
+			yield return new WaitForSeconds(Time.deltaTime);
+		}
+		Destroy(gameObject);
+	}
 }
