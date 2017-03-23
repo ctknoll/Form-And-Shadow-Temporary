@@ -299,7 +299,7 @@ public class PlayerMovement : MonoBehaviour
     #region Follow Methods
     public void FollowShadow()
     {
-        transform.position = playerShadow.transform.position + -GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection * mainCamera.GetComponent<CameraControl>().distanceToPlayer2D;
+        transform.position = playerShadow.transform.position + -GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection * 1.5f;
     }
 
     public void FollowTransitionObject()

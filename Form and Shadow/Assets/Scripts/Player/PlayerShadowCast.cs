@@ -62,9 +62,9 @@ public class PlayerShadowCast : MonoBehaviour {
     // Similar to many other Check2DInvisibility method in Shadowcast, this method
     // turns off or changes the shadowcasting modes of the various mesh renderers
     // that compose the player's mesh when the player is currently in 2D space
-	public void Check2DInvisibility()
-	{
-		if(!PlayerMovement.in3DSpace || PlayerMovement.shadowShiftingIn)
+    public void Check2DInvisibility()
+    {
+        if (PlayerMovement.shadowShiftingIn || PlayerMovement.shadowShiftingOut)
         {
             MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
             foreach (MeshRenderer meshRend in meshRenderers)
@@ -81,12 +81,12 @@ public class PlayerShadowCast : MonoBehaviour {
             }
         }
     }
-    
+
     // This method checks all light sources in the "Lighting" gameobject and finds
     // the most closely aligned light source to the camera's rotation, or not if
     // there is current not one, and then returns it and places it inside the 
     // lightSourceAligned object's locations.
-	public GameObject CheckLightSourceAligned()
+    public GameObject CheckLightSourceAligned()
 	{
 		GameObject nearest = null;
 		float distance = float.MaxValue;
