@@ -20,8 +20,6 @@ public class EnemyToad : MonoBehaviour {
         jumpStart = 0;
         personalTimer = 0;
         jumping = false;
-		foreach (GameObject jumpObj in jumpObjects)
-			Debug.Log (jumpObj);
 	}
 	
 	void Update ()

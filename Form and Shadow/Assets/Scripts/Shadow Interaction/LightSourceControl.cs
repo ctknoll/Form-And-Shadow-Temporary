@@ -37,10 +37,6 @@ public class LightSourceControl : MonoBehaviour
 	void Update() 
 	{
         lightSourceDirection = transform.forward;
-        if(!PlayerMovement.in3DSpace)
-        {
-
-        }
     }
 
 	//Checks the light's direction relative to the master lighting reference (true forward)

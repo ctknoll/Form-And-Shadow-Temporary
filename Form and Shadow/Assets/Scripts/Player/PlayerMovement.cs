@@ -158,15 +158,18 @@ public class PlayerMovement : MonoBehaviour
 
     public void PlayerMovement2D()
     {
-        if (Input.GetAxisRaw("Horizontal") > 0)
+            if (Input.GetAxisRaw("Horizontal") > 0)
         {
             controller.Move(-playerShadow.transform.right * Time.deltaTime * movementSpeed);
+            transform.rotation = Quaternion.LookRotation(-playerShadow.transform.right, Vector3.up);
         }
+
         if (Input.GetAxisRaw("Horizontal") < 0)
         {
             controller.Move(playerShadow.transform.right * Time.deltaTime * movementSpeed);
-        }
+            transform.rotation = Quaternion.LookRotation(playerShadow.transform.right, Vector3.up);
 
+        }
     }
 
     public void PlayerMovement3D()
