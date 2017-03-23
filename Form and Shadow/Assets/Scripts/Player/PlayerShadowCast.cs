@@ -24,7 +24,7 @@ public class PlayerShadowCast : MonoBehaviour {
 
 	void Update () 
 	{
-		Check2DInvisibility();
+		CheckShadowcastModeandLightingChange();
 		lightSourceAligned = CheckLightSourceAligned().GetComponent<LightSourceControl>();
         if(PlayerMovement.in3DSpace && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
             GameController.ToggleShadowShiftInTooltip(lightSourceAligned.gameObject.activeSelf == true);
@@ -59,14 +59,15 @@ public class PlayerShadowCast : MonoBehaviour {
 		}
 	}
 
-    // Similar to many other Check2DInvisibility method in Shadowcast, this method
+    // Similar to Check2DInvisibility method in Shadowcast, this method
     // turns off or changes the shadowcasting modes of the various mesh renderers
     // that compose the player's mesh when the player is currently in 2D space
-	public void Check2DInvisibility()
-	{
-		if(!PlayerMovement.in3DSpace || PlayerMovement.shadowShiftingIn)
+    // and switches their layers for lighting effects
+    public void CheckShadowcastModeandLightingChange()
+    {
+        MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
+        if (PlayerMovement.shadowShiftingIn || PlayerMovement.shadowShiftingOut)
         {
-            MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
             foreach (MeshRenderer meshRend in meshRenderers)
             {
                 meshRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
@@ -74,19 +75,33 @@ public class PlayerShadowCast : MonoBehaviour {
         }
         else
         {
-            MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
             foreach (MeshRenderer meshRend in meshRenderers)
             {
                 meshRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
             }
         }
+
+        if(!PlayerMovement.in3DSpace)
+        {
+            foreach (MeshRenderer meshRend in meshRenderers)
+            {
+                meshRend.gameObject.layer = LayerMask.NameToLayer("Shadow");
+            }
+        }
+        else
+        {
+            foreach (MeshRenderer meshRend in meshRenderers)
+            {
+                meshRend.gameObject.layer = LayerMask.NameToLayer("Form");
+            }
+        }
     }
-    
+
     // This method checks all light sources in the "Lighting" gameobject and finds
     // the most closely aligned light source to the camera's rotation, or not if
     // there is current not one, and then returns it and places it inside the 
     // lightSourceAligned object's locations.
-	public GameObject CheckLightSourceAligned()
+    public GameObject CheckLightSourceAligned()
 	{
 		GameObject nearest = null;
 		float distance = float.MaxValue;
