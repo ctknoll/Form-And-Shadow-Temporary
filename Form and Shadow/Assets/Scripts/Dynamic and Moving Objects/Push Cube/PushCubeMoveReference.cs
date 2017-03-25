@@ -39,7 +39,7 @@ public class PushCubeMoveReference : MonoBehaviour
             else
                 pushCube.canInteract = false;
 		}
-        else if(other.gameObject.tag != "Conveyor Belt")
+        else if(other.gameObject.tag != "Conveyor Belt" && !other.isTrigger)
         {
             blocked = true;
         }

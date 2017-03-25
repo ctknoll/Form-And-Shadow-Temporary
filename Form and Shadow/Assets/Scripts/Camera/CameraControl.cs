@@ -65,6 +65,9 @@ public class CameraControl : MonoBehaviour
 		{
 			if (PlayerMovement.in3DSpace)
 	        {
+                GetComponent<Camera>().orthographic = false;
+                GetComponent<Camera>().clearFlags = CameraClearFlags.Skybox;
+
                 x += Input.GetAxis("Mouse X") * xMouseRotationSpeed * distanceToPlayer3D * 0.02f;
 	            y -= Input.GetAxis("Mouse Y") * yMouseRotationSpeed * 0.02f;
 
@@ -81,14 +84,21 @@ public class CameraControl : MonoBehaviour
 
 			else
 			{
-				Vector3 desiredPosition = target2D.transform.position + -transform.forward * distanceToPlayer2D;
+                GetComponent<Camera>().orthographic = true;
+                GetComponent<Camera>().clearFlags = CameraClearFlags.SolidColor;
+                GetComponent<Camera>().backgroundColor = Color.black;
+
+                Vector3 desiredPosition = target2D.transform.position + -transform.forward * distanceToPlayer2D;
 
 				transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
 			}
 		}
 		else
 		{
-			if(PlayerMovement.in3DSpace)
+            GetComponent<Camera>().orthographic = false;
+            GetComponent<Camera>().clearFlags = CameraClearFlags.Skybox;
+
+            if (PlayerMovement.in3DSpace)
 				transform.LookAt(target3D.GetComponent<PlayerMovement>().shadowShiftFollowObject.transform);
 			else if(!PlayerMovement.in3DSpace)
 			{
