@@ -72,26 +72,33 @@ public class EnemyToad : MonoBehaviour {
 		float jumpPersonalTimer = panStart;
 		Vector3 startPos = transform.position;
 		float sinStart = 0;
-		float sinEnd = 270;
+		float sinEnd = 3/2 * Mathf.PI;
 		bool isHigher = false;
 
 		//target platform change
+		Debug.Log(jumpObjects[currentJumpLocationIndex].transform.position.y);
 		currentJumpLocationIndex = ++currentJumpLocationIndex % jumpObjects.Count;
+		Debug.Log(jumpObjects[currentJumpLocationIndex].transform.position.y);
 
 		//same height
-		if (jumpObjects[currentJumpLocationIndex].transform.position.y >= startPos.y) 
+		if (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y == startPos.y) 
 		{
-			sinEnd -= 90;
+			sinEnd -= 1/2 * Mathf.PI;
 		} 
 		//platform is higher
-		if (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y > startPos.y) 
+		else if (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y > startPos.y) 
 		{
-			sinStart -= 90;
+			sinEnd -= 1/2 * Mathf.PI;
+			sinStart -= 1/2 * Mathf.PI;
 			isHigher = true;
 		} 
 		//platform is lower
+
+		Debug.Log(sinStart);
+		Debug.Log(sinEnd);
+
         
-		float heightDifference = Mathf.Abs(jumpObjects[currentJumpLocationIndex].transform.position.y - startPos.y);
+		float heightDifference = Mathf.Abs(GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y - startPos.y);
 		float unitsPerTime = Time.deltaTime * ((sinEnd - sinStart) / jumpDuration);
 
 		//rotate to platform
@@ -106,9 +113,8 @@ public class EnemyToad : MonoBehaviour {
                 jumpPersonalTimer += Time.deltaTime;
             }
 			currentPos.x = startPos.x + ((jumpPersonalTimer - panStart) / jumpDuration) * (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).x - startPos.x);
-			Debug.Log(isHigher);
 			currentPos.z = startPos.z + ((jumpPersonalTimer - panStart) / jumpDuration) * (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).z - startPos.z);
-			float currentYSin = Mathf.Sin(sinStart + unitsPerTime * (jumpPersonalTimer - panStart));
+			float currentYSin = Mathf.Sin ((sinStart + (sinEnd - sinStart) * ((jumpPersonalTimer - panStart) / jumpDuration)));
 			if (!isHigher) 
 			{
 				currentPos.y = startPos.y + currentYSin * heightDifference;
