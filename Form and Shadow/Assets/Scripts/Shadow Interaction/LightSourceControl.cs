@@ -20,10 +20,13 @@ public class LightSourceControl : MonoBehaviour
 	public bool zAxisMovement;
 	public bool xAxisMovement;
 
+    private int oldMask;
+
 	//Stores a light's default position, as well as checks a 
 	//light's direction
 	void Start ()
 	{
+
 		lightSourceStartRotation = transform.rotation;
 		lightSourceDirection = transform.forward;
 		CheckLightingDirection();
@@ -34,7 +37,6 @@ public class LightSourceControl : MonoBehaviour
 	void Update() 
 	{
         lightSourceDirection = transform.forward;
-
     }
 
 	//Checks the light's direction relative to the master lighting reference (true forward)

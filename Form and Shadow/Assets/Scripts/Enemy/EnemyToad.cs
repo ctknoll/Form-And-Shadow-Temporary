@@ -66,21 +66,42 @@ public class EnemyToad : MonoBehaviour {
     }
 
     public IEnumerator JumpToNextPlatform()
-    {
-        jumping = true;
-        float panStart = Time.time;
-        float jumpPersonalTimer = panStart;
-        Vector3 startPos = transform.position;
+	{
+		jumping = true;
+		float panStart = Time.time;
+		float jumpPersonalTimer = panStart;
+		Vector3 startPos = transform.position;
+		float sinStart = 0;
+		float sinEnd = 3/2 * Mathf.PI;
+		bool isHigher = false;
 
-        if (currentJumpLocationIndex + 1 < jumpObjects.Count)
-        {
-            currentJumpLocationIndex += 1;
-        }
-        else
-        {
-            currentJumpLocationIndex = 0;
-        }
+		//target platform change
+		Debug.Log(jumpObjects[currentJumpLocationIndex].transform.position.y);
+		currentJumpLocationIndex = ++currentJumpLocationIndex % jumpObjects.Count;
+		Debug.Log(jumpObjects[currentJumpLocationIndex].transform.position.y);
+
+		//same height
+		if (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y == startPos.y) 
+		{
+			sinEnd -= 1/2 * Mathf.PI;
+		} 
+		//platform is higher
+		else if (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y > startPos.y) 
+		{
+			sinEnd -= 1/2 * Mathf.PI;
+			sinStart -= 1/2 * Mathf.PI;
+			isHigher = true;
+		} 
+		//platform is lower
+
+		Debug.Log(sinStart);
+		Debug.Log(sinEnd);
+
         
+		float heightDifference = Mathf.Abs(GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y - startPos.y);
+		float unitsPerTime = Time.deltaTime * ((sinEnd - sinStart) / jumpDuration);
+
+		//rotate to platform
         transform.rotation = Quaternion.LookRotation(transform.position - new Vector3(jumpObjects[currentJumpLocationIndex].transform.position.x, 
             transform.position.y, jumpObjects[currentJumpLocationIndex].transform.position.z), Vector3.up);
 
@@ -91,12 +112,23 @@ public class EnemyToad : MonoBehaviour {
             {
                 jumpPersonalTimer += Time.deltaTime;
             }
-            currentPos = Vector3.Lerp(startPos, GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]), (jumpPersonalTimer - panStart) / jumpDuration);
-            transform.position = currentPos;
+			currentPos.x = startPos.x + ((jumpPersonalTimer - panStart) / jumpDuration) * (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).x - startPos.x);
+			currentPos.z = startPos.z + ((jumpPersonalTimer - panStart) / jumpDuration) * (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).z - startPos.z);
+			float currentYSin = Mathf.Sin ((sinStart + (sinEnd - sinStart) * ((jumpPersonalTimer - panStart) / jumpDuration)));
+			if (!isHigher) 
+			{
+				currentPos.y = startPos.y + currentYSin * heightDifference;
+			} 
+			else 
+			{
+				currentPos.y = startPos.y + (1 + currentYSin) * heightDifference;
+			}
+
+			transform.position = new Vector3(currentPos.x, currentPos.y, currentPos.z);
             yield return null;
         }
         jumping = false;
-        SpawnAcidPool();
+        //SpawnAcidPool();
     }
 
     public void SpawnAcidPool()

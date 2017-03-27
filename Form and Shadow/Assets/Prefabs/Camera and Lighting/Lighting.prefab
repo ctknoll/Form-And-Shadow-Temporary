@@ -42,7 +42,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1391115896815764
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,7 +59,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1598007008474966
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,7 +93,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4090699250545372
 Transform:
   m_ObjectHideFlags: 1
@@ -179,7 +179,7 @@ Light:
   m_CookieSize: 10
   m_Shadows:
     m_Type: 1
-    m_Resolution: -1
+    m_Resolution: 3
     m_CustomResolution: -1
     m_Strength: 1
     m_Bias: 0.05
@@ -191,10 +191,10 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294899711
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!108 &108668382725001342
@@ -225,7 +225,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294899711
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -259,7 +259,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294899711
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -293,7 +293,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294899711
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -310,6 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4a0a6ec5a85e2d42be5a5a26c92a5f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightSourceStartRotation: {x: 0, y: 0, z: 0, w: 0}
   lightSourceDirection: {x: 0, y: 0, z: 0}
   zAxisMovement: 0
   xAxisMovement: 0
@@ -324,6 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4a0a6ec5a85e2d42be5a5a26c92a5f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightSourceStartRotation: {x: 0, y: 0, z: 0, w: 0}
   lightSourceDirection: {x: 0, y: 0, z: 0}
   zAxisMovement: 0
   xAxisMovement: 0
@@ -338,6 +340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4a0a6ec5a85e2d42be5a5a26c92a5f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightSourceStartRotation: {x: 0, y: 0, z: 0, w: 0}
   lightSourceDirection: {x: 0, y: 0, z: 0}
   zAxisMovement: 0
   xAxisMovement: 0
@@ -352,6 +355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4a0a6ec5a85e2d42be5a5a26c92a5f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightSourceStartRotation: {x: 0, y: 0, z: 0, w: 0}
   lightSourceDirection: {x: 0, y: 0, z: 0}
   zAxisMovement: 0
   xAxisMovement: 0
