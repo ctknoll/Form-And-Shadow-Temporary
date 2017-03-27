@@ -47,8 +47,7 @@ public class PlayerShadowCollider : MonoBehaviour {
         if(Physics.SphereCast(transform.position, 0.5f, Vector3.down, out firstPlatformHit, transform.position.y, 1 << 11))
         {
             RaycastHit[] hits;
-            hits = Physics.SphereCastAll(firstPlatformHit.transform.position, 0.5f, Vector3.down, GetComponent<CharacterController>().height / 2, 1 << 11);
-
+            hits = Physics.SphereCastAll(firstPlatformHit.point - new Vector3(0, 0.5f, 0), 0.5f, Vector3.down, GetComponent<CharacterController>().height / 2, 1 << 11);
             // Then, create a list of gameobjects and for each RaycastHit in hits, add the hit collider's gameobject to the list of transferPlatforms
             foreach (RaycastHit hit in hits)
             {

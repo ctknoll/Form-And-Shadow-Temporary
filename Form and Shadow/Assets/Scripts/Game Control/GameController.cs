@@ -16,6 +16,10 @@ public class GameController : MonoBehaviour {
 	public static bool resetting;
 	public static int score;
 
+    public float playerDeathAnimationDuration;
+    private float playerDeathTimerStart;
+    private float deathTimer;
+
     private static GameObject w_Tooltip;
     private static GameObject a_Tooltip;
     private static GameObject s_Tooltip;
@@ -33,6 +37,7 @@ public class GameController : MonoBehaviour {
     private GameObject shadowMeldResourceObject;
     
 	private GameObject player;
+    private GameObject playerMesh;
     private GameObject playerShadow;
     [HideInInspector]
     public static GameController instance;
@@ -41,6 +46,8 @@ public class GameController : MonoBehaviour {
 	{
 		player = GameObject.Find("Player_Character");
 		playerShadow = GameObject.Find("Player_Shadow");
+        playerMesh = player.transform.FindChild("Player_Mesh").gameObject;
+
         instance = GetComponent<GameController>();
         scoreText = GameObject.Find("Score_Text");
         w_Tooltip = GameObject.Find("W_Tooltip");
@@ -184,9 +191,12 @@ public class GameController : MonoBehaviour {
     public IEnumerator ResetLevel()
 	{
         // Turn resetting on
-		resetting = true;
+        resetting = true;
+        // Plays the player's death animation
+        StartCoroutine(PlayerDeathAnimation());
+        yield return new WaitForSeconds(playerDeathAnimationDuration);
         // Check if the player is in 2D space
-		if(!PlayerMovement.in3DSpace)
+        if (!PlayerMovement.in3DSpace)
 		{
             // If so, remove them from 2D space first
 			PlayerMovement.in3DSpace = true;
@@ -196,15 +206,30 @@ public class GameController : MonoBehaviour {
 		}
         // Then, reset the player's position to the start position
 		player.transform.position = PlayerMovement.playerStartPosition;
+        playerMesh.transform.localScale = new Vector3(1, 1, 1);
 
         player.GetComponent<PlayerMovement>().shadowMeldResource = 100;
         player.GetComponent<PlayerMovement>().shadowMeldVFX.SetActive(false);
         player.layer = LayerMask.NameToLayer("Form");
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
         resetting = false;
         PlayerMovement.shadowMelded = false;
 	}
 
+    public IEnumerator PlayerDeathAnimation()
+    {
+        Vector3 startScale = playerMesh.transform.localScale;
+        Vector3 endScale = new Vector3(0f, 0f, 0f);
+        playerDeathTimerStart = Time.time;
+        deathTimer = playerDeathTimerStart;
+
+        while (deathTimer < playerDeathTimerStart + playerDeathAnimationDuration)
+        {
+            deathTimer += Time.deltaTime;
+            playerMesh.transform.localScale = Vector3.Lerp(startScale, endScale, (deathTimer - playerDeathTimerStart) / playerDeathAnimationDuration);
+            yield return null;
+        }
+    }
     
 
     public static void ScoreIncrement(int amount)

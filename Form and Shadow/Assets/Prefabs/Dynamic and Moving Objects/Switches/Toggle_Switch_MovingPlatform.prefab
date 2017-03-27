@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4511201782042026}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Toggle_Switch_Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 23406264728259318}
   - component: {fileID: 64055682622061678}
   - component: {fileID: 114058330629629062}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Toggle_Switch_Lever_Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 65548880569467728}
   - component: {fileID: 82096038790208902}
   - component: {fileID: 82593030849797782}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Toggle_Switch_MovingPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 23013128289396180}
   - component: {fileID: 64036168225975346}
   - component: {fileID: 114399866654382268}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Toggle_Switch_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
