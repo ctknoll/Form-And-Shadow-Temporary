@@ -228,7 +228,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1391347478301384}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.27, y: 0.5, z: 2.61}
+  m_LocalPosition: {x: -3.5, y: 0.5, z: 2.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4162493839344438}
@@ -541,7 +541,7 @@ MonoBehaviour:
   shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
     type: 2}
   meshException: 0
-  meshType: 4
+  meshType: 0
   shadowColliders: []
 --- !u!114 &114285364095548302
 MonoBehaviour:
@@ -570,7 +570,7 @@ MonoBehaviour:
   shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
     type: 2}
   meshException: 0
-  meshType: 4
+  meshType: 0
   shadowColliders: []
 --- !u!114 &114487262339459404
 MonoBehaviour:
@@ -596,6 +596,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f98e1f12fba4e34da8e9bc8225aab04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shadowMeldObjectVFXPrefab: {fileID: 1014566905217146, guid: 8c9e947f19da20446a7b0bb9012ed0a7,
+    type: 2}
 --- !u!114 &114662685019088158
 MonoBehaviour:
   m_ObjectHideFlags: 1
