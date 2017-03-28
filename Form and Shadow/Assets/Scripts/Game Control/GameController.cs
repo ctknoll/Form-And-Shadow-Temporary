@@ -3,9 +3,22 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
+
+/*
+
+    Written by: Daniel Colina and Chris Knoll
+    --GameController--
+    A master control script for handling UI, resetting the level, and score.
+    Attached to the GameController prefab in each scene.
+
+*/
 public class GameController : MonoBehaviour {
 	public static bool resetting;
 	public static int score;
+
+    public float playerDeathAnimationDuration;
+    private float playerDeathTimerStart;
+    private float deathTimer;
 
     private static GameObject w_Tooltip;
     private static GameObject a_Tooltip;
@@ -24,6 +37,7 @@ public class GameController : MonoBehaviour {
     private GameObject shadowMeldResourceObject;
     
 	private GameObject player;
+    private GameObject playerMesh;
     private GameObject playerShadow;
     [HideInInspector]
     public static GameController instance;
@@ -32,6 +46,8 @@ public class GameController : MonoBehaviour {
 	{
 		player = GameObject.Find("Player_Character");
 		playerShadow = GameObject.Find("Player_Shadow");
+        playerMesh = player.transform.FindChild("Player_Mesh").gameObject;
+
         instance = GetComponent<GameController>();
         scoreText = GameObject.Find("Score_Text");
         w_Tooltip = GameObject.Find("W_Tooltip");
@@ -54,7 +70,7 @@ public class GameController : MonoBehaviour {
 
     void Update()
     {
-        scoreText.GetComponent<Text>().text = "Score: " + score;
+        ScoreUIControl();
         ShadowmeldUIControl();
 
         if(Input.GetButtonDown("Quit"))
@@ -63,36 +79,22 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    #region UI Control
+    void ScoreUIControl()
+    {
+        scoreText.GetComponent<Text>().text = "Score: " + score;
+
+    }
+
     void ShadowmeldUIControl()
     {
         shadowMeldResourceObject.SetActive(player.GetComponent<PlayerMovement>().shadowMeldAvailable);
         shadowMeldResourceObject.GetComponent<Image>().color = Color.magenta;
         shadowMeldResourceObject.GetComponent<Image>().fillAmount = player.GetComponent<PlayerMovement>().shadowMeldResource / 100;
     }
+    #endregion
 
-    public IEnumerator ResetLevel()
-	{
-		resetting = true;
-
-		// Reset the player's position
-		if(!PlayerMovement.in3DSpace)
-		{
-			PlayerMovement.in3DSpace = true;
-			playerShadow.GetComponent<CharacterController>().enabled = false;
-			player.GetComponent<CharacterController>().enabled = true;
-			player.GetComponent<PlayerMovement>().controller = player.GetComponent<CharacterController>();
-		}
-		player.transform.position = PlayerMovement.playerStartPosition;
-
-        //player.GetComponent<PlayerMovement>().ExitShadowMeld();
-        player.GetComponent<PlayerMovement>().shadowMeldResource = 100;
-        player.GetComponent<PlayerMovement>().shadowMeldVFX.SetActive(false);
-        player.layer = LayerMask.NameToLayer("Form");
-        yield return new WaitForSeconds(1.0f);
-        resetting = false;
-        PlayerMovement.shadowMelded = false;
-	}
-
+    #region Tooltip Control
     public static void Toggle3DMovementTooltips(bool on)
     {
         w_Tooltip.SetActive(on);
@@ -109,7 +111,7 @@ public class GameController : MonoBehaviour {
         a_Tooltip.SetActive(!on);
         d_Tooltip.SetActive(!on);
         e_Tooltip.SetActive(!on);
-		f_Tooltip.SetActive(!on);
+        f_Tooltip.SetActive(!on);
         space_Tooltip.SetActive(!on);
         shift_Tooltip.SetActive(!on);
     }
@@ -154,9 +156,9 @@ public class GameController : MonoBehaviour {
     }
 
     public static void CheckShadowMeldTooltip(bool on)
-	{
+    {
         instance.StartCoroutine(instance.ToggleShadowMeldTooltip(on));
-	}
+    }
 
     public IEnumerator ToggleShadowMeldTooltip(bool on)
     {
@@ -178,6 +180,57 @@ public class GameController : MonoBehaviour {
     {
         shift_Tooltip.SetActive(on);
     }
+    #endregion
+
+    // Method invoked by other classes that resets the level
+    // as a whole by resetting player position to the 3D start
+    // position (in the case that the player is in 2D, manually
+    // removes player from 2D and resets, and flips a global static
+    // boolean called 'Resetting' on that all dynamic objects (push cube)
+    // check in update to see if they need to reset to their start position
+    public IEnumerator ResetLevel()
+	{
+        // Turn resetting on
+        resetting = true;
+        // Plays the player's death animation
+        StartCoroutine(PlayerDeathAnimation());
+        yield return new WaitForSeconds(playerDeathAnimationDuration);
+        // Check if the player is in 2D space
+        if (!PlayerMovement.in3DSpace)
+		{
+            // If so, remove them from 2D space first
+			PlayerMovement.in3DSpace = true;
+			playerShadow.GetComponent<CharacterController>().enabled = false;
+			player.GetComponent<CharacterController>().enabled = true;
+			player.GetComponent<PlayerMovement>().controller = player.GetComponent<CharacterController>();
+		}
+        // Then, reset the player's position to the start position
+		player.transform.position = PlayerMovement.playerStartPosition;
+        playerMesh.transform.localScale = new Vector3(1, 1, 1);
+
+        player.GetComponent<PlayerMovement>().shadowMeldResource = 100;
+        player.GetComponent<PlayerMovement>().shadowMeldVFX.SetActive(false);
+        player.layer = LayerMask.NameToLayer("Form");
+        yield return new WaitForSeconds(0.5f);
+        resetting = false;
+        PlayerMovement.shadowMelded = false;
+	}
+
+    public IEnumerator PlayerDeathAnimation()
+    {
+        Vector3 startScale = playerMesh.transform.localScale;
+        Vector3 endScale = new Vector3(0f, 0f, 0f);
+        playerDeathTimerStart = Time.time;
+        deathTimer = playerDeathTimerStart;
+
+        while (deathTimer < playerDeathTimerStart + playerDeathAnimationDuration)
+        {
+            deathTimer += Time.deltaTime;
+            playerMesh.transform.localScale = Vector3.Lerp(startScale, endScale, (deathTimer - playerDeathTimerStart) / playerDeathAnimationDuration);
+            yield return null;
+        }
+    }
+    
 
     public static void ScoreIncrement(int amount)
 	{

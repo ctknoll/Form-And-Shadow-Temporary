@@ -6,23 +6,22 @@ public class EnemyToad : MonoBehaviour {
     public List<GameObject> jumpObjects;
     public float jumpDuration;
     public float jumpCooldown;
+    public GameObject acidPoolPrefab;
 
     private bool jumping;
     private int currentJumpLocationIndex;
     private float jumpStart;
     private float personalTimer;
 
-	// Use this for initialization
 	void Start ()
     {
-        transform.position = GetRelativePosition(jumpObjects[0]);
+        transform.position = GetRelativeJumpPosition(jumpObjects[0]);
         currentJumpLocationIndex = 0;
         jumpStart = 0;
         personalTimer = 0;
         jumping = false;
 	}
 	
-	// Update is called once per frame
 	void Update ()
     {
         if(!jumping && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
@@ -52,29 +51,57 @@ public class EnemyToad : MonoBehaviour {
         }
     }
 
-    public Vector3 GetRelativePosition(GameObject targetObj)
+    public Vector3 GetRelativeJumpPosition(GameObject targetObj)
     {
         Vector3 relativePosition = targetObj.transform.position + new Vector3(0, targetObj.transform.GetChild(0).transform.lossyScale.y / 2 + transform.lossyScale.y, 0);
 
         return relativePosition;
     }
 
-    public IEnumerator JumpToNextPlatform()
+    public Vector3 GetRelativeAcidPoolPosition(GameObject targetObj)
     {
-        jumping = true;
-        float panStart = Time.time;
-        float jumpPersonalTimer = panStart;
-        Vector3 startPos = transform.position;
+        Vector3 relativePosition = targetObj.transform.position + new Vector3(0, targetObj.transform.GetChild(0).transform.lossyScale.y / 2, 0);
 
-        if (currentJumpLocationIndex + 1 < jumpObjects.Count)
-        {
-            currentJumpLocationIndex += 1;
-        }
-        else
-        {
-            currentJumpLocationIndex = 0;
-        }
-        
+        return relativePosition;
+    }
+
+    public IEnumerator JumpToNextPlatform()
+	{
+		jumping = true;
+		float panStart = Time.time;
+		float jumpPersonalTimer = panStart;
+		Vector3 startPos = transform.position;
+		float sinStart = 0;
+		float sinEnd = 1.5f * Mathf.PI;
+		bool isHigher = false;
+
+		//target platform change
+		//Debug.Log(jumpObjects[currentJumpLocationIndex].transform.position.y);
+		currentJumpLocationIndex = ++currentJumpLocationIndex % jumpObjects.Count;
+		Debug.Log(jumpObjects[currentJumpLocationIndex].transform.position.y);
+        Debug.Log(startPos.y);
+
+		//same height
+		if ((GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y > startPos.y - .1f) && (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y < startPos.y + .1f)) 
+		{
+			sinEnd -= .5f * Mathf.PI;
+		} 
+		//platform is higher
+		else if (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y > startPos.y) 
+		{
+            sinStart -= .5f * Mathf.PI;
+            sinEnd -= .5f * Mathf.PI;
+            isHigher = true;
+		} 
+		//platform is lower
+
+		Debug.Log(sinStart);
+		Debug.Log(sinEnd);
+
+        float heightDifference = Mathf.Abs(GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y - startPos.y);
+		float unitsPerTime = Time.deltaTime * ((sinEnd - sinStart) / jumpDuration);
+
+		//rotate to platform
         transform.rotation = Quaternion.LookRotation(transform.position - new Vector3(jumpObjects[currentJumpLocationIndex].transform.position.x, 
             transform.position.y, jumpObjects[currentJumpLocationIndex].transform.position.z), Vector3.up);
 
@@ -85,16 +112,27 @@ public class EnemyToad : MonoBehaviour {
             {
                 jumpPersonalTimer += Time.deltaTime;
             }
-            currentPos = Vector3.Lerp(startPos, GetRelativePosition(jumpObjects[currentJumpLocationIndex]), (jumpPersonalTimer - panStart) / jumpDuration);
-            transform.position = currentPos;
+			currentPos.x = startPos.x + ((jumpPersonalTimer - panStart) / jumpDuration) * (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).x - startPos.x);
+			currentPos.z = startPos.z + ((jumpPersonalTimer - panStart) / jumpDuration) * (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).z - startPos.z);
+			float currentYSin = Mathf.Sin((sinStart + (sinEnd - sinStart) * ((jumpPersonalTimer - panStart) / jumpDuration)));
+			if (!isHigher) 
+			{
+				currentPos.y = startPos.y + currentYSin * heightDifference;
+			} 
+			else 
+			{
+				currentPos.y = startPos.y + (1 + currentYSin) * heightDifference;
+			}
+
+			transform.position = new Vector3(currentPos.x, currentPos.y, currentPos.z);
             yield return null;
         }
         jumping = false;
-        SpawnAcidPool();
+        //SpawnAcidPool();
     }
 
     public void SpawnAcidPool()
     {
-        Debug.Log("Will spawn acid pool now, WIP");
+        Instantiate(acidPoolPrefab, GetRelativeAcidPoolPosition(jumpObjects[currentJumpLocationIndex]), Quaternion.identity); 
     }
 }

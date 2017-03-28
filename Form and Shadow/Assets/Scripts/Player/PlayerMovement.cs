@@ -158,15 +158,18 @@ public class PlayerMovement : MonoBehaviour
 
     public void PlayerMovement2D()
     {
-        if (Input.GetAxisRaw("Horizontal") > 0)
+            if (Input.GetAxisRaw("Horizontal") > 0)
         {
             controller.Move(-playerShadow.transform.right * Time.deltaTime * movementSpeed);
+            transform.rotation = Quaternion.LookRotation(-playerShadow.transform.right, Vector3.up);
         }
+
         if (Input.GetAxisRaw("Horizontal") < 0)
         {
             controller.Move(playerShadow.transform.right * Time.deltaTime * movementSpeed);
-        }
+            transform.rotation = Quaternion.LookRotation(playerShadow.transform.right, Vector3.up);
 
+        }
     }
 
     public void PlayerMovement3D()
@@ -299,7 +302,7 @@ public class PlayerMovement : MonoBehaviour
     #region Follow Methods
     public void FollowShadow()
     {
-        transform.position = playerShadow.transform.position + -GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection * mainCamera.GetComponent<CameraControl>().distanceToPlayer2D;
+        transform.position = playerShadow.transform.position + -GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection * 1.5f;
     }
 
     public void FollowTransitionObject()
@@ -330,7 +333,7 @@ public class PlayerMovement : MonoBehaviour
             ShiftingOutControl();
         }
 
-        if (CameraControl.cameraIsPanning)
+        if (shadowShiftingOut)
             FollowTransitionObject();
     }
 
