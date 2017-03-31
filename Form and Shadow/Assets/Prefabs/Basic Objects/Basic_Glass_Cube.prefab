@@ -151,3 +151,9 @@ MonoBehaviour:
   meshException: 0
   meshType: 0
   shadowColliders: []
+  shadowmeldCollideObjectVFX: {fileID: 1014566905217146, guid: 8c9e947f19da20446a7b0bb9012ed0a7,
+    type: 2}
+  shadowmeldInvisibleObjectVFX: {fileID: 1986493041603730, guid: 07df60925935bdf47bab853ae6849b7d,
+    type: 2}
+  shadowmeldDeathObjectVFX: {fileID: 1986493041603730, guid: 3dcc28ae0ef055b47b94b0524275b9d0,
+    type: 2}

@@ -1,15 +1,23 @@
 ﻿using UnityEngine;
 
 public class ShadowmeldObjectControl : MonoBehaviour {
-    public enum ShadowMeldObjectType {GLASS, FLAT_SPIKES, WATER, ACID_POOL, CONVEYOR_BELT, ENEMY_TOAD};
+    public enum ShadowMeldObjectType {GLASS, WATER, FLAT_SPIKES, SPIKES, ACID_POOL, CONVEYOR_BELT, ENEMY_TOAD, NON_INTERACTIVE};
     public ShadowMeldObjectType shadowMeldObjectType;
     private LayerMask startingLayer;
     private bool switched;
 
-	void Start ()
+    private Object shadowmeldCollideObjectVFX;
+    private Object shadowmeldInvisibleObjectVFX;
+    private GameObject currentShadowmeldVFX;
+
+
+    void Start ()
     {
         startingLayer = gameObject.layer;
-	}
+        shadowmeldCollideObjectVFX = Resources.Load("ShadowmeldCollideObjectVFX");
+        shadowmeldInvisibleObjectVFX = Resources.Load("ShadowmeldInvisibleObjectVFX");
+        currentShadowmeldVFX = null;
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -30,6 +38,9 @@ public class ShadowmeldObjectControl : MonoBehaviour {
                 switched = false;
             }
         }
+        if(shadowMeldObjectType != ShadowMeldObjectType.CONVEYOR_BELT)
+            UpdateShadowmeldRenderMode();
+        UpdateShadowmeldVFX();
     }
 
     public void TurnOnShadowmeldLayerandCollision()
@@ -52,11 +63,17 @@ public class ShadowmeldObjectControl : MonoBehaviour {
                 gameObject.layer = LayerMask.NameToLayer("Shadowmeld Collide");
                 GetComponent<BoxCollider>().isTrigger = false;
                 break;
-            case ShadowMeldObjectType.ENEMY_TOAD:
+            case ShadowMeldObjectType.NON_INTERACTIVE:
                 gameObject.layer = LayerMask.NameToLayer("Shadowmeld Collide");
+                break;
+            case ShadowMeldObjectType.ENEMY_TOAD:
+                gameObject.layer = LayerMask.NameToLayer("Shadowmeld Death");
                 GetComponent<MeshCollider>().convex = true;
                 GetComponent<MeshCollider>().isTrigger = true;
                 gameObject.AddComponent<Killzone>();
+                break;
+            case ShadowMeldObjectType.SPIKES:
+                gameObject.layer = LayerMask.NameToLayer("Shadowmeld Death");
                 break;
             default:
                 break;
@@ -79,5 +96,62 @@ public class ShadowmeldObjectControl : MonoBehaviour {
             default:
                 break;
         }
+    }
+
+    public void UpdateShadowmeldRenderMode()
+    {
+        if (PlayerMovement.shadowMelded)
+        {
+            if (gameObject.layer == LayerMask.NameToLayer("Shadowmeld Ignore") || gameObject.layer == LayerMask.NameToLayer("Shadowmeld Collide"))
+            {
+                if (GetComponent<ShadowCast>().singleMesh)
+                {
+                    GetComponent<MeshRenderer>().enabled = false;
+                }
+                else
+                {
+                    MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
+                    foreach (MeshRenderer meshRend in meshRenderers)
+                    {
+                        meshRend.enabled = false;
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (GetComponent<ShadowCast>().singleMesh)
+            {
+                GetComponent<MeshRenderer>().enabled = true;
+            }
+            else
+            {
+                MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
+                foreach (MeshRenderer meshRend in meshRenderers)
+                {
+                    meshRend.enabled = true;
+                }
+            }
+        }
+    }
+
+    public void UpdateShadowmeldVFX()
+    {
+        if (PlayerMovement.shadowMelded)
+        {
+            if (currentShadowmeldVFX == null)
+            {
+                if (gameObject.layer == LayerMask.NameToLayer("Shadowmeld Ignore"))
+                {
+                    currentShadowmeldVFX = Instantiate(shadowmeldInvisibleObjectVFX, gameObject.transform) as GameObject;
+                }
+                else if(gameObject.layer == LayerMask.NameToLayer("Shadowmeld Collide"))
+                {
+                    currentShadowmeldVFX = Instantiate(shadowmeldCollideObjectVFX, gameObject.transform) as GameObject;
+                }
+            }
+        }
+        else
+            Destroy(currentShadowmeldVFX);
     }
 }

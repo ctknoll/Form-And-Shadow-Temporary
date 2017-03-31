@@ -224,6 +224,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 0
   shadowColliders: []
+  singleMesh: 0
 --- !u!114 &114266065494795372
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -235,7 +236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc6f6f985af86ce4293528b199111538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shadowMeldObjectType: 4
+  shadowMeldObjectType: 5
 --- !u!114 &114594978347871690
 MonoBehaviour:
   m_ObjectHideFlags: 1
