@@ -40,6 +40,15 @@ public class PlayerMovement : MonoBehaviour
     public float shadowMeldResourceRegen;
     public float shadowMeldResource;
 
+    [Header("Audio Clips")]
+    public AudioSource jumpAudioSource;
+    public AudioClip jumpLiftClip;
+    public AudioClip jumpLandClip;
+
+    public AudioSource walkAudioSource;
+    public float walkStepFrequency;
+    private float walkStepStartTime;
+
     // Static Variables/Object references
     public static Vector3 playerStartPosition;
     public static Vector3 levelStartPosition;
@@ -154,6 +163,8 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetButtonDown("Jump"))
             {
+                jumpAudioSource.clip = jumpLiftClip;
+                jumpAudioSource.Play();
                 verticalVelocity = jumpSpeed;
             }
         }
@@ -165,7 +176,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void PlayerMovement2D()
     {
-            if (Input.GetAxisRaw("Horizontal") > 0)
+        if (Input.GetAxisRaw("Horizontal") > 0)
         {
             controller.Move(-playerShadow.transform.right * Time.deltaTime * movementSpeed);
             transform.rotation = Quaternion.LookRotation(-playerShadow.transform.right, Vector3.up);
@@ -183,15 +194,17 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isGrabbing)
         {
-			GameController.Toggle3DMovementTooltips(true);
+            GameController.Toggle3DMovementTooltips(true);
             rotationDirection = new Vector3(movementReference.transform.forward.x, 0, movementReference.transform.forward.z);
             transform.rotation = Quaternion.LookRotation(rotationDirection, Vector3.up);
+            if (grounded3D)
+                ControlMovementAudio();
 
-			if (conveyorVelocity.magnitude > 0) 
-			{
-				conveyorVelocity = Vector3.MoveTowards(conveyorVelocity, Vector3.zero, conveyorDrag * Time.deltaTime);
-				controller.Move(conveyorVelocity * Time.deltaTime);
-			}
+            if (conveyorVelocity.magnitude > 0)
+            {
+                conveyorVelocity = Vector3.MoveTowards(conveyorVelocity, Vector3.zero, conveyorDrag * Time.deltaTime);
+                controller.Move(conveyorVelocity * Time.deltaTime);
+            }
             if (Input.GetAxisRaw("Horizontal") > 0)
             {
                 controller.Move(movementReference.transform.right * Time.deltaTime * movementSpeed);
@@ -220,6 +233,17 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetAxisRaw("Vertical") < 0)
             {
                 controller.Move(-grabbedObject.GetComponent<PushCube>().directionAwayFromPlayer * Time.deltaTime * grabMovementSpeed);
+            }
+        }
+    }
+    public void ControlMovementAudio()
+    {
+        if(Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+        {
+            if(Time.time > walkStepStartTime + walkStepFrequency)
+            {
+                walkAudioSource.Play();
+                walkStepStartTime = Time.time;
             }
         }
     }

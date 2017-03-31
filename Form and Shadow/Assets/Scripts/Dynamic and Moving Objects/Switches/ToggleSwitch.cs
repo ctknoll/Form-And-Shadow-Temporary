@@ -55,7 +55,8 @@ public abstract class ToggleSwitch : MonoBehaviour {
                         }
                         pressed = true;
                         StartCoroutine(PressSwitchTimer());
-                        StartCoroutine(ControlTimerSwitchAudio());
+                        if(timerDuration > 0)
+                            StartCoroutine(ControlTimerSwitchAudio());
                         GameController.CheckInteractToolip(false, false);
                     }
                     else if(switchType == SwitchType.FLIP_TOGGLE)

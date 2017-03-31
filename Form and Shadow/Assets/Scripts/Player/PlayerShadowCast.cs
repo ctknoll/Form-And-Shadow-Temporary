@@ -44,11 +44,11 @@ public class PlayerShadowCast : MonoBehaviour {
 
 			if (lightSourceAligned.zAxisMovement) 
 			{
-				transformOffset = ((transform.lossyScale.z / 1.95f) * lightSourceAligned.lightSourceDirection);
+				transformOffset = ((transform.lossyScale.z / 1.9f) * lightSourceAligned.lightSourceDirection);
 			}
 			else if (lightSourceAligned.xAxisMovement) 
 			{
-				transformOffset = ((transform.lossyScale.x / 1.95f) * lightSourceAligned.lightSourceDirection);
+				transformOffset = ((transform.lossyScale.x / 1.9f) * lightSourceAligned.lightSourceDirection);
 			}
 			
 			playerShadow.transform.position = hit.point + transformOffset;
