@@ -37,6 +37,8 @@ public class GameController : MonoBehaviour {
     public string interactSwitchTutorialText;
     public string shadowMeldTutorialText;
     public string shadowShiftTutorialText;
+    public AudioSource ambientAudioSource;
+    public AudioClip ambientAudioClip;
 
     public static bool e_Switch_First_Time_Used;
     public static bool e_Grab_First_Time_Used;
@@ -82,6 +84,8 @@ public class GameController : MonoBehaviour {
         space_Tooltip = GameObject.Find("Space_Tooltip");
         shift_Tooltip = GameObject.Find("Shift_Tooltip");
         shadowMeldResourceObject = GameObject.Find("Shadowmeld_Resource");
+        ambientAudioSource.clip = ambientAudioClip;
+        ambientAudioSource.Play();
 
         Cursor.visible = false;
     }
@@ -243,6 +247,10 @@ public class GameController : MonoBehaviour {
 
     public void ToggleGamePause()
     {
+        if (paused)
+            ambientAudioSource.Pause();
+        else
+            ambientAudioSource.UnPause();
         if (!pause_Menu_Panel.activeSelf)
             pause_Menu_Panel.SetActive(true);
         else

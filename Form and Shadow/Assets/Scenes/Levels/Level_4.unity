@@ -3476,7 +3476,7 @@ Prefab:
     - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
         type: 2}
       propertyPath: timerDuration
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
         type: 2}
@@ -3502,6 +3502,11 @@ Prefab:
         type: 2}
       propertyPath: lerpToggleSwitch
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 82253870207479100, guid: 4b6f01473649f6a44aa70455c534d6f9,
+        type: 2}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4b6f01473649f6a44aa70455c534d6f9, type: 2}
@@ -25501,7 +25506,7 @@ Prefab:
     - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
         type: 2}
       propertyPath: timerDuration
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 1596080238362368, guid: 4b6f01473649f6a44aa70455c534d6f9, type: 2}
       propertyPath: m_Name
@@ -25531,6 +25536,11 @@ Prefab:
         type: 2}
       propertyPath: lerpToggleSwitch
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 82253870207479100, guid: 4b6f01473649f6a44aa70455c534d6f9,
+        type: 2}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4b6f01473649f6a44aa70455c534d6f9, type: 2}
@@ -27724,7 +27734,7 @@ Prefab:
     - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
         type: 2}
       propertyPath: timerDuration
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
         type: 2}
@@ -27765,6 +27775,11 @@ Prefab:
         type: 2}
       propertyPath: lerpToggleSwitch
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 82253870207479100, guid: 4b6f01473649f6a44aa70455c534d6f9,
+        type: 2}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4b6f01473649f6a44aa70455c534d6f9, type: 2}
