@@ -24,7 +24,7 @@ public class EnemyToad : MonoBehaviour {
 	
 	void Update ()
     {
-        if(!jumping && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
+        if(!jumping && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !GameController.paused)
         {
             personalTimer += Time.deltaTime;
             if (personalTimer >= jumpStart + jumpCooldown)
@@ -76,10 +76,7 @@ public class EnemyToad : MonoBehaviour {
 		bool isHigher = false;
 
 		//target platform change
-		//Debug.Log(jumpObjects[currentJumpLocationIndex].transform.position.y);
 		currentJumpLocationIndex = ++currentJumpLocationIndex % jumpObjects.Count;
-		Debug.Log(jumpObjects[currentJumpLocationIndex].transform.position.y);
-        Debug.Log(startPos.y);
 
 		//same height
 		if ((GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y > startPos.y - .1f) && (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y < startPos.y + .1f)) 
@@ -95,11 +92,7 @@ public class EnemyToad : MonoBehaviour {
 		} 
 		//platform is lower
 
-		Debug.Log(sinStart);
-		Debug.Log(sinEnd);
-
         float heightDifference = Mathf.Abs(GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y - startPos.y);
-		float unitsPerTime = Time.deltaTime * ((sinEnd - sinStart) / jumpDuration);
 
 		//rotate to platform
         transform.rotation = Quaternion.LookRotation(transform.position - new Vector3(jumpObjects[currentJumpLocationIndex].transform.position.x, 
@@ -108,7 +101,7 @@ public class EnemyToad : MonoBehaviour {
         while (jumpPersonalTimer < panStart + jumpDuration)
         {
             Vector3 currentPos;
-            if(!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
+            if(!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !GameController.paused)
             {
                 jumpPersonalTimer += Time.deltaTime;
             }

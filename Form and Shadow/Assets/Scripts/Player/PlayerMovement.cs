@@ -91,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
     // shifting in, out, and where the player is currently located (3D or 2D)
     void Update()
     {
-        if (!GameController.resetting)
+        if (!GameController.resetting && !GameController.paused)
         {
             CheckPlayerMovement();
             CheckShadowshift();
@@ -113,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
                 light.lightSourceDirection = child.transform.forward;
                 light.CheckLightingDirection();
             }
-            StartCoroutine(GameObject.Find("Game_Controller").GetComponent<GameController>().ResetLevel());
+            StartCoroutine(GameObject.Find("Game_Controller").GetComponent<GameController>().ResetLevel(true));
         }
     }
     #endregion
@@ -224,6 +224,9 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (!shadowMelded)
                 {
+                    if (!GameController.shadowMeld_First_Time_Used)
+                        GameController.shadowMeld_First_Time_Used = true;
+                    GameController.CheckShadowMeldTooltip(false);
                     EnterShadowMeld();
                 }
                 else
@@ -232,6 +235,11 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            GameController.CheckShadowMeldTooltip(false);
+        }
+
         if (shadowMelded)
         {
             if(shadowMeldResource > 0)
@@ -254,9 +262,8 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("Shadowmelding");
         shadowMelded = true;
         shadowMeldVFX.SetActive(true);
-        GameController.CheckInteractToolip(false);
+        GameController.CheckInteractToolip(false, false);
         gameObject.layer = LayerMask.NameToLayer("Shadowmeld");
-
     }
 
     void CheckShadowMeldExit()
@@ -271,11 +278,11 @@ public class PlayerMovement : MonoBehaviour
                 switch (collideObj.GetComponent<ShadowmeldObjectControl>().shadowMeldObjectType)
                 {
                     case ShadowmeldObjectControl.ShadowMeldObjectType.GLASS:
-                        StartCoroutine(gameController.ResetLevel());
+                        StartCoroutine(gameController.ResetLevel(false));
                         ExitShadowMeld();
                         break;
                     case ShadowmeldObjectControl.ShadowMeldObjectType.WATER:
-                        StartCoroutine(gameController.ResetLevel());
+                        StartCoroutine(gameController.ResetLevel(false));
                         ExitShadowMeld();
                         break;
                     default:
@@ -358,6 +365,9 @@ public class PlayerMovement : MonoBehaviour
                         playerShiftInOffset = transform.position.x;
                     GetComponent<CharacterController>().enabled = false;
 
+                    if (!GameController.shadowShift_First_Time_Used)
+                        GameController.shadowShift_First_Time_Used = true;
+                    GameController.CheckShadowShiftTooltip(false);
                     StartCoroutine(CameraPanIn(transform.position, hit.point, -GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection * mainCamera.GetComponent<CameraControl>().distanceToPlayer2D));
 					StartCoroutine(FinishShiftIn());
 				}
@@ -430,30 +440,32 @@ public class PlayerMovement : MonoBehaviour
 
 		if(Input.GetKeyDown(KeyCode.W))
 		{
-			if(currentPlatformIndex - 1 >= 0)
-			{
-				currentPlatformIndex -= 1;
+            if(currentPlatformIndex != 0)
+            {
+                if (currentPlatformIndex - 1 >= 0)
+                {
+                    currentPlatformIndex -= 1;
 
-				if(GetComponent<PlayerShadowCast>().lightSourceAligned.zAxisMovement)
-					StartCoroutine(CameraPanOut(shadowShiftFollowObject.transform.position, new Vector3(playerShadow.transform.position.x, 
-						(shadowShiftOutPlatforms[currentPlatformIndex].transform.position.y + shadowShiftOutPlatforms[currentPlatformIndex].transform.lossyScale.y / 2 + transform.lossyScale.y), 
-						shadowShiftOutPlatforms[currentPlatformIndex].transform.position.z), false));
-				else if(GetComponent<PlayerShadowCast>().lightSourceAligned.xAxisMovement)
-					StartCoroutine(CameraPanOut(shadowShiftFollowObject.transform.position, new Vector3(shadowShiftOutPlatforms[currentPlatformIndex].transform.position.x, 
-						(shadowShiftOutPlatforms[currentPlatformIndex].transform.position.y + shadowShiftOutPlatforms[currentPlatformIndex].transform.lossyScale.y / 2 + transform.lossyScale.y), 
-						playerShadow.transform.position.z), false));
-			}
+                    if (GetComponent<PlayerShadowCast>().lightSourceAligned.zAxisMovement)
+                        StartCoroutine(CameraPanOut(shadowShiftFollowObject.transform.position, new Vector3(playerShadow.transform.position.x,
+                            (shadowShiftOutPlatforms[currentPlatformIndex].transform.position.y + shadowShiftOutPlatforms[currentPlatformIndex].transform.lossyScale.y / 2 + transform.lossyScale.y),
+                            shadowShiftOutPlatforms[currentPlatformIndex].transform.position.z), false));
+                    else if (GetComponent<PlayerShadowCast>().lightSourceAligned.xAxisMovement)
+                        StartCoroutine(CameraPanOut(shadowShiftFollowObject.transform.position, new Vector3(shadowShiftOutPlatforms[currentPlatformIndex].transform.position.x,
+                            (shadowShiftOutPlatforms[currentPlatformIndex].transform.position.y + shadowShiftOutPlatforms[currentPlatformIndex].transform.lossyScale.y / 2 + transform.lossyScale.y),
+                            playerShadow.transform.position.z), false));
+                }
+            }
+			else
+            {
+                StartCoroutine(CameraPanInMultiExit(shadowShiftFollowObject.transform.position, playerShadow.transform.position, -GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection * mainCamera.GetComponent<CameraControl>().distanceToPlayer2D));
+                StartCoroutine(FinishShiftInMultiExit());
+            }
 		}
 
 		if(Input.GetButtonDown("Shadowshift"))
 		{
 			FinishShiftOut();
-		}
-
-		if(Input.GetButtonDown("Cancel"))
-		{
-			StartCoroutine(CameraPanInMultiExit(shadowShiftFollowObject.transform.position, playerShadow.transform.position, -GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection * mainCamera.GetComponent<CameraControl>().distanceToPlayer2D));
-			StartCoroutine(FinishShiftInMultiExit());
 		}
 	}
 

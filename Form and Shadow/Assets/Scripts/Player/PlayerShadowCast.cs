@@ -26,8 +26,8 @@ public class PlayerShadowCast : MonoBehaviour {
 	{
 		CheckShadowcastModeandLightingChange();
 		lightSourceAligned = CheckLightSourceAligned().GetComponent<LightSourceControl>();
-        if(PlayerMovement.in3DSpace && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
-            GameController.ToggleShadowShiftInTooltip(lightSourceAligned.gameObject.activeSelf == true);
+        if(PlayerMovement.in3DSpace && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !PlayerMovement.isGrabbing && !PlayerMovement.shadowMelded && !GameController.paused)
+            GameController.CheckShadowShiftTooltip(lightSourceAligned.gameObject.activeSelf == true);
 	}
 
     // Similar to the CastShadow method in Shadowcast, this method throws the player's shadow onto by casting a ray
@@ -44,11 +44,11 @@ public class PlayerShadowCast : MonoBehaviour {
 
 			if (lightSourceAligned.zAxisMovement) 
 			{
-				transformOffset = ((transform.lossyScale.z / 1.9f) * lightSourceAligned.lightSourceDirection);
+				transformOffset = ((transform.lossyScale.z / 1.95f) * lightSourceAligned.lightSourceDirection);
 			}
 			else if (lightSourceAligned.xAxisMovement) 
 			{
-				transformOffset = ((transform.lossyScale.x / 1.9f) * lightSourceAligned.lightSourceDirection);
+				transformOffset = ((transform.lossyScale.x / 1.95f) * lightSourceAligned.lightSourceDirection);
 			}
 			
 			playerShadow.transform.position = hit.point + transformOffset;
@@ -86,6 +86,13 @@ public class PlayerShadowCast : MonoBehaviour {
             foreach (MeshRenderer meshRend in meshRenderers)
             {
                 meshRend.gameObject.layer = LayerMask.NameToLayer("Shadow");
+            }
+        }
+        else if(PlayerMovement.shadowMelded)
+        {
+            foreach (MeshRenderer meshRend in meshRenderers)
+            {
+                meshRend.gameObject.layer = LayerMask.NameToLayer("Shadowmeld");
             }
         }
         else

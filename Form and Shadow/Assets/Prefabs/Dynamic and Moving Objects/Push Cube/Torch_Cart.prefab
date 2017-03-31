@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 33873474856060756}
   - component: {fileID: 23163686730914184}
   - component: {fileID: 114141573948364682}
+  - component: {fileID: 114881440753524150}
   m_Layer: 12
   m_Name: Push_Cube_Mesh
   m_TagString: Push Cube
@@ -543,6 +544,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 0
   shadowColliders: []
+  singleMesh: 0
 --- !u!114 &114285364095548302
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -572,6 +574,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 0
   shadowColliders: []
+  singleMesh: 0
 --- !u!114 &114487262339459404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -596,7 +599,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f98e1f12fba4e34da8e9bc8225aab04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shadowMeldObjectVFXPrefab: {fileID: 1014566905217146, guid: 8c9e947f19da20446a7b0bb9012ed0a7,
+  shadowMeldObjectVFXPrefab: {fileID: 1986493041603730, guid: 07df60925935bdf47bab853ae6849b7d,
     type: 2}
 --- !u!114 &114662685019088158
 MonoBehaviour:
@@ -628,6 +631,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acrossReference: {fileID: 1068597900161922}
   blocked: 0
+--- !u!114 &114881440753524150
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1246004064637222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f6f985af86ce4293528b199111538, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadowMeldObjectType: 7
 --- !u!114 &114893229672277404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -651,5 +666,5 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.75
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}

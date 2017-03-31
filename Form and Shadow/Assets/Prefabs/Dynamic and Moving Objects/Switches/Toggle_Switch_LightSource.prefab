@@ -222,7 +222,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1399928292171616}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.9442215, y: 0.006229013, z: 3.7217083}
+  m_LocalPosition: {x: 4.9442215, y: 0.006229013, z: 10.722}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4186125498728612}
@@ -368,7 +368,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 3e9117c22cb16664a9dad34c86011c69, type: 2}
+  - {fileID: 2100000, guid: fec4a3f423d06d04fa5350eff92850a7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -715,7 +715,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.2, y: 2, z: 2}
+  m_Size: {x: 3, y: 2, z: 2.5}
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!82 &82197157571675948
 AudioSource:
@@ -784,7 +784,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -923,8 +923,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leverArm: {fileID: 1964491232623190}
-  timerToggleSwitch: 0
-  lerpToggleSwitch: 0
+  switchType: 1
   timerDuration: 0
   pressed: 0
   switchFlipAnimationTime: 0.75

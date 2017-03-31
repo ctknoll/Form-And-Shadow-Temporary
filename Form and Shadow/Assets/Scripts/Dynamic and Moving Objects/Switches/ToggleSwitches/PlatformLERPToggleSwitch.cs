@@ -39,7 +39,7 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
 	}
 
     // Update is called once per frame
-	new void Update()
+	void Update()
 	{
 		if (pressed && !locked && !animating)
 		{
@@ -73,8 +73,6 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
 			}
             StartCoroutine(Clear());
         }
-
-		base.Update();
 	}
 
 	public IEnumerator MoveOut(lerpPlatform platform, int index)
@@ -83,7 +81,7 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
 		float localTime = Time.time;
 		currentPos.Add(platform.platformObject.transform.position);
 		moveTime[index] = ((currentPos[index] - endPos[index]).magnitude / platform.moveSpeed);
-		while ((((!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut) ? localTime += Time.deltaTime : localTime) < (panStart + moveTime[index]) + Time.time - localTime) && pressed)
+		while ((((!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !GameController.paused) ? localTime += Time.deltaTime : localTime) < (panStart + moveTime[index]) + Time.time - localTime) && pressed)
 		{
 			platform.platformObject.transform.position = Vector3.Lerp(currentPos[index], endPos[index], (localTime - panStart) / moveTime[index]);
 			yield return null;
@@ -100,7 +98,7 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
 		moveTime[index] = ((currentPos[index] - startPos[index]).magnitude / platform.moveSpeed);
 		while ((personalTime - panStart) < moveTime[index] && !pressed)
 		{
-			if ((!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)) 
+			if ((!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !GameController.paused)) 
 			{
 				personalTime += Time.deltaTime;
 			} 

@@ -52,3 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerDeathAnimationDuration: 1
+  interactGrabTutorialText: Hold E to grab
+  interactSwitchTutorialText: Press E to toggle
+  shadowMeldTutorialText: Press F to shadowmeld
+  shadowShiftTutorialText: Press shift to shadowshift

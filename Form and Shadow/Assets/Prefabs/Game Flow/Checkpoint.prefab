@@ -35,7 +35,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4216723608191044}
   - component: {fileID: 33566495389380798}
-  - component: {fileID: 65781000456533176}
   - component: {fileID: 23516975382343964}
   - component: {fileID: 114335004281613510}
   m_Layer: 8
@@ -54,7 +53,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4690828316801506}
   - component: {fileID: 33605450627404286}
-  - component: {fileID: 65643667491255662}
   - component: {fileID: 23479890018156028}
   - component: {fileID: 114514715257649090}
   m_Layer: 8
@@ -127,7 +125,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1084639376439122}
   m_LocalRotation: {x: -0, y: 0.7165107, z: -0, w: 0.6975761}
-  m_LocalPosition: {x: -11.611769, y: 5, z: 13.722517}
+  m_LocalPosition: {x: -28.61, y: 6, z: 2.72}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4690828316801506}
@@ -212,30 +210,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1681159215017678}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &65643667491255662
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1681159215017678}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65781000456533176
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1608490860377678}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65881719433047278
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -264,6 +238,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 0
   shadowColliders: []
+  singleMesh: 0
 --- !u!114 &114514715257649090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -280,6 +255,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 0
   shadowColliders: []
+  singleMesh: 0
 --- !u!114 &114623684927591100
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -293,3 +269,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkPointFlag: {fileID: 1608490860377678}
   flagRaiseDuration: 1
+  triggered: 0

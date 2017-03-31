@@ -12,12 +12,10 @@ public class TorchLightControl : MonoBehaviour {
             if (other.GetComponent<ShadowCollider>().exceptionParent)
             {
                 other.GetComponent<ShadowCollider>().exceptionParent.layer = LayerMask.NameToLayer("Shadowmeld Ignore");
-                Instantiate(shadowMeldObjectVFXPrefab, other.GetComponent<ShadowCollider>().exceptionParent.transform);
             }
             else
             {
                 other.transform.parent.gameObject.layer = LayerMask.NameToLayer("Shadowmeld Ignore");
-                Instantiate(shadowMeldObjectVFXPrefab, other.transform.parent);
             }
         }
     }
@@ -31,12 +29,10 @@ public class TorchLightControl : MonoBehaviour {
             if (other.GetComponent<ShadowCollider>().exceptionParent)
             {
                 other.GetComponent<ShadowCollider>().exceptionParent.layer = LayerMask.NameToLayer("Form");
-                Destroy(other.GetComponent<ShadowCollider>().exceptionParent.transform.FindChild("ShadowmeldObjectVFX(Clone)").gameObject);
             }
             else
             {
                 other.transform.parent.gameObject.layer = LayerMask.NameToLayer("Form");
-                Destroy(other.transform.parent.FindChild("ShadowmeldObjectVFX(Clone)").gameObject);
             }
         }
     }

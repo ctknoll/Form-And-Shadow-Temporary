@@ -19,7 +19,7 @@ public class PushCubeMoveReference : MonoBehaviour
         if (!PlayerMovement.in3DSpace)
         {
             pushCube.canInteract = false;
-            GameController.CheckInteractToolip(false);
+            GameController.CheckInteractToolip(false, true);
         }
     }
 
@@ -27,7 +27,7 @@ public class PushCubeMoveReference : MonoBehaviour
 	{
 		if(other.gameObject.tag == "Player")
 		{
-            if (!PlayerMovement.shadowMelded && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && PlayerMovement.in3DSpace)
+            if (!PlayerMovement.shadowMelded && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && PlayerMovement.in3DSpace && !GameController.paused)
             {
                 pushCube.canInteract = true;
                 pushCube.directionAwayFromPlayer = (moveCubeMesh.transform.position - transform.position).normalized;
@@ -49,7 +49,7 @@ public class PushCubeMoveReference : MonoBehaviour
 	{
 		if(other.gameObject.tag == "Player")
 		{
-            GameController.CheckInteractToolip(false);
+            GameController.CheckInteractToolip(false, true);
             pushCube.canInteract = false;
 			pushCube.grabbed = false;
             pushCube.transform.parent = null;
