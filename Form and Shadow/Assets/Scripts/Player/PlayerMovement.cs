@@ -20,7 +20,12 @@ public class PlayerMovement : MonoBehaviour
     public float grabMovementSpeed;
     public float jumpSpeed;
     public float gravity;
+	[HideInInspector]
+	public float gravConst;
     private float verticalVelocity;
+	[HideInInspector]
+	public Vector3 conveyorVelocity;
+	public float conveyorDrag;
 
     [Header("Shadow Shift Variables")]
     public GameObject shadowShiftFollowObjectPrefab;
@@ -76,11 +81,13 @@ public class PlayerMovement : MonoBehaviour
         shadowShiftingIn = false;
         shadowMelded = false;
         isGrabbing = false;
+		gravConst = gravity;
 
         movementReference = GetComponentInChildren<MovementReference>().gameObject;
         playerShadow = GameObject.Find("Player_Shadow");
         gameController = GameObject.Find("Game_Controller").GetComponent<GameController>();
         controller = GetComponent<CharacterController>();
+		conveyorVelocity = new Vector3(0, 0, 0);
 
         currentPlatformIndex = 0;
     }
@@ -176,9 +183,15 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isGrabbing)
         {
-            GameController.Toggle3DMovementTooltips(true);
+			GameController.Toggle3DMovementTooltips(true);
             rotationDirection = new Vector3(movementReference.transform.forward.x, 0, movementReference.transform.forward.z);
             transform.rotation = Quaternion.LookRotation(rotationDirection, Vector3.up);
+
+			if (conveyorVelocity.magnitude > 0) 
+			{
+				conveyorVelocity = Vector3.MoveTowards(conveyorVelocity, Vector3.zero, conveyorDrag * Time.deltaTime);
+				controller.Move(conveyorVelocity * Time.deltaTime);
+			}
             if (Input.GetAxisRaw("Horizontal") > 0)
             {
                 controller.Move(movementReference.transform.right * Time.deltaTime * movementSpeed);

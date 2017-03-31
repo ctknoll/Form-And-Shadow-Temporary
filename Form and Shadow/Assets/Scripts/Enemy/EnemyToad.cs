@@ -74,17 +74,22 @@ public class EnemyToad : MonoBehaviour {
 		float sinStart = 0;
 		float sinEnd = 1.5f * Mathf.PI;
 		bool isHigher = false;
+		bool isSame = false;
 
 		//target platform change
 		currentJumpLocationIndex = ++currentJumpLocationIndex % jumpObjects.Count;
 
+		Debug.Log(GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y);
+        Debug.Log(startPos.y);
+
 		//same height
-		if ((GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y > startPos.y - .1f) && (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y < startPos.y + .1f)) 
+		if ((GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y > startPos.y - .5f) && (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y < startPos.y + .5f)) 
 		{
 			sinEnd -= .5f * Mathf.PI;
+			isSame = true;
 		} 
 		//platform is higher
-		else if (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y > startPos.y) 
+		else if (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y > startPos.y + .5f) 
 		{
             sinStart -= .5f * Mathf.PI;
             sinEnd -= .5f * Mathf.PI;
@@ -93,6 +98,9 @@ public class EnemyToad : MonoBehaviour {
 		//platform is lower
 
         float heightDifference = Mathf.Abs(GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y - startPos.y);
+
+		if (isSame)
+			heightDifference = (1f / Mathf.PI) * Mathf.Sqrt (Mathf.Pow(GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).x - startPos.x, 2) + Mathf.Pow(GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).z - startPos.z, 2));
 
 		//rotate to platform
         transform.rotation = Quaternion.LookRotation(transform.position - new Vector3(jumpObjects[currentJumpLocationIndex].transform.position.x, 

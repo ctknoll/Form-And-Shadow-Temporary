@@ -335,6 +335,9 @@ Prefab:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 316942089}
+      propertyPath: conveyorDrag
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b777b85c09404584bb8ea35afae5c060, type: 2}
   m_IsPrefabParent: 0
@@ -1497,6 +1500,78 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f5ded287dd4b70e488e4ac243c739417, type: 2}
   m_IsPrefabParent: 0
+--- !u!1001 &352500871
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -26.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 2.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 3.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
+      propertyPath: m_RootOrder
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 114594978347871690, guid: 5dce0f60906be8e4691618efb3b39ad0,
+        type: 2}
+      propertyPath: moveSpeed
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114594978347871690, guid: 5dce0f60906be8e4691618efb3b39ad0,
+        type: 2}
+      propertyPath: useMomentum
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4240241749833790, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292536470420820, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
+      propertyPath: m_Name
+      value: Conveyor_Belt (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &364853300
 Prefab:
   m_ObjectHideFlags: 0
@@ -1651,7 +1726,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -21.836649
+      value: -19.89
       objectReference: {fileID: 0}
     - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
       propertyPath: m_LocalPosition.y
@@ -1667,7 +1742,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
       propertyPath: m_LocalRotation.z
@@ -1675,7 +1750,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
       propertyPath: m_RootOrder
@@ -1685,6 +1760,32 @@ Prefab:
         type: 2}
       propertyPath: shadowMeldObjectType
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114594978347871690, guid: 5dce0f60906be8e4691618efb3b39ad0,
+        type: 2}
+      propertyPath: moveSpeed
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114594978347871690, guid: 5dce0f60906be8e4691618efb3b39ad0,
+        type: 2}
+      propertyPath: useMomentum
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4240241749833790, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}

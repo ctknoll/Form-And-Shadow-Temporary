@@ -30406,8 +30406,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveDirection: 1
   moveDistance: 23
-  moveSpeed: 0.075
+  moveSpeed: 0.09
   slowValue: 1
+  triggerTime: 1
   activatePlatform: 0
   distanceTraveled: 0
   playerChildedIn3D: 0
