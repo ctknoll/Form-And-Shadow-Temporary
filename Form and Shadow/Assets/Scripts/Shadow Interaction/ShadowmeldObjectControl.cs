@@ -8,7 +8,6 @@ public class ShadowmeldObjectControl : MonoBehaviour {
 
     private Object shadowmeldCollideObjectVFX;
     private Object shadowmeldInvisibleObjectVFX;
-    private Object shadowmeldDeathObjectVFX;
     private GameObject currentShadowmeldVFX;
 
 
@@ -16,7 +15,6 @@ public class ShadowmeldObjectControl : MonoBehaviour {
     {
         startingLayer = gameObject.layer;
         shadowmeldCollideObjectVFX = Resources.Load("ShadowmeldCollideObjectVFX");
-        shadowmeldDeathObjectVFX = Resources.Load("ShadowmeldDeathObjectVFX");
         shadowmeldInvisibleObjectVFX = Resources.Load("ShadowmeldInvisibleObjectVFX");
         currentShadowmeldVFX = null;
     }

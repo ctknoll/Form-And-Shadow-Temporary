@@ -196,6 +196,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1001 &10811558
 Prefab:
   m_ObjectHideFlags: 0
@@ -467,6 +468,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1 &26538747 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1883329633272308, guid: 9ab127f7ecb030e4888f06dd10085588,
@@ -642,6 +644,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!4 &42501716 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4369771176123120, guid: 108da8674b747c4408a2bdb0dbdd3235,
@@ -872,6 +875,26 @@ Prefab:
         type: 2}
       propertyPath: m_AnchoredPosition.y
       value: 0.060394287
+      objectReference: {fileID: 0}
+    - target: {fileID: 114465509106661262, guid: 8b9826001ef26b94e83bef82c598e807,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1305675598}
+    - target: {fileID: 114465509106661262, guid: 8b9826001ef26b94e83bef82c598e807,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleGamePause
+      objectReference: {fileID: 0}
+    - target: {fileID: 114566379252553974, guid: 8b9826001ef26b94e83bef82c598e807,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1305675598}
+    - target: {fileID: 114566379252553974, guid: 8b9826001ef26b94e83bef82c598e807,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: QuitToMainMenu
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8b9826001ef26b94e83bef82c598e807, type: 2}
@@ -1238,6 +1261,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!4 &100733051 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4342140976546390, guid: d48c8e6a75f5f284cba6b022fb3e4f82,
@@ -1680,6 +1704,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!4 &162174890 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4369771176123120, guid: 108da8674b747c4408a2bdb0dbdd3235,
@@ -1789,6 +1814,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1001 &167617236
 Prefab:
   m_ObjectHideFlags: 0
@@ -2020,6 +2046,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1001 &173653950
 Prefab:
   m_ObjectHideFlags: 0
@@ -3566,6 +3593,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1001 &361168939
 Prefab:
   m_ObjectHideFlags: 0
@@ -4146,6 +4174,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1 &392494180
 GameObject:
   m_ObjectHideFlags: 0
@@ -4194,6 +4223,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 4
   shadowColliders: []
+  singleMesh: 0
 --- !u!23 &392494183
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4292,6 +4322,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 4
   shadowColliders: []
+  singleMesh: 0
 --- !u!23 &398352592
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4534,6 +4565,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 0
   shadowColliders: []
+  singleMesh: 0
 --- !u!65 &405594581
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4712,6 +4744,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1001 &411337410
 Prefab:
   m_ObjectHideFlags: 0
@@ -4879,6 +4912,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1 &425527931 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1883329633272308, guid: 9ab127f7ecb030e4888f06dd10085588,
@@ -5125,6 +5159,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1001 &430760861
 Prefab:
   m_ObjectHideFlags: 0
@@ -5366,6 +5401,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1001 &445270978
 Prefab:
   m_ObjectHideFlags: 0
@@ -5541,6 +5577,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1001 &457791276
 Prefab:
   m_ObjectHideFlags: 0
@@ -6467,6 +6504,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1001 &512984398
 Prefab:
   m_ObjectHideFlags: 0
@@ -7058,6 +7096,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1 &570135727
 GameObject:
   m_ObjectHideFlags: 0
@@ -7106,6 +7145,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 4
   shadowColliders: []
+  singleMesh: 0
 --- !u!23 &570135730
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8127,6 +8167,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!4 &728347283 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4178132589084428, guid: f80f64dd3a4874248a816f253379048e,
@@ -8309,6 +8350,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!4 &742764612 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4178132589084428, guid: f80f64dd3a4874248a816f253379048e,
@@ -8552,6 +8594,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1001 &777620815
 Prefab:
   m_ObjectHideFlags: 0
@@ -8850,6 +8893,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1001 &785764696
 Prefab:
   m_ObjectHideFlags: 0
@@ -9097,6 +9141,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 4
   shadowColliders: []
+  singleMesh: 0
 --- !u!23 &795009686
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9382,6 +9427,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1 &811936602
 GameObject:
   m_ObjectHideFlags: 0
@@ -9486,6 +9532,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1001 &812073203
 Prefab:
   m_ObjectHideFlags: 0
@@ -9840,6 +9887,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1 &848579556
 GameObject:
   m_ObjectHideFlags: 0
@@ -9888,6 +9936,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 4
   shadowColliders: []
+  singleMesh: 0
 --- !u!23 &848579559
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10865,6 +10914,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!4 &942624115 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4388070445815866, guid: 21fbee50eb9639940923b287375f379b,
@@ -11461,6 +11511,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1001 &1012663785
 Prefab:
   m_ObjectHideFlags: 0
@@ -11615,6 +11666,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1001 &1025766619
 Prefab:
   m_ObjectHideFlags: 0
@@ -11908,6 +11960,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1 &1049582640
 GameObject:
   m_ObjectHideFlags: 0
@@ -12319,6 +12372,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1 &1082167769
 GameObject:
   m_ObjectHideFlags: 0
@@ -12929,6 +12983,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!4 &1146606636 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4369771176123120, guid: 108da8674b747c4408a2bdb0dbdd3235,
@@ -13228,6 +13283,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1 &1151254971
 GameObject:
   m_ObjectHideFlags: 0
@@ -13599,6 +13655,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!4 &1171022908 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4011747174678898, guid: 9ab127f7ecb030e4888f06dd10085588,
@@ -13813,6 +13870,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1001 &1189662172
 Prefab:
   m_ObjectHideFlags: 0
@@ -15016,6 +15074,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 51bb5029f199bc6438c85f8250fef858, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1305675598 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114981474573350428, guid: 51bb5029f199bc6438c85f8250fef858,
+    type: 2}
+  m_PrefabInternal: {fileID: 1305675597}
+  m_Script: {fileID: 11500000, guid: d9dde7e5e65eb154fbae511905d0bb52, type: 3}
 --- !u!1 &1306681277 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1883329633272308, guid: 9ab127f7ecb030e4888f06dd10085588,
@@ -15975,6 +16039,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1001 &1386165450
 Prefab:
   m_ObjectHideFlags: 0
@@ -16129,6 +16194,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1001 &1394639717
 Prefab:
   m_ObjectHideFlags: 0
@@ -16283,6 +16349,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1001 &1398293092
 Prefab:
   m_ObjectHideFlags: 0
@@ -16803,6 +16870,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!4 &1430802891 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4369771176123120, guid: 108da8674b747c4408a2bdb0dbdd3235,
@@ -17063,6 +17131,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!4 &1438344384 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4369771176123120, guid: 108da8674b747c4408a2bdb0dbdd3235,
@@ -17219,6 +17288,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1 &1472892669 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1883329633272308, guid: 9ab127f7ecb030e4888f06dd10085588,
@@ -17720,6 +17790,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1 &1508807705
 GameObject:
   m_ObjectHideFlags: 0
@@ -17824,6 +17895,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1 &1513772470 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1883329633272308, guid: 9ab127f7ecb030e4888f06dd10085588,
@@ -18020,6 +18092,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1001 &1519943530
 Prefab:
   m_ObjectHideFlags: 0
@@ -18685,6 +18758,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!4 &1564114544 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4388070445815866, guid: 21fbee50eb9639940923b287375f379b,
@@ -19103,6 +19177,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!4 &1585142431 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4388070445815866, guid: 21fbee50eb9639940923b287375f379b,
@@ -19636,6 +19711,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1001 &1606141445
 Prefab:
   m_ObjectHideFlags: 0
@@ -19803,6 +19879,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 4
   shadowColliders: []
+  singleMesh: 0
 --- !u!23 &1621539574
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -19901,6 +19978,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 4
   shadowColliders: []
+  singleMesh: 0
 --- !u!23 &1623071609
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -20484,6 +20562,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1001 &1667129161
 Prefab:
   m_ObjectHideFlags: 0
@@ -21034,6 +21113,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!4 &1740325203 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4369771176123120, guid: 108da8674b747c4408a2bdb0dbdd3235,
@@ -21921,6 +22001,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!4 &1841234325 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4369771176123120, guid: 108da8674b747c4408a2bdb0dbdd3235,
@@ -22029,6 +22110,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 4
   shadowColliders: []
+  singleMesh: 0
 --- !u!23 &1853744150
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -22801,6 +22883,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!4 &1960152322 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4178132589084428, guid: f80f64dd3a4874248a816f253379048e,
@@ -22915,6 +22998,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1 &1978985921
 GameObject:
   m_ObjectHideFlags: 0
@@ -23019,6 +23103,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1001 &1981575744
 Prefab:
   m_ObjectHideFlags: 0
@@ -23423,6 +23508,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!4 &2031406113 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4369771176123120, guid: 108da8674b747c4408a2bdb0dbdd3235,
@@ -23963,6 +24049,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1 &2086517978
 GameObject:
   m_ObjectHideFlags: 0
@@ -24067,6 +24154,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1 &2088233271
 GameObject:
   m_ObjectHideFlags: 0
@@ -24171,6 +24259,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 1
   shadowColliders: []
+  singleMesh: 0
 --- !u!1 &2088422855 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1883329633272308, guid: 9ab127f7ecb030e4888f06dd10085588,

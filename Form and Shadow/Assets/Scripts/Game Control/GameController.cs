@@ -15,7 +15,7 @@ using System.Collections;
 public class GameController : MonoBehaviour {
 	public static bool resetting;
     public static bool paused;
-	public static int score;
+	public int score;
 
     public float playerDeathAnimationDuration;
     private float playerDeathTimerStart;
@@ -79,7 +79,6 @@ public class GameController : MonoBehaviour {
         e_Tooltip.SetActive(false);
 		f_Tooltip.SetActive(false);
         pause_Menu_Panel.SetActive(false);
-
         space_Tooltip = GameObject.Find("Space_Tooltip");
         shift_Tooltip = GameObject.Find("Shift_Tooltip");
         shadowMeldResourceObject = GameObject.Find("Shadowmeld_Resource");
@@ -248,6 +247,7 @@ public class GameController : MonoBehaviour {
             pause_Menu_Panel.SetActive(true);
         else
             pause_Menu_Panel.SetActive(false);
+        Cursor.visible = !Cursor.visible;
         paused = !paused;
         ChangeInteractTutorialTooltip("");
         ChangeShadowInteractTutorialTooltip("");
@@ -255,6 +255,7 @@ public class GameController : MonoBehaviour {
 
     public void QuitToMainMenu()
     {
+        paused = false;
         SceneManager.LoadScene("Menu_Title");
     }
 
@@ -312,7 +313,7 @@ public class GameController : MonoBehaviour {
         }
     }
     
-    public static void ScoreIncrement(int amount)
+    public void ScoreIncrement(int amount)
 	{
 		score += amount;
 	}

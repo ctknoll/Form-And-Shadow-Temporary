@@ -55,7 +55,7 @@ public class PlayerShadowCollider : MonoBehaviour {
                 if (hit.collider.gameObject.GetComponent<ShadowCollider>().exceptionParent == null)
                 {
                     // Prevent spikes from being added as shadow collider objects
-                    if (hit.collider.gameObject.transform.parent.gameObject.tag != "Spikes")
+                    if (hit.collider.GetComponentInParent<ShadowCast>().meshType != ShadowCast.MeshType.SPIKES)
                         transferPlatforms.Add(hit.collider.gameObject.transform.parent.gameObject);
                 }
                 // If it does have an exception parent

@@ -13,7 +13,7 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
 	private List<IEnumerator> moveReturn;
 	private List<float> moveTime;
 	private bool locked;
-	private bool animating;
+	private bool platformAnimating;
 	private float clearBuffer;
 
     [System.Serializable]
@@ -41,7 +41,7 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
     // Update is called once per frame
 	void Update()
 	{
-		if (pressed && !locked && !animating)
+		if (pressed && !locked && !platformAnimating)
 		{
 			locked = true;
 			
@@ -58,10 +58,10 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
 				i++;
 			}
 		} 
-		else if (!pressed && locked && !animating) 
+		else if (!pressed && locked && !platformAnimating) 
 		{
 			locked = false;
-			animating = true;
+			platformAnimating = true;
 			int i = 0;
 			currentPos.Clear();
 			foreach (lerpPlatform platform in platforms)
@@ -86,7 +86,7 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
 			platform.platformObject.transform.position = Vector3.Lerp(currentPos[index], endPos[index], (localTime - panStart) / moveTime[index]);
 			yield return null;
 		}
-		animating = false;
+		platformAnimating = false;
 	}
 
 	//((!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut) ? localTime += Time.deltaTime : localTime)
@@ -128,7 +128,7 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
         moveTime.Clear();
         moveTowards.Clear();
         moveReturn.Clear();
-        animating = false;
+        platformAnimating = false;
 		clearBuffer = 0;
     }
 }
