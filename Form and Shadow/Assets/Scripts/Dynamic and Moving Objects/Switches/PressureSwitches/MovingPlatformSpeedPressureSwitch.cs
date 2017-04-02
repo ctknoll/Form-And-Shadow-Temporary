@@ -16,7 +16,7 @@ public class MovingPlatformSpeedPressureSwitch : PressureSwitch
 	// Update is called once per frame
 	new void Update () 
 	{
-        //base.Update();
+        base.Update();
 		if (haltWhenNotPressed) movingBlock.GetComponent<MovingPlatform>().slowValue = 0;
         if (pressed) 
 		{
