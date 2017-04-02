@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e44e0afbb6c98d04bab4cde5c36ace1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particlesPerScale: 75
+  particlesPerScale: 100
   particleSystemType: 1
 --- !u!198 &198424446113691536
 ParticleSystem:
@@ -110,12 +110,12 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1292393858
+  randomSeed: -1292393856
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
-      scalar: 0.5
+      scalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -259,10 +259,10 @@ ParticleSystem:
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minColor: {r: 0.972549, g: 0.972549, b: 0.972549, a: 1}
-      maxColor: {r: 0, g: 0, b: 0, a: 0.15686275}
+      maxColor: {r: 0.27058825, g: 0.003921569, b: 0.32941177, a: 0.15686275}
       minMaxState: 0
     startSize:
-      scalar: 3
+      scalar: 2
       maxCurve:
         serializedVersion: 2
         m_Curve:

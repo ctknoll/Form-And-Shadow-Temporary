@@ -8,6 +8,8 @@ public class ShadowCollider : MonoBehaviour {
     public Vector3 castDirection;
 
     [HideInInspector]
+    public Quaternion parentRotation;
+    [HideInInspector]
     public GameObject exceptionParent;
     [HideInInspector]
     public float errorMargin;
@@ -24,7 +26,7 @@ public class ShadowCollider : MonoBehaviour {
         if (exceptionParent == null)
         {
             shadowCast = GetComponentInParent<ShadowCast>();
-
+            gameObject.transform.rotation = parentRotation;
             switch (shadowCast.meshType)
             {
                 case ShadowCast.MeshType.MOVE_PLATFORM:
@@ -48,6 +50,10 @@ public class ShadowCollider : MonoBehaviour {
         else
         {
             shadowCast = exceptionParent.GetComponent<ShadowCast>();
+            if(shadowCast.meshType != ShadowCast.MeshType.ENEMY_TOAD)
+            {
+                gameObject.transform.rotation = parentRotation;
+            }
             switch (shadowCast.meshType)
             {
                 case ShadowCast.MeshType.PROPELLOR_PLATFORM:
