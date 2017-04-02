@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e44e0afbb6c98d04bab4cde5c36ace1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particlesPerScale: 50
+  particlesPerScale: 35
   particleSystemType: 2
 --- !u!198 &198436480289860934
 ParticleSystem:
@@ -115,7 +115,7 @@ ParticleSystem:
     serializedVersion: 3
     enabled: 1
     startLifetime:
-      scalar: 1.25
+      scalar: 0.75
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -469,7 +469,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 3
     enabled: 1
-    type: 6
+    type: 5
     radius: 2
     angle: 20
     length: 1.5

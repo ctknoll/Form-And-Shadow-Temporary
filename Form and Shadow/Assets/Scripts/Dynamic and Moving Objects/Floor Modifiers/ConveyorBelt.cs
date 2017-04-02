@@ -8,7 +8,7 @@ public class ConveyorBelt : MonoBehaviour {
     public MoveDirection moveDirection;
 
 	public bool useMomentum;
-	public float drag;
+	public bool dismountPlayer;
 	private float velocity;
 
     [HideInInspector]
@@ -35,19 +35,23 @@ public class ConveyorBelt : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update ()
-    {
-		
+	{
 	}
 
-    public void OnTriggerStay(Collider other)
+	public void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.tag == "Player") 
+		{
+			other.gameObject.GetComponent<PlayerMovement>().gravConst = other.gameObject.GetComponent<PlayerMovement>().gravity;
+			other.gameObject.GetComponent<PlayerMovement>().gravity = 0;
+		}
+	}
+
+	public void OnTriggerStay(Collider other)
     {      
+		Debug.Log(other);
 		if (other.GetComponent<Collider>() != null && !other.GetComponent<Collider>().isTrigger)
 		{
-			if (other.gameObject.tag == "Player") 
-			{
-				other.gameObject.GetComponent<PlayerMovement>().gravity = 0;
-			}
-
 			if (useMomentum) 
 			{
 				Vector3 directionToMove = new Vector3();
@@ -92,6 +96,13 @@ public class ConveyorBelt : MonoBehaviour {
 
 	public void OnTriggerExit(Collider other)
 	{
-		other.gameObject.GetComponent<PlayerMovement>().gravity = other.gameObject.GetComponent<PlayerMovement>().gravConst;
+		if (other.gameObject.tag == "Player") 
+		{
+			if (dismountPlayer) 
+			{
+				other.transform.position += other.transform.forward;
+			}
+			other.gameObject.GetComponent<PlayerMovement>().gravity = other.gameObject.GetComponent<PlayerMovement>().gravConst;
+		}
 	}
 }

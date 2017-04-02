@@ -8,6 +8,7 @@ public class ShadowmeldObjectControl : MonoBehaviour {
 
     private Object shadowmeldCollideObjectVFX;
     private Object shadowmeldInvisibleObjectVFX;
+    private Object shadowmeldDeathObjectVFX;
     private GameObject currentShadowmeldVFX;
 
 
@@ -16,6 +17,7 @@ public class ShadowmeldObjectControl : MonoBehaviour {
         startingLayer = gameObject.layer;
         shadowmeldCollideObjectVFX = Resources.Load("ShadowmeldCollideObjectVFX");
         shadowmeldInvisibleObjectVFX = Resources.Load("ShadowmeldInvisibleObjectVFX");
+        shadowmeldDeathObjectVFX = Resources.Load("ShadowmeldDeathObjectVFX");
         currentShadowmeldVFX = null;
     }
 	
@@ -38,8 +40,8 @@ public class ShadowmeldObjectControl : MonoBehaviour {
                 switched = false;
             }
         }
-        if(shadowMeldObjectType != ShadowMeldObjectType.CONVEYOR_BELT)
-            UpdateShadowmeldRenderMode();
+        //if(shadowMeldObjectType != ShadowMeldObjectType.CONVEYOR_BELT)
+        //    UpdateShadowmeldRenderMode();
         UpdateShadowmeldVFX();
     }
 
@@ -148,6 +150,10 @@ public class ShadowmeldObjectControl : MonoBehaviour {
                 else if(gameObject.layer == LayerMask.NameToLayer("Shadowmeld Collide"))
                 {
                     currentShadowmeldVFX = Instantiate(shadowmeldCollideObjectVFX, gameObject.transform) as GameObject;
+                }
+                else if(gameObject.layer == LayerMask.NameToLayer("Shadowmeld Death"))
+                {
+                    currentShadowmeldVFX = Instantiate(shadowmeldDeathObjectVFX, gameObject.transform) as GameObject;
                 }
             }
         }

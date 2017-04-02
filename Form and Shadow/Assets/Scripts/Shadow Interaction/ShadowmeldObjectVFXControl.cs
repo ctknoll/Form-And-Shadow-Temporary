@@ -25,15 +25,19 @@ public class ShadowmeldObjectVFXControl : MonoBehaviour {
     }
     void SetParticleSettings ()
     {
-        //if(particleSystemType == ParticleSystemType.DEATH)
-        //{
-        //    ParticleSystem.ShapeModule shapeMod = GetComponent<ParticleSystem>().shape;
-        //    shapeMod.mesh = GetComponentInParent<MeshFilter>().mesh;
+        if(particleSystemType == ParticleSystemType.DEATH)
+        {
+            ParticleSystem.ShapeModule shapeMod = GetComponent<ParticleSystem>().shape;
+            ParticleSystem.EmissionModule emissionMod = GetComponent<ParticleSystem>().emission;
+            
+            if(GetComponentInParent<ShadowmeldObjectControl>().shadowMeldObjectType == ShadowmeldObjectControl.ShadowMeldObjectType.SPIKES)
+            {
+                shapeMod.box = GetComponentInParent<BoxCollider>().size;
 
-        //    ParticleSystem.EmissionModule emissionMod = GetComponent<ParticleSystem>().emission;
-        //    float[] parentScales = new float[] { transform.parent.lossyScale.x, transform.parent.lossyScale.y, transform.parent.lossyScale.z };
-        //    emissionMod.rateOverTime = particlesPerScale * Mathf.Max(parentScales);
-        //}
+                float[] parentScales = new float[] { GetComponentInParent<BoxCollider>().size.x, GetComponentInParent<BoxCollider>().size.y, GetComponentInParent<BoxCollider>().size.z };
+                emissionMod.rateOverTime = particlesPerScale * Mathf.Max(parentScales);
+            }
+        }
         if(particleSystemType == ParticleSystemType.COLLIDE)
         {
             ParticleSystem.ShapeModule shapeMod = GetComponent<ParticleSystem>().shape;
