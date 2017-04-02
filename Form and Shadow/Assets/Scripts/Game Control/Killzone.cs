@@ -15,7 +15,7 @@ public class Killzone : MonoBehaviour
 		{
             if(!GameController.resetting)
             {
-                StartCoroutine(gameController.ResetLevel());
+                StartCoroutine(gameController.ResetLevel(false));
             }
 		}
 	}

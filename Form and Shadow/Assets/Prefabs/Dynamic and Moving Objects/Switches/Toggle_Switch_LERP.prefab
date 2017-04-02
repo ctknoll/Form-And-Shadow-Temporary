@@ -116,7 +116,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1596080238362368}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.3, y: 6.007, z: 8.22}
+  m_LocalPosition: {x: -2.8817103, y: 0.006229013, z: 7.9888086}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4556182672812150}
@@ -252,7 +252,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.5, y: 2, z: 2}
+  m_Size: {x: 3, y: 2, z: 2.5}
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!82 &82253870207479100
 AudioSource:
@@ -427,6 +427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leverArm: {fileID: 1967698092441924}
   timerToggleSwitch: 1
+  lerpToggleSwitch: 0
   timerDuration: 15
   pressed: 0
   switchFlipAnimationTime: 0.75

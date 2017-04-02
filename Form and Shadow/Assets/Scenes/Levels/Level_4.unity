@@ -1893,6 +1893,26 @@ Prefab:
       propertyPath: m_AnchoredPosition.x
       value: 0.2999878
       objectReference: {fileID: 0}
+    - target: {fileID: 114465509106661262, guid: 8b9826001ef26b94e83bef82c598e807,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1305675598}
+    - target: {fileID: 114465509106661262, guid: 8b9826001ef26b94e83bef82c598e807,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleGamePause
+      objectReference: {fileID: 0}
+    - target: {fileID: 114566379252553974, guid: 8b9826001ef26b94e83bef82c598e807,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1305675598}
+    - target: {fileID: 114566379252553974, guid: 8b9826001ef26b94e83bef82c598e807,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: QuitToMainMenu
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8b9826001ef26b94e83bef82c598e807, type: 2}
   m_IsPrefabParent: 0
@@ -3456,7 +3476,7 @@ Prefab:
     - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
         type: 2}
       propertyPath: timerDuration
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
         type: 2}
@@ -3482,6 +3502,11 @@ Prefab:
         type: 2}
       propertyPath: lerpToggleSwitch
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 82253870207479100, guid: 4b6f01473649f6a44aa70455c534d6f9,
+        type: 2}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4b6f01473649f6a44aa70455c534d6f9, type: 2}
@@ -12092,6 +12117,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 6
   moveDirection: 0
+  useMomentum: 0
+  drag: 0
 --- !u!23 &702624192
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -19916,6 +19943,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 51bb5029f199bc6438c85f8250fef858, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1305675598 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114981474573350428, guid: 51bb5029f199bc6438c85f8250fef858,
+    type: 2}
+  m_PrefabInternal: {fileID: 1305675597}
+  m_Script: {fileID: 11500000, guid: d9dde7e5e65eb154fbae511905d0bb52, type: 3}
 --- !u!1 &1308744326
 GameObject:
   m_ObjectHideFlags: 0
@@ -25473,7 +25506,7 @@ Prefab:
     - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
         type: 2}
       propertyPath: timerDuration
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 1596080238362368, guid: 4b6f01473649f6a44aa70455c534d6f9, type: 2}
       propertyPath: m_Name
@@ -25503,6 +25536,11 @@ Prefab:
         type: 2}
       propertyPath: lerpToggleSwitch
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 82253870207479100, guid: 4b6f01473649f6a44aa70455c534d6f9,
+        type: 2}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4b6f01473649f6a44aa70455c534d6f9, type: 2}
@@ -27696,7 +27734,7 @@ Prefab:
     - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
         type: 2}
       propertyPath: timerDuration
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
         type: 2}
@@ -27737,6 +27775,11 @@ Prefab:
         type: 2}
       propertyPath: lerpToggleSwitch
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 82253870207479100, guid: 4b6f01473649f6a44aa70455c534d6f9,
+        type: 2}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4b6f01473649f6a44aa70455c534d6f9, type: 2}
@@ -29138,6 +29181,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 6
   moveDirection: 0
+  useMomentum: 0
+  drag: 0
 --- !u!23 &1958377051
 MeshRenderer:
   m_ObjectHideFlags: 0

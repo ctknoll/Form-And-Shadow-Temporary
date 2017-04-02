@@ -61,7 +61,7 @@ public class CameraControl : MonoBehaviour
     }
     void LateUpdate()
     {
-		if(!cameraIsPanning && !PlayerMovement.shadowShiftingOut && !PlayerMovement.shadowShiftingIn)
+        if (!cameraIsPanning && !PlayerMovement.shadowShiftingOut && !PlayerMovement.shadowShiftingIn && !GameController.paused)
 		{
 			if (PlayerMovement.in3DSpace)
 	        {
@@ -93,7 +93,7 @@ public class CameraControl : MonoBehaviour
 				transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
 			}
 		}
-		else
+		else if(!GameController.paused)
 		{
             GetComponent<Camera>().orthographic = false;
             GetComponent<Camera>().clearFlags = CameraClearFlags.Skybox;

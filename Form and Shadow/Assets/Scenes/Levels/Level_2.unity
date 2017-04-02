@@ -206,6 +206,26 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114465509106661262, guid: 8b9826001ef26b94e83bef82c598e807,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1305675598}
+    - target: {fileID: 114465509106661262, guid: 8b9826001ef26b94e83bef82c598e807,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleGamePause
+      objectReference: {fileID: 0}
+    - target: {fileID: 114566379252553974, guid: 8b9826001ef26b94e83bef82c598e807,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1305675598}
+    - target: {fileID: 114566379252553974, guid: 8b9826001ef26b94e83bef82c598e807,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: QuitToMainMenu
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8b9826001ef26b94e83bef82c598e807, type: 2}
   m_IsPrefabParent: 0
@@ -8590,6 +8610,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 0
   shadowColliders: []
+  singleMesh: 0
 --- !u!1001 &444674589
 Prefab:
   m_ObjectHideFlags: 0
@@ -21384,6 +21405,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 51bb5029f199bc6438c85f8250fef858, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1305675598 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114981474573350428, guid: 51bb5029f199bc6438c85f8250fef858,
+    type: 2}
+  m_PrefabInternal: {fileID: 1305675597}
+  m_Script: {fileID: 11500000, guid: d9dde7e5e65eb154fbae511905d0bb52, type: 3}
 --- !u!1001 &1308414097
 Prefab:
   m_ObjectHideFlags: 0
@@ -30406,8 +30433,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveDirection: 1
   moveDistance: 23
-  moveSpeed: 0.075
+  moveSpeed: 0.09
   slowValue: 1
+  triggerTime: 1
   activatePlatform: 0
   distanceTraveled: 0
   playerChildedIn3D: 0

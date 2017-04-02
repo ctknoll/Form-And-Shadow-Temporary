@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-public class PlayerGroundedZone2D : MonoBehaviour
-{
+public class PlayerGroundedZone2D : MonoBehaviour{
+
 	void OnTriggerStay(Collider other)
 	{
 		if(other.GetComponent<Collider>().isTrigger != true)

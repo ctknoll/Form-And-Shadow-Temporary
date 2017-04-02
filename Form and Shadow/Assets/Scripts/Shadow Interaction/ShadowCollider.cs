@@ -158,7 +158,7 @@ public class ShadowCollider : MonoBehaviour {
 		gameObject.AddComponent<BoxCollider>();
         gameObject.GetComponent<BoxCollider>().size = gameObject.transform.parent.GetComponent<BoxCollider>().size;
 
-        if (!gameObject.transform.parent.GetComponent<ShadowmeldObjectControl>())
+        if (gameObject.transform.parent.GetComponent<ShadowmeldObjectControl>().shadowMeldObjectType != ShadowmeldObjectControl.ShadowMeldObjectType.FLAT_SPIKES)
         {
             gameObject.AddComponent<Killzone>();
             gameObject.GetComponent<BoxCollider>().isTrigger = true;
