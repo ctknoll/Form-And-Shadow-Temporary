@@ -250,3 +250,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: -3
   moveDirection: 0
+  useMomentum: 1
+  drag: 0
