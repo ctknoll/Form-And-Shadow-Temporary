@@ -98,6 +98,8 @@ public class EnemyToad : MonoBehaviour {
 		//platform is lower
 
         float heightDifference = Mathf.Abs(GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y - startPos.y);
+		float actualHeightDifference = heightDifference;
+		heightDifference = Mathf.Max((.5f / Mathf.PI) * Mathf.Sqrt (Mathf.Pow(GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).x - startPos.x, 2) + Mathf.Pow(GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).z - startPos.z, 2)), heightDifference);
 
 		if (isSame)
 			heightDifference = (1f / Mathf.PI) * Mathf.Sqrt (Mathf.Pow(GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).x - startPos.x, 2) + Mathf.Pow(GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).z - startPos.z, 2));

@@ -8,9 +8,7 @@ public class ShadowCast : MonoBehaviour {
     public MeshType meshType;
 
     public List<GameObject> shadowColliders = new List<GameObject>();
-
-    
-    
+    [HideInInspector]
     public bool singleMesh;
 	private UnityEngine.Rendering.ShadowCastingMode shadowCastMode;
 
@@ -56,8 +54,8 @@ public class ShadowCast : MonoBehaviour {
                 shadowAdd.GetComponent<ShadowCollider>().lockedInZAxis = lockedInZ;
                 shadowAdd.GetComponent<ShadowCollider>().castDirection = direction;
                 shadowAdd.GetComponent<ShadowCollider>().wallTransform = hit.collider.transform;
+                shadowAdd.GetComponent<ShadowCollider>().parentRotation = transform.rotation;
                 shadowColliders.Add(shadowAdd);
-
             }
             // If not, instantiate the shadowcollider prefab and child it to the gameobject
             else
@@ -67,10 +65,9 @@ public class ShadowCast : MonoBehaviour {
                 shadowAdd.GetComponent<ShadowCollider>().castDirection = direction;
                 shadowAdd.GetComponent<ShadowCollider>().lockedInZAxis = lockedInZ;
                 shadowAdd.GetComponent<ShadowCollider>().wallTransform = hit.collider.transform;
+                shadowAdd.GetComponent<ShadowCollider>().parentRotation = transform.rotation;
                 shadowColliders.Add(shadowAdd);
             }
-
-
         }
 	}
     public bool GetLockedAxis(Vector3 castDir)

@@ -26,7 +26,7 @@ public class PlayerShadowCast : MonoBehaviour {
 	{
 		CheckShadowcastModeandLightingChange();
 		lightSourceAligned = CheckLightSourceAligned().GetComponent<LightSourceControl>();
-        if(PlayerMovement.in3DSpace && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !PlayerMovement.isGrabbing && !PlayerMovement.shadowMelded && !GameController.paused)
+        if(PlayerMovement.in3DSpace && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !PlayerMovement.isGrabbing && !PlayerMovement.shadowMelded && !GameController.paused && !GameController.resetting)
             GameController.CheckShadowShiftTooltip(lightSourceAligned.gameObject.activeSelf == true);
 	}
 
