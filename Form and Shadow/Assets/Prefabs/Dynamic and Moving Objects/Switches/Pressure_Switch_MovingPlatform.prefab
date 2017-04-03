@@ -54,8 +54,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4177142557976164}
   - component: {fileID: 114254770970474394}
-  - component: {fileID: 135189548304951480}
   - component: {fileID: 54437024797494628}
+  - component: {fileID: 82007954108660732}
+  - component: {fileID: 65320437673730238}
   m_Layer: 0
   m_Name: Pressure_Switch_MovingPlatform
   m_TagString: Untagged
@@ -88,7 +89,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1850082669058008}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.694897, y: 0.15, z: 12.110858}
+  m_LocalPosition: {x: -3, y: -1.055, z: 18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4614140909689104}
@@ -102,7 +103,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1452597774519706}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.25, z: 0}
+  m_LocalPosition: {x: 0, y: 0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4614140909689104}
@@ -130,8 +131,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1944991218662498}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -0.2, z: 0}
+  m_LocalScale: {x: 1, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 4614140909689104}
   m_RootOrder: 1
@@ -255,6 +256,98 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300004, guid: 94db1299c93627f4281f713c411481e8, type: 3}
+--- !u!65 &65320437673730238
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1850082669058008}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.2658885, z: 1}
+  m_Center: {x: 0, y: 0.55, z: 0}
+--- !u!82 &82007954108660732
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1850082669058008}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.25
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &114254770970474394
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -266,11 +359,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89a946d2588981b4f89fb16c868eade8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pressureSwitchAudioSource: {fileID: 82007954108660732}
+  pressureSwitchLowerClip: {fileID: 8300000, guid: 031f72d9301460945b5eb1094423cf26,
+    type: 3}
+  pressureSwitchRaiseClip: {fileID: 8300000, guid: 7b273e3330efe7745a520ffe5cefe50e,
+    type: 3}
   canInteract: 0
   pressed: 0
   movingBlock: {fileID: 0}
-  percentSlow: 100
-  haltWhenNotPressed: 0
+  percentSlow: 0
+  haltWhenNotPressed: 1
 --- !u!114 &114859506387771930
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -287,15 +385,4 @@ MonoBehaviour:
   meshException: 0
   meshType: 0
   shadowColliders: []
---- !u!135 &135189548304951480
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1850082669058008}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0.1, z: 0}
+  singleMesh: 0

@@ -18,7 +18,7 @@ public class LightDirectionToggleSwitch : ToggleSwitch
     }
 
     // Update is called once per frame
-    new void Update()
+    void Update()
     {
         if (pressed)
         {
@@ -45,6 +45,5 @@ public class LightDirectionToggleSwitch : ToggleSwitch
 			}
         }
 		lightDirectionPointer.transform.eulerAngles = new Vector3(startRotation.x, lightSources[0].transform.eulerAngles.y - 90, startRotation.z);
-        base.Update();
     }
 }

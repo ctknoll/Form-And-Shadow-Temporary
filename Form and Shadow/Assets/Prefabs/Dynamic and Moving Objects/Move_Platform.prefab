@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 65318106315746406}
   - component: {fileID: 33894720554336368}
   - component: {fileID: 23229268648773650}
+  - component: {fileID: 114025515794856908}
   m_Layer: 0
   m_Name: Move_Platform_Mesh
   m_TagString: Untagged
@@ -136,6 +137,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114025515794856908
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1793766845158978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f6f985af86ce4293528b199111538, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadowMeldObjectType: 7
 --- !u!114 &114691365021082736
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -152,6 +165,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 3
   shadowColliders: []
+  singleMesh: 0
 --- !u!114 &114958400841393434
 MonoBehaviour:
   m_ObjectHideFlags: 1

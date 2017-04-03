@@ -14,6 +14,7 @@ public class LevelFinish : MonoBehaviour
 	{
 		if(other.gameObject.tag == "Player")
 		{
+            Cursor.visible = true;
 			SceneManager.LoadScene("Game_Over");
 		}
 	}
