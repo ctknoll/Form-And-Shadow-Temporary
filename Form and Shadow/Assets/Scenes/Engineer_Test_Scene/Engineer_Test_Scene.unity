@@ -1792,37 +1792,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 114266065494795372, guid: 5dce0f60906be8e4691618efb3b39ad0,
-        type: 2}
-      propertyPath: shadowMeldObjectType
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114594978347871690, guid: 5dce0f60906be8e4691618efb3b39ad0,
-        type: 2}
-      propertyPath: moveSpeed
-      value: -10
-      objectReference: {fileID: 0}
-    - target: {fileID: 114594978347871690, guid: 5dce0f60906be8e4691618efb3b39ad0,
-        type: 2}
-      propertyPath: useMomentum
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4240241749833790, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
   m_IsPrefabParent: 0
