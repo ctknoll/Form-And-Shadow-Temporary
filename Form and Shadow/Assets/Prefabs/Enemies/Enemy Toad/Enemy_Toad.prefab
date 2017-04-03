@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4741417413382588}
   - component: {fileID: 33104391105414284}
   - component: {fileID: 23108923543360952}
+  - component: {fileID: 114265714920500846}
   m_Layer: 12
   m_Name: Enemy_Toad_Mesh_Refract
   m_TagString: Untagged
@@ -134,7 +135,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1346348854411718}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.19, y: -0.5, z: -39.597683}
+  m_LocalPosition: {x: -15.904533, y: 1.4619424, z: 11.050125}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 4310847696285758}
@@ -183,7 +184,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 432ed1a5c42c1f342b98337774dbe451, type: 2}
+  - {fileID: 2100000, guid: c3c1c748f4857430aaf31b4d17b6ca09, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -389,6 +390,18 @@ MonoBehaviour:
   meshType: 6
   shadowColliders: []
   singleMesh: 0
+--- !u!114 &114265714920500846
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1111027752625372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30f71d022d1be4d34be30c165db0d6b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rend: {fileID: 0}
 --- !u!114 &114459652579524722
 MonoBehaviour:
   m_ObjectHideFlags: 1
