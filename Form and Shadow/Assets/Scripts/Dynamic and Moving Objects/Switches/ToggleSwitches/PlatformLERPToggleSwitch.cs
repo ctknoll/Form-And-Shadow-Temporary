@@ -49,7 +49,9 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
 			currentPos.Clear();
 			foreach (lerpPlatform platform in platforms)
 			{
-				if(startPos.Count < platforms.Length) startPos.Add(platform.platformObject.transform.position);
+                Debug.Log(startPos.Count);
+                Debug.Log(platforms[0]);
+                if (startPos.Count < platforms.Length) startPos.Add(platform.platformObject.transform.position);
 				if(endPos.Count < platforms.Length) endPos.Add(platform.platformObject.transform.position + platform.directionToMove);
 				moveTime.Add((platform.directionToMove.magnitude / platform.moveSpeed));
 				IEnumerator ienum = MoveOut(platform, i);
