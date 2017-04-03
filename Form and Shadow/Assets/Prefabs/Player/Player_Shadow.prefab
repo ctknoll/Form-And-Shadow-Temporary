@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 4309062564736326}
   - component: {fileID: 143308412367957762}
   - component: {fileID: 114778124127622860}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Player_Shadow
   m_TagString: Player
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
