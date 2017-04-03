@@ -1968,7 +1968,7 @@ Prefab:
     - target: {fileID: 114594978347871690, guid: 5dce0f60906be8e4691618efb3b39ad0,
         type: 2}
       propertyPath: useMomentum
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
@@ -43432,7 +43432,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -11.59
+      value: -11.72
       objectReference: {fileID: 0}
     - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
       propertyPath: m_LocalRotation.x
@@ -43456,7 +43456,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
       propertyPath: m_LocalScale.x
-      value: 0.2600901
+      value: 0.29563496
       objectReference: {fileID: 0}
     - target: {fileID: 4339084525040640, guid: 5dce0f60906be8e4691618efb3b39ad0, type: 2}
       propertyPath: m_LocalScale.z
