@@ -139,6 +139,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 0
   shadowColliders: []
+  singleMesh: 0
 --- !u!114 &114356643928682068
 MonoBehaviour:
   m_ObjectHideFlags: 1
