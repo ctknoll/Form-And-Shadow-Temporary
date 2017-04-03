@@ -93,7 +93,7 @@ Material:
       second: 1
     - first:
         name: _InvFade
-      second: 1.5
+      second: 0.5
     - first:
         name: _Metallic
       second: 0
@@ -133,4 +133,4 @@ Material:
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _TintColor
-      second: {r: 1, g: 1, b: 1, a: 0.078431375}
+      second: {r: 0.8179976, g: 0.83793104, b: 0.77631843, a: 0.041}
