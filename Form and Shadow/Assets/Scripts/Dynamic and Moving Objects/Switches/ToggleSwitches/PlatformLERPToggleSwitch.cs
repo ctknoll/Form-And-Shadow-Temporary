@@ -41,16 +41,16 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
     // Update is called once per frame
 	void Update()
 	{
-		if (pressed && !locked && !platformAnimating)
+       // Debug.Log("TOGGLED: " + toggledOn);
+       // Debug.Log("PRESSED: " + pressed);
+        //Debug.Log("LOCKED: " + locked);
+        if ((switchType == SwitchType.TIMER_TOGGLE || switchType == SwitchType.FLIP_TOGGLE && !toggledOn) && pressed && !locked && !platformAnimating)
 		{
-			locked = true;
-			
+			locked = true;			
 			int i = 0;
 			currentPos.Clear();
 			foreach (lerpPlatform platform in platforms)
 			{
-                Debug.Log(startPos.Count);
-                Debug.Log(platforms[0]);
                 if (startPos.Count < platforms.Length) startPos.Add(platform.platformObject.transform.position);
 				if(endPos.Count < platforms.Length) endPos.Add(platform.platformObject.transform.position + platform.directionToMove);
 				moveTime.Add((platform.directionToMove.magnitude / platform.moveSpeed));
@@ -60,7 +60,7 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
 				i++;
 			}
 		} 
-		else if (!pressed && locked && !platformAnimating) 
+		else if ((switchType == SwitchType.TIMER_TOGGLE || switchType == SwitchType.FLIP_TOGGLE && toggledOn) && (pressed && locked && !platformAnimating)) 
 		{
 			locked = false;
 			platformAnimating = true;
