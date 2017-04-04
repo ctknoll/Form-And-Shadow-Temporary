@@ -27943,34 +27943,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 9
       objectReference: {fileID: 0}
-    - target: {fileID: 4357733737363346, guid: f5ded287dd4b70e488e4ac243c739417, type: 2}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4641417875896990, guid: f5ded287dd4b70e488e4ac243c739417, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4503680466680396, guid: f5ded287dd4b70e488e4ac243c739417, type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4339088250607370, guid: f5ded287dd4b70e488e4ac243c739417, type: 2}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4136100489531672, guid: f5ded287dd4b70e488e4ac243c739417, type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4481356205250892, guid: f5ded287dd4b70e488e4ac243c739417, type: 2}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1992499532377428, guid: f5ded287dd4b70e488e4ac243c739417, type: 2}
-      propertyPath: m_TagString
-      value: Push Cube
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f5ded287dd4b70e488e4ac243c739417, type: 2}
   m_IsPrefabParent: 0
