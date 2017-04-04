@@ -353,4 +353,14 @@ public class GameController : MonoBehaviour {
 	{
 		score += amount;
 	}
+
+	public void SwitchOnCooldown()
+	{
+		switch_cooldown = true;
+	}
+
+	public void SwitchOffCooldown()
+	{
+		switch_cooldown = false;
+	}
 }

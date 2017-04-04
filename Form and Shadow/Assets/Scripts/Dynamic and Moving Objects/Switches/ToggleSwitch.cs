@@ -41,7 +41,7 @@ public abstract class ToggleSwitch : MonoBehaviour {
 	// Update is called once per frame
     void OnTriggerStay (Collider other)
     {
-        if(other.gameObject.tag == "Player" && !PlayerMovement.shadowMelded && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
+		if(other.gameObject.tag == "Player" && !PlayerMovement.shadowMelded && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !GameController.switch_cooldown)
         {
             if(!animating)
             {
@@ -55,6 +55,7 @@ public abstract class ToggleSwitch : MonoBehaviour {
                             GameController.e_Switch_First_Time_Used = true;
                         }
                         pressed = true;
+
                         StartCoroutine(PressSwitchTimer());
                         if(timerDuration > 0)
                             StartCoroutine(ControlTimerSwitchAudio());
@@ -169,6 +170,12 @@ public abstract class ToggleSwitch : MonoBehaviour {
         }
         switchFlipAudioSource.Stop();
     }
+
+	public IEnumerator switchCooldown(float timeToWait)
+	{
+		yield return new WaitForSeconds(timeToWait);
+		GameController.switch_cooldown = false;
+	}
 
     public IEnumerator PressFlipToggle()
     {
