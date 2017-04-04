@@ -38,7 +38,10 @@ public class GameController : MonoBehaviour {
     public string shadowMeldTutorialText;
     public string shadowShiftTutorialText;
     public AudioSource ambientAudioSource;
-    public AudioClip ambientAudioClip;
+    public AudioSource playerDeathAudioSource;
+    public AudioClip playerDeathAudioClip;
+    public AudioClip ambientGearsAudioClip;
+    public AudioClip ambientShadowmeldAudioClip;
 
     public static bool e_Switch_First_Time_Used;
     public static bool e_Grab_First_Time_Used;
@@ -84,7 +87,7 @@ public class GameController : MonoBehaviour {
         space_Tooltip = GameObject.Find("Space_Tooltip");
         shift_Tooltip = GameObject.Find("Shift_Tooltip");
         shadowMeldResourceObject = GameObject.Find("Shadowmeld_Resource");
-        ambientAudioSource.clip = ambientAudioClip;
+        ambientAudioSource.clip = ambientGearsAudioClip;
         ambientAudioSource.Play();
 
         Cursor.visible = false;
@@ -99,6 +102,7 @@ public class GameController : MonoBehaviour {
         {
             ToggleGamePause();
         }
+        ControlAmbientAudio();
     }
 
     #region UI Control
@@ -247,10 +251,14 @@ public class GameController : MonoBehaviour {
 
     public void ToggleGamePause()
     {
-        if (paused)
+        if (!paused)
+        {
             ambientAudioSource.Pause();
+        }
         else
+        {
             ambientAudioSource.UnPause();
+        }
         if (!pause_Menu_Panel.activeSelf)
             pause_Menu_Panel.SetActive(true);
         else
@@ -259,6 +267,22 @@ public class GameController : MonoBehaviour {
         paused = !paused;
         ChangeInteractTutorialTooltip("");
         ChangeShadowInteractTutorialTooltip("");
+    }
+
+    public void ControlAmbientAudio()
+    {
+        if(PlayerMovement.shadowMelded)
+        {
+            ambientAudioSource.Pause();
+            ambientAudioSource.clip = ambientShadowmeldAudioClip;
+            ambientAudioSource.Play();
+        }
+        else
+        {
+            ambientAudioSource.Pause();
+            ambientAudioSource.clip = ambientGearsAudioClip;
+            ambientAudioSource.Play();
+        }
     }
 
     public void QuitToMainMenu()
@@ -277,7 +301,7 @@ public class GameController : MonoBehaviour {
 	{
         // Turn resetting on
         resetting = true;
-
+        playerDeathAudioSource.Play();
         // Plays the player's death animation
         if(!resetWithK)
         {

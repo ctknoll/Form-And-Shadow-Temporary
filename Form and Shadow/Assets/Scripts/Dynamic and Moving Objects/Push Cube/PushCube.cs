@@ -19,6 +19,10 @@ public class PushCube : MonoBehaviour {
 
 	void Update()
 	{
+        if (!grabbed)
+        {
+            GetComponent<AudioSource>().Stop();
+        }
         if (canInteract)
         {
             if (!grabbed)

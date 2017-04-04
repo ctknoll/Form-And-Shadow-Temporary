@@ -14,8 +14,8 @@ public class PlayerGroundedZone3D : MonoBehaviour{
         {
             if (other.GetComponent<Collider>().isTrigger != true && other.gameObject.layer != LayerMask.NameToLayer("Shadowmeld Ignore") && other.gameObject.tag != "Player")
             {
-                playerMovement.jumpAudioSource.clip = playerMovement.jumpLandClip;
-                playerMovement.jumpAudioSource.Play();
+                playerMovement.playerAudioSource.clip = playerMovement.jumpLandClip;
+                playerMovement.playerAudioSource.Play();
             }
         }
     }

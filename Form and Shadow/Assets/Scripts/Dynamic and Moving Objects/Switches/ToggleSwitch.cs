@@ -22,7 +22,8 @@ public abstract class ToggleSwitch : MonoBehaviour {
     public AudioSource switchFlipAudioSource;
 
     private bool animating;
-    private bool toggledOn;
+    [HideInInspector]
+    public bool toggledOn;
     private Vector3 startLerpRotation;
     private Vector3 endLerpRotation;
 
@@ -66,6 +67,7 @@ public abstract class ToggleSwitch : MonoBehaviour {
                             GameController.e_Switch_First_Time_Used = true;
                         }
                         pressed = true;
+                        Debug.Log("Toggling");
                         StartCoroutine(PressFlipToggle());
                         StartCoroutine(ControlFlipSwitchAudio());
                         GameController.CheckInteractToolip(false, false);
@@ -126,6 +128,7 @@ public abstract class ToggleSwitch : MonoBehaviour {
         timerAudioSource.Stop();
         StartCoroutine(DepressSwitchTimer());
     }
+
     public IEnumerator DepressSwitchTimer()
     {
         switchFlipAudioSource.Play();
@@ -181,15 +184,18 @@ public abstract class ToggleSwitch : MonoBehaviour {
                 flipPersonalTimer += Time.deltaTime;
             }
             if (!toggledOn)
+            {
+                Debug.Log("Forward");
                 leverArm.transform.eulerAngles = Vector3.Lerp(startLerpRotation, endLerpRotation, (flipPersonalTimer - panStart) / switchFlipAnimationTime);
+            }
             else
+            {
+                Debug.Log("Backwards");
                 leverArm.transform.eulerAngles = Vector3.Lerp(endLerpRotation, startLerpRotation, (flipPersonalTimer - panStart) / switchFlipAnimationTime);
+            }
             yield return null;
         }
-        if (!toggledOn)
-            toggledOn = true;
-        else
-            toggledOn = false;
+        toggledOn = !toggledOn;
         pressed = false;
         animating = false;
     }
