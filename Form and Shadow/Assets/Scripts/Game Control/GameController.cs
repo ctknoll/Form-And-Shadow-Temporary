@@ -291,7 +291,8 @@ public class GameController : MonoBehaviour {
 
     public void QuitToMainMenu()
     {
-        paused = false;
+        //paused = false;
+		ToggleGamePause();
         SceneManager.LoadScene("Menu_Title");
     }
 
