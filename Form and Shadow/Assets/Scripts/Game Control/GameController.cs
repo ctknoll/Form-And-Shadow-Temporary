@@ -253,10 +253,12 @@ public class GameController : MonoBehaviour {
     {
         if (!paused)
         {
+            Time.timeScale = 0;
             ambientAudioSource.Pause();
         }
         else
         {
+            Time.timeScale = 1;
             ambientAudioSource.UnPause();
         }
         if (!pause_Menu_Panel.activeSelf)
