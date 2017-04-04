@@ -13463,6 +13463,11 @@ Prefab:
       propertyPath: shadowMeldResourceObject
       value: 
       objectReference: {fileID: 1628857457}
+    - target: {fileID: 82027252661872064, guid: 51bb5029f199bc6438c85f8250fef858,
+        type: 2}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 51bb5029f199bc6438c85f8250fef858, type: 2}
   m_IsPrefabParent: 0
