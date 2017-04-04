@@ -15,6 +15,7 @@ using System.Collections;
 public class GameController : MonoBehaviour {
 	public static bool resetting;
     public static bool paused;
+	public static bool switch_cooldown;
 	public int score;
 
     public float playerDeathAnimationDuration;
@@ -80,6 +81,7 @@ public class GameController : MonoBehaviour {
         e_Grab_First_Time_Used = false;
         shadowMeld_First_Time_Used = false;
         shadowShift_First_Time_Used = false;
+		switch_cooldown = false;
 
         e_Tooltip.SetActive(false);
 		f_Tooltip.SetActive(false);
@@ -289,7 +291,8 @@ public class GameController : MonoBehaviour {
 
     public void QuitToMainMenu()
     {
-        paused = false;
+        //paused = false;
+		ToggleGamePause();
         SceneManager.LoadScene("Menu_Title");
     }
 

@@ -15,6 +15,7 @@ public abstract class ToggleSwitch : MonoBehaviour {
     public enum SwitchType {TIMER_TOGGLE, FLIP_TOGGLE}
     public SwitchType switchType;
     public float timerDuration;
+	public float switchDelay;
 
     public bool pressed;
     public float switchFlipAnimationTime;
@@ -41,7 +42,7 @@ public abstract class ToggleSwitch : MonoBehaviour {
 	// Update is called once per frame
     void OnTriggerStay (Collider other)
     {
-        if(other.gameObject.tag == "Player" && !PlayerMovement.shadowMelded && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
+		if(other.gameObject.tag == "Player" && !PlayerMovement.shadowMelded && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !GameController.switch_cooldown)
         {
             if(!animating)
             {
@@ -55,10 +56,13 @@ public abstract class ToggleSwitch : MonoBehaviour {
                             GameController.e_Switch_First_Time_Used = true;
                         }
                         pressed = true;
+
                         StartCoroutine(PressSwitchTimer());
                         if(timerDuration > 0)
                             StartCoroutine(ControlTimerSwitchAudio());
                         GameController.CheckInteractToolip(false, false);
+						GameController.switch_cooldown = true;
+						StartCoroutine (SwitchCooldown (switchDelay));
                     }
                     else if(switchType == SwitchType.FLIP_TOGGLE)
                     {
@@ -69,6 +73,8 @@ public abstract class ToggleSwitch : MonoBehaviour {
                         StartCoroutine(PressFlipToggle());
                         StartCoroutine(ControlFlipSwitchAudio());
                         GameController.CheckInteractToolip(false, false);
+						GameController.switch_cooldown = true;
+						StartCoroutine (SwitchCooldown (switchDelay));
                     }
                 }
             }
@@ -169,6 +175,12 @@ public abstract class ToggleSwitch : MonoBehaviour {
         }
         switchFlipAudioSource.Stop();
     }
+
+	public IEnumerator SwitchCooldown(float timeToWait)
+	{
+		yield return new WaitForSeconds(timeToWait);
+		GameController.switch_cooldown = false;
+	}
 
     public IEnumerator PressFlipToggle()
     {
