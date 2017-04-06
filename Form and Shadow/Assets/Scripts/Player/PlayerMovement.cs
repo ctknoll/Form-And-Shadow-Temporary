@@ -120,6 +120,7 @@ public class PlayerMovement : MonoBehaviour
     // shifting in, out, and where the player is currently located (3D or 2D)
     void Update()
     {
+        Debug.Log(grounded3D);
         if (!GameController.resetting && !GameController.paused)
         {
             CheckPlayerMovement();
