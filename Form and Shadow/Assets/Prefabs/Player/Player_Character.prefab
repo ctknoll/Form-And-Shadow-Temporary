@@ -144,9 +144,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4173897930357246}
-  - component: {fileID: 65235106533843754}
   - component: {fileID: 54822601893208556}
   - component: {fileID: 114680685476149912}
+  - component: {fileID: 136023878540377072}
   m_Layer: 12
   m_Name: Player_Character_Grounded_Check
   m_TagString: Untagged
@@ -207,8 +207,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1722832261627040}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.1, z: 0}
-  m_LocalScale: {x: 0.6, y: 1, z: 0.6}
+  m_LocalPosition: {x: 0, y: -0.8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4710416165020350}
   m_RootOrder: 3
@@ -288,8 +288,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1099584862315612}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.7, y: 6.27, z: 8.92}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.4, y: 2.9, z: 5.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4487168017051280}
@@ -531,18 +531,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65235106533843754
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1722832261627040}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 0.1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!81 &81722112071209782
 AudioListener:
   m_ObjectHideFlags: 1
@@ -688,7 +676,7 @@ MonoBehaviour:
     type: 2}
   shadowShiftPanDuration: 1.5
   shadowShiftFollowObject: {fileID: 0}
-  shadowMeldAvailable: 1
+  shadowMeldAvailable: 0
   shadowMeldVFX: {fileID: 1758487694470666}
   shadowMeldResourceCost: 6.6
   shadowMeldResourceRegen: 10
@@ -770,6 +758,19 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &136023878540377072
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1722832261627040}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 0
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!143 &143736298376177622
 CharacterController:
