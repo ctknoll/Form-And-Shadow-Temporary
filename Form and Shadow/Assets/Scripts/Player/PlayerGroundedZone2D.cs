@@ -23,13 +23,13 @@ public class PlayerGroundedZone2D : MonoBehaviour{
 
     void OnTriggerStay(Collider other)
 	{
-		if(other.GetComponent<Collider>().isTrigger != true)
+		if(other.GetComponent<Collider>().isTrigger != true && other.gameObject.tag != "Player")
 		    PlayerMovement.grounded2D = true;
 	}
 
 	void OnTriggerExit(Collider other)
 	{
-		if(other.GetComponent<Collider>().isTrigger !=true)
+		if(other.GetComponent<Collider>().isTrigger != true && other.gameObject.tag != "Player")
 		    PlayerMovement.grounded2D = false;
 	}
 }
