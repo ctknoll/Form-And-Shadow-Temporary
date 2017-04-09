@@ -2058,7 +2058,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294964223
   m_Lightmapping: 2
   m_AreaSize: {x: 10, y: 10}
   m_BounceIntensity: 1
@@ -10251,7 +10251,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294964223
   m_Lightmapping: 2
   m_AreaSize: {x: 10, y: 10}
   m_BounceIntensity: 1
