@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -26,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
 	[HideInInspector]
 	public Vector3 conveyorVelocity;
 	public float conveyorDrag;
+	public string currentGameLevel;
 
     [Header("Shadow Shift Variables")]
     public GameObject shadowShiftFollowObjectPrefab;
@@ -98,6 +100,8 @@ public class PlayerMovement : MonoBehaviour
         shadowMelded = false;
         isGrabbing = false;
 		gravConst = gravity;
+		currentGameLevel = SceneManager.GetActiveScene ().name;
+
 
         movementReference = GetComponentInChildren<MovementReference>().gameObject;
         playerAudioSource = GetComponent<AudioSource>();
@@ -105,6 +109,7 @@ public class PlayerMovement : MonoBehaviour
         gameController = GameObject.Find("Game_Controller").GetComponent<GameController>();
         controller = GetComponent<CharacterController>();
 		conveyorVelocity = new Vector3(0, 0, 0);
+
 
         currentPlatformIndex = 0;
     }
@@ -115,6 +120,7 @@ public class PlayerMovement : MonoBehaviour
     // shifting in, out, and where the player is currently located (3D or 2D)
     void Update()
     {
+        Debug.Log(grounded3D);
         if (!GameController.resetting && !GameController.paused)
         {
             CheckPlayerMovement();
@@ -129,6 +135,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetButtonDown("Reset") && !shadowShiftingIn && !shadowShiftingOut)
         {
+			SceneManager.LoadScene (currentGameLevel);
+			/*
             playerStartPosition = levelStartPosition;
             foreach (Transform child in GameObject.Find("Lighting").transform)
             {
@@ -137,7 +145,9 @@ public class PlayerMovement : MonoBehaviour
                 light.lightSourceDirection = child.transform.forward;
                 light.CheckLightingDirection();
             }
+
             StartCoroutine(GameObject.Find("Game_Controller").GetComponent<GameController>().ResetLevel(true));
+            */
         }
     }
     #endregion
