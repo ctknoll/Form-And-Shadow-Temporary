@@ -15,6 +15,7 @@ using System.Collections;
 public class GameController : MonoBehaviour {
 	public static bool resetting;
     public static bool paused;
+	public static bool switch_cooldown;
 	public int score;
 
     public float playerDeathAnimationDuration;
@@ -38,7 +39,10 @@ public class GameController : MonoBehaviour {
     public string shadowMeldTutorialText;
     public string shadowShiftTutorialText;
     public AudioSource ambientAudioSource;
-    public AudioClip ambientAudioClip;
+    public AudioSource playerDeathAudioSource;
+    public AudioClip playerDeathAudioClip;
+    public AudioClip ambientGearsAudioClip;
+    public AudioClip ambientShadowmeldAudioClip;
 
     public static bool e_Switch_First_Time_Used;
     public static bool e_Grab_First_Time_Used;
@@ -77,6 +81,7 @@ public class GameController : MonoBehaviour {
         e_Grab_First_Time_Used = false;
         shadowMeld_First_Time_Used = false;
         shadowShift_First_Time_Used = false;
+		switch_cooldown = false;
 
         e_Tooltip.SetActive(false);
 		f_Tooltip.SetActive(false);
@@ -84,7 +89,7 @@ public class GameController : MonoBehaviour {
         space_Tooltip = GameObject.Find("Space_Tooltip");
         shift_Tooltip = GameObject.Find("Shift_Tooltip");
         shadowMeldResourceObject = GameObject.Find("Shadowmeld_Resource");
-        ambientAudioSource.clip = ambientAudioClip;
+        ambientAudioSource.clip = ambientGearsAudioClip;
         ambientAudioSource.Play();
 
         Cursor.visible = false;
@@ -99,6 +104,7 @@ public class GameController : MonoBehaviour {
         {
             ToggleGamePause();
         }
+        ControlAmbientAudio();
     }
 
     #region UI Control
@@ -247,10 +253,16 @@ public class GameController : MonoBehaviour {
 
     public void ToggleGamePause()
     {
-        if (paused)
+        if (!paused)
+        {
+            Time.timeScale = 0;
             ambientAudioSource.Pause();
+        }
         else
+        {
+            Time.timeScale = 1;
             ambientAudioSource.UnPause();
+        }
         if (!pause_Menu_Panel.activeSelf)
             pause_Menu_Panel.SetActive(true);
         else
@@ -261,9 +273,26 @@ public class GameController : MonoBehaviour {
         ChangeShadowInteractTutorialTooltip("");
     }
 
+    public void ControlAmbientAudio()
+    {
+        if(PlayerMovement.shadowMelded)
+        {
+            ambientAudioSource.Pause();
+            ambientAudioSource.clip = ambientShadowmeldAudioClip;
+            ambientAudioSource.Play();
+        }
+        else
+        {
+            ambientAudioSource.Pause();
+            ambientAudioSource.clip = ambientGearsAudioClip;
+            ambientAudioSource.Play();
+        }
+    }
+
     public void QuitToMainMenu()
     {
-        paused = false;
+        //paused = false;
+		ToggleGamePause();
         SceneManager.LoadScene("Menu_Title");
     }
 
@@ -277,7 +306,7 @@ public class GameController : MonoBehaviour {
 	{
         // Turn resetting on
         resetting = true;
-
+        playerDeathAudioSource.Play();
         // Plays the player's death animation
         if(!resetWithK)
         {

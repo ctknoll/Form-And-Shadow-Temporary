@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -26,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
 	[HideInInspector]
 	public Vector3 conveyorVelocity;
 	public float conveyorDrag;
+	public string currentGameLevel;
 
     [Header("Shadow Shift Variables")]
     public GameObject shadowShiftFollowObjectPrefab;
@@ -40,12 +42,19 @@ public class PlayerMovement : MonoBehaviour
     public float shadowMeldResourceRegen;
     public float shadowMeldResource;
 
-    [Header("Audio Clips")]
-    public AudioSource jumpAudioSource;
+    [HideInInspector]
+    public AudioSource playerAudioSource;
+
+    [Header("Sound Variables")]
     public AudioClip jumpLiftClip;
     public AudioClip jumpLandClip;
+    public AudioClip[] walkAudioClips;
+    public AudioClip shadowShiftInAudioClip;
+    public AudioClip shadowShiftOutAudioClip;
+    public AudioClip shadowMeldInAudioClip;
+    public AudioClip shadowMeldOutAudioClip;
 
-    public AudioSource walkAudioSource;
+    private AudioClip previousWalkAudioClip;
     public float walkStepFrequency;
     private float walkStepStartTime;
 
@@ -91,12 +100,16 @@ public class PlayerMovement : MonoBehaviour
         shadowMelded = false;
         isGrabbing = false;
 		gravConst = gravity;
+		currentGameLevel = SceneManager.GetActiveScene ().name;
+
 
         movementReference = GetComponentInChildren<MovementReference>().gameObject;
+        playerAudioSource = GetComponent<AudioSource>();
         playerShadow = GameObject.Find("Player_Shadow");
         gameController = GameObject.Find("Game_Controller").GetComponent<GameController>();
         controller = GetComponent<CharacterController>();
 		conveyorVelocity = new Vector3(0, 0, 0);
+
 
         currentPlatformIndex = 0;
     }
@@ -107,6 +120,7 @@ public class PlayerMovement : MonoBehaviour
     // shifting in, out, and where the player is currently located (3D or 2D)
     void Update()
     {
+        Debug.Log(grounded3D);
         if (!GameController.resetting && !GameController.paused)
         {
             CheckPlayerMovement();
@@ -121,6 +135,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetButtonDown("Reset") && !shadowShiftingIn && !shadowShiftingOut)
         {
+			SceneManager.LoadScene (currentGameLevel);
+			/*
             playerStartPosition = levelStartPosition;
             foreach (Transform child in GameObject.Find("Lighting").transform)
             {
@@ -129,7 +145,9 @@ public class PlayerMovement : MonoBehaviour
                 light.lightSourceDirection = child.transform.forward;
                 light.CheckLightingDirection();
             }
+
             StartCoroutine(GameObject.Find("Game_Controller").GetComponent<GameController>().ResetLevel(true));
+            */
         }
     }
     #endregion
@@ -163,8 +181,8 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetButtonDown("Jump"))
             {
-                jumpAudioSource.clip = jumpLiftClip;
-                jumpAudioSource.Play();
+                playerAudioSource.clip = jumpLiftClip;
+                playerAudioSource.Play();
                 verticalVelocity = jumpSpeed;
             }
         }
@@ -176,6 +194,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void PlayerMovement2D()
     {
+        if(grounded2D)
+            ControlMovementAudio();
+
         if (Input.GetAxisRaw("Horizontal") > 0)
         {
             controller.Move(-playerShadow.transform.right * Time.deltaTime * movementSpeed);
@@ -226,13 +247,48 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             GameController.ToggleGrabbingTooltips(true);
-            if (Input.GetAxisRaw("Vertical") > 0 && !grabbedObject.GetComponent<PushCube>().blockedAhead)
+
+            bool movingForward = false;
+            bool movingBackward = false;
+
+            if (Input.GetAxisRaw("Vertical") > 0 && !movingBackward)
             {
-                controller.Move(grabbedObject.GetComponent<PushCube>().directionAwayFromPlayer * Time.deltaTime * grabMovementSpeed);
+                if (!grabbedObject.GetComponent<PushCube>().blockedAhead && grounded3D)
+                {
+                    movingForward = true;
+                    controller.Move(grabbedObject.GetComponent<PushCube>().directionAwayFromPlayer * Time.deltaTime * grabMovementSpeed);
+                    ControlMovementAudio();
+                }
             }
-            if (Input.GetAxisRaw("Vertical") < 0)
+            else
             {
+                movingForward = false;
+            }
+
+            if (Input.GetAxisRaw("Vertical") < 0 && !movingForward)
+            {
+                movingBackward = true;
                 controller.Move(-grabbedObject.GetComponent<PushCube>().directionAwayFromPlayer * Time.deltaTime * grabMovementSpeed);
+                if (grounded3D)
+                {
+                    ControlMovementAudio();
+                }
+            }
+            else
+            {
+                movingBackward = false;
+            }
+
+            if((movingForward || movingBackward))
+            {
+                if (!grabbedObject.GetComponent<AudioSource>().isPlaying)
+                {
+                    grabbedObject.GetComponent<AudioSource>().Play();
+                }
+            }
+            else
+            {
+                grabbedObject.GetComponent<AudioSource>().Stop();
             }
         }
     }
@@ -241,9 +297,24 @@ public class PlayerMovement : MonoBehaviour
         if(Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
         {
             if(Time.time > walkStepStartTime + walkStepFrequency)
-            {
-                walkAudioSource.Play();
-                walkStepStartTime = Time.time;
+            { 
+                playerAudioSource.clip = walkAudioClips[Random.Range(0, walkAudioClips.Length)];
+                if(playerAudioSource.clip != previousWalkAudioClip)
+                {
+                    previousWalkAudioClip = playerAudioSource.clip;
+                    playerAudioSource.Play();
+                    walkStepStartTime = Time.time;
+                }
+                else
+                {
+                    while(playerAudioSource.clip == previousWalkAudioClip)
+                    {
+                        playerAudioSource.clip = walkAudioClips[Random.Range(0, walkAudioClips.Length)];
+                    }
+                    previousWalkAudioClip = playerAudioSource.clip;
+                    playerAudioSource.Play();
+                    walkStepStartTime = Time.time;
+                }
             }
         }
     }
@@ -296,6 +367,8 @@ public class PlayerMovement : MonoBehaviour
 
     void EnterShadowMeld()
     {
+        GetComponent<AudioSource>().clip = shadowMeldInAudioClip;
+        GetComponent<AudioSource>().Play();
         Debug.Log("Shadowmelding");
         shadowMelded = true;
         shadowMeldVFX.SetActive(true);
@@ -336,6 +409,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void ExitShadowMeld()
     {
+        GetComponent<AudioSource>().clip = shadowMeldOutAudioClip;
+        GetComponent<AudioSource>().Play();
         Debug.Log("Leaving shadowmelded");
         shadowMelded = false;
         shadowMeldVFX.SetActive(false);
@@ -405,6 +480,10 @@ public class PlayerMovement : MonoBehaviour
                     if (!GameController.shadowShift_First_Time_Used)
                         GameController.shadowShift_First_Time_Used = true;
                     GameController.CheckShadowShiftTooltip(false);
+
+                    GetComponent<AudioSource>().clip = shadowShiftInAudioClip;
+                    GetComponent<AudioSource>().Play();
+
                     StartCoroutine(CameraPanIn(transform.position, hit.point, -GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection * mainCamera.GetComponent<CameraControl>().distanceToPlayer2D));
 					StartCoroutine(FinishShiftIn());
 				}
@@ -420,7 +499,11 @@ public class PlayerMovement : MonoBehaviour
 	public void StartShadowShiftOut()
 	{
 		ShiftOutSetup();
-		if(shadowShiftOutPlatforms.Count != 0)
+
+        GetComponent<AudioSource>().clip = shadowShiftOutAudioClip;
+        GetComponent<AudioSource>().Play();
+
+        if (shadowShiftOutPlatforms.Count != 0)
 		{
 			if(shadowShiftOutPlatforms.Count == 1)
 			{

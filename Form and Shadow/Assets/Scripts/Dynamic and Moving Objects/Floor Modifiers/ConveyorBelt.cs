@@ -40,9 +40,9 @@ public class ConveyorBelt : MonoBehaviour {
 
 	public void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.tag == "Player") 
+        if (other.gameObject.tag == "Player") 
 		{
-			other.gameObject.GetComponent<PlayerMovement>().gravConst = other.gameObject.GetComponent<PlayerMovement>().gravity;
+            Debug.Log("Enter: " + other.gameObject.GetComponent<PlayerMovement>().gravConst);
 			other.gameObject.GetComponent<PlayerMovement>().gravity = 0;
 		}
 	}
@@ -96,9 +96,10 @@ public class ConveyorBelt : MonoBehaviour {
 
 	public void OnTriggerExit(Collider other)
 	{
-		if (other.gameObject.tag == "Player") 
-		{
-			if (dismountPlayer) 
+        if (other.gameObject.tag == "Player")
+        {
+            Debug.Log("Exit: " + other.gameObject.GetComponent<PlayerMovement>().gravConst);
+            if (dismountPlayer) 
 			{
 				other.transform.position += other.transform.forward;
 			}
