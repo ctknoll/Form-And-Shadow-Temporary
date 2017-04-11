@@ -7099,7 +7099,7 @@ Prefab:
     - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
         type: 2}
       propertyPath: switchDelay
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
         type: 2}
@@ -12548,7 +12548,7 @@ Prefab:
     - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
         type: 2}
       propertyPath: switchDelay
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
         type: 2}
@@ -26406,7 +26406,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4342140976546390, guid: d48c8e6a75f5f284cba6b022fb3e4f82, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 22.5
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 4342140976546390, guid: d48c8e6a75f5f284cba6b022fb3e4f82, type: 2}
       propertyPath: m_LocalPosition.z
@@ -26442,7 +26442,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4683592134496282, guid: d48c8e6a75f5f284cba6b022fb3e4f82, type: 2}
       propertyPath: m_LocalScale.y
-      value: 12
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 4683592134496282, guid: d48c8e6a75f5f284cba6b022fb3e4f82, type: 2}
       propertyPath: m_LocalScale.z
@@ -37239,7 +37239,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4342140976546390, guid: d48c8e6a75f5f284cba6b022fb3e4f82, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 21.5
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 4342140976546390, guid: d48c8e6a75f5f284cba6b022fb3e4f82, type: 2}
       propertyPath: m_LocalPosition.z
@@ -37275,7 +37275,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4683592134496282, guid: d48c8e6a75f5f284cba6b022fb3e4f82, type: 2}
       propertyPath: m_LocalScale.y
-      value: 10.007948
+      value: 42
       objectReference: {fileID: 0}
     - target: {fileID: 4683592134496282, guid: d48c8e6a75f5f284cba6b022fb3e4f82, type: 2}
       propertyPath: m_LocalScale.z
@@ -37289,6 +37289,10 @@ Prefab:
     - target: {fileID: 4683592134496282, guid: d48c8e6a75f5f284cba6b022fb3e4f82, type: 2}
       propertyPath: m_LocalScale.x
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4342140976546390, guid: d48c8e6a75f5f284cba6b022fb3e4f82, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d48c8e6a75f5f284cba6b022fb3e4f82, type: 2}
@@ -45918,7 +45922,7 @@ Prefab:
     - target: {fileID: 114060621539087264, guid: 4b6f01473649f6a44aa70455c534d6f9,
         type: 2}
       propertyPath: switchDelay
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1596080238362368, guid: 4b6f01473649f6a44aa70455c534d6f9, type: 2}
       propertyPath: m_Name
