@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 114395094927715148}
   - component: {fileID: 33598820786002852}
   - component: {fileID: 23679266017446344}
+  - component: {fileID: 114307024080847924}
   m_Layer: 12
   m_Name: Spikes_1x6_Mesh
   m_TagString: Untagged
@@ -66,7 +67,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1197400877085680}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.45, z: 17}
+  m_LocalPosition: {x: -4.6459913, y: 0.46436685, z: 13.42835}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4193276989955930}
@@ -123,6 +124,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3, y: 1, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114307024080847924
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1695522799382664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f6f985af86ce4293528b199111538, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadowMeldObjectType: 3
 --- !u!114 &114395094927715148
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -150,3 +163,4 @@ MonoBehaviour:
   meshException: 0
   meshType: 2
   shadowColliders: []
+  singleMesh: 0

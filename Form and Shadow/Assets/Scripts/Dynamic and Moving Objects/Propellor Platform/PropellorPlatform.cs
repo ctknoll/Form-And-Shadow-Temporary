@@ -32,7 +32,7 @@ public class PropellorPlatform : MonoBehaviour {
 
 	void FixedUpdate () 
 	{
-		if(!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
+		if(!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !GameController.resetting && !GameController.paused)
 			transform.Rotate(Vector3.up, Time.deltaTime * rotationSpeed);
 	}
 }

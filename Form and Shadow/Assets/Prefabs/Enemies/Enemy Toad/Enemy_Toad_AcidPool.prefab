@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc6f6f985af86ce4293528b199111538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shadowMeldObjectType: 3
+  shadowMeldObjectType: 4
 --- !u!114 &114298015395395098
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -191,6 +191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acidPoolDuration: 4
   acidPoolGrowScale: 3
+  destroySelf: 0
 --- !u!198 &198885128581706152
 ParticleSystem:
   m_ObjectHideFlags: 1

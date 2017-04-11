@@ -1,11 +1,14 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class MovingPlatform_OnTrigger : MonoBehaviour {
 	public enum ShiftDirection {X, Y, Z};
 	public ShiftDirection moveDirection;
 	public float moveDistance;
 	public float moveSpeed;
-    public float slowValue = 1;
+	public float slowValue = 0;
+	public float triggerTime = 0;
 	public bool activatePlatform = false;
 
 	private float personalTime;
@@ -18,11 +21,18 @@ public class MovingPlatform_OnTrigger : MonoBehaviour {
 
 	void Start()
 	{
-        personalTime = 0;
+		personalTime = 0;
 		distanceTraveled = 0;
 		startPosition = transform.position;
 		GetComponent<BoxCollider>().size = new Vector3(gameObject.transform.GetChild(0).gameObject.GetComponent<Transform>().localScale.x, 0.5f, 
 			gameObject.transform.GetChild(0).gameObject.GetComponent<Transform>().localScale.z);
+	}
+
+	public IEnumerator waitForPlatform(float timeToWait)
+	{
+		yield return new WaitForSeconds(timeToWait);
+		slowValue = 1;
+		activatePlatform = true;
 	}
 
 	void OnTriggerEnter(Collider other)
@@ -31,7 +41,7 @@ public class MovingPlatform_OnTrigger : MonoBehaviour {
 		{
 			playerChildedIn3D = true;
 			other.gameObject.transform.parent = gameObject.transform;
-			activatePlatform = true;
+			StartCoroutine (waitForPlatform (triggerTime));
 		}
 	}
 

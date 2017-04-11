@@ -19,21 +19,27 @@ public class PushCube : MonoBehaviour {
 
 	void Update()
 	{
-		if(canInteract)
-		{
+        if (!grabbed)
+        {
+            GetComponent<AudioSource>().Stop();
+        }
+        if (canInteract)
+        {
             if (!grabbed)
-			{
-                GameController.CheckInteractToolip(true);
+            {
+                GameController.CheckInteractToolip(true, true);
                 if (Input.GetButton("Grab"))
                 {
-                    GameController.CheckInteractToolip(false);
+                    if (!GameController.e_Grab_First_Time_Used)
+                        GameController.e_Grab_First_Time_Used = true;
+                    GameController.CheckInteractToolip(false, true);
                     grabbed = true;
                     player.transform.rotation = Quaternion.LookRotation(directionAwayFromPlayer, Vector3.up);
                     transform.parent = player.transform;
-					PlayerMovement.isGrabbing = true;
-					PlayerMovement.grabbedObject = gameObject;
-				}
-			}
+                    PlayerMovement.isGrabbing = true;
+                    PlayerMovement.grabbedObject = gameObject;
+                }
+            }
 
             if (Input.GetButtonUp("Grab"))
             {
@@ -46,7 +52,7 @@ public class PushCube : MonoBehaviour {
 
 		if(GameController.resetting)
 		{
-            GameController.CheckInteractToolip(false);
+            GameController.CheckInteractToolip(false, true);
             transform.position = startPos;
 			grabbed = false;
             transform.parent = null;

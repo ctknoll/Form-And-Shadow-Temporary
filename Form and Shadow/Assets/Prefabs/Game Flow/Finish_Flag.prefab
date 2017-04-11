@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4246349237118380}
   - component: {fileID: 33679877010435854}
-  - component: {fileID: 65907214311834292}
   - component: {fileID: 23694600015753558}
   - component: {fileID: 114276898773034752}
   m_Layer: 12
@@ -54,7 +53,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4750934762111150}
   - component: {fileID: 33818906538726530}
-  - component: {fileID: 65144068308958014}
   - component: {fileID: 23436347871622046}
   - component: {fileID: 114095464221496444}
   m_Layer: 12
@@ -149,7 +147,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: b8ca94098381d3747a9ed81ce5f00207, type: 2}
+  - {fileID: 2100000, guid: af1be645d4727d4419a6583785184593, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -180,7 +178,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: b8ca94098381d3747a9ed81ce5f00207, type: 2}
+  - {fileID: 2100000, guid: af1be645d4727d4419a6583785184593, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -212,18 +210,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1664122596096680}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &65144068308958014
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1664122596096680}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65647551252415844
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -233,18 +219,6 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65907214311834292
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1048884411467202}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -264,6 +238,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 0
   shadowColliders: []
+  singleMesh: 0
 --- !u!114 &114276898773034752
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -280,6 +255,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 0
   shadowColliders: []
+  singleMesh: 0
 --- !u!114 &114766510149821038
 MonoBehaviour:
   m_ObjectHideFlags: 1

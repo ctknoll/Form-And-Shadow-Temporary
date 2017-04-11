@@ -22,13 +22,31 @@ public class PlayerShadowCast : MonoBehaviour {
         playerShadow = GameObject.Find("Player_Shadow");
     }
 
-	void Update () 
-	{
-		CheckShadowcastModeandLightingChange();
-		lightSourceAligned = CheckLightSourceAligned().GetComponent<LightSourceControl>();
-        if(PlayerMovement.in3DSpace && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
-            GameController.ToggleShadowShiftInTooltip(lightSourceAligned.gameObject.activeSelf == true);
-	}
+    void Update()
+    {
+        CheckShadowcastModeandLightingChange();
+        lightSourceAligned = CheckLightSourceAligned().GetComponent<LightSourceControl>();
+        if (PlayerMovement.in3DSpace && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !PlayerMovement.isGrabbing && !PlayerMovement.shadowMelded && !GameController.paused && !GameController.resetting)
+        {
+            RaycastHit hit;
+            if (Physics.SphereCast(transform.position, 0.1f, GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection, out hit, Mathf.Infinity))
+            {
+                if (hit.collider.gameObject.tag == "Shadow Wall")
+                {
+                    if (!Physics.Raycast(hit.point + new Vector3(0, transform.lossyScale.y * 1 / 3, 0), GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection, 1f, 1 << 11) &&
+                    !Physics.Raycast(hit.point - new Vector3(0, transform.lossyScale.y * 2 / 3, 0), GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection, 1f, 1 << 11) &&
+                    !Physics.Raycast(hit.point, GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection, 1f, 1 << 11))
+                    {
+                        GameController.CheckShadowShiftTooltip(lightSourceAligned.gameObject.activeSelf == true);
+                    }
+                }
+            }
+        }
+        else
+        {
+            GameController.CheckShadowShiftTooltip(false);
+        }
+    }
 
     // Similar to the CastShadow method in Shadowcast, this method throws the player's shadow onto by casting a ray
     // in the direction of whichever lightsource most aligned with the way the camera is currently rotated around 
@@ -86,6 +104,13 @@ public class PlayerShadowCast : MonoBehaviour {
             foreach (MeshRenderer meshRend in meshRenderers)
             {
                 meshRend.gameObject.layer = LayerMask.NameToLayer("Shadow");
+            }
+        }
+        else if(PlayerMovement.shadowMelded)
+        {
+            foreach (MeshRenderer meshRend in meshRenderers)
+            {
+                meshRend.gameObject.layer = LayerMask.NameToLayer("Shadowmeld");
             }
         }
         else

@@ -14,7 +14,7 @@ public class MovingPlatform : MonoBehaviour {
 
 	private Vector3 startPosition;
 
-	void Start()
+	public void Start()
 	{
         personalTime = 0;
 		startPosition = transform.position;
@@ -22,7 +22,7 @@ public class MovingPlatform : MonoBehaviour {
 			gameObject.transform.GetChild(0).gameObject.GetComponent<Transform>().localScale.z);
 	}
 
-	void OnTriggerEnter(Collider other)
+	public void OnTriggerEnter(Collider other)
 	{
 		if(other.gameObject.tag == "Player")
 		{
@@ -31,7 +31,7 @@ public class MovingPlatform : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerExit(Collider other)
+	public void OnTriggerExit(Collider other)
 	{
 		if(other.gameObject.tag == "Player")
 		{
@@ -40,9 +40,9 @@ public class MovingPlatform : MonoBehaviour {
 		}
 	}
 
-	void FixedUpdate () 
+	public void FixedUpdate() 
 	{
-		if(!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
+		if(!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !GameController.paused)
 		{
 			personalTime += slowValue * Time.deltaTime;
 		}
