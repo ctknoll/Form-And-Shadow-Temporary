@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e44e0afbb6c98d04bab4cde5c36ace1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particlesPerScale: 35
+  particlesPerScale: 20
   particleSystemType: 2
 --- !u!198 &198436480289860934
 ParticleSystem:
@@ -115,7 +115,7 @@ ParticleSystem:
     serializedVersion: 3
     enabled: 1
     startLifetime:
-      scalar: 0.75
+      scalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -259,10 +259,10 @@ ParticleSystem:
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minColor: {r: 0.972549, g: 0.972549, b: 0.972549, a: 1}
-      maxColor: {r: 0.5882353, g: 0, b: 0, a: 0.15686275}
+      maxColor: {r: 1, g: 0, b: 0, a: 0.15686275}
       minMaxState: 0
     startSize:
-      scalar: 0.75
+      scalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -428,7 +428,7 @@ ParticleSystem:
     size3D: 0
     rotation3D: 0
     gravityModifier:
-      scalar: -0.1
+      scalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -2562,7 +2562,7 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: c50d77affeb31e14c9c062c282f13fc8, type: 2}
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
