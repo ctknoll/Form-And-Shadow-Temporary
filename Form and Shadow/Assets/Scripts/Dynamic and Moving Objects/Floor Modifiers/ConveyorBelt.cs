@@ -48,49 +48,52 @@ public class ConveyorBelt : MonoBehaviour {
 	}
 
 	public void OnTriggerStay(Collider other)
-    {      
-		Debug.Log(other);
-		if (other.GetComponent<Collider>() != null && !other.GetComponent<Collider>().isTrigger)
-		{
-			if (useMomentum) 
-			{
-				Vector3 directionToMove = new Vector3();
-				if (moveDirection == MoveDirection.Forward) 
-				{
-					if(moveSpeed >= 0)
-						directionToMove = -1 * transform.parent.FindChild("Conveyor_Direction_Pointer").right;
-					else if(moveSpeed < 0)
-						directionToMove = transform.parent.FindChild("Conveyor_Direction_Pointer").right;
-				} 
-				else 
-				{
-					if(moveSpeed >= 0)
-						directionToMove = -1 * transform.parent.FindChild("Conveyor_Direction_Pointer").forward;
-					else if(moveSpeed < 0)
-						directionToMove = transform.parent.FindChild("Conveyor_Direction_Pointer").forward;
-				}
+    {
+        if(!GameController.paused)
+        {
+            Debug.Log(other);
+            if (other.GetComponent<Collider>() != null && !other.GetComponent<Collider>().isTrigger)
+            {
+                if (useMomentum)
+                {
+                    Vector3 directionToMove = new Vector3();
+                    if (moveDirection == MoveDirection.Forward)
+                    {
+                        if (moveSpeed >= 0)
+                            directionToMove = -1 * transform.parent.FindChild("Conveyor_Direction_Pointer").right;
+                        else if (moveSpeed < 0)
+                            directionToMove = transform.parent.FindChild("Conveyor_Direction_Pointer").right;
+                    }
+                    else
+                    {
+                        if (moveSpeed >= 0)
+                            directionToMove = -1 * transform.parent.FindChild("Conveyor_Direction_Pointer").forward;
+                        else if (moveSpeed < 0)
+                            directionToMove = transform.parent.FindChild("Conveyor_Direction_Pointer").forward;
+                    }
 
-				if (other.gameObject.tag == "Player") 
-				{
-					other.gameObject.GetComponent<PlayerMovement>().conveyorVelocity = moveSpeed * directionToMove;
-				} 
-				else 
-				{
-					if (moveDirection == MoveDirection.Forward)
-					{
-						other.transform.position += moveSpeed * Time.deltaTime * transform.forward;
-					}
-					else other.transform.position += moveSpeed * Time.deltaTime * transform.right;
-				}
-			} 
-			else 
-			{
-				if (moveDirection == MoveDirection.Forward)
-				{
-					other.transform.position += moveSpeed * Time.deltaTime * transform.forward;
-				}
-				else other.transform.position += moveSpeed * Time.deltaTime * transform.right;
-			}
+                    if (other.gameObject.tag == "Player")
+                    {
+                        other.gameObject.GetComponent<PlayerMovement>().conveyorVelocity = moveSpeed * directionToMove;
+                    }
+                    else
+                    {
+                        if (moveDirection == MoveDirection.Forward)
+                        {
+                            other.transform.position += moveSpeed * Time.deltaTime * transform.forward;
+                        }
+                        else other.transform.position += moveSpeed * Time.deltaTime * transform.right;
+                    }
+                }
+                else
+                {
+                    if (moveDirection == MoveDirection.Forward)
+                    {
+                        other.transform.position += moveSpeed * Time.deltaTime * transform.forward;
+                    }
+                    else other.transform.position += moveSpeed * Time.deltaTime * transform.right;
+                }
+            }
         }
     }
 
