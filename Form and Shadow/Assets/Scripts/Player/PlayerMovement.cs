@@ -578,7 +578,7 @@ public class PlayerMovement : MonoBehaviour
 			else
             {
                 StartCoroutine(CameraPanInMultiExit(shadowShiftFollowObject.transform.position, playerShadow.transform.position, -GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection * mainCamera.GetComponent<CameraControl>().distanceToPlayer2D));
-                StartCoroutine(FinishShiftInMultiExit());
+                StartCoroutine(FinishShiftOutMultiExit());
             }
 		}
 
@@ -632,8 +632,11 @@ public class PlayerMovement : MonoBehaviour
 
 		CameraControl.cameraIsPanning = false;
 		if(finishing)
-			FinishShiftOut();
-	}
+        {
+            shadowShiftFollowObject.transform.position = target;
+            FinishShiftOut();
+        }
+    }
 
     public IEnumerator CameraPanInMultiExit(Vector3 start, Vector3 target, Vector3 offset)
     {
@@ -667,7 +670,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("In Wall");
 	}
 
-	public IEnumerator FinishShiftInMultiExit()
+	public IEnumerator FinishShiftOutMultiExit()
 	{
 		yield return new WaitForSeconds(shadowShiftPanDuration);
         Destroy(shadowShiftFollowObject);
