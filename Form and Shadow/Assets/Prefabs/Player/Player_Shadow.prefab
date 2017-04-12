@@ -19,9 +19,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4362292789171690}
-  - component: {fileID: 65262222186710882}
   - component: {fileID: 114014116528842090}
   - component: {fileID: 54709014649252228}
+  - component: {fileID: 136226548535678930}
   m_Layer: 0
   m_Name: Player_Shadow_Grounded_Check
   m_TagString: Untagged
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 4309062564736326}
   - component: {fileID: 143308412367957762}
   - component: {fileID: 114778124127622860}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Player_Shadow
   m_TagString: Player
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
@@ -53,7 +53,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1929564859913044}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6, y: 1, z: -0.5}
+  m_LocalPosition: {x: 4, y: 1, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4362292789171690}
@@ -67,8 +67,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1475636230910692}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.1, z: 0}
-  m_LocalScale: {x: 0.4, y: 1, z: 0.4}
+  m_LocalPosition: {x: 0, y: -0.8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4309062564736326}
   m_RootOrder: 0
@@ -88,18 +88,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65262222186710882
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1475636230910692}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 0.1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114014116528842090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -126,6 +114,19 @@ MonoBehaviour:
   transformOffset: {x: 0, y: 0, z: 0}
   wallTransform: {fileID: 0}
   zAxisMovement: 0
+--- !u!136 &136226548535678930
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1475636230910692}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 0
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!143 &143308412367957762
 CharacterController:
   m_ObjectHideFlags: 1
@@ -134,7 +135,7 @@ CharacterController:
   m_GameObject: {fileID: 1929564859913044}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Height: 2
   m_Radius: 0.5

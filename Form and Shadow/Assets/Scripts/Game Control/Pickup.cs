@@ -6,7 +6,7 @@ public class Pickup : MonoBehaviour
 	{
 		if(other.gameObject.tag == "Player")
 		{
-			GameController.ScoreIncrement(100);
+			GameObject.Find("Game_Controller").GetComponent<GameController>().ScoreIncrement(100);
             Destroy(gameObject);
 		}
 	}

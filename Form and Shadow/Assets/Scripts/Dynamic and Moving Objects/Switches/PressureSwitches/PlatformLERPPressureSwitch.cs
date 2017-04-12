@@ -35,7 +35,6 @@ public class PlatformLERPPressureSwitch : PressureSwitch
     // Update is called once per frame
     new void Update()
     {
-
         if (pressed && !locked && !moving)
         {
 			locked = true;

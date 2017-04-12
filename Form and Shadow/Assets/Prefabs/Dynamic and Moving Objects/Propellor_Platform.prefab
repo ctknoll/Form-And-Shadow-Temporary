@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 65025596040542290}
   - component: {fileID: 33819203735571246}
   - component: {fileID: 23675816403394410}
+  - component: {fileID: 114804300518406016}
   m_Layer: 0
   m_Name: Propellor_Blade_Mesh
   m_TagString: Untagged
@@ -152,6 +153,7 @@ MonoBehaviour:
   meshException: 0
   meshType: 5
   shadowColliders: []
+  singleMesh: 0
 --- !u!114 &114175660532293890
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -166,3 +168,15 @@ MonoBehaviour:
   rotationSpeed: 90
   playerChildedIn3D: 0
   playerChildedIn2D: 0
+--- !u!114 &114804300518406016
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1942575940596856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f6f985af86ce4293528b199111538, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadowMeldObjectType: 7

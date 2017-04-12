@@ -16,7 +16,7 @@ public class MovingPlatformSpeedToggleSwitch : ToggleSwitch
     }
 
     // Update is called once per frame
-    new void Update()
+    void Update()
     {
         if (haltWhenNotPressed) movingPlatform.GetComponent<MovingPlatform>().slowValue = 0;
         if (pressed)
@@ -39,6 +39,5 @@ public class MovingPlatformSpeedToggleSwitch : ToggleSwitch
 
             }
         }
-        base.Update();
     }
 }

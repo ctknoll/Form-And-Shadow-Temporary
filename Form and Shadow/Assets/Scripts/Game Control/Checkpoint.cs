@@ -15,9 +15,10 @@ public class Checkpoint : MonoBehaviour {
     public bool triggered;
     private Vector3 endPos;
 
-    void Start()
+    void Update()
     {
-        endPos = checkPointFlag.transform.position + new Vector3(0, 0.65f, 0);
+        if(!triggered)
+            endPos = checkPointFlag.transform.position + new Vector3(0, 0.65f, 0);
     }
     void OnTriggerEnter(Collider other)
     {

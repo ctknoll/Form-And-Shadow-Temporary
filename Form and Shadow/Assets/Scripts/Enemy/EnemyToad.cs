@@ -24,7 +24,7 @@ public class EnemyToad : MonoBehaviour {
 	
 	void Update ()
     {
-        if(!jumping && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
+        if(!jumping && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !GameController.paused)
         {
             personalTimer += Time.deltaTime;
             if (personalTimer >= jumpStart + jumpCooldown)
@@ -72,27 +72,37 @@ public class EnemyToad : MonoBehaviour {
 		float jumpPersonalTimer = panStart;
 		Vector3 startPos = transform.position;
 		float sinStart = 0;
-		float sinEnd = 270;
+		float sinEnd = 1.5f * Mathf.PI;
 		bool isHigher = false;
+		bool isSame = false;
 
 		//target platform change
 		currentJumpLocationIndex = ++currentJumpLocationIndex % jumpObjects.Count;
 
+		Debug.Log(GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y);
+        Debug.Log(startPos.y);
+
 		//same height
-		if (jumpObjects[currentJumpLocationIndex].transform.position.y >= startPos.y) 
+		if ((GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y > startPos.y - .5f) && (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y < startPos.y + .5f)) 
 		{
-			sinEnd -= 90;
+			sinEnd -= .5f * Mathf.PI;
+			isSame = true;
 		} 
 		//platform is higher
-		if (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y > startPos.y) 
+		else if (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y > startPos.y + .5f) 
 		{
-			sinStart -= 90;
-			isHigher = true;
+            sinStart -= .5f * Mathf.PI;
+            sinEnd -= .5f * Mathf.PI;
+            isHigher = true;
 		} 
 		//platform is lower
-        
-		float heightDifference = Mathf.Abs(jumpObjects[currentJumpLocationIndex].transform.position.y - startPos.y);
-		float unitsPerTime = Time.deltaTime * ((sinEnd - sinStart) / jumpDuration);
+
+        float heightDifference = Mathf.Abs(GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y - startPos.y);
+		float actualHeightDifference = heightDifference;
+		//heightDifference = Mathf.Max((.5f / Mathf.PI) * Mathf.Sqrt (Mathf.Pow(GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).x - startPos.x, 2) + Mathf.Pow(GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).z - startPos.z, 2)), heightDifference);
+
+		if (isSame)
+			heightDifference = (1f / Mathf.PI) * Mathf.Sqrt (Mathf.Pow(GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).x - startPos.x, 2) + Mathf.Pow(GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).z - startPos.z, 2));
 
 		//rotate to platform
         transform.rotation = Quaternion.LookRotation(transform.position - new Vector3(jumpObjects[currentJumpLocationIndex].transform.position.x, 
@@ -101,14 +111,13 @@ public class EnemyToad : MonoBehaviour {
         while (jumpPersonalTimer < panStart + jumpDuration)
         {
             Vector3 currentPos;
-            if(!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
+            if(!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !GameController.paused)
             {
                 jumpPersonalTimer += Time.deltaTime;
             }
 			currentPos.x = startPos.x + ((jumpPersonalTimer - panStart) / jumpDuration) * (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).x - startPos.x);
-			Debug.Log(isHigher);
 			currentPos.z = startPos.z + ((jumpPersonalTimer - panStart) / jumpDuration) * (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).z - startPos.z);
-			float currentYSin = Mathf.Sin(sinStart + unitsPerTime * (jumpPersonalTimer - panStart));
+			float currentYSin = Mathf.Sin((sinStart + (sinEnd - sinStart) * ((jumpPersonalTimer - panStart) / jumpDuration)));
 			if (!isHigher) 
 			{
 				currentPos.y = startPos.y + currentYSin * heightDifference;

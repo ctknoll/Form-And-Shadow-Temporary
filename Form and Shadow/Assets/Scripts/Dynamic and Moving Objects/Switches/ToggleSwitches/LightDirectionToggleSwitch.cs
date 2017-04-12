@@ -6,7 +6,8 @@ public class LightDirectionToggleSwitch : ToggleSwitch
     public GameObject[] lightSources;
     public GameObject lightDirectionPointer;
     public float degreesToRotate;
-    private bool locked;
+    private bool turnedLightSourceForPressed;
+    private bool turnedLightSourceForDepressed;
     private Vector3 startRotation;
 	public bool turnClockwise;
 
@@ -14,37 +15,44 @@ public class LightDirectionToggleSwitch : ToggleSwitch
     new void Start()
     {
         startRotation = lightDirectionPointer.transform.rotation.eulerAngles;
+        turnedLightSourceForDepressed = true;
+        turnedLightSourceForPressed = false;
         base.Start();
     }
 
     // Update is called once per frame
-    new void Update()
+    void Update()
     {
         if (pressed)
         {
-            if (!locked)
+            if (!turnedLightSourceForPressed)
             {
                 foreach (GameObject lightSource in lightSources)
                 {
                     if (lightSource.GetComponent<LightSourceControl>() != null)
                     {
                         lightSource.GetComponent<LightSourceControl>().turnLightSource(turnClockwise);
-                        locked = true;
+                        turnedLightSourceForPressed = true;
+                        turnedLightSourceForDepressed = false;
                     }
                 }
             }
         }
-        else
+        else if (!pressed)
         {
-			foreach (GameObject lightSource in lightSources) 
-			{
-				if (lightSource.GetComponent<LightSourceControl>() != null)
-				{
-					locked = false;
-				}
-			}
+            if(!turnedLightSourceForDepressed)
+            {
+                foreach (GameObject lightSource in lightSources)
+                {
+                    if (lightSource.GetComponent<LightSourceControl>() != null)
+                    {
+                        lightSource.GetComponent<LightSourceControl>().turnLightSource(turnClockwise);
+                        turnedLightSourceForDepressed = true;
+                        turnedLightSourceForPressed = false;
+                    }
+                }
+            }
         }
 		lightDirectionPointer.transform.eulerAngles = new Vector3(startRotation.x, lightSources[0].transform.eulerAngles.y - 90, startRotation.z);
-        base.Update();
     }
 }

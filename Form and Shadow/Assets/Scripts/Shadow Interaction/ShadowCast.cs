@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 
 public class ShadowCast : MonoBehaviour {
-	public GameObject shadowColliderPrefab;
-    public enum MeshType {NO_SHADOW, BASIC_CUBE, SPIKES, MOVE_PLATFORM, PUSH_CUBE, PROPELLOR_PLATFORM, ENEMY_TOAD};
+    public GameObject shadowColliderPrefab;
+    public enum MeshType { NO_SHADOW, BASIC_CUBE, SPIKES, MOVE_PLATFORM, PUSH_CUBE, PROPELLOR_PLATFORM, ENEMY_TOAD };
     public bool meshException;
     public MeshType meshType;
 
     public List<GameObject> shadowColliders = new List<GameObject>();
-    private bool singleMesh;
+    [HideInInspector]
+    public bool singleMesh;
 	private UnityEngine.Rendering.ShadowCastingMode shadowCastMode;
 
 	void Start()
 	{
-		// Used to differentiate between 3D objects with multiple mesh renderers childed under it (like spikes)
+        // Used to differentiate between 3D objects with multiple mesh renderers childed under it (like spikes)
 		// and single objects with one master mesh renderer
 		singleMesh = GetComponent<MeshRenderer>();
 		if(singleMesh)
@@ -31,16 +32,11 @@ public class ShadowCast : MonoBehaviour {
             CastShadow(GameObject.Find("Lighting_Reference").transform.forward);
             CastShadow(-GameObject.Find("Lighting_Reference").transform.forward);
         }
-	}
+    }
 
 	void Update () 
 	{
-        if (shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.Off)
-            Check2DInvisibility();
-        else if (meshType == MeshType.ENEMY_TOAD)
-            return;
-        else
-            Check2DShadowsOnly();
+        UpdateShadowcastMode();
     }
 
     public void CastShadow(Vector3 direction)
@@ -58,8 +54,8 @@ public class ShadowCast : MonoBehaviour {
                 shadowAdd.GetComponent<ShadowCollider>().lockedInZAxis = lockedInZ;
                 shadowAdd.GetComponent<ShadowCollider>().castDirection = direction;
                 shadowAdd.GetComponent<ShadowCollider>().wallTransform = hit.collider.transform;
+                shadowAdd.GetComponent<ShadowCollider>().parentRotation = transform.rotation;
                 shadowColliders.Add(shadowAdd);
-
             }
             // If not, instantiate the shadowcollider prefab and child it to the gameobject
             else
@@ -69,10 +65,9 @@ public class ShadowCast : MonoBehaviour {
                 shadowAdd.GetComponent<ShadowCollider>().castDirection = direction;
                 shadowAdd.GetComponent<ShadowCollider>().lockedInZAxis = lockedInZ;
                 shadowAdd.GetComponent<ShadowCollider>().wallTransform = hit.collider.transform;
+                shadowAdd.GetComponent<ShadowCollider>().parentRotation = transform.rotation;
                 shadowColliders.Add(shadowAdd);
             }
-
-
         }
 	}
     public bool GetLockedAxis(Vector3 castDir)
@@ -108,62 +103,54 @@ public class ShadowCast : MonoBehaviour {
         }
         return transOffset;
     }
-
-	public void Check2DShadowsOnly()
+    
+    // Handles turning off an on Shadowcastmodes for various objects based on if they are
+    // not casting shadows (ShadowCastingMode.Off), or normally casting shadows (ShadowCastingMode.On)
+    // in 3D space, and changing their ShadowCastingMode when the player transitions into 2D.
+	public void UpdateShadowcastMode()
 	{
-        if (!PlayerMovement.in3DSpace && !PlayerMovement.shadowShiftingOut)
+        if(!PlayerMovement.shadowMelded)
         {
-            if (singleMesh)
-                GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-            else
+            if (!PlayerMovement.in3DSpace && !PlayerMovement.shadowShiftingOut)
             {
-                MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
-                foreach (MeshRenderer meshRend in meshRenderers)
+                if (singleMesh)
                 {
-                    meshRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                    if (shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.Off)
+                        GetComponent<MeshRenderer>().enabled = false;
+                    else if (shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.On)
+                        GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                }
+                else
+                {
+                    MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
+                    foreach (MeshRenderer meshRend in meshRenderers)
+                    {
+                        if (shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.Off)
+                            meshRend.enabled = false;
+                        else if (shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.On)
+                            meshRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                    }
                 }
             }
-
-        }
-        else
-        {
-            if (singleMesh)
-                GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
             else
             {
-                MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
-                foreach (MeshRenderer meshRend in meshRenderers)
+                if (singleMesh)
                 {
-                    meshRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                    if (shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.Off)
+                        GetComponent<MeshRenderer>().enabled = true;
+                    else if (shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.On)
+                        GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
                 }
-            }
-        }
-    }
-    public void Check2DInvisibility()
-    {
-        if(!PlayerMovement.in3DSpace && !PlayerMovement.shadowShiftingOut)
-        {
-            if (singleMesh)
-                GetComponent<MeshRenderer>().enabled = false;
-            else
-            {
-                MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
-                foreach (MeshRenderer meshRend in meshRenderers)
+                else
                 {
-                    meshRend.enabled = false;
-                }
-            }
-        }
-        else
-        {
-            if (singleMesh)
-                GetComponent<MeshRenderer>().enabled = true;
-            else
-            {
-                MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
-                foreach (MeshRenderer meshRend in meshRenderers)
-                {
-                    meshRend.enabled = true;
+                    MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
+                    foreach (MeshRenderer meshRend in meshRenderers)
+                    {
+                        if (shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.Off)
+                            meshRend.enabled = true;
+                        else if (shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.On)
+                            meshRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                    }
                 }
             }
         }
