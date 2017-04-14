@@ -23,7 +23,9 @@ public class ShadowmeldObjectVFXControl : MonoBehaviour {
                 shapeMod.box = GetComponentInParent<BoxCollider>().size;
 
                 float[] parentScales = new float[] { GetComponentInParent<BoxCollider>().size.x, GetComponentInParent<BoxCollider>().size.y, GetComponentInParent<BoxCollider>().size.z };
-                emissionMod.rateOverTime = particlesPerScale * Mathf.Max(parentScales);
+                float cappedParentScale = Mathf.Max(parentScales);
+                cappedParentScale = Mathf.Clamp(cappedParentScale, 1, 10);
+                emissionMod.rateOverTime = particlesPerScale * cappedParentScale;
             }
         }
         if(particleSystemType == ParticleSystemType.COLLIDE)
@@ -35,20 +37,26 @@ public class ShadowmeldObjectVFXControl : MonoBehaviour {
             {
                 shapeMod.box = Vector3.Scale(shapeMod.box, new Vector3(2, 1, 2));
                 float[] parentScales = new float[] { GetComponentInParent<BoxCollider>().bounds.size.x, GetComponentInParent<BoxCollider>().bounds.size.y, GetComponentInParent<BoxCollider>().bounds.size.z };
-                emissionMod.rateOverTime = particlesPerScale * Mathf.Max(parentScales);
+                float cappedParentScale = Mathf.Max(parentScales);
+                cappedParentScale = Mathf.Clamp(cappedParentScale, 1, 10);
+                emissionMod.rateOverTime = particlesPerScale * cappedParentScale;
             }
             else
             {
                 float[] parentScales = new float[] { transform.parent.lossyScale.x, transform.parent.lossyScale.y, transform.parent.lossyScale.z };
-                emissionMod.rateOverTime = particlesPerScale * Mathf.Max(parentScales);
+                float cappedParentScale = Mathf.Max(parentScales);
+                cappedParentScale = Mathf.Clamp(cappedParentScale, 1, 10);
+                emissionMod.rateOverTime = particlesPerScale * cappedParentScale;
             }
         }
         else if(particleSystemType == ParticleSystemType.INVISIBLE)
         {
             ParticleSystem.EmissionModule emissionMod = GetComponent<ParticleSystem>().emission;
             float[] parentScales = new float[] { transform.parent.lossyScale.x, transform.parent.lossyScale.y, transform.parent.lossyScale.z };
-            emissionMod.rateOverTime = particlesPerScale * Mathf.Max(parentScales);
 
+            float cappedParentScale = Mathf.Max(parentScales);
+            cappedParentScale = Mathf.Clamp(cappedParentScale, 1, 10);
+            emissionMod.rateOverTime = particlesPerScale * cappedParentScale;
         }
 	}
 }
