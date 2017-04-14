@@ -11,18 +11,6 @@ public class ShadowmeldObjectVFXControl : MonoBehaviour {
         SetParticleSettings();
 	}
 
-    void Update()
-    {
-        if(PlayerMovement.shadowMelded)
-        {
-            GetComponent<ParticleSystem>().Play();
-        }
-        else
-        {
-            GetComponent<ParticleSystem>().Clear();
-            GetComponent<ParticleSystem>().Stop();
-        }
-    }
     void SetParticleSettings ()
     {
         if(particleSystemType == ParticleSystemType.DEATH)
@@ -60,6 +48,7 @@ public class ShadowmeldObjectVFXControl : MonoBehaviour {
             ParticleSystem.EmissionModule emissionMod = GetComponent<ParticleSystem>().emission;
             float[] parentScales = new float[] { transform.parent.lossyScale.x, transform.parent.lossyScale.y, transform.parent.lossyScale.z };
             emissionMod.rateOverTime = particlesPerScale * Mathf.Max(parentScales);
+
         }
 	}
 }

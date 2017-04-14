@@ -129,6 +129,10 @@ public class PlayerMovement : MonoBehaviour
 			CheckMenuAndReset();
         }
     }
+    void OnTriggerEnter()
+    {
+
+    }
     #region Game Control Methods
     void CheckMenuAndReset()
     {
