@@ -40,8 +40,7 @@ public class ShadowmeldObjectControl : MonoBehaviour {
                 switched = false;
             }
         }
-        //if(shadowMeldObjectType != ShadowMeldObjectType.CONVEYOR_BELT)
-        //    UpdateShadowmeldRenderMode();
+
         UpdateShadowmeldVFX();
     }
 
@@ -147,17 +146,25 @@ public class ShadowmeldObjectControl : MonoBehaviour {
                 {
                     currentShadowmeldVFX = Instantiate(shadowmeldInvisibleObjectVFX, gameObject.transform) as GameObject;
                 }
-                else if(gameObject.layer == LayerMask.NameToLayer("Shadowmeld Collide"))
+                else if (gameObject.layer == LayerMask.NameToLayer("Shadowmeld Collide"))
                 {
                     currentShadowmeldVFX = Instantiate(shadowmeldCollideObjectVFX, gameObject.transform) as GameObject;
                 }
-                else if(gameObject.layer == LayerMask.NameToLayer("Shadowmeld Death"))
+                else if (gameObject.layer == LayerMask.NameToLayer("Shadowmeld Death"))
                 {
                     currentShadowmeldVFX = Instantiate(shadowmeldDeathObjectVFX, gameObject.transform) as GameObject;
                 }
             }
+            else
+                currentShadowmeldVFX.GetComponent<ParticleSystem>().Play();
         }
         else
-            Destroy(currentShadowmeldVFX);
+        {
+            if(currentShadowmeldVFX != null)
+            {
+                currentShadowmeldVFX.GetComponent<ParticleSystem>().Clear();
+                currentShadowmeldVFX.GetComponent<ParticleSystem>().Pause();
+            }
+        }
     }
 }
