@@ -10,6 +10,10 @@ public class PushCube : MonoBehaviour {
     public Vector3 directionAwayFromPlayer;
     [HideInInspector]
 	public Vector3 startPos;
+    public AudioSource moveAudioSource;
+    public AudioSource grabAudioSource;
+    public AudioClip grabAudioClip;
+    public AudioClip releaseAudioClip;
 
 	void Start()
 	{
@@ -30,6 +34,8 @@ public class PushCube : MonoBehaviour {
                 GameController.CheckInteractToolip(true, true);
                 if (Input.GetButton("Grab"))
                 {
+                    grabAudioSource.clip = grabAudioClip;
+                    grabAudioSource.Play();
                     if (!GameController.e_Grab_First_Time_Used)
                         GameController.e_Grab_First_Time_Used = true;
                     GameController.CheckInteractToolip(false, true);
@@ -43,6 +49,8 @@ public class PushCube : MonoBehaviour {
 
             if (Input.GetButtonUp("Grab"))
             {
+                grabAudioSource.clip = releaseAudioClip;
+                grabAudioSource.Play();
                 grabbed = false;
                 transform.parent = null;
                 PlayerMovement.isGrabbing = false;
