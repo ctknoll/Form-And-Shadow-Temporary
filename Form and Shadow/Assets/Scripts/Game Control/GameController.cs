@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-
 /*
 
     Written by: Daniel Colina and Chris Knoll
@@ -51,6 +50,7 @@ public class GameController : MonoBehaviour {
 
     private GameObject scoreText;
     private GameObject shadowMeldResourceObject;
+    private GameObject shadowMeldResourceBackdrop;
     
 	private GameObject player;
     private GameObject playerMesh;
@@ -77,10 +77,6 @@ public class GameController : MonoBehaviour {
         shadowInteract_Tutorial_Tooltip = GameObject.Find("Shadow_Interact_Tutorial_Tooltip");
         interact_Tutorial_Tooltip = GameObject.Find("Interact_Tutorial_Tooltip");
         pause_Menu_Panel = GameObject.Find("Pause_Menu_Panel");
-        e_Switch_First_Time_Used = false;
-        e_Grab_First_Time_Used = false;
-        shadowMeld_First_Time_Used = false;
-        shadowShift_First_Time_Used = false;
 		switch_cooldown = false;
 
         e_Tooltip.SetActive(false);
@@ -89,9 +85,12 @@ public class GameController : MonoBehaviour {
         space_Tooltip = GameObject.Find("Space_Tooltip");
         shift_Tooltip = GameObject.Find("Shift_Tooltip");
         shadowMeldResourceObject = GameObject.Find("Shadowmeld_Resource");
+        shadowMeldResourceBackdrop = GameObject.Find("Shadowmeld_Backdrop");
         ambientAudioSource.clip = ambientGearsAudioClip;
         ambientAudioSource.Play();
 
+        paused = false;
+        resetting = false;
         Cursor.visible = false;
     }
 
@@ -104,7 +103,8 @@ public class GameController : MonoBehaviour {
         {
             ToggleGamePause();
         }
-        ControlAmbientAudio();
+        if (!paused)
+            ControlAmbientAudio();
     }
 
     #region UI Control
@@ -117,6 +117,7 @@ public class GameController : MonoBehaviour {
     void ShadowmeldUIControl()
     {
         shadowMeldResourceObject.SetActive(player.GetComponent<PlayerMovement>().shadowMeldAvailable);
+        shadowMeldResourceBackdrop.SetActive(player.GetComponent<PlayerMovement>().shadowMeldAvailable);
         shadowMeldResourceObject.GetComponent<Image>().color = Color.magenta;
         shadowMeldResourceObject.GetComponent<Image>().fillAmount = player.GetComponent<PlayerMovement>().shadowMeldResource / 100;
     }
@@ -214,7 +215,7 @@ public class GameController : MonoBehaviour {
                 ChangeShadowInteractTutorialTooltip(shadowMeldTutorialText);
             }
             else
-                shadowInteract_Tutorial_Tooltip.GetComponent<Text>().text = "";
+                ChangeShadowInteractTutorialTooltip("");
         }
         shadowInteract_Tutorial_Tooltip.SetActive(on);
         f_Tooltip.SetActive(on);
@@ -234,7 +235,7 @@ public class GameController : MonoBehaviour {
                 ChangeShadowInteractTutorialTooltip(shadowShiftTutorialText);
             }
             else
-                shadowInteract_Tutorial_Tooltip.GetComponent<Text>().text = "";
+                ChangeShadowInteractTutorialTooltip("");
         }
         shadowInteract_Tutorial_Tooltip.SetActive(on);
         shift_Tooltip.SetActive(on);
@@ -255,22 +256,19 @@ public class GameController : MonoBehaviour {
     {
         if (!paused)
         {
-            Time.timeScale = 0;
             ambientAudioSource.Pause();
+            pause_Menu_Panel.SetActive(true);
+            Cursor.visible = true;
+            paused = true;
         }
         else
         {
-            Time.timeScale = 1;
-            ambientAudioSource.UnPause();
-        }
-        if (!pause_Menu_Panel.activeSelf)
-            pause_Menu_Panel.SetActive(true);
-        else
+            ambientAudioSource.Play();
             pause_Menu_Panel.SetActive(false);
-        Cursor.visible = !Cursor.visible;
-        paused = !paused;
-        ChangeInteractTutorialTooltip("");
-        ChangeShadowInteractTutorialTooltip("");
+            Cursor.visible = false;
+            paused = false;
+
+        }
     }
 
     public void ControlAmbientAudio()
@@ -291,8 +289,6 @@ public class GameController : MonoBehaviour {
 
     public void QuitToMainMenu()
     {
-        //paused = false;
-		ToggleGamePause();
         SceneManager.LoadScene("Menu_Title");
     }
 
