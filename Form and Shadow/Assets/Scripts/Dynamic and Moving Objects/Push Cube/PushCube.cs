@@ -32,7 +32,7 @@ public class PushCube : MonoBehaviour {
             if (!grabbed)
             {
                 GameController.CheckInteractToolip(true, true);
-                if (Input.GetButton("Grab"))
+                if (Input.GetButtonDown("Grab"))
                 {
                     grabAudioSource.clip = grabAudioClip;
                     grabAudioSource.Play();
