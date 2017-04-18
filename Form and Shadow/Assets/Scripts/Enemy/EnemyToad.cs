@@ -7,6 +7,10 @@ public class EnemyToad : MonoBehaviour {
     public float jumpDuration;
     public float jumpCooldown;
     public GameObject acidPoolPrefab;
+    public AudioSource toadAmbientAudioSource;
+    public AudioSource toadJumpLandAudioSource;
+    public AudioClip toadJumpClip;
+    public AudioClip toadLandClip;
 
     private bool jumping;
     private int currentJumpLocationIndex;
@@ -24,6 +28,14 @@ public class EnemyToad : MonoBehaviour {
 	
 	void Update ()
     {
+        if(GameController.paused)
+        {
+            toadAmbientAudioSource.Pause();
+        }
+        else
+        {
+            toadAmbientAudioSource.UnPause();
+        }
         if(!jumping && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !GameController.paused)
         {
             personalTimer += Time.deltaTime;
@@ -67,6 +79,8 @@ public class EnemyToad : MonoBehaviour {
 
     public IEnumerator JumpToNextPlatform()
 	{
+        toadJumpLandAudioSource.clip = toadJumpClip;
+        toadJumpLandAudioSource.Play();
 		jumping = true;
 		float panStart = Time.time;
 		float jumpPersonalTimer = panStart;
@@ -78,9 +92,6 @@ public class EnemyToad : MonoBehaviour {
 
 		//target platform change
 		currentJumpLocationIndex = ++currentJumpLocationIndex % jumpObjects.Count;
-
-		Debug.Log(GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y);
-        Debug.Log(startPos.y);
 
 		//same height
 		if ((GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y > startPos.y - .5f) && (GetRelativeJumpPosition(jumpObjects[currentJumpLocationIndex]).y < startPos.y + .5f)) 
@@ -130,6 +141,8 @@ public class EnemyToad : MonoBehaviour {
 			transform.position = new Vector3(currentPos.x, currentPos.y, currentPos.z);
             yield return null;
         }
+        toadJumpLandAudioSource.clip = toadLandClip;
+        toadJumpLandAudioSource.Play();
         jumping = false;
         //SpawnAcidPool();
     }

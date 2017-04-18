@@ -39,7 +39,8 @@ public class GameController : MonoBehaviour {
     public string shadowShiftTutorialText;
     public AudioSource ambientAudioSource;
     public AudioSource playerDeathAudioSource;
-    public AudioClip playerDeathAudioClip;
+    public AudioClip playerDefaultDeathAudioClip;
+    public AudioClip playerWaterDeathAudioClip;
     public AudioClip ambientGearsAudioClip;
     public AudioClip ambientShadowmeldAudioClip;
 
@@ -298,11 +299,21 @@ public class GameController : MonoBehaviour {
     // removes player from 2D and resets, and flips a global static
     // boolean called 'Resetting' on that all dynamic objects (push cube)
     // check in update to see if they need to reset to their start position
-    public IEnumerator ResetLevel(bool resetWithK)
+    public IEnumerator ResetLevel(bool resetWithK, bool deathByWater)
 	{
         // Turn resetting on
         resetting = true;
-        playerDeathAudioSource.Play();
+        if(deathByWater)
+        {
+            playerDeathAudioSource.clip = playerWaterDeathAudioClip;
+            playerDeathAudioSource.Play();
+        }
+        else
+        {
+            playerDeathAudioSource.clip = playerDefaultDeathAudioClip;
+            playerDeathAudioSource.Play();
+        }
+
         // Plays the player's death animation
         if(!resetWithK)
         {

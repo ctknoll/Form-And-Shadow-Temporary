@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ConveyorBelt : MonoBehaviour {
 
@@ -36,6 +34,14 @@ public class ConveyorBelt : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
+        if(GameController.paused)
+        {
+            GetComponent<AudioSource>().Pause();
+        }
+        else
+        {
+            GetComponent<AudioSource>().UnPause();
+        }
 	}
 
 	public void OnTriggerEnter(Collider other)
@@ -51,7 +57,6 @@ public class ConveyorBelt : MonoBehaviour {
     {
         if(!GameController.paused)
         {
-            Debug.Log(other);
             if (other.GetComponent<Collider>() != null && !other.GetComponent<Collider>().isTrigger)
             {
                 if (useMomentum)
@@ -101,7 +106,6 @@ public class ConveyorBelt : MonoBehaviour {
 	{
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("Exit: " + other.gameObject.GetComponent<PlayerMovement>().gravConst);
             if (dismountPlayer) 
 			{
 				other.transform.position += other.transform.forward;
