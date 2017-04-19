@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311924, g: 0.38074008, b: 0.35872692, a: 1}
+  m_IndirectSpecularColor: {r: 0.3731195, g: 0.3807401, b: 0.35872737, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -451,6 +451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &28204031
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -546,6 +547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &29533811
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -818,6 +820,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &50521820
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1449,6 +1452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &77207073
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2499,6 +2503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &122315897
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3188,6 +3193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &157944379
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3943,6 +3949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &213956185
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4146,6 +4153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &228480857
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4241,6 +4249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &234706164
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4469,6 +4478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &237231370
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4792,6 +4802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &244452998
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4942,6 +4953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &252955274
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5149,6 +5161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &270514390
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5249,6 +5262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &273585526
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5354,6 +5368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &301739376
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5575,6 +5590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &313872558
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5835,6 +5851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &321503436
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5972,6 +5989,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &323955841
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6241,6 +6259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!114 &333866176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6394,6 +6413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &344706714
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6932,6 +6952,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &369926284
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7205,6 +7226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &382538200
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7423,6 +7445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &409286432
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7896,6 +7919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &433708246
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8169,6 +8193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &452043640
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8264,6 +8289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &457524081
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8359,6 +8385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &465141147
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8721,6 +8748,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &481780125
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8816,6 +8844,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &505243963
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9488,6 +9517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &536331803
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9638,6 +9668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &537934768
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9733,6 +9764,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &538516696
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9942,6 +9974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &555724592
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10042,6 +10075,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &566065256
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10477,6 +10511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &635638390
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10824,6 +10859,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &647136189
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11096,6 +11132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &666729528
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11464,6 +11501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &701101780
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11874,6 +11912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &720849070
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12107,6 +12146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &727494120
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12451,6 +12491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &776443025
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12671,6 +12712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &780730871
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -12932,6 +12974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &786292222
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -13215,6 +13258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &796234052
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -13601,6 +13645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &820918152
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -13810,6 +13855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &828263956
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -14231,6 +14277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &853419560
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -14331,6 +14378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &861131317
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -14477,6 +14525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &870373524
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -14582,6 +14631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &881741874
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -15078,6 +15128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &913038778
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -15529,6 +15580,48 @@ Transform:
   m_PrefabParentObject: {fileID: 4421553206629328, guid: e3e06127634a03443840b656f3d0df45,
     type: 2}
   m_PrefabInternal: {fileID: 931233365}
+--- !u!1001 &931419096
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4454725297483748, guid: 15b28356c63c54279b092b405d538c0c, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4454725297483748, guid: 15b28356c63c54279b092b405d538c0c, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4454725297483748, guid: 15b28356c63c54279b092b405d538c0c, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4454725297483748, guid: 15b28356c63c54279b092b405d538c0c, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4454725297483748, guid: 15b28356c63c54279b092b405d538c0c, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4454725297483748, guid: 15b28356c63c54279b092b405d538c0c, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4454725297483748, guid: 15b28356c63c54279b092b405d538c0c, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4454725297483748, guid: 15b28356c63c54279b092b405d538c0c, type: 2}
+      propertyPath: m_RootOrder
+      value: 29
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 15b28356c63c54279b092b405d538c0c, type: 2}
+  m_IsPrefabParent: 0
 --- !u!4 &935655113 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4011747174678898, guid: 9ab127f7ecb030e4888f06dd10085588,
@@ -15694,6 +15787,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &964461875
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -16273,6 +16367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &993061775
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -16505,6 +16600,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1007828529
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -16800,6 +16896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1034096480
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -17063,6 +17160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1046564653
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -17447,6 +17545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1066244673
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -17605,6 +17704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1070732839
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -17700,6 +17800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1076221099
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -17858,6 +17959,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1077719301
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -18457,6 +18559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1096332066
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -18552,6 +18655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1096576058
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -19102,6 +19206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1146024439
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -19767,6 +19872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1193797591
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -19819,52 +19925,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1193797588}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &1195713792
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4805575525533420, guid: 15b28356c63c54279b092b405d538c0c, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4805575525533420, guid: 15b28356c63c54279b092b405d538c0c, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4805575525533420, guid: 15b28356c63c54279b092b405d538c0c, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4805575525533420, guid: 15b28356c63c54279b092b405d538c0c, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4805575525533420, guid: 15b28356c63c54279b092b405d538c0c, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4805575525533420, guid: 15b28356c63c54279b092b405d538c0c, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4805575525533420, guid: 15b28356c63c54279b092b405d538c0c, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4805575525533420, guid: 15b28356c63c54279b092b405d538c0c, type: 2}
-      propertyPath: m_RootOrder
-      value: 29
-      objectReference: {fileID: 0}
-    - target: {fileID: 1519857391718842, guid: 15b28356c63c54279b092b405d538c0c, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 15b28356c63c54279b092b405d538c0c, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1199824645
 GameObject:
   m_ObjectHideFlags: 0
@@ -19908,6 +19968,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1199824648
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -20874,6 +20935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1262710367
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -21621,6 +21683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1316067685
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -21979,6 +22042,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1334728116
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -22393,6 +22457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1352802059
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -22488,6 +22553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1357234861
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -22672,6 +22738,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1368028041
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -23045,6 +23112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1374405743
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -23140,6 +23208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1375233853
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -23369,6 +23438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1377815328
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -23464,6 +23534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1379319009
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -23697,6 +23768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1382611303
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -24340,6 +24412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1436435209
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -24435,6 +24508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1440826085
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -24530,6 +24604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1442775408
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -24868,6 +24943,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1463097432
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -25026,6 +25102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1476448845
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -25289,6 +25366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1484282188
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -25384,6 +25462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1486409111
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -25796,6 +25875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1500904372
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -26047,6 +26127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1515593119
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -26428,6 +26509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1534868232
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -26844,6 +26926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1556013578
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -27107,6 +27190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1574406118
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -27257,6 +27341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1577015655
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -27352,6 +27437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1578630382
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -27561,6 +27647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1588247640
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -27871,6 +27958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1626237364
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -28073,6 +28161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1644549710
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -28373,6 +28462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1660040306
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -28776,6 +28866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1678868895
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -29133,6 +29224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1712762784
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -29405,6 +29497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1723957196
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -29610,6 +29703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1731002930
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -30092,6 +30186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1769177364
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -30358,6 +30453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1786502338
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -30644,6 +30740,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1809102480
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -31101,6 +31198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1841473342
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -31603,6 +31701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1871720614
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -31905,6 +32004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1879059713
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -32010,6 +32110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1880418249
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -32595,6 +32696,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1919975717
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -33489,6 +33591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1951760280
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -33942,6 +34045,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &1989387690
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -34193,6 +34297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &2007512645
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -34288,6 +34393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &2014421393
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -34446,6 +34552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &2020492237
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -34600,6 +34707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &2032200921
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -35035,6 +35143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &2057721839
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -35130,6 +35239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &2063271741
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -35494,6 +35604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &2097066238
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -35691,6 +35802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &2102629455
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -35786,6 +35898,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &2105942644
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -35881,6 +35994,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &2111323301
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -35976,6 +36090,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &2130434645
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -36147,6 +36262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &2142338608
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -36242,6 +36358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &2142894272
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -36400,6 +36517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &2146399895
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -36495,6 +36613,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63823ab5b9cd40141a4fa2b898df5495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterKillZone: 0
 --- !u!23 &2146461341
 MeshRenderer:
   m_ObjectHideFlags: 0
