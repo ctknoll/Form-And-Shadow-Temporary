@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e44e0afbb6c98d04bab4cde5c36ace1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particlesPerScale: 75
+  particlesPerScale: 50
   particleSystemType: 0
 --- !u!198 &198436480289860934
 ParticleSystem:
@@ -115,7 +115,7 @@ ParticleSystem:
     serializedVersion: 3
     enabled: 1
     startLifetime:
-      scalar: 2.5
+      scalar: 0.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -259,10 +259,10 @@ ParticleSystem:
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minColor: {r: 0.972549, g: 0.972549, b: 0.972549, a: 1}
-      maxColor: {r: 0.78431374, g: 0.9764706, b: 0.9411765, a: 0.15686275}
+      maxColor: {r: 1, g: 1, b: 1, a: 0.15686275}
       minMaxState: 0
     startSize:
-      scalar: 0.25
+      scalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -2594,7 +2594,7 @@ ParticleSystemRenderer:
   m_Pivot: {x: 0, y: 0, z: 0}
   m_UseCustomVertexStreams: 0
   m_VertexStreamMask: 27
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
