@@ -52,7 +52,6 @@ public class PlayerShadowCollider : MonoBehaviour {
             // Then, create a list of gameobjects and for each RaycastHit in hits, add the hit collider's gameobject to the list of transferPlatforms
             foreach (RaycastHit hit in hits)
             {
-                Debug.Log(hit.collider.gameObject);
                 // If the shadowcollider follows regular behavior and does not have an exception parent
                 if (hit.collider.gameObject.GetComponent<ShadowCollider>().exceptionParent == null)
                 {

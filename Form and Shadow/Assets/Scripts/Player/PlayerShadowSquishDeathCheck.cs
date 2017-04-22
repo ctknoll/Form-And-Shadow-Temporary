@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerSquishDeathCheck : MonoBehaviour {
+public class PlayerShadowSquishDeathCheck : MonoBehaviour {
     private GameController gameController;
 
 	void Start()
@@ -10,7 +10,7 @@ public class PlayerSquishDeathCheck : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other)
 	{
-        if(PlayerMovement.in3DSpace && !PlayerMovement.shadowMelded && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
+        if(!PlayerMovement.in3DSpace && !PlayerMovement.shadowMelded && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
         {
             if (other.gameObject.tag != "Player" && !other.isTrigger)
             {
