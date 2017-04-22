@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3731199, g: 0.3807403, b: 0.35872707, a: 1}
+  m_IndirectSpecularColor: {r: 0.3731195, g: 0.3807401, b: 0.35872737, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -590,6 +590,10 @@ Prefab:
       propertyPath: player
       value: 
       objectReference: {fileID: 1487259421}
+    - target: {fileID: 1475636230910692, guid: f1de96659f174ef4aa74b930e7ef9a46, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f1de96659f174ef4aa74b930e7ef9a46, type: 2}
   m_IsPrefabParent: 0
@@ -2982,6 +2986,10 @@ Prefab:
       propertyPath: jumpObjects.Array.data[1]
       value: 
       objectReference: {fileID: 1977491303}
+    - target: {fileID: 1346348854411718, guid: b36414dd17c369843a9e20acd460d1b7, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b36414dd17c369843a9e20acd460d1b7, type: 2}
   m_IsPrefabParent: 0

@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 4049274275415622}
   - component: {fileID: 64742171650379416}
   - component: {fileID: 54588474996457846}
-  - component: {fileID: 114864866262023700}
+  - component: {fileID: 114642935398696894}
   m_Layer: 12
   m_Name: Player_Squish_Death_Check
   m_TagString: Untagged
@@ -320,7 +320,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1099584862315612}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.7, y: 6.27, z: 8.92}
+  m_LocalPosition: {x: 16.75, y: -0.24, z: -41.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4487168017051280}
@@ -703,6 +703,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+--- !u!114 &114642935398696894
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1847098689597182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baa50b959e33a8c4e9c3d20bdb197d0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114680685476149912
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -737,7 +748,7 @@ MonoBehaviour:
     type: 2}
   shadowShiftPanDuration: 1.5
   shadowShiftFollowObject: {fileID: 0}
-  shadowMeldAvailable: 1
+  shadowMeldAvailable: 0
   shadowMeldVFX: {fileID: 1758487694470666}
   shadowMeldResourceCost: 6.6
   shadowMeldResourceRegen: 10
@@ -763,17 +774,6 @@ MonoBehaviour:
   walkStepFrequency: 0.5
   controller: {fileID: 143736298376177622}
   mainCamera: {fileID: 0}
---- !u!114 &114864866262023700
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1847098689597182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5da417f81bd66ce4b9b26c20cedc2ac4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114973802022037786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -871,7 +871,7 @@ ParticleSystem:
   m_GameObject: {fileID: 1758487694470666}
   serializedVersion: 5
   lengthInSec: 5
-  speed: 1
+  simulationSpeed: 1
   looping: 1
   prewarm: 0
   playOnAwake: 1
