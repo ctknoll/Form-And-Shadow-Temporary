@@ -34,13 +34,16 @@ public class ConveyorBelt : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
-        if(GameController.paused)
+        if(GetComponent<AudioSource>())
         {
-            GetComponent<AudioSource>().Pause();
-        }
-        else
-        {
-            GetComponent<AudioSource>().UnPause();
+            if (GameController.paused)
+            {
+                GetComponent<AudioSource>().Pause();
+            }
+            else
+            {
+                GetComponent<AudioSource>().UnPause();
+            }
         }
 	}
 

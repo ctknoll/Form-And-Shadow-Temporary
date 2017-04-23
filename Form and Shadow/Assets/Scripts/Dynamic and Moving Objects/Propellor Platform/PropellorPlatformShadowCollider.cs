@@ -3,7 +3,7 @@
 public class PropellorPlatformShadowCollider : MonoBehaviour
 {
 	public GameObject propellor;
-    public float personalTime;
+    private float personalTime;
 	private GameObject propellorMesh;
     private ShadowCollider shadowColliderMaster;
 

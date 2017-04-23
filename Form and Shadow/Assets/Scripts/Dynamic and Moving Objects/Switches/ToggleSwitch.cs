@@ -195,12 +195,10 @@ public abstract class ToggleSwitch : MonoBehaviour {
             }
             if (!pressed)
             {
-                Debug.Log("Forward");
                 leverArm.transform.eulerAngles = Vector3.Lerp(startLerpRotation, endLerpRotation, (flipPersonalTimer - panStart) / switchFlipAnimationTime);
             }
             else
             {
-                Debug.Log("Backwards");
                 leverArm.transform.eulerAngles = Vector3.Lerp(endLerpRotation, startLerpRotation, (flipPersonalTimer - panStart) / switchFlipAnimationTime);
             }
             yield return null;
