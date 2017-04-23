@@ -39,7 +39,7 @@ public class PushCubeMoveReference : MonoBehaviour
             else
                 pushCube.canInteract = false;
 		}
-        else if(other.gameObject.tag != "Conveyor Belt" && !other.isTrigger)
+        else if(other.gameObject.tag != "Push Cube" && other.gameObject.tag != "Conveyor Belt" && !other.isTrigger)
         {
             blocked = true;
         }
@@ -47,15 +47,15 @@ public class PushCubeMoveReference : MonoBehaviour
 
 	void OnTriggerExit(Collider other)
 	{
-		if(other.gameObject.tag == "Player")
-		{
-            GameController.CheckInteractToolip(false, true);
-            pushCube.canInteract = false;
-			pushCube.grabbed = false;
-            pushCube.transform.parent = null;
-			PlayerMovement.isGrabbing = false;
-			PlayerMovement.grabbedObject = null;
-		}
+		//if(other.gameObject.tag == "Player")
+		//{
+  //          GameController.CheckInteractToolip(false, true);
+  //          pushCube.canInteract = false;
+		//	pushCube.grabbed = false;
+  //          pushCube.transform.parent = null;
+		//	PlayerMovement.isGrabbing = false;
+		//	PlayerMovement.grabbedObject = null;
+		//}
         blocked = false;
 	}
 }
