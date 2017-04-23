@@ -34,6 +34,7 @@ public class LightDirectionToggleSwitch : ToggleSwitch
                         lightSource.GetComponent<LightSourceControl>().turnLightSource(turnClockwise);
                         turnedLightSourceForPressed = true;
                         turnedLightSourceForDepressed = false;
+                        timerAudioSource.Play();
                     }
                 }
             }
@@ -49,6 +50,7 @@ public class LightDirectionToggleSwitch : ToggleSwitch
                         lightSource.GetComponent<LightSourceControl>().turnLightSource(turnClockwise);
                         turnedLightSourceForDepressed = true;
                         turnedLightSourceForPressed = false;
+                        timerAudioSource.Play();
                     }
                 }
             }
