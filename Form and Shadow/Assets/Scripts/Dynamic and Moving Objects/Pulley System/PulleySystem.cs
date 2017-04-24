@@ -15,7 +15,7 @@ public class PulleySystem : MonoBehaviour {
 	
 	void Update ()
 	{
-		if(!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
+		if(!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !GameController.paused)
 		{
 			personalTime += Time.deltaTime;	
 			if(personalTime >= spawnTime + spawnCooldown)
