@@ -161,6 +161,7 @@ public class PlayerMovement : MonoBehaviour
             GameController.Toggle2DMovementTooltips(true);
             PlayerMovement2D();
             FollowShadow();
+            checkWallSafety();
         }
     }
 
@@ -198,6 +199,14 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(playerShadow.transform.right, Vector3.up);
 
         }
+    }
+
+    public void checkWallSafety()
+    {
+        if (GameObject.Find("Player_Shadow").GetComponent<PlayerShadowCollider>().wallTransform == null)
+            StartCoroutine(gameController.ResetLevel(false, false));
+        else if (!GameObject.Find("Player_Shadow").GetComponent<PlayerShadowCollider>().wallTransform.GetComponent<ShadowWall>().isLit && !GameController.resetting)
+            StartCoroutine(gameController.ResetLevel(false, false));
     }
 
     public void PlayerMovement3D()

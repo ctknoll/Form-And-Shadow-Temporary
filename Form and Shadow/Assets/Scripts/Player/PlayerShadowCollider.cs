@@ -11,7 +11,8 @@ using System.Collections.Generic;
     transfer out onto for usage in the shadow shift multi-exit system.
 
 */
-public class PlayerShadowCollider : MonoBehaviour {
+public class PlayerShadowCollider : MonoBehaviour
+{
 	public GameObject player;
     public Vector3 transformOffset;
     public Transform wallTransform;
@@ -31,7 +32,21 @@ public class PlayerShadowCollider : MonoBehaviour {
                 else
                     transform.position = new Vector3(wallTransform.position.x + transformOffset.x, transform.position.y, transform.position.z);
             }
-        }
+            if(!PlayerMovement.in3DSpace && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position + gameObject.transform.forward, -gameObject.transform.forward, out hit, Mathf.Infinity, 1 << 10))
+                {
+                    if(hit.distance <= 1)
+                         wallTransform = hit.transform;
+                }
+                else if (Physics.Raycast(transform.position + gameObject.transform.forward, -gameObject.transform.forward, out hit, Mathf.Infinity, 1 << 12))
+                {
+                    if (hit.distance <= 1)
+                        wallTransform = null;
+                }
+            }
+        }     
 	}
 
 	public void FollowPlayer()

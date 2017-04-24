@@ -45,9 +45,9 @@ public class PulleySystemPlatform : MonoBehaviour {
 		}
 	}
 
-	void FixedUpdate () 
+	void Update () 
 	{
-		if(!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
+		if(!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !GameController.paused)
 		{
 			transform.position += moveSpeed * moveDirection;
 
