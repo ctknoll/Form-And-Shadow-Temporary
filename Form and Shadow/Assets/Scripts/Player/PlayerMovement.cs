@@ -204,7 +204,8 @@ public class PlayerMovement : MonoBehaviour
     public void checkWallSafety()
     {
         if (GameObject.Find("Player_Shadow").GetComponent<PlayerShadowCollider>().wallTransform == null)
-            StartCoroutine(gameController.ResetLevel(false, false));
+        //    StartCoroutine(gameController.ResetLevel(false, false));
+        {} //to appease the compiler gods
         else if (!GameObject.Find("Player_Shadow").GetComponent<PlayerShadowCollider>().wallTransform.GetComponent<ShadowWall>().isLit && !GameController.resetting)
             StartCoroutine(gameController.ResetLevel(false, false));
     }
