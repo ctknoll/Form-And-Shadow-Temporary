@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-
 /*
 
     Written by: Daniel Colina and Chris Knoll
@@ -40,7 +39,8 @@ public class GameController : MonoBehaviour {
     public string shadowShiftTutorialText;
     public AudioSource ambientAudioSource;
     public AudioSource playerDeathAudioSource;
-    public AudioClip playerDeathAudioClip;
+    public AudioClip playerDefaultDeathAudioClip;
+    public AudioClip playerWaterDeathAudioClip;
     public AudioClip ambientGearsAudioClip;
     public AudioClip ambientShadowmeldAudioClip;
 
@@ -51,6 +51,7 @@ public class GameController : MonoBehaviour {
 
     private GameObject scoreText;
     private GameObject shadowMeldResourceObject;
+    private GameObject shadowMeldResourceBackdrop;
     
 	private GameObject player;
     private GameObject playerMesh;
@@ -85,6 +86,7 @@ public class GameController : MonoBehaviour {
         space_Tooltip = GameObject.Find("Space_Tooltip");
         shift_Tooltip = GameObject.Find("Shift_Tooltip");
         shadowMeldResourceObject = GameObject.Find("Shadowmeld_Resource");
+        shadowMeldResourceBackdrop = GameObject.Find("Shadowmeld_Backdrop");
         ambientAudioSource.clip = ambientGearsAudioClip;
         ambientAudioSource.Play();
 
@@ -116,6 +118,7 @@ public class GameController : MonoBehaviour {
     void ShadowmeldUIControl()
     {
         shadowMeldResourceObject.SetActive(player.GetComponent<PlayerMovement>().shadowMeldAvailable);
+        shadowMeldResourceBackdrop.SetActive(player.GetComponent<PlayerMovement>().shadowMeldAvailable);
         shadowMeldResourceObject.GetComponent<Image>().color = Color.magenta;
         shadowMeldResourceObject.GetComponent<Image>().fillAmount = player.GetComponent<PlayerMovement>().shadowMeldResource / 100;
     }
@@ -296,11 +299,21 @@ public class GameController : MonoBehaviour {
     // removes player from 2D and resets, and flips a global static
     // boolean called 'Resetting' on that all dynamic objects (push cube)
     // check in update to see if they need to reset to their start position
-    public IEnumerator ResetLevel(bool resetWithK)
+    public IEnumerator ResetLevel(bool resetWithK, bool deathByWater)
 	{
         // Turn resetting on
         resetting = true;
-        playerDeathAudioSource.Play();
+        if(deathByWater)
+        {
+            playerDeathAudioSource.clip = playerWaterDeathAudioClip;
+            playerDeathAudioSource.Play();
+        }
+        else
+        {
+            playerDeathAudioSource.clip = playerDefaultDeathAudioClip;
+            playerDeathAudioSource.Play();
+        }
+
         // Plays the player's death animation
         if(!resetWithK)
         {

@@ -2,6 +2,7 @@
 
 public class Killzone : MonoBehaviour 
 {
+    public bool waterKillZone;
 	private GameController gameController;
 
 	void Start()
@@ -15,7 +16,10 @@ public class Killzone : MonoBehaviour
 		{
             if(!GameController.resetting)
             {
-                StartCoroutine(gameController.ResetLevel(false));
+                if(waterKillZone)
+                    StartCoroutine(gameController.ResetLevel(false, true));
+                else
+                    StartCoroutine(gameController.ResetLevel(false, false));
             }
 		}
 	}

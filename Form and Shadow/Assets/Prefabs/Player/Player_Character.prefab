@@ -171,6 +171,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1 &1847098689597182
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4049274275415622}
+  - component: {fileID: 64742171650379416}
+  - component: {fileID: 54588474996457846}
+  - component: {fileID: 114642935398696894}
+  m_Layer: 12
+  m_Name: Player_Squish_Death_Check
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1968478021884728
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,6 +218,19 @@ Transform:
   m_Father: {fileID: 4487168017051280}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4049274275415622
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1847098689597182}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.7, y: 0.3, z: 0.7}
+  m_Children: []
+  m_Father: {fileID: 4710416165020350}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4173897930357246
 Transform:
   m_ObjectHideFlags: 1
@@ -211,7 +242,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4710416165020350}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4182093174865406
 Transform:
@@ -288,15 +319,16 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1099584862315612}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.4, y: 2.9, z: 5.61}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 16.75, y: -0.24, z: -41.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4487168017051280}
   - {fileID: 4969831798489872}
   - {fileID: 4182093174865406}
-  - {fileID: 4173897930357246}
+  - {fileID: 4049274275415622}
   - {fileID: 4658484709259310}
+  - {fileID: 4173897930357246}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -516,6 +548,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1339014265202880}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &54588474996457846
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1847098689597182}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!54 &54822601893208556
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -531,6 +578,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!64 &64742171650379416
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1847098689597182}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_InflateMesh: 0
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!81 &81722112071209782
 AudioListener:
   m_ObjectHideFlags: 1
@@ -642,6 +703,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+--- !u!114 &114642935398696894
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1847098689597182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baa50b959e33a8c4e9c3d20bdb197d0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114680685476149912
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -696,6 +768,8 @@ MonoBehaviour:
   shadowMeldInAudioClip: {fileID: 8300000, guid: c51a7e576cc1b7c40856ea9b5b5e081b,
     type: 3}
   shadowMeldOutAudioClip: {fileID: 8300000, guid: 79ef40e542eb8e9498db5156edb5ddee,
+    type: 3}
+  shadowShiftFailAudioClip: {fileID: 8300000, guid: a23b45c5237e2804ca70dde1a985dd61,
     type: 3}
   walkStepFrequency: 0.5
   controller: {fileID: 143736298376177622}
@@ -768,7 +842,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.45
   m_Height: 0
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -797,7 +871,7 @@ ParticleSystem:
   m_GameObject: {fileID: 1758487694470666}
   serializedVersion: 5
   lengthInSec: 5
-  speed: 1
+  simulationSpeed: 1
   looping: 1
   prewarm: 0
   playOnAwake: 1
@@ -993,7 +1067,7 @@ ParticleSystem:
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minColor: {r: 0.972549, g: 0.972549, b: 0.972549, a: 1}
-      maxColor: {r: 0, g: 0, b: 0, a: 0.15686275}
+      maxColor: {r: 0.47058824, g: 0, b: 0.4392157, a: 0.15686275}
       minMaxState: 0
     startSize:
       scalar: 0.75
@@ -1227,7 +1301,7 @@ ParticleSystem:
     enabled: 1
     serializedVersion: 3
     rateOverTime:
-      scalar: 500
+      scalar: 250
       maxCurve:
         serializedVersion: 2
         m_Curve:

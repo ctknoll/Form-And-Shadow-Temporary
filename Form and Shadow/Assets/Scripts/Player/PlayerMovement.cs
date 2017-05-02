@@ -53,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip shadowShiftOutAudioClip;
     public AudioClip shadowMeldInAudioClip;
     public AudioClip shadowMeldOutAudioClip;
+    public AudioClip shadowShiftFailAudioClip;
 
     private AudioClip previousWalkAudioClip;
     public float walkStepFrequency;
@@ -129,24 +130,13 @@ public class PlayerMovement : MonoBehaviour
 			CheckMenuAndReset();
         }
     }
+
     #region Game Control Methods
     void CheckMenuAndReset()
     {
         if (Input.GetButtonDown("Reset") && !shadowShiftingIn && !shadowShiftingOut)
         {
 			SceneManager.LoadScene (currentGameLevel);
-			/*
-            playerStartPosition = levelStartPosition;
-            foreach (Transform child in GameObject.Find("Lighting").transform)
-            {
-                LightSourceControl light = child.GetComponent<LightSourceControl>();
-                child.rotation = light.lightSourceStartRotation;
-                light.lightSourceDirection = child.transform.forward;
-                light.CheckLightingDirection();
-            }
-
-            StartCoroutine(GameObject.Find("Game_Controller").GetComponent<GameController>().ResetLevel(true));
-            */
         }
     }
     #endregion
@@ -171,6 +161,7 @@ public class PlayerMovement : MonoBehaviour
             GameController.Toggle2DMovementTooltips(true);
             PlayerMovement2D();
             FollowShadow();
+            checkWallSafety();
         }
     }
 
@@ -208,6 +199,15 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(playerShadow.transform.right, Vector3.up);
 
         }
+    }
+
+    public void checkWallSafety()
+    {
+        if (GameObject.Find("Player_Shadow").GetComponent<PlayerShadowCollider>().wallTransform == null)
+        //    StartCoroutine(gameController.ResetLevel(false, false));
+        {} //to appease the compiler gods
+        else if (!GameObject.Find("Player_Shadow").GetComponent<PlayerShadowCollider>().wallTransform.GetComponent<ShadowWall>().isLit && !GameController.resetting)
+            StartCoroutine(gameController.ResetLevel(false, false));
     }
 
     public void PlayerMovement3D()
@@ -280,14 +280,14 @@ public class PlayerMovement : MonoBehaviour
 
             if((movingForward || movingBackward))
             {
-                if (!grabbedObject.GetComponent<AudioSource>().isPlaying)
+                if (!grabbedObject.GetComponent<PushCube>().moveAudioSource.isPlaying)
                 {
-                    grabbedObject.GetComponent<AudioSource>().Play();
+                    grabbedObject.GetComponent<PushCube>().moveAudioSource.Play();
                 }
             }
             else
             {
-                grabbedObject.GetComponent<AudioSource>().Stop();
+                grabbedObject.GetComponent<PushCube>().moveAudioSource.Stop();
             }
         }
     }
@@ -387,11 +387,11 @@ public class PlayerMovement : MonoBehaviour
                 switch (collideObj.GetComponent<ShadowmeldObjectControl>().shadowMeldObjectType)
                 {
                     case ShadowmeldObjectControl.ShadowMeldObjectType.GLASS:
-                        StartCoroutine(gameController.ResetLevel(false));
+                        StartCoroutine(gameController.ResetLevel(false, false));
                         ExitShadowMeld();
                         break;
                     case ShadowmeldObjectControl.ShadowMeldObjectType.WATER:
-                        StartCoroutine(gameController.ResetLevel(false));
+                        StartCoroutine(gameController.ResetLevel(false, true));
                         ExitShadowMeld();
                         break;
                     default:
@@ -439,7 +439,9 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetButtonDown("Shadowshift"))
             {
                 if (in3DSpace)
+                {
                     StartShadowShiftIn();
+                }
                 else
                 {
                     StartShadowShiftOut();
@@ -460,7 +462,7 @@ public class PlayerMovement : MonoBehaviour
 		RaycastHit hit;
 		// Cast a ray in the direction of the light source and see if it hits a shadow wall
 
-		if (Physics.SphereCast(transform.position, 0.1f, GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection, out hit, Mathf.Infinity))
+		if (Physics.SphereCast(transform.position, 0.1f, GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection, out hit, 1 << 11))
 		{
 			if(hit.collider.gameObject.tag == "Shadow Wall")
 			{
@@ -487,12 +489,24 @@ public class PlayerMovement : MonoBehaviour
 					StartCoroutine(FinishShiftIn());
 				}
 				else
-					Debug.Log("You can't transfer, there is a shadow in the way!");
-			}
+                {
+                    GetComponent<AudioSource>().clip = shadowShiftFailAudioClip;
+                    GetComponent<AudioSource>().Play();
+                    Debug.Log("You can't transfer, there is a shadow in the way!");
+                }
+            }
 			else
-				Debug.Log("You can't transfer, you didn't hit a shadow wall!");
+            {
+                Debug.Log("You can't transfer, you didn't hit a shadow wall!");
+                GetComponent<AudioSource>().clip = shadowShiftFailAudioClip;
+                GetComponent<AudioSource>().Play();
+            }
 		}
-		
+        else
+        {
+            GetComponent<AudioSource>().clip = shadowShiftFailAudioClip;
+            GetComponent<AudioSource>().Play();
+        }
 	}
 
 	public void StartShadowShiftOut()
@@ -578,7 +592,7 @@ public class PlayerMovement : MonoBehaviour
 			else
             {
                 StartCoroutine(CameraPanInMultiExit(shadowShiftFollowObject.transform.position, playerShadow.transform.position, -GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection * mainCamera.GetComponent<CameraControl>().distanceToPlayer2D));
-                StartCoroutine(FinishShiftInMultiExit());
+                StartCoroutine(FinishShiftOutMultiExit());
             }
 		}
 
@@ -632,8 +646,11 @@ public class PlayerMovement : MonoBehaviour
 
 		CameraControl.cameraIsPanning = false;
 		if(finishing)
-			FinishShiftOut();
-	}
+        {
+            shadowShiftFollowObject.transform.position = target;
+            FinishShiftOut();
+        }
+    }
 
     public IEnumerator CameraPanInMultiExit(Vector3 start, Vector3 target, Vector3 offset)
     {
@@ -667,7 +684,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("In Wall");
 	}
 
-	public IEnumerator FinishShiftInMultiExit()
+	public IEnumerator FinishShiftOutMultiExit()
 	{
 		yield return new WaitForSeconds(shadowShiftPanDuration);
         Destroy(shadowShiftFollowObject);

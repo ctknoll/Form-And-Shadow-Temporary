@@ -11,7 +11,8 @@ using System.Collections.Generic;
     transfer out onto for usage in the shadow shift multi-exit system.
 
 */
-public class PlayerShadowCollider : MonoBehaviour {
+public class PlayerShadowCollider : MonoBehaviour
+{
 	public GameObject player;
     public Vector3 transformOffset;
     public Transform wallTransform;
@@ -31,7 +32,21 @@ public class PlayerShadowCollider : MonoBehaviour {
                 else
                     transform.position = new Vector3(wallTransform.position.x + transformOffset.x, transform.position.y, transform.position.z);
             }
-        }
+            if(!PlayerMovement.in3DSpace && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position + gameObject.transform.forward, -gameObject.transform.forward, out hit, Mathf.Infinity, 1 << 10))
+                {
+                    if(hit.distance <= 1)
+                         wallTransform = hit.transform;
+                }
+                else if (Physics.Raycast(transform.position + gameObject.transform.forward, -gameObject.transform.forward, out hit, Mathf.Infinity, 1 << 12))
+                {
+                    if (hit.distance <= 1)
+                        wallTransform = null;
+                }
+            }
+        }     
 	}
 
 	public void FollowPlayer()
@@ -44,10 +59,11 @@ public class PlayerShadowCollider : MonoBehaviour {
         List<GameObject> transferPlatforms = new List<GameObject>();
         // Cast a ray down from the player shadow and store all shadow colliders hit in an array of RaycastHits
         RaycastHit firstPlatformHit;
-        if(Physics.SphereCast(transform.position, 0.5f, Vector3.down, out firstPlatformHit, transform.position.y, 1 << 11))
+        if(Physics.SphereCast(transform.position, 0.5f, Vector3.down, out firstPlatformHit, transform.position.y, 1 << 11, QueryTriggerInteraction.Collide))
         {
+            Debug.Log(firstPlatformHit.collider.gameObject);
             RaycastHit[] hits;
-            hits = Physics.SphereCastAll(firstPlatformHit.point - new Vector3(0, 0.5f, 0), 0.5f, Vector3.down, GetComponent<CharacterController>().height / 2, 1 << 11);
+            hits = Physics.SphereCastAll(firstPlatformHit.point - new Vector3(0, 0.5f, 0), 0.5f, Vector3.down, GetComponent<CharacterController>().height / 2, 1 << 11, QueryTriggerInteraction.Collide);
             // Then, create a list of gameobjects and for each RaycastHit in hits, add the hit collider's gameobject to the list of transferPlatforms
             foreach (RaycastHit hit in hits)
             {
