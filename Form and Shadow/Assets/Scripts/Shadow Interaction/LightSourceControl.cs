@@ -25,8 +25,7 @@ public class LightSourceControl : MonoBehaviour
 	//Stores a light's default position, as well as checks a 
 	//light's direction
 	void Start ()
-	{
-
+    {
 		lightSourceStartRotation = transform.rotation;
 		lightSourceDirection = transform.forward;
 		CheckLightingDirection();

@@ -2,8 +2,9 @@
 
 public class PropellorPlatform : MonoBehaviour {
 	public float rotationSpeed;
+    public bool rotateClockwise;
 
-	public bool playerChildedIn3D;
+    public bool playerChildedIn3D;
 	public bool playerChildedIn2D;
 
 	void Start()
@@ -33,6 +34,15 @@ public class PropellorPlatform : MonoBehaviour {
 	void FixedUpdate () 
 	{
 		if(!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !GameController.resetting && !GameController.paused)
-			transform.Rotate(Vector3.up, Time.deltaTime * rotationSpeed);
-	}
+        {
+            if(rotateClockwise)
+            {
+                transform.Rotate(Vector3.up, Time.deltaTime * rotationSpeed);
+            }
+            else
+            {
+                transform.Rotate(Vector3.up, Time.deltaTime * -rotationSpeed);
+            }
+        }
+    }
 }

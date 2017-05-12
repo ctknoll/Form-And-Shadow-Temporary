@@ -27,7 +27,8 @@ public class RaycastToCamera : MonoBehaviour {
 		RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit))
         {
-            if (hit.collider.gameObject.tag != "Player" && hit.collider.gameObject.layer != LayerMask.NameToLayer("Shadowmeld Ignore") && hit.collider.gameObject.layer != LayerMask.NameToLayer("Shadowmeld"))
+            if (hit.collider.gameObject.tag != "Player" && hit.collider.gameObject.layer != LayerMask.NameToLayer("Shadowmeld Ignore") && 
+                hit.collider.gameObject.layer != LayerMask.NameToLayer("Shadowmeld") && hit.collider.gameObject.layer != LayerMask.NameToLayer("Shadow"))
                 distance = hit.distance - 0.5f;
             else
                 distance = target.GetComponent<CameraControl>().distanceToPlayer3D;

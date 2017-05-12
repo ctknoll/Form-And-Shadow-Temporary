@@ -93,7 +93,7 @@ public abstract class ToggleSwitch : MonoBehaviour {
     {
         switchFlipAudioSource.Play();
         animating = true;
-        float panStart = Time.time;
+        float panStart = GameController.masterTimer;
         float flipPersonalTimer = panStart;
         while (flipPersonalTimer < panStart + switchFlipAnimationTime)
         {
@@ -109,7 +109,7 @@ public abstract class ToggleSwitch : MonoBehaviour {
     public IEnumerator ControlTimerSwitchAudio()
     {
         timerAudioSource.Play();
-        float audioStart = Time.time;
+        float audioStart = GameController.masterTimer;
         float currentTimerDuration = audioStart;
         while(currentTimerDuration < audioStart + timerAudioSource.clip.length)
         {
@@ -137,7 +137,7 @@ public abstract class ToggleSwitch : MonoBehaviour {
     {
         switchFlipAudioSource.Play();
         animating = true;
-        float panStart = Time.time;
+        float panStart = GameController.masterTimer;
         float flipPersonalTimer = panStart;
         while (flipPersonalTimer < panStart + switchFlipAnimationTime)
         {
@@ -155,7 +155,7 @@ public abstract class ToggleSwitch : MonoBehaviour {
     public IEnumerator ControlFlipSwitchAudio()
     {
         switchFlipAudioSource.Play();
-        float audioStart = Time.time;
+        float audioStart = GameController.masterTimer;
         float currentTimerDuration = audioStart;
         while (currentTimerDuration < audioStart + switchFlipAudioSource.clip.length)
         {
@@ -185,7 +185,7 @@ public abstract class ToggleSwitch : MonoBehaviour {
     public IEnumerator PressFlipToggle()
     {
         animating = true;
-        float panStart = Time.time;
+        float panStart = GameController.masterTimer;
         float flipPersonalTimer = panStart;
         while (flipPersonalTimer < panStart + switchFlipAnimationTime)
         {

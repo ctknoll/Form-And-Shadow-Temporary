@@ -294,14 +294,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if(Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
         {
-            if(Time.time > walkStepStartTime + walkStepFrequency)
+            if(GameController.masterTimer > walkStepStartTime + walkStepFrequency)
             { 
                 playerAudioSource.clip = walkAudioClips[Random.Range(0, walkAudioClips.Length)];
                 if(playerAudioSource.clip != previousWalkAudioClip)
                 {
                     previousWalkAudioClip = playerAudioSource.clip;
                     playerAudioSource.Play();
-                    walkStepStartTime = Time.time;
+                    walkStepStartTime = GameController.masterTimer;
                 }
                 else
                 {
@@ -311,7 +311,7 @@ public class PlayerMovement : MonoBehaviour
                     }
                     previousWalkAudioClip = playerAudioSource.clip;
                     playerAudioSource.Play();
-                    walkStepStartTime = Time.time;
+                    walkStepStartTime = GameController.masterTimer;
                 }
             }
         }
@@ -367,7 +367,6 @@ public class PlayerMovement : MonoBehaviour
     {
         GetComponent<AudioSource>().clip = shadowMeldInAudioClip;
         GetComponent<AudioSource>().Play();
-        Debug.Log("Shadowmelding");
         shadowMelded = true;
         shadowMeldVFX.SetActive(true);
         GameController.CheckInteractToolip(false, false);
@@ -409,7 +408,6 @@ public class PlayerMovement : MonoBehaviour
     {
         GetComponent<AudioSource>().clip = shadowMeldOutAudioClip;
         GetComponent<AudioSource>().Play();
-        Debug.Log("Leaving shadowmelded");
         shadowMelded = false;
         shadowMeldVFX.SetActive(false);
         gameObject.layer = LayerMask.NameToLayer("Form");

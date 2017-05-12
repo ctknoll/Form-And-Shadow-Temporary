@@ -79,11 +79,11 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
 
     public IEnumerator MoveOut(lerpPlatform platform, int index)
     {
-        float panStart = Time.time;
-        float localTime = Time.time;
+        float panStart = GameController.masterTimer;
+        float localTime = GameController.masterTimer;
         currentPos.Add(platform.platformObject.transform.position);
         moveTime[index] = ((currentPos[index] - endPos[index]).magnitude / platform.moveSpeed);
-        while ((((!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !GameController.paused) ? localTime += Time.deltaTime : localTime) < (panStart + moveTime[index]) + Time.time - localTime) && pressed)
+        while ((((!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !GameController.paused) ? localTime += Time.deltaTime : localTime) < (panStart + moveTime[index]) + GameController.masterTimer - localTime) && pressed)
         {
             platform.platformObject.transform.position = Vector3.Lerp(currentPos[index], endPos[index], (localTime - panStart) / moveTime[index]);
             yield return null;
@@ -94,7 +94,7 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
     //((!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut) ? localTime += Time.deltaTime : localTime)
     public IEnumerator MoveBack(lerpPlatform platform, int index)
     {
-        float panStart = Time.time;
+        float panStart = GameController.masterTimer;
         float personalTime = panStart;
         currentPos.Add(platform.platformObject.transform.position);
         moveTime[index] = ((currentPos[index] - startPos[index]).magnitude / platform.moveSpeed);

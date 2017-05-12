@@ -35,7 +35,7 @@ public class Checkpoint : MonoBehaviour {
 
     IEnumerator RaiseFlag()
     {
-        float panStart = Time.time;
+        float panStart = GameController.masterTimer;
         float personalTimer = panStart;
         Vector3 startPos = checkPointFlag.transform.position;
 

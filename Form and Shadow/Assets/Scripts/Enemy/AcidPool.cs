@@ -13,7 +13,7 @@ public class AcidPool : MonoBehaviour {
 	
 	IEnumerator GrowAcidPool()
     {
-        float growStartTime = Time.time;
+        float growStartTime = GameController.masterTimer;
         float growPersonalTimer = growStartTime;
         Vector3 startScale = transform.lossyScale;
         Vector3 endScale = new Vector3(acidPoolGrowScale * transform.lossyScale.x, transform.lossyScale.y, acidPoolGrowScale * transform.lossyScale.z);

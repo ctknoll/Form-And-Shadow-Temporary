@@ -72,12 +72,12 @@ public class PlatformLERPPressureSwitch : PressureSwitch
 
 	public IEnumerator MoveOut(GameObject platform, int index)
 	{
-		float panStart = Time.time;
+		float panStart = GameController.masterTimer;
 		currentPos.Add(platform.transform.position);
 		moveTime[index] = ((currentPos[index] - endPos[index]).magnitude / moveSpeed);
-		while ((Time.time < panStart + moveTime[index]) && pressed)
+		while ((GameController.masterTimer < panStart + moveTime[index]) && pressed)
 		{
-			platform.transform.position = Vector3.Lerp(currentPos[index], endPos[index], (Time.time - panStart) / moveTime[index]);
+			platform.transform.position = Vector3.Lerp(currentPos[index], endPos[index], (GameController.masterTimer - panStart) / moveTime[index]);
 			yield return null;
 		}
 		moving = false;
@@ -85,12 +85,12 @@ public class PlatformLERPPressureSwitch : PressureSwitch
 
 	public IEnumerator MoveBack(GameObject platform, int index)
 	{
-		float panStart = Time.time;
+		float panStart = GameController.masterTimer;
 		currentPos.Add(platform.transform.position);
 		moveTime[index] = ((currentPos[index] - startPos[index]).magnitude / moveSpeed);
-		while (Time.time < panStart + moveTime[index] && !pressed)
+		while (GameController.masterTimer < panStart + moveTime[index] && !pressed)
 		{
-			platform.transform.position = Vector3.Lerp(currentPos[index], startPos[index], (Time.time - panStart) / moveTime[index]);
+			platform.transform.position = Vector3.Lerp(currentPos[index], startPos[index], (GameController.masterTimer - panStart) / moveTime[index]);
 			yield return null;
 		}
 		moveTime.Clear();

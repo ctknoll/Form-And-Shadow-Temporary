@@ -61,27 +61,16 @@ public class PlayerShadowCollider : MonoBehaviour
         RaycastHit firstPlatformHit;
         if(Physics.SphereCast(transform.position, 0.5f, Vector3.down, out firstPlatformHit, transform.position.y, 1 << 11, QueryTriggerInteraction.Collide))
         {
-            Debug.Log(firstPlatformHit.collider.gameObject);
             RaycastHit[] hits;
             hits = Physics.SphereCastAll(firstPlatformHit.point - new Vector3(0, 0.5f, 0), 0.5f, Vector3.down, GetComponent<CharacterController>().height / 2, 1 << 11, QueryTriggerInteraction.Collide);
             // Then, create a list of gameobjects and for each RaycastHit in hits, add the hit collider's gameobject to the list of transferPlatforms
             foreach (RaycastHit hit in hits)
             {
-                // If the shadowcollider follows regular behavior and does not have an exception parent
-                if (hit.collider.gameObject.GetComponent<ShadowCollider>().exceptionParent == null)
-                {
-                    // Prevent spikes from being added as shadow collider objects
-                    if (hit.collider.GetComponentInParent<ShadowCast>().meshType != ShadowCast.MeshType.SPIKES)
-                        transferPlatforms.Add(hit.collider.gameObject.transform.parent.gameObject);
-                }
-                // If it does have an exception parent
-                else
-                {
-                    transferPlatforms.Add(hit.collider.gameObject.GetComponent<ShadowCollider>().exceptionParent);
-                }
+                // Prevent spikes from being added as shadow collider objects
+                if (hit.collider.GetComponentInParent<ShadowCollider>().transformParent.GetComponent<ShadowCast>().shadowType != ShadowCast.ShadowType.SPIKES)
+                    transferPlatforms.Add(hit.collider.gameObject.GetComponentInParent<ShadowCollider>().transformParent);
             }
         }
-		
 		// Then, return a list of gameobjects equal to all the shadow colliders below the player when called
 		return transferPlatforms;
 	}

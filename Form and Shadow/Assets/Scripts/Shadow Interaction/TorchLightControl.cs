@@ -9,9 +9,9 @@ public class TorchLightControl : MonoBehaviour {
         {
             other.gameObject.layer = LayerMask.NameToLayer("Invisible Shadow");
             // Handle the logic of moving the 3D object to the shadowmeld ignore layer
-            if (other.GetComponent<ShadowCollider>().exceptionParent)
+            if (other.GetComponent<ShadowCollider>().transformParent)
             {
-                other.GetComponent<ShadowCollider>().exceptionParent.layer = LayerMask.NameToLayer("Shadowmeld Ignore");
+                other.GetComponent<ShadowCollider>().transformParent.layer = LayerMask.NameToLayer("Shadowmeld Ignore");
             }
             else
             {
@@ -26,9 +26,9 @@ public class TorchLightControl : MonoBehaviour {
         {
             other.gameObject.layer = LayerMask.NameToLayer("Shadow");
             // Handle the logic of moving the 3D object back to the original layer
-            if (other.GetComponent<ShadowCollider>().exceptionParent)
+            if (other.GetComponent<ShadowCollider>().transformParent)
             {
-                other.GetComponent<ShadowCollider>().exceptionParent.layer = LayerMask.NameToLayer("Form");
+                other.GetComponent<ShadowCollider>().transformParent.layer = LayerMask.NameToLayer("Form");
             }
             else
             {

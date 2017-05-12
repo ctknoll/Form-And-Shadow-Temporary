@@ -82,7 +82,7 @@ public class EnemyToad : MonoBehaviour {
         toadJumpLandAudioSource.clip = toadJumpClip;
         toadJumpLandAudioSource.Play();
 		jumping = true;
-		float panStart = Time.time;
+		float panStart = GameController.masterTimer;
 		float jumpPersonalTimer = panStart;
 		Vector3 startPos = transform.position;
 		float sinStart = 0;

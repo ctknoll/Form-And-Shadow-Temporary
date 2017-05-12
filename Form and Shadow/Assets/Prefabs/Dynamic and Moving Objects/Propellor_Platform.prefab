@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4147176065376038}
   - component: {fileID: 114175660532293890}
   - component: {fileID: 65828925142544594}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Propellor_Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,8 +41,8 @@ GameObject:
   - component: {fileID: 33819203735571246}
   - component: {fileID: 23675816403394410}
   - component: {fileID: 114804300518406016}
-  m_Layer: 0
-  m_Name: Propellor_Blade_Mesh
+  m_Layer: 12
+  m_Name: Propellor_Platform_Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,7 +68,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1870742685079626}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.72311115, y: 4, z: 8.342588}
+  m_LocalPosition: {x: -8.7278805, y: 2.05, z: 15.18139}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4023727354551066}
@@ -150,8 +150,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
     type: 2}
+  shadowType: 5
   meshException: 0
-  meshType: 5
+  dynamicObject: 0
   shadowColliders: []
   singleMesh: 0
 --- !u!114 &114175660532293890
@@ -165,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f1c036b83d0b5941b16a19c65957bbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 90
+  rotationSpeed: 180
   playerChildedIn3D: 0
   playerChildedIn2D: 0
 --- !u!114 &114804300518406016

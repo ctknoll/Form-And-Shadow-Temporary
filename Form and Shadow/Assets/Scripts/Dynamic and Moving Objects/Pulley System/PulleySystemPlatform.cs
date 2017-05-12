@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 public class PulleySystemPlatform : MonoBehaviour {
 	public float moveSpeed;
@@ -12,8 +11,7 @@ public class PulleySystemPlatform : MonoBehaviour {
 
 	[HideInInspector]
 	public bool playerChildedIn3D;
-	[HideInInspector]
-	public bool playerChildedIn2D;
+
 	[HideInInspector]
 	public bool atEndOfRoute;
 
@@ -47,7 +45,7 @@ public class PulleySystemPlatform : MonoBehaviour {
 
 	void Update () 
 	{
-		if(!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !GameController.paused)
+        if (!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !GameController.paused && !GameController.resetting)
 		{
 			transform.position += moveSpeed * moveDirection;
 
@@ -61,10 +59,16 @@ public class PulleySystemPlatform : MonoBehaviour {
 	public IEnumerator DestroyPlatform()
 	{
 		yield return new WaitForSeconds(destroyDelayTime);
-		if(playerChildedIn3D)
-			GameObject.Find("Player_Character").transform.parent = null;
-		else if(playerChildedIn2D)
-			GameObject.Find("Player_Shadow").transform.parent = null;
+        if(playerChildedIn3D)
+		    GameObject.Find("Player_Character").transform.parent = null;
+
+        foreach(GameObject pulleyShadowCollider in GetComponentInChildren<ShadowCast>().shadowColliders)
+        {
+            if(pulleyShadowCollider.GetComponentInChildren<MovingPlatformShadowCollider>().playerChildedIn2D)
+            {
+                GameObject.Find("Player_Shadow").transform.parent = null;
+            }
+        }
 		Destroy(gameObject);
 	}
 }

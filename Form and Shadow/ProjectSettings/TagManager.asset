@@ -9,6 +9,7 @@ TagManager:
   - Move Platform
   - MainCameraReference
   - Conveyor Belt
+  - Test
   layers:
   - Default
   - TransparentFX

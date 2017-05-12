@@ -10,7 +10,6 @@ public class MovingPlatform : MonoBehaviour {
 	private float personalTime;
 
 	public bool playerChildedIn3D;
-	public bool playerChildedIn2D;
 
 	private Vector3 startPosition;
 

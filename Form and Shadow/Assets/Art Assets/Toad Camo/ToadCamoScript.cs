@@ -7,8 +7,8 @@ public class ToadCamoScript : MonoBehaviour {
 		rend = GetComponent<Renderer>();
 	}
 	void Update() {
-		float scaleX = Mathf.Cos(Time.time) * 0.75F + 1;
-		float scaleY = Mathf.Sin(Time.time) * 0.75F + 1;
+		float scaleX = Mathf.Cos(GameController.masterTimer) * 0.75F + 1;
+		float scaleY = Mathf.Sin(GameController.masterTimer) * 0.75F + 1;
 		rend.material.mainTextureScale = new Vector2(scaleX, scaleY);
 	}
 }

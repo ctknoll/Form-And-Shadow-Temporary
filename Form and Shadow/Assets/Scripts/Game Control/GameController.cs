@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour {
 	public static bool switch_cooldown;
 	public int score;
 
+    public static float masterTimer;
     public float playerDeathAnimationDuration;
     private float playerDeathTimerStart;
     private float deathTimer;
@@ -93,10 +94,13 @@ public class GameController : MonoBehaviour {
         paused = false;
         resetting = false;
         Cursor.visible = false;
+        masterTimer = 0f;
     }
 
     void Update()
     {
+        if (!paused && !resetting && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
+            masterTimer += Time.deltaTime;
         ScoreUIControl();
         ShadowmeldUIControl();
 
@@ -346,7 +350,7 @@ public class GameController : MonoBehaviour {
     {
         Vector3 startScale = playerMesh.transform.localScale;
         Vector3 endScale = new Vector3(0f, 0f, 0f);
-        playerDeathTimerStart = Time.time;
+        playerDeathTimerStart = masterTimer;
         deathTimer = playerDeathTimerStart;
 
         while (deathTimer < playerDeathTimerStart + playerDeathAnimationDuration)

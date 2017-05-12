@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 
 public class MovingPlatformShadowCollider : MonoBehaviour {
-	void OnTriggerEnter(Collider other)
+    [HideInInspector]
+    public bool playerChildedIn2D;
+    void OnTriggerEnter(Collider other)
 	{
 		if(other.gameObject.tag == "Player")
 		{
-			if(GetComponentInParent<PulleySystemPlatform>())
-				GetComponentInParent<PulleySystemPlatform>().playerChildedIn2D = true;
+			playerChildedIn2D = true;
 			other.gameObject.transform.parent = gameObject.transform;
 		}
 	}
@@ -15,8 +16,7 @@ public class MovingPlatformShadowCollider : MonoBehaviour {
 	{
 		if(other.gameObject.tag == "Player")
 		{
-			if(GetComponentInParent<PulleySystemPlatform>())
-				GetComponentInParent<PulleySystemPlatform>().playerChildedIn2D = false;
+		    playerChildedIn2D = false;
 			other.gameObject.transform.parent = null;
 		}
 	}
