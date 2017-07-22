@@ -42,8 +42,8 @@ public class PushCube : MonoBehaviour {
                     grabbed = true;
                     player.transform.rotation = Quaternion.LookRotation(directionAwayFromPlayer, Vector3.up);
                     transform.parent = player.transform;
-                    PlayerMovement.isGrabbing = true;
-                    PlayerMovement.grabbedObject = gameObject;
+                    PlayerShadowInteraction.isGrabbing = true;
+                    PlayerShadowInteraction.grabbedObject = gameObject;
                 }
             }
 
@@ -53,8 +53,8 @@ public class PushCube : MonoBehaviour {
                 grabAudioSource.Play();
                 grabbed = false;
                 transform.parent = null;
-                PlayerMovement.isGrabbing = false;
-                PlayerMovement.grabbedObject = null;
+                PlayerShadowInteraction.isGrabbing = false;
+                PlayerShadowInteraction.grabbedObject = null;
             }
         }
 
@@ -64,8 +64,8 @@ public class PushCube : MonoBehaviour {
             transform.position = startPos;
 			grabbed = false;
             transform.parent = null;
-			PlayerMovement.isGrabbing = false;
-			PlayerMovement.grabbedObject = null;
+			PlayerShadowInteraction.isGrabbing = false;
+			PlayerShadowInteraction.grabbedObject = null;
 		}
 	}
 }

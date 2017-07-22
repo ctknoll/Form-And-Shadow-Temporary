@@ -10,7 +10,7 @@ public class PlayerShadowSquishDeathCheck : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other)
 	{
-        if(!PlayerMovement.in3DSpace && !PlayerMovement.shadowMelded && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
+        if(!PlayerShadowInteraction.in3DSpace && !PlayerShadowInteraction.shadowMelded && !PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut)
         {
             if (other.gameObject.tag != "Player" && !other.isTrigger)
             {

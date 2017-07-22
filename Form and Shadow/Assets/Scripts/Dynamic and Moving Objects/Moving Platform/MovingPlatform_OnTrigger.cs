@@ -58,7 +58,7 @@ public class MovingPlatform_OnTrigger : MonoBehaviour {
 	{
 		if (distanceTraveled < (moveDistance - 0.1)) {
 			if (activatePlatform == true){			
-				if (!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut) {
+				if (!PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut) {
 					personalTime += slowValue * Time.deltaTime;
 				}
 

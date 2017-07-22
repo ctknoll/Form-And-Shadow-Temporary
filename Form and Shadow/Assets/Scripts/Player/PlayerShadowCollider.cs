@@ -21,7 +21,7 @@ public class PlayerShadowCollider : MonoBehaviour
     void Update()
 	{
         // If the player is moving in the 3D space, force the shadow collider to follow the main player character
-        if (PlayerMovement.in3DSpace && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
+        if (PlayerShadowInteraction.in3DSpace && !PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut)
 			FollowPlayer();
         else
         {
@@ -32,7 +32,7 @@ public class PlayerShadowCollider : MonoBehaviour
                 else
                     transform.position = new Vector3(wallTransform.position.x + transformOffset.x, transform.position.y, transform.position.z);
             }
-            if(!PlayerMovement.in3DSpace && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
+            if(!PlayerShadowInteraction.in3DSpace && !PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut)
             {
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position + gameObject.transform.forward, -gameObject.transform.forward, out hit, Mathf.Infinity, 1 << 10))

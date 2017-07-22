@@ -17,7 +17,7 @@ public class PropellorPlatformShadowCollider : MonoBehaviour
 	
 	void FixedUpdate ()
 	{
-		if(!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !GameController.resetting && !GameController.paused)
+		if(!PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut && !GameController.resetting && !GameController.paused)
 		{
             personalTime += Time.deltaTime;
 		}

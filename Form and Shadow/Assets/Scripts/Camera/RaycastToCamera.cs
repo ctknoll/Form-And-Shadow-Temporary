@@ -12,13 +12,12 @@
 */
 
 public class RaycastToCamera : MonoBehaviour {
-	public Transform target;
-
     public static float distance;
-
+    Transform target;
     void Start()
     {
-        distance = target.GetComponent<CameraControl>().distanceToPlayer3D;
+        target = Camera.main.transform;
+        distance = target.GetComponent<NewCameraControl>().m_DistanceToPlayer3D;
     }
 	void Update ()
 	{
@@ -27,11 +26,10 @@ public class RaycastToCamera : MonoBehaviour {
 		RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit))
         {
-            if (hit.collider.gameObject.tag != "Player" && hit.collider.gameObject.layer != LayerMask.NameToLayer("Shadowmeld Ignore") && 
-                hit.collider.gameObject.layer != LayerMask.NameToLayer("Shadowmeld") && hit.collider.gameObject.layer != LayerMask.NameToLayer("Shadow"))
+            if (hit.collider.gameObject.tag != "Player")
                 distance = hit.distance - 0.5f;
             else
-                distance = target.GetComponent<CameraControl>().distanceToPlayer3D;
+                distance = target.GetComponent<NewCameraControl>().m_DistanceToPlayer3D;
         }
 	}
 }

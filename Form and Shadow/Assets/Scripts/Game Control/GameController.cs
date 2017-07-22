@@ -99,12 +99,12 @@ public class GameController : MonoBehaviour {
 
     void Update()
     {
-        if (!paused && !resetting && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
+        if (!paused && !resetting && !PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut)
             masterTimer += Time.deltaTime;
         ScoreUIControl();
         ShadowmeldUIControl();
 
-        if(Input.GetButtonDown("Quit") && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
+        if(Input.GetButtonDown("Quit") && !PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut)
         {
             ToggleGamePause();
         }
@@ -121,10 +121,10 @@ public class GameController : MonoBehaviour {
 
     void ShadowmeldUIControl()
     {
-        shadowMeldResourceObject.SetActive(player.GetComponent<PlayerMovement>().shadowMeldAvailable);
-        shadowMeldResourceBackdrop.SetActive(player.GetComponent<PlayerMovement>().shadowMeldAvailable);
+        shadowMeldResourceObject.SetActive(player.GetComponent<PlayerShadowInteraction>().shadowMeldAvailable);
+        shadowMeldResourceBackdrop.SetActive(player.GetComponent<PlayerShadowInteraction>().shadowMeldAvailable);
         shadowMeldResourceObject.GetComponent<Image>().color = Color.magenta;
-        shadowMeldResourceObject.GetComponent<Image>().fillAmount = player.GetComponent<PlayerMovement>().shadowMeldResource / 100;
+        shadowMeldResourceObject.GetComponent<Image>().fillAmount = player.GetComponent<PlayerShadowInteraction>().shadowMeldResource / 100;
     }
     #endregion
 
@@ -278,7 +278,7 @@ public class GameController : MonoBehaviour {
 
     public void ControlAmbientAudio()
     {
-        if(PlayerMovement.shadowMelded)
+        if(PlayerShadowInteraction.shadowMelded)
         {
             ambientAudioSource.Pause();
             ambientAudioSource.clip = ambientShadowmeldAudioClip;
@@ -326,24 +326,24 @@ public class GameController : MonoBehaviour {
         }
         
         // Check if the player is in 2D space
-        if (!PlayerMovement.in3DSpace)
+        if (!PlayerShadowInteraction.in3DSpace)
 		{
             // If so, remove them from 2D space first
-			PlayerMovement.in3DSpace = true;
+			PlayerShadowInteraction.in3DSpace = true;
 			playerShadow.GetComponent<CharacterController>().enabled = false;
 			player.GetComponent<CharacterController>().enabled = true;
-			player.GetComponent<PlayerMovement>().controller = player.GetComponent<CharacterController>();
+			player.GetComponent<PlayerShadowInteraction>().controller = player.GetComponent<CharacterController>();
 		}
         // Then, reset the player's position to the start position
-		player.transform.position = PlayerMovement.playerStartPosition;
+		player.transform.position = PlayerShadowInteraction.playerStartPosition;
         playerMesh.transform.localScale = new Vector3(1, 1, 1);
 
-        player.GetComponent<PlayerMovement>().shadowMeldResource = 100;
-        player.GetComponent<PlayerMovement>().shadowMeldVFX.SetActive(false);
+        player.GetComponent<PlayerShadowInteraction>().shadowMeldResource = 100;
+        player.GetComponent<PlayerShadowInteraction>().shadowMeldVFX.SetActive(false);
         player.layer = LayerMask.NameToLayer("Form");
         yield return new WaitForSeconds(0.5f);
         resetting = false;
-        PlayerMovement.shadowMelded = false;
+        PlayerShadowInteraction.shadowMelded = false;
 	}
 
     public IEnumerator PlayerDeathAnimation()

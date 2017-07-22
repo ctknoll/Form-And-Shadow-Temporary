@@ -24,7 +24,7 @@ public class ShadowmeldObjectControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (PlayerMovement.shadowMelded)
+        if (PlayerShadowInteraction.shadowMelded)
         {
             if(!switched)
             {
@@ -101,7 +101,7 @@ public class ShadowmeldObjectControl : MonoBehaviour {
 
     public void UpdateShadowmeldRenderMode()
     {
-        if (PlayerMovement.shadowMelded)
+        if (PlayerShadowInteraction.shadowMelded)
         {
             if (gameObject.layer == LayerMask.NameToLayer("Shadowmeld Ignore") || gameObject.layer == LayerMask.NameToLayer("Shadowmeld Collide"))
             {
@@ -138,7 +138,7 @@ public class ShadowmeldObjectControl : MonoBehaviour {
 
     public void UpdateShadowmeldVFX()
     {
-        if (PlayerMovement.shadowMelded)
+        if (PlayerShadowInteraction.shadowMelded)
         {
             if (currentShadowmeldVFX == null)
             {

@@ -19,14 +19,14 @@ public class PlayerShadowCast : MonoBehaviour {
 
     void Start()
     {
-        playerShadow = GameObject.Find("Player_Shadow");
+        playerShadow = GameObject.Find("Player_Temp_Shadow");
     }
 
     void Update()
     {
         CheckShadowcastModeandLightingChange();
         lightSourceAligned = CheckLightSourceAligned().GetComponent<LightSourceControl>();
-        if (PlayerMovement.in3DSpace && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !PlayerMovement.isGrabbing && !PlayerMovement.shadowMelded && !GameController.paused && !GameController.resetting)
+        if (PlayerShadowInteraction.in3DSpace && !PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut && !PlayerShadowInteraction.isGrabbing && !PlayerShadowInteraction.shadowMelded && !GameController.paused && !GameController.resetting)
         {
             RaycastHit hit;
             if (Physics.SphereCast(transform.position, 0.1f, GetComponent<PlayerShadowCast>().lightSourceAligned.lightSourceDirection, out hit, Mathf.Infinity))
@@ -84,7 +84,7 @@ public class PlayerShadowCast : MonoBehaviour {
     public void CheckShadowcastModeandLightingChange()
     {
         MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
-        if (PlayerMovement.shadowShiftingIn || PlayerMovement.shadowShiftingOut)
+        if (PlayerShadowInteraction.shadowShiftingIn || PlayerShadowInteraction.shadowShiftingOut)
         {
             foreach (MeshRenderer meshRend in meshRenderers)
             {
@@ -99,14 +99,14 @@ public class PlayerShadowCast : MonoBehaviour {
             }
         }
 
-        if(!PlayerMovement.in3DSpace)
+        if(!PlayerShadowInteraction.in3DSpace)
         {
             foreach (MeshRenderer meshRend in meshRenderers)
             {
                 meshRend.gameObject.layer = LayerMask.NameToLayer("Shadow");
             }
         }
-        else if(PlayerMovement.shadowMelded)
+        else if(PlayerShadowInteraction.shadowMelded)
         {
             foreach (MeshRenderer meshRend in meshRenderers)
             {
@@ -133,9 +133,9 @@ public class PlayerShadowCast : MonoBehaviour {
 		foreach(Transform child in GameObject.Find("Lighting").transform)
 		{
 			float tempDistance = 0;
-			tempDistance += Mathf.Pow((child.forward.x - GameObject.Find ("Main_Camera").transform.forward.x), 2);
-			tempDistance += Mathf.Pow((child.forward.y - GameObject.Find ("Main_Camera").transform.forward.y), 2);
-			tempDistance += Mathf.Pow((child.forward.z - GameObject.Find ("Main_Camera").transform.forward.z), 2);
+			tempDistance += Mathf.Pow((child.forward.x - Camera.main.transform.forward.x), 2);
+			tempDistance += Mathf.Pow((child.forward.y - Camera.main.transform.forward.y), 2);
+			tempDistance += Mathf.Pow((child.forward.z - Camera.main.transform.forward.z), 2);
 
 			if (tempDistance < distance) 
 			{

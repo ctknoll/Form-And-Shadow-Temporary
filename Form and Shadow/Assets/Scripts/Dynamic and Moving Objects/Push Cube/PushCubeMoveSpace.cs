@@ -16,8 +16,8 @@ public class PushCubeMoveSpace : MonoBehaviour
             pushCube.canInteract = false;
             pushCube.grabbed = false;
             pushCube.transform.parent = null;
-            PlayerMovement.isGrabbing = false;
-            PlayerMovement.grabbedObject = null;
+            PlayerShadowInteraction.isGrabbing = false;
+            PlayerShadowInteraction.grabbedObject = null;
         }
     }
 }

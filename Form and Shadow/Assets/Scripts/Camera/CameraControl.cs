@@ -61,9 +61,9 @@ public class CameraControl : MonoBehaviour
     }
     void LateUpdate()
     {
-        if (!cameraIsPanning && !PlayerMovement.shadowShiftingOut && !PlayerMovement.shadowShiftingIn && !GameController.paused)
+        if (!cameraIsPanning && !PlayerShadowInteraction.shadowShiftingOut && !PlayerShadowInteraction.shadowShiftingIn && !GameController.paused)
 		{
-			if (PlayerMovement.in3DSpace)
+			if (PlayerShadowInteraction.in3DSpace)
 	        {
                 GetComponent<Camera>().orthographic = false;
                 GetComponent<Camera>().clearFlags = CameraClearFlags.Skybox;
@@ -98,14 +98,14 @@ public class CameraControl : MonoBehaviour
             GetComponent<Camera>().orthographic = false;
             GetComponent<Camera>().clearFlags = CameraClearFlags.Skybox;
 
-            if (PlayerMovement.in3DSpace)
-				transform.LookAt(target3D.GetComponent<PlayerMovement>().shadowShiftFollowObject.transform);
-			else if(!PlayerMovement.in3DSpace)
+            if (PlayerShadowInteraction.in3DSpace)
+				transform.LookAt(target3D.GetComponent<PlayerShadowInteraction>().shadowShiftFollowObject.transform);
+			else if(!PlayerShadowInteraction.in3DSpace)
 			{
-				if(target3D.GetComponent<PlayerMovement>().shadowShiftFollowObject)
-					transform.LookAt(target3D.GetComponent<PlayerMovement>().shadowShiftFollowObject.transform);
+				if(target3D.GetComponent<PlayerShadowInteraction>().shadowShiftFollowObject)
+					transform.LookAt(target3D.GetComponent<PlayerShadowInteraction>().shadowShiftFollowObject.transform);
 				else
-					transform.LookAt(target3D.GetComponent<PlayerMovement>().shadowShiftFollowObject.transform);
+					transform.LookAt(target3D.GetComponent<PlayerShadowInteraction>().shadowShiftFollowObject.transform);
 			}
 		}
     }

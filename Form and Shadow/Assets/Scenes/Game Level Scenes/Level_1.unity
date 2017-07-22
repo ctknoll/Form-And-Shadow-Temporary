@@ -4167,8 +4167,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
     type: 2}
+  shadowType: 0
   meshException: 0
-  meshType: 4
   shadowColliders: []
   singleMesh: 0
 --- !u!23 &392494183
@@ -4266,8 +4266,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
     type: 2}
+  shadowType: 0
   meshException: 0
-  meshType: 4
   shadowColliders: []
   singleMesh: 0
 --- !u!23 &398352592
@@ -6067,8 +6067,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
     type: 2}
+  shadowType: 0
   meshException: 0
-  meshType: 4
   shadowColliders: []
   singleMesh: 0
 --- !u!23 &570135730
@@ -7591,8 +7591,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
     type: 2}
+  shadowType: 0
   meshException: 0
-  meshType: 4
   shadowColliders: []
   singleMesh: 0
 --- !u!23 &786798818
@@ -7773,8 +7773,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
     type: 2}
+  shadowType: 0
   meshException: 0
-  meshType: 4
   shadowColliders: []
   singleMesh: 0
 --- !u!23 &795009686
@@ -8502,8 +8502,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
     type: 2}
+  shadowType: 0
   meshException: 0
-  meshType: 4
   shadowColliders: []
   singleMesh: 0
 --- !u!23 &839131789
@@ -8606,8 +8606,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
     type: 2}
+  shadowType: 0
   meshException: 0
-  meshType: 4
   shadowColliders: []
   singleMesh: 0
 --- !u!23 &848579559
@@ -13624,8 +13624,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
     type: 2}
+  shadowType: 0
   meshException: 0
-  meshType: 0
   shadowColliders: []
   singleMesh: 0
 --- !u!65 &1301792738
@@ -17104,8 +17104,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
     type: 2}
+  shadowType: 0
   meshException: 0
-  meshType: 4
   shadowColliders: []
   singleMesh: 0
 --- !u!23 &1621539574
@@ -17203,8 +17203,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
     type: 2}
+  shadowType: 0
   meshException: 0
-  meshType: 4
   shadowColliders: []
   singleMesh: 0
 --- !u!23 &1623071609
@@ -18693,7 +18693,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4178132589084428, guid: f80f64dd3a4874248a816f253379048e, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: -22
       objectReference: {fileID: 0}
     - target: {fileID: 4178132589084428, guid: f80f64dd3a4874248a816f253379048e, type: 2}
       propertyPath: m_LocalRotation.x
@@ -19472,8 +19472,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
     type: 2}
+  shadowType: 0
   meshException: 0
-  meshType: 4
   shadowColliders: []
   singleMesh: 0
 --- !u!23 &1853744150
@@ -20654,6 +20654,18 @@ Prefab:
     - target: {fileID: 4925074261487268, guid: be61b123ca058cb40b6c203fa8ca6183, type: 2}
       propertyPath: m_RootOrder
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4566863370717594, guid: be61b123ca058cb40b6c203fa8ca6183, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4566863370717594, guid: be61b123ca058cb40b6c203fa8ca6183, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4566863370717594, guid: be61b123ca058cb40b6c203fa8ca6183, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: be61b123ca058cb40b6c203fa8ca6183, type: 2}

@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
 
-public class PlayerGroundedZone2D : MonoBehaviour{
+public class PlayerGroundedZone2D : MonoBehaviour
+{
 
-    PlayerMovement playerMovement;
+    PlayerShadowInteraction playerMovement;
 
     void Start()
     {
-        playerMovement = GameObject.Find("Player_Character").GetComponent<PlayerMovement>();
+        playerMovement = GameObject.Find("Player_Character").GetComponent<PlayerShadowInteraction>();
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (!PlayerMovement.grounded2D && !PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut)
+        if (!PlayerShadowInteraction.grounded2D && !PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut)
         {
             if (other.GetComponent<Collider>().isTrigger != true && other.gameObject.tag != "Player")
             {
@@ -22,15 +23,15 @@ public class PlayerGroundedZone2D : MonoBehaviour{
     }
 
     void OnTriggerStay(Collider other)
-	{
-		if(other.GetComponent<Collider>().isTrigger != true && other.gameObject.tag != "Player")
-		    PlayerMovement.grounded2D = true;
-	}
+    {
+        if (other.GetComponent<Collider>().isTrigger != true && other.gameObject.tag != "Player")
+            PlayerShadowInteraction.grounded2D = true;
+    }
 
-	void OnTriggerExit(Collider other)
-	{
-		if(other.GetComponent<Collider>().isTrigger != true && other.gameObject.tag != "Player")
-		    PlayerMovement.grounded2D = false;
-	}
+    void OnTriggerExit(Collider other)
+    {
+        if (other.GetComponent<Collider>().isTrigger != true && other.gameObject.tag != "Player")
+            PlayerShadowInteraction.grounded2D = false;
+    }
 }
 

@@ -14,7 +14,7 @@ public class DownwardShadowControl : MonoBehaviour
 {
 	void Update ()
     {
-		if (PlayerMovement.shadowShiftingIn || PlayerMovement.shadowShiftingOut || PlayerMovement.in3DSpace)
+		if (PlayerShadowInteraction.shadowShiftingIn || PlayerShadowInteraction.shadowShiftingOut || PlayerShadowInteraction.in3DSpace)
         {
             gameObject.GetComponent<Light>().enabled = true;
         }

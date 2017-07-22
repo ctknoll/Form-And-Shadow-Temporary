@@ -41,7 +41,7 @@ public class MovingPlatform : MonoBehaviour {
 
 	public void FixedUpdate() 
 	{
-		if(!PlayerMovement.shadowShiftingIn && !PlayerMovement.shadowShiftingOut && !GameController.paused)
+		if(!PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut && !GameController.paused)
 		{
 			personalTime += slowValue * Time.deltaTime;
 		}

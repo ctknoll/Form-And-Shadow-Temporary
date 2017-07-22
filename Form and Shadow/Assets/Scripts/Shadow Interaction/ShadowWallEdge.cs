@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class ShadowWallEdge : MonoBehaviour {
     private float castInternalCooldown = 0.5f;
     private float castInternalCooldownStart;
-    private List<GameObject> platformList = new List<GameObject>();
 
     public void OnTriggerStay(Collider other)
     {
