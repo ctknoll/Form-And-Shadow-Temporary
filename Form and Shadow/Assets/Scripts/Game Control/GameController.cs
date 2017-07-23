@@ -64,7 +64,7 @@ public class GameController : MonoBehaviour {
 	{
 		player = GameObject.Find("Player_Character");
 		playerShadow = GameObject.Find("Player_Shadow");
-        playerMesh = player.transform.FindChild("Player_Mesh").gameObject;
+        playerMesh = player.transform.Find("Player_Mesh").gameObject;
 
         instance = GetComponent<GameController>();
         scoreText = GameObject.Find("Score_Text");
@@ -99,12 +99,12 @@ public class GameController : MonoBehaviour {
 
     void Update()
     {
-        if (!paused && !resetting && !PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut)
+        if (!paused && !resetting && NewPlayerShadowInteraction.m_CurrentPlayerState != NewPlayerShadowInteraction.PLAYERSTATE.SHIFTING)
             masterTimer += Time.deltaTime;
         ScoreUIControl();
         ShadowmeldUIControl();
 
-        if(Input.GetButtonDown("Quit") && !PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut)
+        if(Input.GetButtonDown("Quit") && NewPlayerShadowInteraction.m_CurrentPlayerState != NewPlayerShadowInteraction.PLAYERSTATE.SHIFTING)
         {
             ToggleGamePause();
         }
@@ -121,10 +121,10 @@ public class GameController : MonoBehaviour {
 
     void ShadowmeldUIControl()
     {
-        shadowMeldResourceObject.SetActive(player.GetComponent<PlayerShadowInteraction>().shadowMeldAvailable);
-        shadowMeldResourceBackdrop.SetActive(player.GetComponent<PlayerShadowInteraction>().shadowMeldAvailable);
+        shadowMeldResourceObject.SetActive(player.GetComponent<NewPlayerShadowInteraction>().m_ShadowmeldAvailable);
+        shadowMeldResourceBackdrop.SetActive(player.GetComponent<NewPlayerShadowInteraction>().m_ShadowmeldAvailable);
         shadowMeldResourceObject.GetComponent<Image>().color = Color.magenta;
-        shadowMeldResourceObject.GetComponent<Image>().fillAmount = player.GetComponent<PlayerShadowInteraction>().shadowMeldResource / 100;
+        shadowMeldResourceObject.GetComponent<Image>().fillAmount = player.GetComponent<NewPlayerShadowInteraction>().m_CurrentShadowmeldResource / player.GetComponent<NewPlayerShadowInteraction>().m_MaxShadowmeldResource;
     }
     #endregion
 
@@ -278,7 +278,7 @@ public class GameController : MonoBehaviour {
 
     public void ControlAmbientAudio()
     {
-        if(PlayerShadowInteraction.shadowMelded)
+        if(NewPlayerShadowInteraction.m_CurrentPlayerState == NewPlayerShadowInteraction.PLAYERSTATE.SHADOWMELDED)
         {
             ambientAudioSource.Pause();
             ambientAudioSource.clip = ambientShadowmeldAudioClip;
@@ -326,24 +326,19 @@ public class GameController : MonoBehaviour {
         }
         
         // Check if the player is in 2D space
-        if (!PlayerShadowInteraction.in3DSpace)
+        if (NewPlayerShadowInteraction.m_CurrentPlayerState == NewPlayerShadowInteraction.PLAYERSTATE.SHADOW)
 		{
             // If so, remove them from 2D space first
-			PlayerShadowInteraction.in3DSpace = true;
-			playerShadow.GetComponent<CharacterController>().enabled = false;
-			player.GetComponent<CharacterController>().enabled = true;
-			player.GetComponent<PlayerShadowInteraction>().controller = player.GetComponent<CharacterController>();
 		}
         // Then, reset the player's position to the start position
-		player.transform.position = PlayerShadowInteraction.playerStartPosition;
+        player.transform.position = NewPlayerShadowInteraction.m_PlayerStartPosition;
         playerMesh.transform.localScale = new Vector3(1, 1, 1);
 
-        player.GetComponent<PlayerShadowInteraction>().shadowMeldResource = 100;
-        player.GetComponent<PlayerShadowInteraction>().shadowMeldVFX.SetActive(false);
+        player.GetComponent<NewPlayerShadowInteraction>().m_CurrentShadowmeldResource = 100;
         player.layer = LayerMask.NameToLayer("Form");
+        NewPlayerShadowInteraction.m_CurrentPlayerState = NewPlayerShadowInteraction.PLAYERSTATE.FORM;
         yield return new WaitForSeconds(0.5f);
         resetting = false;
-        PlayerShadowInteraction.shadowMelded = false;
 	}
 
     public IEnumerator PlayerDeathAnimation()

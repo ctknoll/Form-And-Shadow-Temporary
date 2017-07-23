@@ -33,7 +33,7 @@ public class PropellorPlatform : MonoBehaviour {
 
 	void FixedUpdate () 
 	{
-		if(!PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut && !GameController.resetting && !GameController.paused)
+		if(NewPlayerShadowInteraction.m_CurrentPlayerState != NewPlayerShadowInteraction.PLAYERSTATE.SHIFTING && !GameController.resetting && !GameController.paused)
         {
             if(rotateClockwise)
             {

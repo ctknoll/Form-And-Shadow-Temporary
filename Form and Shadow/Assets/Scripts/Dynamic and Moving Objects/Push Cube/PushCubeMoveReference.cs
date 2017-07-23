@@ -16,18 +16,18 @@ public class PushCubeMoveReference : MonoBehaviour
 
     void Update()
     {
-        if (!PlayerShadowInteraction.in3DSpace)
-        {
-            pushCube.canInteract = false;
-            GameController.CheckInteractToolip(false, true);
-        }
+        //if (!PlayerShadowInteraction.in3DSpace)
+        //{
+        //    pushCube.canInteract = false;
+        //    GameController.CheckInteractToolip(false, true);
+        //}
     }
 
 	void OnTriggerStay(Collider other)
 	{
 		if(other.gameObject.tag == "Player")
 		{
-            if (!PlayerShadowInteraction.shadowMelded && !PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut && PlayerShadowInteraction.in3DSpace && !GameController.paused)
+            if (NewPlayerShadowInteraction.m_CurrentPlayerState == NewPlayerShadowInteraction.PLAYERSTATE.FORM && !GameController.paused)
             {
                 pushCube.canInteract = true;
                 pushCube.directionAwayFromPlayer = (moveCubeMesh.transform.position - transform.position).normalized;

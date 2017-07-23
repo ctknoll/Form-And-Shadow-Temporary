@@ -42,7 +42,7 @@ public abstract class ToggleSwitch : MonoBehaviour {
 	// Update is called once per frame
     void OnTriggerStay (Collider other)
     {
-		if(other.gameObject.tag == "Player" && !PlayerShadowInteraction.shadowMelded && !PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut && !GameController.switch_cooldown)
+        if (other.gameObject.tag == "Player" && NewPlayerShadowInteraction.m_CurrentPlayerState == NewPlayerShadowInteraction.PLAYERSTATE.FORM && !GameController.switch_cooldown)
         {
             if(!animating)
             {
@@ -83,7 +83,7 @@ public abstract class ToggleSwitch : MonoBehaviour {
 
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Player" && !PlayerShadowInteraction.shadowMelded && !PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut)
+        if (other.gameObject.tag == "Player" && NewPlayerShadowInteraction.m_CurrentPlayerState == NewPlayerShadowInteraction.PLAYERSTATE.FORM)
         {
             GameController.CheckInteractToolip(false, false);
         }
@@ -97,7 +97,7 @@ public abstract class ToggleSwitch : MonoBehaviour {
         float flipPersonalTimer = panStart;
         while (flipPersonalTimer < panStart + switchFlipAnimationTime)
         {
-            if (!PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut && !GameController.paused)
+            if (NewPlayerShadowInteraction.m_CurrentPlayerState != NewPlayerShadowInteraction.PLAYERSTATE.SHIFTING && !GameController.paused)
             {
                 flipPersonalTimer += Time.deltaTime;
             }
@@ -113,11 +113,11 @@ public abstract class ToggleSwitch : MonoBehaviour {
         float currentTimerDuration = audioStart;
         while(currentTimerDuration < audioStart + timerAudioSource.clip.length)
         {
-            if (!PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut && !GameController.paused)
+            if (NewPlayerShadowInteraction.m_CurrentPlayerState != NewPlayerShadowInteraction.PLAYERSTATE.SHIFTING && !GameController.paused)
             {
                 currentTimerDuration += Time.deltaTime;
             }
-            if (GameController.paused || PlayerShadowInteraction.shadowShiftingIn || PlayerShadowInteraction.shadowShiftingOut)
+            if (GameController.paused || NewPlayerShadowInteraction.m_CurrentPlayerState == NewPlayerShadowInteraction.PLAYERSTATE.SHIFTING)
             {
                 switchFlipAudioSource.Pause();
                 timerAudioSource.Pause();
@@ -141,7 +141,7 @@ public abstract class ToggleSwitch : MonoBehaviour {
         float flipPersonalTimer = panStart;
         while (flipPersonalTimer < panStart + switchFlipAnimationTime)
         {
-            if (!PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut && !GameController.paused)
+            if (NewPlayerShadowInteraction.m_CurrentPlayerState != NewPlayerShadowInteraction.PLAYERSTATE.SHIFTING && !GameController.paused)
             {
                 flipPersonalTimer += Time.deltaTime;
             }
@@ -159,11 +159,11 @@ public abstract class ToggleSwitch : MonoBehaviour {
         float currentTimerDuration = audioStart;
         while (currentTimerDuration < audioStart + switchFlipAudioSource.clip.length)
         {
-            if (!PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut && !GameController.paused)
+            if (NewPlayerShadowInteraction.m_CurrentPlayerState != NewPlayerShadowInteraction.PLAYERSTATE.SHIFTING && !GameController.paused)
             {
                 currentTimerDuration += Time.deltaTime;
             }
-            if (GameController.paused || PlayerShadowInteraction.shadowShiftingIn || PlayerShadowInteraction.shadowShiftingOut)
+            if (GameController.paused || NewPlayerShadowInteraction.m_CurrentPlayerState == NewPlayerShadowInteraction.PLAYERSTATE.SHIFTING)
             {
                 switchFlipAudioSource.Pause();
             }
@@ -189,7 +189,7 @@ public abstract class ToggleSwitch : MonoBehaviour {
         float flipPersonalTimer = panStart;
         while (flipPersonalTimer < panStart + switchFlipAnimationTime)
         {
-            if (!PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut && !GameController.paused)
+            if (NewPlayerShadowInteraction.m_CurrentPlayerState != NewPlayerShadowInteraction.PLAYERSTATE.SHIFTING && !GameController.paused)
             {
                 flipPersonalTimer += Time.deltaTime;
             }

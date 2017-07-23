@@ -83,7 +83,7 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
         float localTime = GameController.masterTimer;
         currentPos.Add(platform.platformObject.transform.position);
         moveTime[index] = ((currentPos[index] - endPos[index]).magnitude / platform.moveSpeed);
-        while ((((!PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut && !GameController.paused) ? localTime += Time.deltaTime : localTime) < (panStart + moveTime[index]) + GameController.masterTimer - localTime) && pressed)
+        while ((((NewPlayerShadowInteraction.m_CurrentPlayerState != NewPlayerShadowInteraction.PLAYERSTATE.SHIFTING && !GameController.paused) ? localTime += Time.deltaTime : localTime) < (panStart + moveTime[index]) + GameController.masterTimer - localTime) && pressed)
         {
             platform.platformObject.transform.position = Vector3.Lerp(currentPos[index], endPos[index], (localTime - panStart) / moveTime[index]);
             yield return null;
@@ -100,7 +100,7 @@ public class PlatformLERPToggleSwitch : ToggleSwitch
         moveTime[index] = ((currentPos[index] - startPos[index]).magnitude / platform.moveSpeed);
         while ((personalTime - panStart) < moveTime[index] && !pressed)
         {
-            if ((!PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut && !GameController.paused))
+            if ((NewPlayerShadowInteraction.m_CurrentPlayerState != NewPlayerShadowInteraction.PLAYERSTATE.SHIFTING && !GameController.paused))
             {
                 personalTime += Time.deltaTime;
             }

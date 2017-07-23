@@ -8,10 +8,12 @@ public class NewPlayerShadowInteraction : MonoBehaviour
 {
     [Header("Master References")]
     public GameObject m_PlayerShadow;
+    GameObject m_LightingMaster;
+    [HideInInspector] public GameObject m_LightSourceAligned;
     //public GameController m_GameController;
 
     [Header("Shadow Shift Variables")]
-    [SerializeField] bool m_ShadowshiftAvailable;
+    public bool m_ShadowshiftAvailable;
     //[SerializeField] AudioClip m_ShadowshiftInAudioClip;
     //[SerializeField] AudioClip m_ShadowShiftOutAudioClip;
     [SerializeField] GameObject m_ShadowShiftFollowPrefab;
@@ -25,14 +27,14 @@ public class NewPlayerShadowInteraction : MonoBehaviour
     float m_CameraPanInRelativeDistance;
 
     [Header("Shadowmeld Variables and References")]
-    [SerializeField] bool m_ShadowmeldAvailable;
+    public bool m_ShadowmeldAvailable;
     //[SerializeField] AudioClip m_ShadowmeldInAudioClip;
     //[SerializeField] AudioClip m_ShadowmeldOutAudioClip;
     //[SerializeField] GameObject m_ShadowmeldVFX;
     [Range(0, 20)][SerializeField] float m_ShadowmeldResourceCost;
     [Range(5, 20)][SerializeField] float m_ShadowmeldResourceRegen;
-    [SerializeField] float m_MaxShadowmeldResource = 100f;
-    float m_CurrentShadowmeldResource;
+    public float m_MaxShadowmeldResource;
+    [HideInInspector] public float m_CurrentShadowmeldResource;
 
     public enum PLAYERSTATE {FORM, SHADOW, GRABBING, SHIFTING, SHADOWMELDED};
     [Header("Player State and Respawn")]
@@ -46,6 +48,7 @@ public class NewPlayerShadowInteraction : MonoBehaviour
         m_CurrentPlayerState = PLAYERSTATE.FORM;
         m_CurrentShadowmeldResource = m_MaxShadowmeldResource;
         m_CurrentPlatformIndex = 0;
+        m_LightingMaster = GameObject.Find("Lighting");
     }
 
     void Update()
@@ -188,7 +191,7 @@ public class NewPlayerShadowInteraction : MonoBehaviour
             {
                 // If the player is at index 0 of the platforms, or the first platform, and they try to go forward,
                 // they return to the wall
-                StartCoroutine(CameraPanIn(m_ShadowShiftFollowObject.transform.position, targetLocation, -GetComponent<NewPlayerShadowCast>().m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection * Camera.main.GetComponent<NewCameraControl>().m_DistanceToPlayer2D));
+                StartCoroutine(CameraPanIn(m_ShadowShiftFollowObject.transform.position, targetLocation, -m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection * Camera.main.GetComponent<NewCameraControl>().m_DistanceToPlayer2D));
             }
             else
             {
@@ -217,14 +220,14 @@ public class NewPlayerShadowInteraction : MonoBehaviour
     {
         RaycastHit shadowWallHit;
 
-        if(GetComponent<NewPlayerShadowCast>().CheckLightSourceAligned() != null)
+        if(CheckLightSourceAligned() != null)
         {
             Debug.Log("got a light");
-            m_ZAxisTransition = GetComponent<NewPlayerShadowCast>().m_LightSourceAligned.GetComponent<LightSourceControl>().zAxisMovement;
+            m_ZAxisTransition = m_LightSourceAligned.GetComponent<LightSourceControl>().zAxisMovement;
             // Cast a sphere in the direction of the most aligned light source on the
             // shadow wall layer
             if (Physics.SphereCast(transform.position, 0.2f,
-                GetComponent<NewPlayerShadowCast>().m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection, out shadowWallHit, 1 << 10))
+                m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection, out shadowWallHit, 1 << 10))
             {
                 if (m_ZAxisTransition)
                     m_PlayerShiftInOffset = transform.position.z;
@@ -232,8 +235,7 @@ public class NewPlayerShadowInteraction : MonoBehaviour
                     m_PlayerShiftInOffset = transform.position.x;
                 // Shift in
                 StartCoroutine(CameraPanIn(transform.position, shadowWallHit.point,
-                    -GetComponent<NewPlayerShadowCast>().m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection *
-                    Camera.main.GetComponent<NewCameraControl>().m_DistanceToPlayer2D));
+                    -m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection * Camera.main.GetComponent<NewCameraControl>().m_DistanceToPlayer2D));
             }
         }
     }
@@ -305,12 +307,7 @@ public class NewPlayerShadowInteraction : MonoBehaviour
             Camera.main.transform.position = Vector3.Lerp(m_CameraPanInStartPosition, target + cameraOffset, (Time.time - panStart) / m_ShadowShiftDuration);
             yield return null;
         }
-
-        // After the transition is finished, perform final steps
-        transform.parent = null;
-        m_PlayerShadow.transform.parent = null;
-        Destroy(m_ShadowShiftFollowObject);
-        m_CurrentPlayerState = PLAYERSTATE.SHADOW;
+        FinishShiftIn();
     }
 
     IEnumerator CameraPanOut(Vector3 start, Vector3 target, bool finish)
@@ -330,6 +327,16 @@ public class NewPlayerShadowInteraction : MonoBehaviour
             FinishShiftingOut();
     }
 
+    void FinishShiftIn()
+    {
+        // After the transition is finished, perform final steps
+        m_PlayerShadow.transform.position = m_ShadowShiftFollowObject.transform.position;
+        Destroy(m_ShadowShiftFollowObject);
+        transform.parent = null;
+        m_PlayerShadow.transform.parent = null;
+        m_CurrentPlayerState = PLAYERSTATE.SHADOW;
+    }
+
     void FinishShiftingOut()
     {
         m_CurrentPlatformIndex = 0;
@@ -338,6 +345,28 @@ public class NewPlayerShadowInteraction : MonoBehaviour
         transform.parent = null;
         m_PlayerShadow.transform.parent = null;
         m_CurrentPlayerState = PLAYERSTATE.FORM;
+    }
+
+    public GameObject CheckLightSourceAligned()
+    {
+        GameObject mostAlignedLightSource = null;
+        foreach (Transform lightTransform in m_LightingMaster.transform)
+        {
+            if (lightTransform.gameObject.activeSelf)
+            {
+                Transform cameraTransform = Camera.main.transform;
+                cameraTransform.eulerAngles = new Vector3(0, cameraTransform.eulerAngles.y, cameraTransform.eulerAngles.z);
+                float tempAngle = Vector3.Angle(lightTransform.forward, cameraTransform.forward);
+                if (Mathf.Abs(tempAngle) < 35)
+                {
+                    m_LightSourceAligned = lightTransform.gameObject;
+                    mostAlignedLightSource = lightTransform.gameObject;
+                }
+            }
+            else
+                continue;
+        }
+        return mostAlignedLightSource;
     }
     #endregion
 }

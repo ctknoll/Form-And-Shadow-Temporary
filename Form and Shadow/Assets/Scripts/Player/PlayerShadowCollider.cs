@@ -13,40 +13,23 @@ using System.Collections.Generic;
 */
 public class PlayerShadowCollider : MonoBehaviour
 {
-	public GameObject player;
-    public Vector3 transformOffset;
-    public Transform wallTransform;
-    public bool zAxisMovement;
+	GameObject player;
+
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
 
     void Update()
 	{
-        // If the player is moving in the 3D space, force the shadow collider to follow the main player character
-        if (PlayerShadowInteraction.in3DSpace && !PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut)
-			FollowPlayer();
-        else
+        switch (NewPlayerShadowInteraction.m_CurrentPlayerState)
         {
-            if(wallTransform != null)
-            {
-                if (zAxisMovement)
-                    transform.position = new Vector3(transform.position.x, transform.position.y, wallTransform.position.z + transformOffset.z);
-                else
-                    transform.position = new Vector3(wallTransform.position.x + transformOffset.x, transform.position.y, transform.position.z);
-            }
-            if(!PlayerShadowInteraction.in3DSpace && !PlayerShadowInteraction.shadowShiftingIn && !PlayerShadowInteraction.shadowShiftingOut)
-            {
-                RaycastHit hit;
-                if (Physics.Raycast(transform.position + gameObject.transform.forward, -gameObject.transform.forward, out hit, Mathf.Infinity, 1 << 10))
-                {
-                    if(hit.distance <= 1)
-                         wallTransform = hit.transform;
-                }
-                else if (Physics.Raycast(transform.position + gameObject.transform.forward, -gameObject.transform.forward, out hit, Mathf.Infinity, 1 << 12))
-                {
-                    if (hit.distance <= 1)
-                        wallTransform = null;
-                }
-            }
-        }     
+            case NewPlayerShadowInteraction.PLAYERSTATE.SHADOW:
+                break;
+            default:
+                FollowPlayer();
+                break;
+        }
 	}
 
 	public void FollowPlayer()
