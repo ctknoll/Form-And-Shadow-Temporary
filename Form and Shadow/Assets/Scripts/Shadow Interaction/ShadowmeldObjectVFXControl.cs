@@ -20,7 +20,7 @@ public class ShadowmeldObjectVFXControl : MonoBehaviour {
             
             if(GetComponentInParent<ShadowmeldObjectControl>().shadowMeldObjectType == ShadowmeldObjectControl.ShadowMeldObjectType.SPIKES)
             {
-                shapeMod.scale = GetComponentInParent<BoxCollider>().size;
+                shapeMod.box = GetComponentInParent<BoxCollider>().size;
 
                 float[] parentScales = new float[] { GetComponentInParent<BoxCollider>().size.x, GetComponentInParent<BoxCollider>().size.y, GetComponentInParent<BoxCollider>().size.z };
                 float cappedParentScale = Mathf.Max(parentScales);
@@ -35,7 +35,7 @@ public class ShadowmeldObjectVFXControl : MonoBehaviour {
 
             if (GetComponentInParent<ShadowmeldObjectControl>().shadowMeldObjectType == ShadowmeldObjectControl.ShadowMeldObjectType.FLAT_SPIKES)
             {
-                shapeMod.scale = Vector3.Scale(shapeMod.scale, new Vector3(2, 1, 2));
+                shapeMod.box = Vector3.Scale(shapeMod.box, new Vector3(2, 1, 2));
                 float[] parentScales = new float[] { GetComponentInParent<BoxCollider>().bounds.size.x, GetComponentInParent<BoxCollider>().bounds.size.y, GetComponentInParent<BoxCollider>().bounds.size.z };
                 float cappedParentScale = Mathf.Max(parentScales);
                 cappedParentScale = Mathf.Clamp(cappedParentScale, 1, 10);

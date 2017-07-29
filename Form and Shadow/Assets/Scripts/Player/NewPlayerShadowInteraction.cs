@@ -320,7 +320,7 @@ public class NewPlayerShadowInteraction : MonoBehaviour
         while (Time.time < panStart + m_ShadowShiftDuration)
         {
             m_ShadowShiftFollowObject.transform.position = Vector3.Lerp(start, target, (Time.time - panStart) / m_ShadowShiftDuration);
-            Camera.main.transform.position = Vector3.Lerp(startPos, target + m_CameraRelativeDirectionOffset * Camera.main.GetComponent<NewCameraControl>().m_DistanceToPlayer3D, (Time.time - panStart) / m_ShadowShiftDuration);
+            Camera.main.transform.position = Vector3.Lerp(startPos, target + m_CameraRelativeDirectionOffset * Camera.main.GetComponent<NewCameraControl>().m_DistanceMax, (Time.time - panStart) / m_ShadowShiftDuration);
             yield return null;
         }
         if (finish)

@@ -30,7 +30,7 @@ public class PlayerMovementInput : MonoBehaviour
 	}
 
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         // Get player inputs
         {
