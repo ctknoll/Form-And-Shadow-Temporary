@@ -13,7 +13,7 @@ using System.Collections.Generic;
 */
 public class PlayerShadowCollider : MonoBehaviour
 {
-	GameObject player;
+	private GameObject player;
 
     void Start()
     {
@@ -22,39 +22,14 @@ public class PlayerShadowCollider : MonoBehaviour
 
     void Update()
 	{
-        switch (NewPlayerShadowInteraction.m_CurrentPlayerState)
-        {
-            case NewPlayerShadowInteraction.PLAYERSTATE.SHADOW:
-                break;
-            default:
-                FollowPlayer();
-                break;
-        }
+        if (NewPlayerShadowInteraction.m_CurrentPlayerState != NewPlayerShadowInteraction.PLAYERSTATE.SHADOW)
+            FollowPlayer();
 	}
 
-	public void FollowPlayer()
+	void FollowPlayer()
 	{
 		transform.position = player.transform.position + Vector3.up * 10;
 	}
 
-	public List<GameObject> GetTransferPlatforms()
-	{
-        List<GameObject> transferPlatforms = new List<GameObject>();
-        // Cast a ray down from the player shadow and store all shadow colliders hit in an array of RaycastHits
-        RaycastHit firstPlatformHit;
-        if(Physics.SphereCast(transform.position, 0.5f, Vector3.down, out firstPlatformHit, transform.position.y, 1 << 11, QueryTriggerInteraction.Collide))
-        {
-            RaycastHit[] hits;
-            hits = Physics.SphereCastAll(firstPlatformHit.point - new Vector3(0, 0.5f, 0), 0.5f, Vector3.down, GetComponent<CharacterController>().height / 2, 1 << 11, QueryTriggerInteraction.Collide);
-            // Then, create a list of gameobjects and for each RaycastHit in hits, add the hit collider's gameobject to the list of transferPlatforms
-            foreach (RaycastHit hit in hits)
-            {
-                // Prevent spikes from being added as shadow collider objects
-                if (hit.collider.GetComponentInParent<ShadowCollider>().transformParent.GetComponent<ShadowCast>().shadowType != ShadowCast.ShadowType.SPIKES)
-                    transferPlatforms.Add(hit.collider.gameObject.GetComponentInParent<ShadowCollider>().transformParent);
-            }
-        }
-		// Then, return a list of gameobjects equal to all the shadow colliders below the player when called
-		return transferPlatforms;
-	}
+
 }

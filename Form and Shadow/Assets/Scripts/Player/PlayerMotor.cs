@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TP_Motor : MonoBehaviour
+public class PlayerMotor : MonoBehaviour
 {
-    public static TP_Motor m_Instance;
-    [Range(5, 15)][SerializeField] float m_ForwardSpeed = 10f;
-    [Range(2, 8)][SerializeField] float m_BackwardSpeed = 2f;
-    [Range(5, 15)][SerializeField] float m_StrafingSpeed = 5f;
+    public static PlayerMotor m_Instance;
+    [Range(2, 10)][SerializeField] float m_ForwardSpeed = 10f;
+    [Range(1, 5)][SerializeField] float m_BackwardSpeed = 2f;
+    [Range(2, 10)][SerializeField] float m_StrafingSpeed = 5f;
     [Range(2, 7)][SerializeField] float m_SlideSpeed = 10f;
     [Range(4, 10)][SerializeField] float m_JumpSpeed = 6f;
     [Range(15, 25)] public float m_Gravity = 21f;
@@ -25,7 +25,7 @@ public class TP_Motor : MonoBehaviour
 	}
 
 
-    public void UpdateMotor ()
+    public void Update3DMovement ()
     {
         SnapAlignCharacterWithCamera();
         ProcessMotion();
@@ -53,7 +53,7 @@ public class TP_Motor : MonoBehaviour
         ApplyGravity();
 
         // Move the CharacterController in world space using the MoveVector
-        TP_Controller.m_CharacterController.Move(m_MoveVector * Time.deltaTime);
+        PlayerController.m_CharacterController.Move(m_MoveVector * Time.deltaTime);
     }
 
     void ApplyGravity()
@@ -61,13 +61,13 @@ public class TP_Motor : MonoBehaviour
         if (m_MoveVector.y > -m_TerminalVelocity)
             m_MoveVector = new Vector3(m_MoveVector.x, m_MoveVector.y - m_Gravity * Time.deltaTime, m_MoveVector.z);
 
-        if(TP_Controller.m_CharacterController.isGrounded && m_MoveVector.y < -1)
+        if(PlayerController.m_CharacterController.isGrounded && m_MoveVector.y < -1)
             m_MoveVector = new Vector3(m_MoveVector.x, -1, m_MoveVector.z);
     }
 
     void ApplySlide()
     {
-        if (!TP_Controller.m_CharacterController.isGrounded)
+        if (!PlayerController.m_CharacterController.isGrounded)
         {
             return;
         }
@@ -78,7 +78,7 @@ public class TP_Motor : MonoBehaviour
 
         Debug.DrawRay(transform.position + Vector3.up, Vector3.down, Color.red);
 
-        if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hitInfo))
+        if (Physics.Raycast(PlayerController.m_CharacterController.transform.position + Vector3.up, Vector3.down, out hitInfo))
         {
             if(hitInfo.normal.y < m_SlideThreshold)
             {
@@ -96,7 +96,7 @@ public class TP_Motor : MonoBehaviour
 
     public void Jump()
     {
-        if (TP_Controller.m_CharacterController.isGrounded)
+        if (PlayerController.m_CharacterController.isGrounded)
             m_VerticalVelocity = m_JumpSpeed;
     }
 
@@ -111,33 +111,33 @@ public class TP_Motor : MonoBehaviour
     float MoveSpeed()
     {
         var moveSpeed = 0f;
-        switch (TP_Animator.m_Instance.m_MoveDirection)
+        switch (PlayerAnimator.m_Instance.m_MoveDirection)
         {
-            case TP_Animator.Direction.Stationary:
+            case PlayerAnimator.Direction.Stationary:
                 moveSpeed = 0;
                 break;
-            case TP_Animator.Direction.Forward:
+            case PlayerAnimator.Direction.Forward:
                 moveSpeed = m_ForwardSpeed;
                 break;
-            case TP_Animator.Direction.Backward:
+            case PlayerAnimator.Direction.Backward:
                 moveSpeed = m_BackwardSpeed;
                 break;
-            case TP_Animator.Direction.Left:
+            case PlayerAnimator.Direction.Left:
                 moveSpeed = m_StrafingSpeed;
                 break;
-            case TP_Animator.Direction.Right:
+            case PlayerAnimator.Direction.Right:
                 moveSpeed = m_StrafingSpeed;
                 break;
-            case TP_Animator.Direction.LeftForward:
+            case PlayerAnimator.Direction.LeftForward:
                 moveSpeed = m_ForwardSpeed;
                 break;
-            case TP_Animator.Direction.RightForward:
+            case PlayerAnimator.Direction.RightForward:
                 moveSpeed = m_ForwardSpeed;
                 break;
-            case TP_Animator.Direction.LeftBackward:
+            case PlayerAnimator.Direction.LeftBackward:
                 moveSpeed = m_BackwardSpeed;
                 break;
-            case TP_Animator.Direction.RightBackward:
+            case PlayerAnimator.Direction.RightBackward:
                 moveSpeed = m_BackwardSpeed;
                 break;
             default:

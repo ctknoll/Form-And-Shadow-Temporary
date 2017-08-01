@@ -279,7 +279,7 @@ public class NewPlayerShadowInteraction : MonoBehaviour
 
     void SetupShadowShiftOut()
     {
-        m_ShadowShiftOutPlatforms = m_PlayerShadow.GetComponent<PlayerShadowCollider>().GetTransferPlatforms();
+        m_ShadowShiftOutPlatforms = GetTransferPlatforms();
 
         if (m_ShadowShiftOutPlatforms.Count != 0)
         {
@@ -287,6 +287,27 @@ public class NewPlayerShadowInteraction : MonoBehaviour
                 return Vector3.Distance(t1.transform.position, m_PlayerShadow.transform.position).CompareTo(Vector3.Distance(t2.transform.position, m_PlayerShadow.transform.position));
             });
         }
+    }
+
+    List<GameObject> GetTransferPlatforms()
+    {
+        List<GameObject> transferPlatforms = new List<GameObject>();
+        // Cast a ray down from the player shadow and store all shadow colliders hit in an array of RaycastHits
+        RaycastHit firstPlatformHit;
+        if (Physics.SphereCast(m_PlayerShadow.transform.position, 0.5f, Vector3.down, out firstPlatformHit, m_PlayerShadow.transform.position.y, 1 << 11, QueryTriggerInteraction.Collide))
+        {
+            RaycastHit[] hits;
+            hits = Physics.SphereCastAll(firstPlatformHit.point - new Vector3(0, 0.5f, 0), 0.5f, Vector3.down, GetComponent<CharacterController>().height / 2, 1 << 11, QueryTriggerInteraction.Collide);
+            // Then, create a list of gameobjects and for each RaycastHit in hits, add the hit collider's gameobject to the list of transferPlatforms
+            foreach (RaycastHit hit in hits)
+            {
+                // Prevent spikes from being added as shadow collider objects
+                if (hit.collider.GetComponentInParent<ShadowCollider>().transformParent.GetComponent<ShadowCast>().shadowType != ShadowCast.ShadowType.SPIKES)
+                    transferPlatforms.Add(hit.collider.gameObject.GetComponentInParent<ShadowCollider>().transformParent);
+            }
+        }
+        // Then, return a list of gameobjects equal to all the shadow colliders below the player when called
+        return transferPlatforms;
     }
 
     IEnumerator CameraPanIn(Vector3 start, Vector3 target, Vector3 cameraOffset)
@@ -331,6 +352,12 @@ public class NewPlayerShadowInteraction : MonoBehaviour
     {
         // After the transition is finished, perform final steps
         m_PlayerShadow.transform.position = m_ShadowShiftFollowObject.transform.position;
+        transform.position = Camera.main.transform.position + Camera.main.transform.forward * 2f;
+
+        m_PlayerShadow.GetComponent<CharacterController>().enabled = true;
+        PlayerController.m_CharacterController = m_PlayerShadow.GetComponent<CharacterController>();
+        GetComponent<CharacterController>().enabled = false;
+
         Destroy(m_ShadowShiftFollowObject);
         transform.parent = null;
         m_PlayerShadow.transform.parent = null;
@@ -341,6 +368,11 @@ public class NewPlayerShadowInteraction : MonoBehaviour
     {
         m_CurrentPlatformIndex = 0;
         transform.position = m_ShadowShiftFollowObject.transform.position;
+
+        m_PlayerShadow.GetComponent<CharacterController>().enabled = false;
+        PlayerController.m_CharacterController = GetComponent<CharacterController>();
+        GetComponent<CharacterController>().enabled = true;
+
         Destroy(m_ShadowShiftFollowObject);
         transform.parent = null;
         m_PlayerShadow.transform.parent = null;

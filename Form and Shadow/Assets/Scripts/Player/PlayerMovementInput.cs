@@ -36,7 +36,6 @@ public class PlayerMovementInput : MonoBehaviour
         {
             float horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
             float vertical = CrossPlatformInputManager.GetAxis("Vertical");
-            bool crouch = Input.GetKey(KeyCode.LeftControl);
 
             if(mainCamera != null)
             {
@@ -49,12 +48,7 @@ public class PlayerMovementInput : MonoBehaviour
                 playerMoveVector = vertical * Vector3.forward + horizontal * Vector3.right;
             }
 
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                playerMoveVector *= 0.5f;
-            }
-
-            pMovement.Move(playerMoveVector, crouch, playerJump);
+            pMovement.Move(playerMoveVector, playerJump);
             playerJump = false;
         }
     }
