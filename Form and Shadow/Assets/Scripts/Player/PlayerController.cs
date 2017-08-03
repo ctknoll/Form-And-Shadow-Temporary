@@ -18,12 +18,12 @@ public class PlayerController : MonoBehaviour
     {
         if (Camera.main == null)
             return;
-        switch(NewPlayerShadowInteraction.m_CurrentPlayerState)
+        switch(PlayerShadowInteraction.m_CurrentPlayerState)
         {
-            case NewPlayerShadowInteraction.PLAYERSTATE.FORM:
+            case PlayerShadowInteraction.PLAYERSTATE.FORM:
                 Get3DLocomotionInput();
                 break;
-            case NewPlayerShadowInteraction.PLAYERSTATE.SHADOW:
+            case PlayerShadowInteraction.PLAYERSTATE.SHADOW:
                 Get2DLocomotionInput();
                 break;
             default:
@@ -58,13 +58,10 @@ public class PlayerController : MonoBehaviour
         PlayerMotor.m_Instance.m_VerticalVelocity = PlayerMotor.m_Instance.m_MoveVector.y;
         PlayerMotor.m_Instance.m_MoveVector = Vector3.zero;
 
-        if (CrossPlatformInputManager.GetAxis("Horizontal") > deadZone || CrossPlatformInputManager.GetAxis("Horizontal") < -deadZone)
-        {
-            if (GetComponent<NewPlayerShadowInteraction>().m_ZAxisTransition)
-                PlayerMotor.m_Instance.m_MoveVector += new Vector3(CrossPlatformInputManager.GetAxis("Horizontal"), 0, 0);
-            else
-                PlayerMotor.m_Instance.m_MoveVector += new Vector3(0, 0, CrossPlatformInputManager.GetAxis("Horizontal"));
-        }
+        if (CrossPlatformInputManager.GetAxis("Horizontal") > deadZone)
+            PlayerMotor.m_Instance.m_MoveVector += Camera.main.transform.right;
+        if (CrossPlatformInputManager.GetAxis("Horizontal") < -deadZone)
+            PlayerMotor.m_Instance.m_MoveVector += -Camera.main.transform.right;
     }
 
     void HandleActionInput()

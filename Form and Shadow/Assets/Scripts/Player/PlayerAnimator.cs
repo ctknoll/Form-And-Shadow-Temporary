@@ -27,12 +27,24 @@ public class PlayerAnimator : MonoBehaviour
 	
 	void Update ()
     {
-        animator.SetFloat("VSpeed", Input.GetAxis("Vertical"), 0.1f, Time.deltaTime);
-        animator.SetFloat("HSpeed", Input.GetAxis("Horizontal"), 0.1f, Time.deltaTime);
+        switch(PlayerShadowInteraction.m_CurrentPlayerState)
+        {
+            case PlayerShadowInteraction.PLAYERSTATE.FORM:
+                if(animator.GetBool("PlayerInShadow"))
+                    animator.SetBool("PlayerInShadow", false);
+                animator.SetFloat("VSpeed", Input.GetAxis("Vertical"), 0.1f, Time.deltaTime);
+                animator.SetFloat("HSpeed", Input.GetAxis("Horizontal"), 0.1f, Time.deltaTime);
+                break;
+            case PlayerShadowInteraction.PLAYERSTATE.SHADOW:
+                if (!animator.GetBool("PlayerInShadow"))
+                    animator.SetBool("PlayerInShadow", true);
+                animator.SetFloat("HSpeed", Input.GetAxis("Horizontal"));
+                break;
+        }
+
         animator.SetBool("IsGrounded", PlayerController.m_CharacterController.isGrounded);
         if (!PlayerController.m_CharacterController.isGrounded)
             animator.SetFloat("Jump", PlayerMotor.m_Instance.m_MoveVector.y);
-
     }
 
     public void DetermineCurrentMoveDirection()

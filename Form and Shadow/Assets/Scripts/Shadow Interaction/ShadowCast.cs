@@ -161,9 +161,9 @@ public class ShadowCast : MonoBehaviour {
     // in 3D space, and changing their ShadowCastingMode when the player transitions into 2D.
 	public void UpdateShadowcastMode()
 	{
-        if(NewPlayerShadowInteraction.m_CurrentPlayerState != NewPlayerShadowInteraction.PLAYERSTATE.SHADOWMELDED)
+        if(PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PLAYERSTATE.SHADOWMELDED)
         {
-            if (NewPlayerShadowInteraction.m_CurrentPlayerState == NewPlayerShadowInteraction.PLAYERSTATE.SHADOW)
+            if (PlayerShadowInteraction.m_CurrentPlayerState == PlayerShadowInteraction.PLAYERSTATE.SHADOW)
             {
                 if (singleMesh)
                 {

@@ -2110,7 +2110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ForwardSpeed: 4
   m_BackwardSpeed: 1
-  m_StrafingSpeed: 4
+  m_StrafingSpeed: 3
   m_SlideSpeed: 10
   m_JumpSpeed: 10
   m_Gravity: 21
@@ -2130,7 +2130,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9adfa2004ab86be4d84e7369bd1b84d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlayerShadow: {fileID: 0}
   m_LightSourceAligned: {fileID: 0}
   m_ShadowshiftAvailable: 1
   m_ShadowShiftFollowPrefab: {fileID: 1506101941598320, guid: 96f053d07a717d64d8dc4a6db0ea4a06,

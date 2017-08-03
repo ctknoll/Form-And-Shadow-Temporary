@@ -20,7 +20,7 @@ public class AcidPool : MonoBehaviour {
 
         while (growPersonalTimer < growStartTime + acidPoolDuration)
         {
-            if (NewPlayerShadowInteraction.m_CurrentPlayerState != NewPlayerShadowInteraction.PLAYERSTATE.SHIFTING)
+            if (PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PLAYERSTATE.SHIFTING)
             {
                 growPersonalTimer += Time.deltaTime;
             }

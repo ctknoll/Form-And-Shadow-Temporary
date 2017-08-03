@@ -27,7 +27,7 @@ public class PushCubeMoveReference : MonoBehaviour
 	{
 		if(other.gameObject.tag == "Player")
 		{
-            if (NewPlayerShadowInteraction.m_CurrentPlayerState == NewPlayerShadowInteraction.PLAYERSTATE.FORM && !GameController.paused)
+            if (PlayerShadowInteraction.m_CurrentPlayerState == PlayerShadowInteraction.PLAYERSTATE.FORM && !GameController.paused)
             {
                 pushCube.canInteract = true;
                 pushCube.directionAwayFromPlayer = (moveCubeMesh.transform.position - transform.position).normalized;

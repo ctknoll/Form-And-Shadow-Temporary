@@ -65,12 +65,12 @@ public class NewCameraControl : MonoBehaviour
 
     void LateUpdate()
     {
-        switch(NewPlayerShadowInteraction.m_CurrentPlayerState)
+        switch(PlayerShadowInteraction.m_CurrentPlayerState)
         {
-            case NewPlayerShadowInteraction.PLAYERSTATE.SHADOW:
+            case PlayerShadowInteraction.PLAYERSTATE.SHADOW:
                 Update2DCameraMovement();
                 break;
-            case NewPlayerShadowInteraction.PLAYERSTATE.SHIFTING:
+            case PlayerShadowInteraction.PLAYERSTATE.SHIFTING:
                 UpdateShiftingCameraMovement();
                 break;
             default:
@@ -250,7 +250,7 @@ public class NewCameraControl : MonoBehaviour
     {
         m_Camera.orthographic = false;
         m_Camera.clearFlags = CameraClearFlags.Skybox;
-        transform.LookAt(m_CameraTarget.GetComponentInParent<NewPlayerShadowInteraction>().m_ShadowShiftFollowObject.transform);
+        transform.LookAt(m_CameraTarget.GetComponentInParent<PlayerShadowInteraction>().m_ShadowShiftFollowObject.transform);
     }
 
     public struct ClipPlanePoints

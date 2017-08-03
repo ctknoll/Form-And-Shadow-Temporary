@@ -14,9 +14,9 @@ public class DownwardShadowControl : MonoBehaviour
 {
 	void Update ()
     {
-        switch(NewPlayerShadowInteraction.m_CurrentPlayerState)
+        switch(PlayerShadowInteraction.m_CurrentPlayerState)
         {
-            case NewPlayerShadowInteraction.PLAYERSTATE.SHADOW:
+            case PlayerShadowInteraction.PLAYERSTATE.SHADOW:
                 gameObject.GetComponent<Light>().enabled = false;
                 break;
             default:

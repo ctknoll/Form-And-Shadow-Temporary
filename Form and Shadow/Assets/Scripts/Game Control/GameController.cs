@@ -99,12 +99,12 @@ public class GameController : MonoBehaviour {
 
     void Update()
     {
-        if (!paused && !resetting && NewPlayerShadowInteraction.m_CurrentPlayerState != NewPlayerShadowInteraction.PLAYERSTATE.SHIFTING)
+        if (!paused && !resetting && PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PLAYERSTATE.SHIFTING)
             masterTimer += Time.deltaTime;
         ScoreUIControl();
         ShadowmeldUIControl();
 
-        if(Input.GetButtonDown("Quit") && NewPlayerShadowInteraction.m_CurrentPlayerState != NewPlayerShadowInteraction.PLAYERSTATE.SHIFTING)
+        if(Input.GetButtonDown("Quit") && PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PLAYERSTATE.SHIFTING)
         {
             ToggleGamePause();
         }
@@ -121,10 +121,10 @@ public class GameController : MonoBehaviour {
 
     void ShadowmeldUIControl()
     {
-        shadowMeldResourceObject.SetActive(player.GetComponent<NewPlayerShadowInteraction>().m_ShadowmeldAvailable);
-        shadowMeldResourceBackdrop.SetActive(player.GetComponent<NewPlayerShadowInteraction>().m_ShadowmeldAvailable);
+        shadowMeldResourceObject.SetActive(player.GetComponent<PlayerShadowInteraction>().m_ShadowmeldAvailable);
+        shadowMeldResourceBackdrop.SetActive(player.GetComponent<PlayerShadowInteraction>().m_ShadowmeldAvailable);
         shadowMeldResourceObject.GetComponent<Image>().color = Color.magenta;
-        shadowMeldResourceObject.GetComponent<Image>().fillAmount = player.GetComponent<NewPlayerShadowInteraction>().m_CurrentShadowmeldResource / player.GetComponent<NewPlayerShadowInteraction>().m_MaxShadowmeldResource;
+        shadowMeldResourceObject.GetComponent<Image>().fillAmount = player.GetComponent<PlayerShadowInteraction>().m_CurrentShadowmeldResource / player.GetComponent<PlayerShadowInteraction>().m_MaxShadowmeldResource;
     }
     #endregion
 
@@ -278,7 +278,7 @@ public class GameController : MonoBehaviour {
 
     public void ControlAmbientAudio()
     {
-        if(NewPlayerShadowInteraction.m_CurrentPlayerState == NewPlayerShadowInteraction.PLAYERSTATE.SHADOWMELDED)
+        if(PlayerShadowInteraction.m_CurrentPlayerState == PlayerShadowInteraction.PLAYERSTATE.SHADOWMELDED)
         {
             ambientAudioSource.Pause();
             ambientAudioSource.clip = ambientShadowmeldAudioClip;
@@ -326,17 +326,17 @@ public class GameController : MonoBehaviour {
         }
         
         // Check if the player is in 2D space
-        if (NewPlayerShadowInteraction.m_CurrentPlayerState == NewPlayerShadowInteraction.PLAYERSTATE.SHADOW)
+        if (PlayerShadowInteraction.m_CurrentPlayerState == PlayerShadowInteraction.PLAYERSTATE.SHADOW)
 		{
             // If so, remove them from 2D space first
 		}
         // Then, reset the player's position to the start position
-        player.transform.position = NewPlayerShadowInteraction.m_PlayerStartPosition;
+        player.transform.position = PlayerShadowInteraction.m_PlayerStartPosition;
         playerMesh.transform.localScale = new Vector3(1, 1, 1);
 
-        player.GetComponent<NewPlayerShadowInteraction>().m_CurrentShadowmeldResource = 100;
+        player.GetComponent<PlayerShadowInteraction>().m_CurrentShadowmeldResource = 100;
         player.layer = LayerMask.NameToLayer("Form");
-        NewPlayerShadowInteraction.m_CurrentPlayerState = NewPlayerShadowInteraction.PLAYERSTATE.FORM;
+        PlayerShadowInteraction.m_CurrentPlayerState = PlayerShadowInteraction.PLAYERSTATE.FORM;
         yield return new WaitForSeconds(0.5f);
         resetting = false;
 	}

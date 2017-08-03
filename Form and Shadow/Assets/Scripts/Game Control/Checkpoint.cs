@@ -26,7 +26,7 @@ public class Checkpoint : MonoBehaviour {
         {
             if(!triggered)
             {
-                NewPlayerShadowInteraction.m_PlayerStartPosition = transform.position;
+                PlayerShadowInteraction.m_PlayerStartPosition = transform.position;
                 triggered = true;
                 StartCoroutine(RaiseFlag());
             }
@@ -42,7 +42,7 @@ public class Checkpoint : MonoBehaviour {
         while (personalTimer < panStart + flagRaiseDuration)
         {
             Vector3 currentPos;
-            if (NewPlayerShadowInteraction.m_CurrentPlayerState != NewPlayerShadowInteraction.PLAYERSTATE.SHIFTING)
+            if (PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PLAYERSTATE.SHIFTING)
             {
                 personalTimer += Time.deltaTime;
             }

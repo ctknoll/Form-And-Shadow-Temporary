@@ -27,13 +27,13 @@ public class PlayerMotor : MonoBehaviour
 
     public void UpdateMovement ()
     {
-        switch(NewPlayerShadowInteraction.m_CurrentPlayerState)
+        switch(PlayerShadowInteraction.m_CurrentPlayerState)
         {
-            case NewPlayerShadowInteraction.PLAYERSTATE.FORM:
+            case PlayerShadowInteraction.PLAYERSTATE.FORM:
                 SnapAlignCharacterWithCamera3D();
                 Process3DMotion();
                 break;
-            case NewPlayerShadowInteraction.PLAYERSTATE.SHADOW:
+            case PlayerShadowInteraction.PLAYERSTATE.SHADOW:
                 SnapAlignCharacterWithCamera2D();
                 Process2DMotion();
                 PlayerFollowShadow();
@@ -193,11 +193,11 @@ public class PlayerMotor : MonoBehaviour
 
     void PlayerFollowShadow()
     {
-        transform.position = NewPlayerShadowInteraction.m_PlayerShadow.transform.position + -GetComponent<NewPlayerShadowInteraction>().m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection * 4;
+        transform.position = PlayerShadowInteraction.m_PlayerShadow.transform.position + -GetComponent<PlayerShadowInteraction>().m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection * 4;
     }
 
     void ShadowFollowPlayer()
     {
-        NewPlayerShadowInteraction.m_PlayerShadow.transform.position = transform.position + Vector3.up * 10;
+        PlayerShadowInteraction.m_PlayerShadow.transform.position = transform.position + Vector3.up * 10;
     }
 }
