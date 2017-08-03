@@ -5,9 +5,9 @@ using UnityEngine;
 public class PlayerMotor : MonoBehaviour
 {
     public static PlayerMotor m_Instance;
-    [Range(2, 10)][SerializeField] float m_ForwardSpeed = 10f;
-    [Range(1, 5)][SerializeField] float m_BackwardSpeed = 2f;
-    [Range(2, 10)][SerializeField] float m_StrafingSpeed = 5f;
+    [Range(2, 10)][SerializeField] float m_ForwardSpeed = 4f;
+    [Range(1, 5)][SerializeField] float m_BackwardSpeed = 1f;
+    [Range(2, 10)][SerializeField] float m_StrafingSpeed = 4f;
     [Range(2, 7)][SerializeField] float m_SlideSpeed = 10f;
     [Range(4, 10)][SerializeField] float m_JumpSpeed = 6f;
     [Range(15, 25)] public float m_Gravity = 21f;
@@ -25,17 +25,29 @@ public class PlayerMotor : MonoBehaviour
 	}
 
 
-    public void Update3DMovement ()
+    public void UpdateMovement ()
     {
-        SnapAlignCharacterWithCamera();
-        ProcessMotion();
+        switch(NewPlayerShadowInteraction.m_CurrentPlayerState)
+        {
+            case NewPlayerShadowInteraction.PLAYERSTATE.FORM:
+                SnapAlignCharacterWithCamera3D();
+                Process3DMotion();
+                break;
+            case NewPlayerShadowInteraction.PLAYERSTATE.SHADOW:
+                SnapAlignCharacterWithCamera2D();
+                Process2DMotion();
+                PlayerFollowShadow();
+                break;
+            default:
+                break;
+
+        }
 	}
 
-    void ProcessMotion()
+    void Process3DMotion()
     {
         // Transform MoveVector into world space relative to character's rotation
         m_MoveVector = transform.TransformDirection(m_MoveVector);
-
         // Normalize MoveVector if Magnitude > 1
         if (m_MoveVector.magnitude > 1) 
             m_MoveVector = m_MoveVector.normalized;
@@ -45,6 +57,29 @@ public class PlayerMotor : MonoBehaviour
 
         // Multiply normalized MoveVector by MoveSpeed;
         m_MoveVector *= MoveSpeed();
+
+        // Reapply VerticalVelocity to MoveVector.y
+        m_MoveVector = new Vector3(m_MoveVector.x, m_VerticalVelocity, m_MoveVector.z);
+
+        // Apply gravity
+        ApplyGravity();
+
+        // Move the CharacterController in world space using the MoveVector
+        PlayerController.m_CharacterController.Move(m_MoveVector * Time.deltaTime);
+    }
+
+    void Process2DMotion()
+    {
+        // Transform MoveVector into world space relative to character's rotation
+        // Normalize MoveVector if Magnitude > 1
+        if (m_MoveVector.magnitude > 1)
+            m_MoveVector = m_MoveVector.normalized;
+
+        // Apply sliding if applicable
+        ApplySlide();
+
+        // Multiply normalized MoveVector by MoveSpeed;
+        m_MoveVector *= m_StrafingSpeed;
 
         // Reapply VerticalVelocity to MoveVector.y
         m_MoveVector = new Vector3(m_MoveVector.x, m_VerticalVelocity, m_MoveVector.z);
@@ -76,7 +111,7 @@ public class PlayerMotor : MonoBehaviour
 
         RaycastHit hitInfo;
 
-        Debug.DrawRay(transform.position + Vector3.up, Vector3.down, Color.red);
+        Debug.DrawRay(PlayerController.m_CharacterController.transform.position + Vector3.up, Vector3.down, Color.red);
 
         if (Physics.Raycast(PlayerController.m_CharacterController.transform.position + Vector3.up, Vector3.down, out hitInfo))
         {
@@ -100,12 +135,20 @@ public class PlayerMotor : MonoBehaviour
             m_VerticalVelocity = m_JumpSpeed;
     }
 
-    void SnapAlignCharacterWithCamera()
+    void SnapAlignCharacterWithCamera3D()
     {
         if(m_MoveVector.x != 0 || m_MoveVector.z != 0)
         {
             transform.rotation = Quaternion.Euler(transform.eulerAngles.x, Camera.main.transform.eulerAngles.y, transform.eulerAngles.z);
         }
+    }
+
+    void SnapAlignCharacterWithCamera2D()
+    {
+        if(m_MoveVector.x > 0)
+            transform.rotation = Quaternion.LookRotation(Camera.main.transform.right, Camera.main.transform.up);
+        if (m_MoveVector.x < 0)
+            transform.rotation = Quaternion.LookRotation(-Camera.main.transform.right, Camera.main.transform.up);
     }
 
     float MoveSpeed()
@@ -145,7 +188,16 @@ public class PlayerMotor : MonoBehaviour
         }
         if (m_SlideDirection.magnitude > 0)
             moveSpeed = m_SlideSpeed;
-        
         return moveSpeed;
+    }
+
+    void PlayerFollowShadow()
+    {
+        transform.position = NewPlayerShadowInteraction.m_PlayerShadow.transform.position + -GetComponent<NewPlayerShadowInteraction>().m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection * 4;
+    }
+
+    void ShadowFollowPlayer()
+    {
+        NewPlayerShadowInteraction.m_PlayerShadow.transform.position = transform.position + Vector3.up * 10;
     }
 }

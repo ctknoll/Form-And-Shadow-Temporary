@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class NewPlayerShadowInteraction : MonoBehaviour
 {
     [Header("Master References")]
-    public GameObject m_PlayerShadow;
+    public static GameObject m_PlayerShadow;
     GameObject m_LightingMaster;
     [HideInInspector] public GameObject m_LightSourceAligned;
     //public GameController m_GameController;
@@ -40,7 +40,7 @@ public class NewPlayerShadowInteraction : MonoBehaviour
     [Header("Player State and Respawn")]
     public static PLAYERSTATE m_CurrentPlayerState;
     public static Vector3 m_PlayerStartPosition;
-    bool m_ZAxisTransition;
+    [HideInInspector] public bool m_ZAxisTransition;
 
     void Start()
     {
@@ -48,6 +48,7 @@ public class NewPlayerShadowInteraction : MonoBehaviour
         m_CurrentPlayerState = PLAYERSTATE.FORM;
         m_CurrentShadowmeldResource = m_MaxShadowmeldResource;
         m_CurrentPlatformIndex = 0;
+        m_PlayerShadow = GameObject.Find("Player_Shadow");
         m_LightingMaster = GameObject.Find("Lighting");
     }
 
@@ -191,7 +192,8 @@ public class NewPlayerShadowInteraction : MonoBehaviour
             {
                 // If the player is at index 0 of the platforms, or the first platform, and they try to go forward,
                 // they return to the wall
-                StartCoroutine(CameraPanIn(m_ShadowShiftFollowObject.transform.position, targetLocation, -m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection * Camera.main.GetComponent<NewCameraControl>().m_DistanceToPlayer2D));
+                StartCoroutine(CameraPanIn(m_ShadowShiftFollowObject.transform.position, targetLocation, 
+                    -m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection * Camera.main.GetComponent<NewCameraControl>().m_DistanceToPlayer2D));
             }
             else
             {
@@ -234,7 +236,7 @@ public class NewPlayerShadowInteraction : MonoBehaviour
                 else
                     m_PlayerShiftInOffset = transform.position.x;
                 // Shift in
-                StartCoroutine(CameraPanIn(transform.position, shadowWallHit.point,
+                StartCoroutine(CameraPanIn(transform.position, shadowWallHit.point + m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection,
                     -m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection * Camera.main.GetComponent<NewCameraControl>().m_DistanceToPlayer2D));
             }
         }
@@ -352,7 +354,6 @@ public class NewPlayerShadowInteraction : MonoBehaviour
     {
         // After the transition is finished, perform final steps
         m_PlayerShadow.transform.position = m_ShadowShiftFollowObject.transform.position;
-        transform.position = Camera.main.transform.position + Camera.main.transform.forward * 2f;
 
         m_PlayerShadow.GetComponent<CharacterController>().enabled = true;
         PlayerController.m_CharacterController = m_PlayerShadow.GetComponent<CharacterController>();

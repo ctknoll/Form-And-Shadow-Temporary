@@ -22,13 +22,15 @@ public class PlayerController : MonoBehaviour
         {
             case NewPlayerShadowInteraction.PLAYERSTATE.FORM:
                 Get3DLocomotionInput();
-                PlayerMotor.m_Instance.Update3DMovement();
                 break;
             case NewPlayerShadowInteraction.PLAYERSTATE.SHADOW:
                 Get2DLocomotionInput();
                 break;
+            default:
+                break;
         }
         HandleActionInput();
+        PlayerMotor.m_Instance.UpdateMovement();
     }
 
     void Get3DLocomotionInput()
@@ -48,6 +50,7 @@ public class PlayerController : MonoBehaviour
 
         PlayerAnimator.m_Instance.DetermineCurrentMoveDirection();
     }
+
     void Get2DLocomotionInput()
     {
         var deadZone = 0.1f;
@@ -57,10 +60,13 @@ public class PlayerController : MonoBehaviour
 
         if (CrossPlatformInputManager.GetAxis("Horizontal") > deadZone || CrossPlatformInputManager.GetAxis("Horizontal") < -deadZone)
         {
-            if(GetComponent<NewPlayerShadowInteraction>().)
-            PlayerMotor.m_Instance.m_MoveVector += new Vector3(CrossPlatformInputManager.GetAxis("Horizontal"), 0, 0);
+            if (GetComponent<NewPlayerShadowInteraction>().m_ZAxisTransition)
+                PlayerMotor.m_Instance.m_MoveVector += new Vector3(CrossPlatformInputManager.GetAxis("Horizontal"), 0, 0);
+            else
+                PlayerMotor.m_Instance.m_MoveVector += new Vector3(0, 0, CrossPlatformInputManager.GetAxis("Horizontal"));
         }
     }
+
     void HandleActionInput()
     {
         if (CrossPlatformInputManager.GetButtonDown("Jump"))

@@ -8,8 +8,7 @@ public class NewCameraControl : MonoBehaviour
     public static NewCameraControl m_Instance;
 
     [Header("Player Target 2D and 3D")]
-    [SerializeField] Transform m_Target3D;
-    [SerializeField] Transform m_Target2D;
+    [SerializeField] Transform m_CameraTarget;
     Camera m_Camera;
 
     [Header("3D Camera Variables")]
@@ -44,7 +43,7 @@ public class NewCameraControl : MonoBehaviour
     float preOccludedDistance = 0f;
 
     [Header("2D Camera Variables")]
-    [Range(8, 12)] public float m_DistanceToPlayer2D;
+    [Range(4, 6)] public float m_DistanceToPlayer2D;
     [Range(0.1f, 0.2f)][SerializeField] float m_CameraSmoothSpeed2D;
 
     public static bool cameraIsPanning;
@@ -140,14 +139,14 @@ public class NewCameraControl : MonoBehaviour
     {
         Vector3 direction = new Vector3(0, 0, -distance);
         Quaternion rotation = Quaternion.Euler(rotationX, rotationY, 0);
-        return m_Target3D.position + rotation * direction;
+        return m_CameraTarget.position + rotation * direction;
     }
 
     bool CheckIfOccluded(int count)
     {
         var isOccluded = false;
 
-        var nearestDistance = CheckCameraPoints(m_Target3D.position, desiredPosition);
+        var nearestDistance = CheckCameraPoints(m_CameraTarget.position, desiredPosition);
 
         if (nearestDistance != -1)
         {
@@ -216,7 +215,7 @@ public class NewCameraControl : MonoBehaviour
         {
             var pos = CalculatePosition(mouseY, mouseX, preOccludedDistance);
 
-            var nearestDistance = CheckCameraPoints(m_Target3D.position, pos);
+            var nearestDistance = CheckCameraPoints(m_CameraTarget.position, pos);
 
             if (nearestDistance == -1 || nearestDistance > preOccludedDistance)
             {
@@ -233,7 +232,7 @@ public class NewCameraControl : MonoBehaviour
         position = new Vector3(posX, posY, posZ);
 
         transform.position = position;
-        transform.LookAt(m_Target3D);
+        transform.LookAt(m_CameraTarget);
     }
 
     void Update2DCameraMovement()
@@ -242,7 +241,7 @@ public class NewCameraControl : MonoBehaviour
         m_Camera.clearFlags = CameraClearFlags.SolidColor;
         m_Camera.backgroundColor = Color.black;
 
-        Vector3 desiredPosition = m_Target2D.transform.position + -transform.forward * m_DistanceToPlayer2D;
+        Vector3 desiredPosition = m_CameraTarget.transform.position + -transform.forward * m_DistanceToPlayer2D;
 
         transform.position = Vector3.Lerp(transform.position, desiredPosition, m_CameraSmoothSpeed2D);
     }
@@ -251,7 +250,7 @@ public class NewCameraControl : MonoBehaviour
     {
         m_Camera.orthographic = false;
         m_Camera.clearFlags = CameraClearFlags.Skybox;
-        transform.LookAt(m_Target3D.GetComponentInParent<NewPlayerShadowInteraction>().m_ShadowShiftFollowObject.transform);
+        transform.LookAt(m_CameraTarget.GetComponentInParent<NewPlayerShadowInteraction>().m_ShadowShiftFollowObject.transform);
     }
 
     public struct ClipPlanePoints
