@@ -22,14 +22,18 @@ public class PlayerController : MonoBehaviour
         {
             case PlayerShadowInteraction.PLAYERSTATE.FORM:
                 Get3DLocomotionInput();
+                GetJumpInput();
                 break;
             case PlayerShadowInteraction.PLAYERSTATE.SHADOW:
                 Get2DLocomotionInput();
+                GetJumpInput();
+                break;
+            case PlayerShadowInteraction.PLAYERSTATE.GRABBING:
+                GetGrabbingLocomotionInput();
                 break;
             default:
                 break;
         }
-        HandleActionInput();
         PlayerMotor.m_Instance.UpdateMovement();
     }
 
@@ -64,7 +68,20 @@ public class PlayerController : MonoBehaviour
             PlayerMotor.m_Instance.m_MoveVector += -Camera.main.transform.right;
     }
 
-    void HandleActionInput()
+    void GetGrabbingLocomotionInput()
+    {
+        var deadZone = 0.1f;
+
+        PlayerMotor.m_Instance.m_VerticalVelocity = PlayerMotor.m_Instance.m_MoveVector.y;
+        PlayerMotor.m_Instance.m_MoveVector = Vector3.zero;
+
+        if (CrossPlatformInputManager.GetAxis("Vertical") > deadZone)
+            PlayerMotor.m_Instance.m_MoveVector += transform.forward;
+        if (CrossPlatformInputManager.GetAxis("Vertical") < -deadZone)
+            PlayerMotor.m_Instance.m_MoveVector -= transform.forward;
+    }
+
+    void GetJumpInput()
     {
         if (CrossPlatformInputManager.GetButtonDown("Jump"))
         {

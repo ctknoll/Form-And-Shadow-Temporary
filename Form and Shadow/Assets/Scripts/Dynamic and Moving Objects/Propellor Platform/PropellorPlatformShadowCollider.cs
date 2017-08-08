@@ -15,7 +15,7 @@ public class PropellorPlatformShadowCollider : MonoBehaviour
         masterPropellor = propellorMesh.transform.parent.gameObject;
     }
 	
-	void FixedUpdate ()
+	void Update ()
 	{
 		if(PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PLAYERSTATE.SHIFTING && !GameController.resetting && !GameController.paused)
 		{

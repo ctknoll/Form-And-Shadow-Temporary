@@ -30,21 +30,43 @@ public class PlayerAnimator : MonoBehaviour
         switch(PlayerShadowInteraction.m_CurrentPlayerState)
         {
             case PlayerShadowInteraction.PLAYERSTATE.FORM:
-                if(animator.GetBool("PlayerInShadow"))
-                    animator.SetBool("PlayerInShadow", false);
-                animator.SetFloat("VSpeed", Input.GetAxis("Vertical"), 0.1f, Time.deltaTime);
-                animator.SetFloat("HSpeed", Input.GetAxis("Horizontal"), 0.1f, Time.deltaTime);
+                Update3DAnimationParameters();
                 break;
             case PlayerShadowInteraction.PLAYERSTATE.SHADOW:
-                if (!animator.GetBool("PlayerInShadow"))
-                    animator.SetBool("PlayerInShadow", true);
-                animator.SetFloat("HSpeed", Input.GetAxis("Horizontal"));
+                Update2DAnimationParameters();
+                break;
+            case PlayerShadowInteraction.PLAYERSTATE.GRABBING:
+                UpdateGrabbingAnimationParameters();
                 break;
         }
 
         animator.SetBool("IsGrounded", PlayerController.m_CharacterController.isGrounded);
         if (!PlayerController.m_CharacterController.isGrounded)
             animator.SetFloat("Jump", PlayerMotor.m_Instance.m_MoveVector.y);
+    }
+
+    void Update3DAnimationParameters()
+    {
+        if (animator.GetBool("PlayerInShadow"))
+            animator.SetBool("PlayerInShadow", false);
+        if(animator.GetBool("Grabbing"))
+            animator.SetBool("Grabbing", false);
+        animator.SetFloat("VSpeed", Input.GetAxis("Vertical"), 0.1f, Time.deltaTime);
+        animator.SetFloat("HSpeed", Input.GetAxis("Horizontal"), 0.1f, Time.deltaTime);
+    }
+
+    void Update2DAnimationParameters()
+    {
+        if (!animator.GetBool("PlayerInShadow"))
+            animator.SetBool("PlayerInShadow", true);
+        animator.SetFloat("HSpeed", Input.GetAxis("Horizontal"));
+    }
+
+    void UpdateGrabbingAnimationParameters()
+    {
+        if (!animator.GetBool("Grabbing"))
+            animator.SetBool("Grabbing", true);
+        animator.SetFloat("VSpeed", Input.GetAxis("Vertical"));
     }
 
     public void DetermineCurrentMoveDirection()

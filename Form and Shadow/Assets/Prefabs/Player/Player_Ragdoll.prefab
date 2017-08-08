@@ -431,7 +431,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4138364123122936}
   m_Layer: 0
-  m_Name: Y_Bot_Ragdoll
+  m_Name: Player_Ragdoll
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2412,6 +2412,7 @@ SkinnedMeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   serializedVersion: 2
   m_Quality: 0
@@ -2507,6 +2508,7 @@ SkinnedMeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   serializedVersion: 2
   m_Quality: 0
@@ -2614,6 +2616,8 @@ CharacterJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 0
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!144 &144419617923539828
 CharacterJoint:
   m_ObjectHideFlags: 1
@@ -2656,6 +2660,8 @@ CharacterJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 0
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!144 &144429002548294072
 CharacterJoint:
   m_ObjectHideFlags: 1
@@ -2698,6 +2704,8 @@ CharacterJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 0
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!144 &144499358327095522
 CharacterJoint:
   m_ObjectHideFlags: 1
@@ -2740,6 +2748,8 @@ CharacterJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 0
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!144 &144717867549934128
 CharacterJoint:
   m_ObjectHideFlags: 1
@@ -2782,6 +2792,8 @@ CharacterJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 0
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!144 &144718311745387206
 CharacterJoint:
   m_ObjectHideFlags: 1
@@ -2824,6 +2836,8 @@ CharacterJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 0
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!144 &144744111434803756
 CharacterJoint:
   m_ObjectHideFlags: 1
@@ -2866,6 +2880,8 @@ CharacterJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 0
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!144 &144802120014523980
 CharacterJoint:
   m_ObjectHideFlags: 1
@@ -2908,6 +2924,8 @@ CharacterJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 0
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!144 &144854521964770588
 CharacterJoint:
   m_ObjectHideFlags: 1
@@ -2950,6 +2968,8 @@ CharacterJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 0
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!144 &144999450759006464
 CharacterJoint:
   m_ObjectHideFlags: 1
@@ -2992,3 +3012,5 @@ CharacterJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 0
+  m_MassScale: 1
+  m_ConnectedMassScale: 1

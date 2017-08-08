@@ -56,7 +56,7 @@ public class ShadowCollider : MonoBehaviour {
         }
     }
 	
-	void FixedUpdate () 
+	void Update () 
 	{
         LockMovementAxis();
 

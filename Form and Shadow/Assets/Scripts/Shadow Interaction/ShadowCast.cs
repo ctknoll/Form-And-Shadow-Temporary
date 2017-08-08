@@ -16,7 +16,7 @@ public class ShadowCast : MonoBehaviour {
 
     void Start()
 	{
-        lightReference = GameObject.Find("Lighting_Reference");
+        lightReference = GameObject.Find("Lighting");
         // Used to differentiate between 3D objects with multiple mesh renderers childed under it (like spikes)
 		// and single objects with one master mesh renderer
 		singleMesh = GetComponent<MeshRenderer>();
@@ -124,7 +124,7 @@ public class ShadowCast : MonoBehaviour {
 
     public bool GetLockedAxis(Vector3 castDir)
     {
-        return castDir == GameObject.Find("Lighting_Reference").transform.forward || -1 * castDir == GameObject.Find("Lighting_Reference").transform.forward;
+        return castDir == lightReference.transform.forward || -1 * castDir == lightReference.transform.forward;
     }
 
     public Vector3 GetTransformOffset(Vector3 castDirection, bool zLocked)

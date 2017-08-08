@@ -73,7 +73,7 @@ public class PlayerShadowInteraction : MonoBehaviour
                     UpdateShadowmeldMaster();
                     break;
                 case PLAYERSTATE.SHIFTING:
-                    if(!NewCameraControl.cameraIsPanning)
+                    if(!CameraControl.cameraIsPanning)
                         UpdateShadowShiftingInput();
                     break;
             }
@@ -193,7 +193,7 @@ public class PlayerShadowInteraction : MonoBehaviour
                 // If the player is at index 0 of the platforms, or the first platform, and they try to go forward,
                 // they return to the wall
                 StartCoroutine(CameraPanIn(m_ShadowShiftFollowObject.transform.position, targetLocation, 
-                    -m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection * Camera.main.GetComponent<NewCameraControl>().m_DistanceToPlayer2D));
+                    -m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection * Camera.main.GetComponent<CameraControl>().m_DistanceToPlayer2D));
             }
             else
             {
@@ -238,7 +238,7 @@ public class PlayerShadowInteraction : MonoBehaviour
                 // Shift in
                 TogglePlayerMeshVisibility(true);
                 StartCoroutine(CameraPanIn(transform.position, shadowWallHit.point + m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection,
-                    -m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection * Camera.main.GetComponent<NewCameraControl>().m_DistanceToPlayer2D));
+                    -m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection * Camera.main.GetComponent<CameraControl>().m_DistanceToPlayer2D));
             }
         }
     }
@@ -344,7 +344,7 @@ public class PlayerShadowInteraction : MonoBehaviour
         while (Time.time < panStart + m_ShadowShiftDuration)
         {
             m_ShadowShiftFollowObject.transform.position = Vector3.Lerp(start, target, (Time.time - panStart) / m_ShadowShiftDuration);
-            Camera.main.transform.position = Vector3.Lerp(startPos, target + m_CameraRelativeDirectionOffset * Camera.main.GetComponent<NewCameraControl>().m_DistanceMax, (Time.time - panStart) / m_ShadowShiftDuration);
+            Camera.main.transform.position = Vector3.Lerp(startPos, target + m_CameraRelativeDirectionOffset * Camera.main.GetComponent<CameraControl>().m_DistanceMax, (Time.time - panStart) / m_ShadowShiftDuration);
             yield return null;
         }
         if (finish)

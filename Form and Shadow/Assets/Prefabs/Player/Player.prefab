@@ -973,7 +973,7 @@ GameObject:
   - component: {fileID: 114816037303390134}
   - component: {fileID: 114868226676530480}
   m_Layer: 0
-  m_Name: Y_Bot
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

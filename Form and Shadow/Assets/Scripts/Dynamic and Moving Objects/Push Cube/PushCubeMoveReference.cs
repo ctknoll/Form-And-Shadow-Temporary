@@ -1,62 +1,37 @@
-﻿    using UnityEngine;
+﻿using UnityEngine;
 
 public class PushCubeMoveReference : MonoBehaviour
 {
-	private PushCube pushCube;
-	private GameObject moveCubeMesh;
-    public GameObject acrossReference;
-    
-    public bool blocked;
+	PushCube m_PushCube;
 
 	void Start()
 	{
-		pushCube = GetComponentInParent<PushCube>();
-		moveCubeMesh = transform.parent.GetComponentInChildren<ShadowCast>().gameObject;
+		m_PushCube = GetComponentInParent<PushCube>();
 	}
 
-    void Update()
-    {
-        //if (!PlayerShadowInteraction.in3DSpace)
-        //{
-        //    pushCube.canInteract = false;
-        //    GameController.CheckInteractToolip(false, true);
-        //}
-    }
-
-	void OnTriggerStay(Collider other)
+	void OnTriggerEnter(Collider other)
 	{
-		if(other.gameObject.tag == "Player")
+        if (PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PLAYERSTATE.FORM || GameController.paused)
+            return;
+
+        if (other.gameObject.CompareTag("Player"))
 		{
-            if (PlayerShadowInteraction.m_CurrentPlayerState == PlayerShadowInteraction.PLAYERSTATE.FORM && !GameController.paused)
-            {
-                pushCube.canInteract = true;
-                pushCube.directionAwayFromPlayer = (moveCubeMesh.transform.position - transform.position).normalized;
-                if (acrossReference.GetComponent<PushCubeMoveReference>().blocked)
-                    pushCube.blockedAhead = true;
-                else
-                    pushCube.blockedAhead = false;
-            }
-            else
-                pushCube.canInteract = false;
-		}
-        else if(other.gameObject.tag != "Push Cube" && other.gameObject.tag != "Conveyor Belt" && !other.isTrigger)
-        {
-            blocked = true;
+            m_PushCube.canInteract = true;
+            PlayerMotor.m_Instance.m_GrabbedObjectPlayerSide = gameObject.transform;
         }
 	}
 
 	void OnTriggerExit(Collider other)
 	{
-        //if(other.gameObject.tag == "Player")
-        //{
-        GameController.CheckInteractToolip(false, true);
-        //          pushCube.canInteract = false;
-        //	pushCube.grabbed = false;
-        //          pushCube.transform.parent = null;
-        //	PlayerMovement.isGrabbing = false;
-        //	PlayerMovement.grabbedObject = null;
-        //}
-        blocked = false;
-	}
+        if (GameController.paused)
+            return;
+
+        if (other.gameObject.CompareTag("Player"))
+        {
+            m_PushCube.canInteract = false;
+            PlayerMotor.m_Instance.m_GrabbedObjectPlayerSide = null;
+            m_PushCube.Release();
+        }
+    }
 }
 

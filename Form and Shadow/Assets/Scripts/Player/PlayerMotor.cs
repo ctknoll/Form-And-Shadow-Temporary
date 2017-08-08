@@ -8,6 +8,8 @@ public class PlayerMotor : MonoBehaviour
     [Range(2, 10)][SerializeField] float m_ForwardSpeed = 4f;
     [Range(1, 5)][SerializeField] float m_BackwardSpeed = 1f;
     [Range(2, 10)][SerializeField] float m_StrafingSpeed = 4f;
+    [Range(2, 10)][SerializeField] float m_2DMovementSpeed = 4f;
+    [Range(1, 5)][SerializeField] float m_GrabbingMovementSpeed = 1f;
     [Range(2, 7)][SerializeField] float m_SlideSpeed = 10f;
     [Range(4, 10)][SerializeField] float m_JumpSpeed = 6f;
     [Range(15, 25)] public float m_Gravity = 21f;
@@ -16,6 +18,8 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] float m_MaxControllableSlideMagnitude = 0.4f;
     [HideInInspector] public Vector3 m_MoveVector;
     [HideInInspector] public float m_VerticalVelocity;
+    [HideInInspector] public Transform m_GrabbedObjectTransform;
+    [HideInInspector] public Transform m_GrabbedObjectPlayerSide;
 
     Vector3 m_SlideDirection;
 
@@ -32,18 +36,24 @@ public class PlayerMotor : MonoBehaviour
             case PlayerShadowInteraction.PLAYERSTATE.FORM:
                 SnapAlignCharacterWithCamera3D();
                 Process3DMotion();
+                ShadowFollowPlayer();
                 break;
             case PlayerShadowInteraction.PLAYERSTATE.SHADOW:
                 SnapAlignCharacterWithCamera2D();
                 Process2DMotion();
                 PlayerFollowShadow();
                 break;
+            case PlayerShadowInteraction.PLAYERSTATE.GRABBING:
+                SnapAlignCharacterWithGrabbedObject();
+                ProcessGrabbingMotion();
+                ShadowFollowPlayer();
+                break;
             default:
                 break;
 
         }
 	}
-
+#region Motion Processing Methods
     void Process3DMotion()
     {
         // Transform MoveVector into world space relative to character's rotation
@@ -70,7 +80,6 @@ public class PlayerMotor : MonoBehaviour
 
     void Process2DMotion()
     {
-        // Transform MoveVector into world space relative to character's rotation
         // Normalize MoveVector if Magnitude > 1
         if (m_MoveVector.magnitude > 1)
             m_MoveVector = m_MoveVector.normalized;
@@ -78,8 +87,8 @@ public class PlayerMotor : MonoBehaviour
         // Apply sliding if applicable
         ApplySlide();
 
-        // Multiply normalized MoveVector by MoveSpeed;
-        m_MoveVector *= m_StrafingSpeed;
+        // Multiply normalized MoveVector by 2D Movement speed;
+        m_MoveVector *= m_2DMovementSpeed;
 
         // Reapply VerticalVelocity to MoveVector.y
         m_MoveVector = new Vector3(m_MoveVector.x, m_VerticalVelocity, m_MoveVector.z);
@@ -91,6 +100,26 @@ public class PlayerMotor : MonoBehaviour
         PlayerController.m_CharacterController.Move(m_MoveVector * Time.deltaTime);
     }
 
+    void ProcessGrabbingMotion()
+    {
+        if (m_MoveVector.magnitude > 1)
+            m_MoveVector = m_MoveVector.normalized;
+
+        //Multiply normalized MoveVector by Grabbing Speed
+        m_MoveVector *= m_GrabbingMovementSpeed;
+
+        // Reapply VerticalVelocity to MoveVector.y
+        m_MoveVector = new Vector3(m_MoveVector.x, m_VerticalVelocity, m_MoveVector.z);
+
+        // Apply gravity
+        ApplyGravity();
+
+        // Move the CharacterController in world space using the MoveVector
+        PlayerController.m_CharacterController.Move(m_MoveVector * Time.deltaTime);
+    }
+#endregion
+
+#region Utility Methods
     void ApplyGravity()
     {
         if (m_MoveVector.y > -m_TerminalVelocity)
@@ -135,22 +164,6 @@ public class PlayerMotor : MonoBehaviour
             m_VerticalVelocity = m_JumpSpeed;
     }
 
-    void SnapAlignCharacterWithCamera3D()
-    {
-        if(m_MoveVector.x != 0 || m_MoveVector.z != 0)
-        {
-            transform.rotation = Quaternion.Euler(transform.eulerAngles.x, Camera.main.transform.eulerAngles.y, transform.eulerAngles.z);
-        }
-    }
-
-    void SnapAlignCharacterWithCamera2D()
-    {
-        if(m_MoveVector.x > 0)
-            transform.rotation = Quaternion.LookRotation(Camera.main.transform.right, Camera.main.transform.up);
-        if (m_MoveVector.x < 0)
-            transform.rotation = Quaternion.LookRotation(-Camera.main.transform.right, Camera.main.transform.up);
-    }
-
     float MoveSpeed()
     {
         var moveSpeed = 0f;
@@ -190,7 +203,32 @@ public class PlayerMotor : MonoBehaviour
             moveSpeed = m_SlideSpeed;
         return moveSpeed;
     }
+#endregion
 
+#region Snap Align Methods
+    void SnapAlignCharacterWithCamera3D()
+    {
+        if(m_MoveVector.x != 0 || m_MoveVector.z != 0)
+        {
+            transform.rotation = Quaternion.Euler(transform.eulerAngles.x, Camera.main.transform.eulerAngles.y, transform.eulerAngles.z);
+        }
+    }
+
+    void SnapAlignCharacterWithCamera2D()
+    {
+        if(m_MoveVector.x > 0)
+            transform.rotation = Quaternion.LookRotation(Camera.main.transform.right, Camera.main.transform.up);
+        if (m_MoveVector.x < 0)
+            transform.rotation = Quaternion.LookRotation(-Camera.main.transform.right, Camera.main.transform.up);
+    }
+
+    void SnapAlignCharacterWithGrabbedObject()
+    {
+        transform.rotation = Quaternion.LookRotation(Vector3.Normalize(m_GrabbedObjectTransform.position - m_GrabbedObjectPlayerSide.position), Vector3.up);
+    }
+#endregion
+
+#region Follow Methods
     void PlayerFollowShadow()
     {
         transform.position = PlayerShadowInteraction.m_PlayerShadow.transform.position + -GetComponent<PlayerShadowInteraction>().m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection * 4;
@@ -200,4 +238,5 @@ public class PlayerMotor : MonoBehaviour
     {
         PlayerShadowInteraction.m_PlayerShadow.transform.position = transform.position + Vector3.up * 10;
     }
+#endregion
 }

@@ -68,7 +68,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1870742685079626}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.7278805, y: 2.05, z: 15.18139}
+  m_LocalPosition: {x: -0.24980257, y: 0.05, z: -8.649609}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4023727354551066}
@@ -105,6 +105,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!33 &33819203735571246
 MeshFilter:
@@ -152,7 +153,6 @@ MonoBehaviour:
     type: 2}
   shadowType: 5
   meshException: 0
-  dynamicObject: 0
   shadowColliders: []
   singleMesh: 0
 --- !u!114 &114175660532293890
@@ -166,7 +166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f1c036b83d0b5941b16a19c65957bbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 180
+  rotationSpeed: 100
+  rotateClockwise: 0
   playerChildedIn3D: 0
   playerChildedIn2D: 0
 --- !u!114 &114804300518406016

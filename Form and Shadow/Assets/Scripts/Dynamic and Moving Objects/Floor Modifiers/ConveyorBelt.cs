@@ -1,119 +1,50 @@
-﻿//using UnityEngine;
+﻿using UnityEngine;
 
-//public class ConveyorBelt : MonoBehaviour {
+[RequireComponent(typeof(Rigidbody))]
 
-//    public float moveSpeed;
-//    public MoveDirection moveDirection;
+public class ConveyorBelt : MonoBehaviour
+{
+    [SerializeField] float m_ConveyorBeltSpeed;
+    Vector3 m_MoveDirection;
+    Rigidbody m_Body;
+    GameObject m_Player;
+    bool m_PlayerInTrigger;
 
-//	public bool useMomentum;
-//	public bool dismountPlayer;
-//	private float velocity;
+    // Use this for initialization
+    void Start()
+    {
+        m_MoveDirection = transform.forward;
+        m_Body = GetComponent<Rigidbody>();
+        m_Player = GameObject.FindGameObjectWithTag("Player");
+    }
 
-//    [HideInInspector]
-//    public enum MoveDirection {Forward, Right};
+    void Update()
+    {
+        if(m_PlayerInTrigger)
+        {
+            m_Player.transform.position += m_MoveDirection * m_ConveyorBeltSpeed * Time.deltaTime;
+        }
+    }
 
-//    // Use this for initialization
-//	void Start ()
-//    {
-//        foreach (Transform child in transform.parent)
-//        {
-//            if (child.name == "Conveyor_Direction_Pointer")
-//            {
-//                child.rotation = transform.parent.rotation;
-//                child.transform.Rotate(Vector3.up * 90, Space.Self);
-//                if (moveDirection == MoveDirection.Forward && moveSpeed < 0)
-//                    child.transform.Rotate(Vector3.up * 180, Space.Self);
-//                else if (moveDirection == MoveDirection.Right && moveSpeed >= 0)
-//                    child.transform.Rotate(Vector3.up * 90, Space.Self);
-//                else if (moveDirection == MoveDirection.Right && moveSpeed < 0)
-//                    child.transform.Rotate(Vector3.up * -90, Space.Self);
-//            }   
-//        }
-//    }
-	
-//	// Update is called once per frame
-//	void Update ()
-//	{
-//        if(GetComponent<AudioSource>())
-//        {
-//            if (GameController.paused)
-//            {
-//                GetComponent<AudioSource>().Pause();
-//            }
-//            else
-//            {
-//                GetComponent<AudioSource>().UnPause();
-//            }
-//        }
-//	}
+    void FixedUpdate()
+    {
+        m_Body.position -= m_MoveDirection * m_ConveyorBeltSpeed * Time.deltaTime;
+        m_Body.MovePosition(m_Body.position + m_MoveDirection * m_ConveyorBeltSpeed * Time.deltaTime);
+    }
 
-//	public void OnTriggerEnter(Collider other)
-//	{
-//        if (other.gameObject.tag == "Player") 
-//		{
-//            Debug.Log("Enter: " + other.gameObject.GetComponent<PlayerMovement>().gravConst);
-//			other.gameObject.GetComponent<PlayerMovement>().gravity = 0;
-//		}
-//	}
+    void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            m_PlayerInTrigger = true;
+        }
+    }
 
-//	public void OnTriggerStay(Collider other)
-//    {
-//        if(!GameController.paused)
-//        {
-//            if (other.GetComponent<Collider>() != null && !other.GetComponent<Collider>().isTrigger)
-//            {
-//                if (useMomentum)
-//                {
-//                    Vector3 directionToMove = new Vector3();
-//                    if (moveDirection == MoveDirection.Forward)
-//                    {
-//                        if (moveSpeed >= 0)
-//                            directionToMove = -1 * transform.parent.FindChild("Conveyor_Direction_Pointer").right;
-//                        else if (moveSpeed < 0)
-//                            directionToMove = transform.parent.FindChild("Conveyor_Direction_Pointer").right;
-//                    }
-//                    else
-//                    {
-//                        if (moveSpeed >= 0)
-//                            directionToMove = -1 * transform.parent.FindChild("Conveyor_Direction_Pointer").forward;
-//                        else if (moveSpeed < 0)
-//                            directionToMove = transform.parent.FindChild("Conveyor_Direction_Pointer").forward;
-//                    }
-
-//                    if (other.gameObject.tag == "Player")
-//                    {
-//                        other.gameObject.GetComponent<PlayerMovement>().conveyorVelocity = moveSpeed * directionToMove;
-//                    }
-//                    else
-//                    {
-//                        if (moveDirection == MoveDirection.Forward)
-//                        {
-//                            other.transform.position += moveSpeed * Time.deltaTime * transform.forward;
-//                        }
-//                        else other.transform.position += moveSpeed * Time.deltaTime * transform.right;
-//                    }
-//                }
-//                else
-//                {
-//                    if (moveDirection == MoveDirection.Forward)
-//                    {
-//                        other.transform.position += moveSpeed * Time.deltaTime * transform.forward;
-//                    }
-//                    else other.transform.position += moveSpeed * Time.deltaTime * transform.right;
-//                }
-//            }
-//        }
-//    }
-
-//	public void OnTriggerExit(Collider other)
-//	{
-//        if (other.gameObject.tag == "Player")
-//        {
-//            if (dismountPlayer) 
-//			{
-//				other.transform.position += other.transform.forward;
-//			}
-//			other.gameObject.GetComponent<PlayerMovement>().gravity = other.gameObject.GetComponent<PlayerMovement>().gravConst;
-//		}
-//	}
-//}
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            m_PlayerInTrigger = false;
+        }
+    }
+}
