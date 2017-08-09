@@ -11,7 +11,7 @@ public class PlayerShadowSquishDeathCheck : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (PlayerShadowInteraction.m_CurrentPlayerState == PlayerShadowInteraction.PLAYERSTATE.SHADOW)
+        if (PlayerShadowInteraction.m_CurrentPlayerState == PlayerShadowInteraction.PlayerState.Shadow)
         {
             if (other.gameObject.tag != "Player" && !other.isTrigger)
             {

@@ -11,7 +11,7 @@ public class PushCubeMoveReference : MonoBehaviour
 
 	void OnTriggerEnter(Collider other)
 	{
-        if (PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PLAYERSTATE.FORM || GameController.paused)
+        if (PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PlayerState.Form || GameController.paused)
             return;
 
         if (other.gameObject.CompareTag("Player"))

@@ -17,7 +17,7 @@ public class PropellorPlatformShadowCollider : MonoBehaviour
 
     void Update()
     {
-        if (PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PLAYERSTATE.SHIFTING && !GameController.resetting && !GameController.paused)
+        if (PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PlayerState.Shifting && !GameController.resetting && !GameController.paused)
         {
             personalTime += Time.deltaTime;
         }

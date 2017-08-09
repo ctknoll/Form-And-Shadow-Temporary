@@ -37,13 +37,13 @@ public class PushCube : MonoBehaviour
         m_Grabbed = true;
         PlayerMotor.m_Instance.m_GrabbedObjectTransform = gameObject.transform;
         PlayerMotor.m_Instance.SnapAlignCharacterWithGrabbedObject();
-        PlayerShadowInteraction.m_CurrentPlayerState = PlayerShadowInteraction.PLAYERSTATE.GRABBING;
+        PlayerShadowInteraction.m_CurrentPlayerState = PlayerShadowInteraction.PlayerState.Grabbing;
     }
 
     public void Release()
     {
         m_Grabbed = false;
         PlayerMotor.m_Instance.m_GrabbedObjectTransform = null;
-        PlayerShadowInteraction.m_CurrentPlayerState = PlayerShadowInteraction.PLAYERSTATE.FORM;
+        PlayerShadowInteraction.m_CurrentPlayerState = PlayerShadowInteraction.PlayerState.Form;
     }
 }

@@ -60,10 +60,10 @@ public class CameraControl : MonoBehaviour
     {
         switch(PlayerShadowInteraction.m_CurrentPlayerState)
         {
-            case PlayerShadowInteraction.PLAYERSTATE.SHADOW:
+            case PlayerShadowInteraction.PlayerState.Shadow:
                 Update2DCameraMovement();
                 break;
-            case PlayerShadowInteraction.PLAYERSTATE.SHIFTING:
+            case PlayerShadowInteraction.PlayerState.Shifting:
                 UpdateShiftingCameraMovement();
                 break;
             default:

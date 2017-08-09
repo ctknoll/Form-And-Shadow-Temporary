@@ -42,7 +42,7 @@ public class Checkpoint : MonoBehaviour {
         while (personalTimer < panStart + flagRaiseDuration)
         {
             Vector3 currentPos;
-            if (PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PLAYERSTATE.SHIFTING)
+            if (PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PlayerState.Shifting)
             {
                 personalTimer += Time.deltaTime;
             }

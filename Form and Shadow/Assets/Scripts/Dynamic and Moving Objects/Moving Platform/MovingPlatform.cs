@@ -8,12 +8,12 @@ public class MovingPlatform : MonoBehaviour
     [SerializeField] bool m_LoopRoute = true;
     public List<Transform> m_PathLocations;
     protected bool m_IsFinished = false;
+    public float slowValue = 1;
 
     int pathIndex = 0;
     int pathIndexInc = +1;
     bool isPause = false;
     float timeCounter = 0f;
-    public float slowValue = 1;
 
 
     // Use this for initialization
@@ -32,7 +32,7 @@ public class MovingPlatform : MonoBehaviour
 
     protected void Update()
     {
-        if (PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PLAYERSTATE.SHIFTING && !GameController.paused)
+        if (PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PlayerState.Shifting && !GameController.paused)
         {
             if (timeCounter > 0)
             {
@@ -47,7 +47,7 @@ public class MovingPlatform : MonoBehaviour
             if (isPause || m_IsFinished) { return; }
             if (m_PathLocations.Count == 0) { return; }
 
-            transform.position = Vector3.MoveTowards(transform.position, m_PathLocations[pathIndex].position, m_MoveSpeed * Time.fixedDeltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, m_PathLocations[pathIndex].position, m_MoveSpeed * slowValue * Time.fixedDeltaTime);
             if (Vector3.Distance(transform.position, m_PathLocations[pathIndex].position) < m_MoveSpeed * Time.fixedDeltaTime)
             {
                 pathIndex += pathIndexInc;

@@ -29,13 +29,13 @@ public class PlayerAnimator : MonoBehaviour
     {
         switch(PlayerShadowInteraction.m_CurrentPlayerState)
         {
-            case PlayerShadowInteraction.PLAYERSTATE.FORM:
+            case PlayerShadowInteraction.PlayerState.Form:
                 Update3DAnimationParameters();
                 break;
-            case PlayerShadowInteraction.PLAYERSTATE.SHADOW:
+            case PlayerShadowInteraction.PlayerState.Shadow:
                 Update2DAnimationParameters();
                 break;
-            case PlayerShadowInteraction.PLAYERSTATE.GRABBING:
+            case PlayerShadowInteraction.PlayerState.Grabbing:
                 UpdateGrabbingAnimationParameters();
                 break;
         }

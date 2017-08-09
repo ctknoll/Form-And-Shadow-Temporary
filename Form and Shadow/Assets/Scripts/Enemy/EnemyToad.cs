@@ -36,7 +36,7 @@ public class EnemyToad : MonoBehaviour {
         {
             toadAmbientAudioSource.UnPause();
         }
-        if(!jumping && PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PLAYERSTATE.SHIFTING && !GameController.paused)
+        if(!jumping && PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PlayerState.Shifting && !GameController.paused)
         {
             personalTimer += Time.deltaTime;
             if (personalTimer >= jumpStart + jumpCooldown)
@@ -121,7 +121,7 @@ public class EnemyToad : MonoBehaviour {
         while (jumpPersonalTimer < panStart + jumpDuration)
         {
             Vector3 currentPos;
-            if(PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PLAYERSTATE.SHIFTING && !GameController.paused)
+            if(PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PlayerState.Shifting && !GameController.paused)
             {
                 jumpPersonalTimer += Time.deltaTime;
             }

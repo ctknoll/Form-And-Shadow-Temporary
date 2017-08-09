@@ -20,15 +20,15 @@ public class PlayerController : MonoBehaviour
             return;
         switch(PlayerShadowInteraction.m_CurrentPlayerState)
         {
-            case PlayerShadowInteraction.PLAYERSTATE.FORM:
+            case PlayerShadowInteraction.PlayerState.Form:
                 Get3DLocomotionInput();
                 GetJumpInput();
                 break;
-            case PlayerShadowInteraction.PLAYERSTATE.SHADOW:
+            case PlayerShadowInteraction.PlayerState.Shadow:
                 Get2DLocomotionInput();
                 GetJumpInput();
                 break;
-            case PlayerShadowInteraction.PLAYERSTATE.GRABBING:
+            case PlayerShadowInteraction.PlayerState.Grabbing:
                 GetGrabbingLocomotionInput();
                 break;
             default:

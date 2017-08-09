@@ -28,8 +28,8 @@ public class ConveyorBelt : MonoBehaviour
 
     void FixedUpdate()
     {
-        m_Body.position -= m_MoveDirection * m_ConveyorBeltSpeed * Time.deltaTime;
-        m_Body.MovePosition(m_Body.position + m_MoveDirection * m_ConveyorBeltSpeed * Time.deltaTime);
+        m_Body.position -= m_MoveDirection * m_ConveyorBeltSpeed * Time.fixedDeltaTime;
+        m_Body.MovePosition(m_Body.position + m_MoveDirection * m_ConveyorBeltSpeed * Time.fixedDeltaTime);
     }
 
     void OnTriggerStay(Collider other)

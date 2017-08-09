@@ -99,12 +99,12 @@ public class GameController : MonoBehaviour {
 
     void Update()
     {
-        if (!paused && !resetting && PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PLAYERSTATE.SHIFTING)
+        if (!paused && !resetting && PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PlayerState.Shifting)
             masterTimer += Time.deltaTime;
         ScoreUIControl();
         ShadowmeldUIControl();
 
-        if(Input.GetButtonDown("Quit") && PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PLAYERSTATE.SHIFTING)
+        if(Input.GetButtonDown("Quit") && PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PlayerState.Shifting)
         {
             ToggleGamePause();
         }
@@ -278,7 +278,7 @@ public class GameController : MonoBehaviour {
 
     public void ControlAmbientAudio()
     {
-        if(PlayerShadowInteraction.m_CurrentPlayerState == PlayerShadowInteraction.PLAYERSTATE.SHADOWMELDED)
+        if(PlayerShadowInteraction.m_CurrentPlayerState == PlayerShadowInteraction.PlayerState.Shadowmelded)
         {
             ambientAudioSource.Pause();
             ambientAudioSource.clip = ambientShadowmeldAudioClip;
@@ -326,7 +326,7 @@ public class GameController : MonoBehaviour {
         }
         
         // Check if the player is in 2D space
-        if (PlayerShadowInteraction.m_CurrentPlayerState == PlayerShadowInteraction.PLAYERSTATE.SHADOW)
+        if (PlayerShadowInteraction.m_CurrentPlayerState == PlayerShadowInteraction.PlayerState.Shadow)
 		{
             // If so, remove them from 2D space first
 		}
@@ -336,7 +336,7 @@ public class GameController : MonoBehaviour {
 
         player.GetComponent<PlayerShadowInteraction>().m_CurrentShadowmeldResource = 100;
         player.layer = LayerMask.NameToLayer("Form");
-        PlayerShadowInteraction.m_CurrentPlayerState = PlayerShadowInteraction.PLAYERSTATE.FORM;
+        PlayerShadowInteraction.m_CurrentPlayerState = PlayerShadowInteraction.PlayerState.Form;
         yield return new WaitForSeconds(0.5f);
         resetting = false;
 	}

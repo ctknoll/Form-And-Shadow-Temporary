@@ -33,21 +33,21 @@ public class PlayerMotor : MonoBehaviour
     {
         switch(PlayerShadowInteraction.m_CurrentPlayerState)
         {
-            case PlayerShadowInteraction.PLAYERSTATE.FORM:
+            case PlayerShadowInteraction.PlayerState.Form:
                 SnapAlignCharacterWithCamera3D();
                 Process3DMotion();
                 ShadowFollowPlayer();
                 break;
-            case PlayerShadowInteraction.PLAYERSTATE.SHADOW:
+            case PlayerShadowInteraction.PlayerState.Shadow:
                 SnapAlignCharacterWithCamera2D();
                 Process2DMotion();
                 PlayerFollowShadow();
                 break;
-            case PlayerShadowInteraction.PLAYERSTATE.GRABBING:
+            case PlayerShadowInteraction.PlayerState.Grabbing:
                 ProcessGrabbingMotion();
                 ShadowFollowPlayer();
                 break;
-            case PlayerShadowInteraction.PLAYERSTATE.SHIFTING:
+            case PlayerShadowInteraction.PlayerState.Shifting:
                 PlayerFollowShiftingObject();
                 break;
         }

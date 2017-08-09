@@ -24,7 +24,7 @@ public class ShadowmeldObjectControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (PlayerShadowInteraction.m_CurrentPlayerState == PlayerShadowInteraction.PLAYERSTATE.SHADOWMELDED)
+        if (PlayerShadowInteraction.m_CurrentPlayerState == PlayerShadowInteraction.PlayerState.Shadowmelded)
         {
             if(!switched)
             {
@@ -138,7 +138,7 @@ public class ShadowmeldObjectControl : MonoBehaviour {
 
     public void UpdateShadowmeldVFX()
     {
-        if (PlayerShadowInteraction.m_CurrentPlayerState == PlayerShadowInteraction.PLAYERSTATE.SHADOWMELDED)
+        if (PlayerShadowInteraction.m_CurrentPlayerState == PlayerShadowInteraction.PlayerState.Shadowmelded)
         {
             if (currentShadowmeldVFX == null)
             {

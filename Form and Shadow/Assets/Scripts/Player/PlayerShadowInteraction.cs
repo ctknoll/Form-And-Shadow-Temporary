@@ -36,16 +36,16 @@ public class PlayerShadowInteraction : MonoBehaviour
     public float m_MaxShadowmeldResource;
     [HideInInspector] public float m_CurrentShadowmeldResource;
 
-    public enum PLAYERSTATE {FORM, SHADOW, GRABBING, SHIFTING, SHADOWMELDED};
+    public enum PlayerState {Form, Shadow, Grabbing, Shifting, Shadowmelded};
     [Header("Player State and Respawn")]
-    public static PLAYERSTATE m_CurrentPlayerState;
+    public static PlayerState m_CurrentPlayerState;
     public static Vector3 m_PlayerStartPosition;
     [HideInInspector] public bool m_ZAxisTransition;
 
     void Start()
     {
         m_PlayerStartPosition = transform.position;
-        m_CurrentPlayerState = PLAYERSTATE.FORM;
+        m_CurrentPlayerState = PlayerState.Form;
         m_CurrentShadowmeldResource = m_MaxShadowmeldResource;
         m_CurrentPlatformIndex = 0;
         m_PlayerShadow = GameObject.Find("Player_Shadow");
@@ -58,21 +58,21 @@ public class PlayerShadowInteraction : MonoBehaviour
         {
             switch(m_CurrentPlayerState)
             {
-                case PLAYERSTATE.FORM:
+                case PlayerState.Form:
                     if (m_ShadowshiftAvailable)
                         UpdateShadowShiftMaster();
                     if (m_ShadowmeldAvailable)
                         UpdateShadowmeldMaster();
                     break;
-                case PLAYERSTATE.SHADOW:
+                case PlayerState.Shadow:
                     UpdateShadowShiftMaster();
                     break;
-                case PLAYERSTATE.GRABBING:
+                case PlayerState.Grabbing:
                     break;
-                case PLAYERSTATE.SHADOWMELDED:
+                case PlayerState.Shadowmelded:
                     UpdateShadowmeldMaster();
                     break;
-                case PLAYERSTATE.SHIFTING:
+                case PlayerState.Shifting:
                     if(!CameraControl.cameraIsPanning)
                         UpdateShadowShiftingInput();
                     break;
@@ -93,11 +93,11 @@ public class PlayerShadowInteraction : MonoBehaviour
         {
             switch (m_CurrentPlayerState)
             {
-                case PLAYERSTATE.FORM:
+                case PlayerState.Form:
                     if (m_CurrentShadowmeldResource > 0)
                         EnterShadowmeld();
                     break;
-                case PLAYERSTATE.SHADOWMELDED:
+                case PlayerState.Shadowmelded:
                     CheckShadowmeldExit();
                     break;
             }
@@ -108,11 +108,11 @@ public class PlayerShadowInteraction : MonoBehaviour
     {
         switch(m_CurrentPlayerState)
         {
-            case PLAYERSTATE.FORM:
+            case PlayerState.Form:
                 if (m_CurrentShadowmeldResource < m_MaxShadowmeldResource)
                     m_CurrentShadowmeldResource += m_ShadowmeldResourceRegen * Time.deltaTime;
                 break;
-            case PLAYERSTATE.SHADOWMELDED:
+            case PlayerState.Shadowmelded:
                 if (m_CurrentShadowmeldResource > 0)
                     m_CurrentShadowmeldResource -= m_ShadowmeldResourceCost * Time.deltaTime;
                 if (m_CurrentShadowmeldResource < 0)
@@ -123,7 +123,7 @@ public class PlayerShadowInteraction : MonoBehaviour
 
     void EnterShadowmeld()
     {
-        m_CurrentPlayerState = PLAYERSTATE.SHADOWMELDED;
+        m_CurrentPlayerState = PlayerState.Shadowmelded;
         //m_ShadowmeldVFX.SetActive(true);
         gameObject.layer = LayerMask.NameToLayer("Shadowmeld");
     }
@@ -137,7 +137,7 @@ public class PlayerShadowInteraction : MonoBehaviour
     {
         //m_ShadowmeldVFX.SetActive(false);
         gameObject.layer = LayerMask.NameToLayer("Form");
-        m_CurrentPlayerState = PLAYERSTATE.FORM;
+        m_CurrentPlayerState = PlayerState.Form;
     }
 #endregion
 
@@ -153,10 +153,10 @@ public class PlayerShadowInteraction : MonoBehaviour
         {
             switch (m_CurrentPlayerState)
             {
-                case PLAYERSTATE.FORM:
+                case PlayerState.Form:
                     CheckShadowShiftIn();
                     break;
-                case PLAYERSTATE.SHADOW:
+                case PlayerState.Shadow:
                     StartShadowShiftOut();
                     break;
             }
@@ -260,7 +260,7 @@ public class PlayerShadowInteraction : MonoBehaviour
     void StartShadowShiftOut()
     {
         SetupShadowShiftOut();
-        m_CurrentPlayerState = PLAYERSTATE.SHIFTING;
+        m_CurrentPlayerState = PlayerState.Shifting;
 
         Vector3 targetLocation = m_PlayerShadow.transform.position;
         if (m_ZAxisTransition)
@@ -329,7 +329,7 @@ public class PlayerShadowInteraction : MonoBehaviour
 
     IEnumerator ShiftPlayerIn(Vector3 start, Vector3 target, Vector3 cameraOffset)
     {
-        m_CurrentPlayerState = PLAYERSTATE.SHIFTING;
+        m_CurrentPlayerState = PlayerState.Shifting;
 
         if (m_ShadowShiftFollowObject == null)
             m_ShadowShiftFollowObject = Instantiate(m_ShadowShiftFollowPrefab, start, Quaternion.identity);
@@ -390,7 +390,7 @@ public class PlayerShadowInteraction : MonoBehaviour
         Destroy(m_ShadowShiftFollowObject);
         transform.parent = null;
         m_PlayerShadow.transform.parent = null;
-        m_CurrentPlayerState = PLAYERSTATE.SHADOW;
+        m_CurrentPlayerState = PlayerState.Shadow;
     }
 
     void FinishShiftingOut()
@@ -406,7 +406,7 @@ public class PlayerShadowInteraction : MonoBehaviour
         Destroy(m_ShadowShiftFollowObject);
         transform.parent = null;
         m_PlayerShadow.transform.parent = null;
-        m_CurrentPlayerState = PLAYERSTATE.FORM;
+        m_CurrentPlayerState = PlayerState.Form;
     }
 
     public GameObject CheckLightSourceAligned()

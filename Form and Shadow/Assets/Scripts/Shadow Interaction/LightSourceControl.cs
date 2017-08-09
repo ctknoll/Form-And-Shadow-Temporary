@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-
+using System.Collections.Generic;
+using System.Collections;
 /*
 
 -- Light Source Control --
@@ -10,8 +11,6 @@ sets axis-control for shadow casting.
 
 public class LightSourceControl : MonoBehaviour
 {
-	//The starting and current directions of the light
-	[HideInInspector] public Quaternion lightSourceStartRotation;
     [HideInInspector] public Vector3 m_LightSourceForward;
 
 	//The variables defining whether a light is shining along the
@@ -27,7 +26,6 @@ public class LightSourceControl : MonoBehaviour
     {
         m_LightSourceForward = transform.forward;
         m_LightingMasterControl = GameObject.Find("Lighting_Master_Control");
-		lightSourceStartRotation = transform.rotation;
 		CheckLightingDirection();
 	}
 
@@ -49,7 +47,18 @@ public class LightSourceControl : MonoBehaviour
 	public void TurnLightSource(bool turnClockwise)
     {
 		float clockWiseVal = (turnClockwise ? -1 : 1);
-		transform.Rotate(0, clockWiseVal * 90, 0);
+        Debug.Log("Got this far");
+        StartCoroutine(Turn(transform.eulerAngles, transform.eulerAngles + new Vector3(0, clockWiseVal, 0)));
+    }
+
+    IEnumerator Turn(Vector3 startRot, Vector3 endRot)
+    {
+        float panStart = Time.time;
+        while (Time.time < 0.5f)
+        {
+            transform.eulerAngles = Vector3.Slerp(startRot, endRot, (Time.time - panStart) / 0.5f);
+            yield return null;
+        }
         m_LightSourceForward = transform.forward;
         CheckLightingDirection();
     }
