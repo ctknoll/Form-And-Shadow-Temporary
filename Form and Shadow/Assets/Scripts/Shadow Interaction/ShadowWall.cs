@@ -8,7 +8,7 @@ public class ShadowWall : MonoBehaviour
 	void Update ()
     {
         bool lighting = false;
-        foreach (Transform child in GameObject.Find("Lighting").GetComponentInChildren<Transform>())
+        foreach (Transform child in GameObject.Find("Lighting_Master_Control").GetComponentInChildren<Transform>())
         {
             if (!child.gameObject.activeSelf) continue;
             Vector3 lightDirection = child.forward.normalized;

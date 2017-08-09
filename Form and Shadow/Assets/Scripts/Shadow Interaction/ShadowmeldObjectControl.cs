@@ -99,42 +99,42 @@ public class ShadowmeldObjectControl : MonoBehaviour {
         }
     }
 
-    public void UpdateShadowmeldRenderMode()
-    {
-        if (PlayerShadowInteraction.m_CurrentPlayerState == PlayerShadowInteraction.PLAYERSTATE.SHADOWMELDED)
-        {
-            if (gameObject.layer == LayerMask.NameToLayer("Shadowmeld Ignore") || gameObject.layer == LayerMask.NameToLayer("Shadowmeld Collide"))
-            {
-                if (GetComponent<ShadowCast>().singleMesh)
-                {
-                    GetComponent<MeshRenderer>().enabled = false;
-                }
-                else
-                {
-                    MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
-                    foreach (MeshRenderer meshRend in meshRenderers)
-                    {
-                        meshRend.enabled = false;
-                    }
-                }
-            }
-        }
-        else
-        {
-            if (GetComponent<ShadowCast>().singleMesh)
-            {
-                GetComponent<MeshRenderer>().enabled = true;
-            }
-            else
-            {
-                MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
-                foreach (MeshRenderer meshRend in meshRenderers)
-                {
-                    meshRend.enabled = true;
-                }
-            }
-        }
-    }
+    //public void UpdateShadowmeldRenderMode()
+    //{
+    //    if (PlayerShadowInteraction.m_CurrentPlayerState == PlayerShadowInteraction.PLAYERSTATE.SHADOWMELDED)
+    //    {
+    //        if (gameObject.layer == LayerMask.NameToLayer("Shadowmeld Ignore") || gameObject.layer == LayerMask.NameToLayer("Shadowmeld Collide"))
+    //        {
+    //            if (GetComponent<ShadowCast>().singleMesh)
+    //            {
+    //                GetComponent<MeshRenderer>().enabled = false;
+    //            }
+    //            else
+    //            {
+    //                MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
+    //                foreach (MeshRenderer meshRend in meshRenderers)
+    //                {
+    //                    meshRend.enabled = false;
+    //                }
+    //            }
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (GetComponent<ShadowCast>().singleMesh)
+    //        {
+    //            GetComponent<MeshRenderer>().enabled = true;
+    //        }
+    //        else
+    //        {
+    //            MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
+    //            foreach (MeshRenderer meshRend in meshRenderers)
+    //            {
+    //                meshRend.enabled = true;
+    //            }
+    //        }
+    //    }
+    //}
 
     public void UpdateShadowmeldVFX()
     {

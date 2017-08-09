@@ -18,7 +18,7 @@ public class PlayerShadowInteraction : MonoBehaviour
     //[SerializeField] AudioClip m_ShadowShiftOutAudioClip;
     [SerializeField] GameObject m_ShadowShiftFollowPrefab;
     [SerializeField] float m_ShadowShiftDuration;
-    [HideInInspector] public GameObject m_ShadowShiftFollowObject;
+    [HideInInspector] public static GameObject m_ShadowShiftFollowObject;
     List<GameObject> m_ShadowShiftOutPlatforms;
     int m_CurrentPlatformIndex;
     float m_PlayerShiftInOffset;
@@ -49,7 +49,7 @@ public class PlayerShadowInteraction : MonoBehaviour
         m_CurrentShadowmeldResource = m_MaxShadowmeldResource;
         m_CurrentPlatformIndex = 0;
         m_PlayerShadow = GameObject.Find("Player_Shadow");
-        m_LightingMaster = GameObject.Find("Lighting");
+        m_LightingMaster = GameObject.Find("Lighting_Master_Control");
     }
 
     void Update()
@@ -182,7 +182,7 @@ public class PlayerShadowInteraction : MonoBehaviour
                     targetLocation.y = m_ShadowShiftOutPlatforms[m_CurrentPlatformIndex].transform.position.y;
                 }
 
-                StartCoroutine(CameraPanOut(m_ShadowShiftFollowObject.transform.position, targetLocation, false));
+                StartCoroutine(ShiftPlayerOut(m_ShadowShiftFollowObject.transform.position, targetLocation, false));
             }
         }
         if(Input.GetKeyDown(KeyCode.W))
@@ -192,8 +192,8 @@ public class PlayerShadowInteraction : MonoBehaviour
             {
                 // If the player is at index 0 of the platforms, or the first platform, and they try to go forward,
                 // they return to the wall
-                StartCoroutine(CameraPanIn(m_ShadowShiftFollowObject.transform.position, targetLocation, 
-                    -m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection * Camera.main.GetComponent<CameraControl>().m_DistanceToPlayer2D));
+                StartCoroutine(ShiftPlayerIn(m_ShadowShiftFollowObject.transform.position, targetLocation, 
+                    -m_LightSourceAligned.GetComponent<LightSourceControl>().m_LightSourceForward * Camera.main.GetComponent<CameraControl>().m_DistanceToPlayer2D));
             }
             else
             {
@@ -208,7 +208,7 @@ public class PlayerShadowInteraction : MonoBehaviour
                     targetLocation.x = m_ShadowShiftOutPlatforms[m_CurrentPlatformIndex].transform.position.x;
                     targetLocation.y = m_ShadowShiftOutPlatforms[m_CurrentPlatformIndex].transform.position.y;
                 }
-                StartCoroutine(CameraPanOut(m_ShadowShiftFollowObject.transform.position, targetLocation, false));
+                StartCoroutine(ShiftPlayerOut(m_ShadowShiftFollowObject.transform.position, targetLocation, false));
             }
         }
 
@@ -224,12 +224,26 @@ public class PlayerShadowInteraction : MonoBehaviour
 
         if(CheckLightSourceAligned() != null)
         {
-            Debug.Log("got a light");
-            m_ZAxisTransition = m_LightSourceAligned.GetComponent<LightSourceControl>().zAxisMovement;
+            Debug.Log("Aligned light source found!");
+            switch(m_LightSourceAligned.GetComponent<LightSourceControl>().m_CurrentFacingDirection)
+            {
+                case LightSourceControl.FacingDirection.North:
+                    m_ZAxisTransition = true;
+                    break;
+                case LightSourceControl.FacingDirection.East:
+                    m_ZAxisTransition = false;
+                    break;
+                case LightSourceControl.FacingDirection.South:
+                    m_ZAxisTransition = true;
+                    break;
+                case LightSourceControl.FacingDirection.West:
+                    m_ZAxisTransition = false;
+                    break;
+            }
             // Cast a sphere in the direction of the most aligned light source on the
             // shadow wall layer
             if (Physics.SphereCast(transform.position, 0.2f,
-                m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection, out shadowWallHit, 1 << 10))
+                m_LightSourceAligned.GetComponent<LightSourceControl>().m_LightSourceForward, out shadowWallHit, 1 << 10))
             {
                 if (m_ZAxisTransition)
                     m_PlayerShiftInOffset = transform.position.z;
@@ -237,8 +251,8 @@ public class PlayerShadowInteraction : MonoBehaviour
                     m_PlayerShiftInOffset = transform.position.x;
                 // Shift in
                 TogglePlayerMeshVisibility(true);
-                StartCoroutine(CameraPanIn(transform.position, shadowWallHit.point + m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection,
-                    -m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection * Camera.main.GetComponent<CameraControl>().m_DistanceToPlayer2D));
+                StartCoroutine(ShiftPlayerIn(transform.position, shadowWallHit.point + m_LightSourceAligned.GetComponent<LightSourceControl>().m_LightSourceForward,
+                    -m_LightSourceAligned.GetComponent<LightSourceControl>().m_LightSourceForward * Camera.main.GetComponent<CameraControl>().m_DistanceToPlayer2D));
             }
         }
     }
@@ -275,9 +289,9 @@ public class PlayerShadowInteraction : MonoBehaviour
         }
 
         if (m_ShadowShiftOutPlatforms.Count == 0 || m_ShadowShiftOutPlatforms.Count == 1)
-            StartCoroutine(CameraPanOut(m_PlayerShadow.transform.position, targetLocation, true));
+            StartCoroutine(ShiftPlayerOut(m_PlayerShadow.transform.position, targetLocation, true));
         else
-            StartCoroutine(CameraPanOut(m_PlayerShadow.transform.position, targetLocation, false));
+            StartCoroutine(ShiftPlayerOut(m_PlayerShadow.transform.position, targetLocation, false));
     }
 
     void SetupShadowShiftOut()
@@ -305,15 +319,15 @@ public class PlayerShadowInteraction : MonoBehaviour
             foreach (RaycastHit hit in hits)
             {
                 // Prevent spikes from being added as shadow collider objects
-                if (hit.collider.GetComponentInParent<ShadowCollider>().transformParent.GetComponent<ShadowCast>().shadowType != ShadowCast.ShadowType.SPIKES)
-                    transferPlatforms.Add(hit.collider.gameObject.GetComponentInParent<ShadowCollider>().transformParent);
+                if (hit.collider.GetComponentInParent<ShadowCollider>().m_TransformParent.GetComponent<ShadowCast>().m_CastedShadowType != ShadowCast.CastedShadowType.Killzone_Shadow)
+                    transferPlatforms.Add(hit.collider.gameObject.GetComponentInParent<ShadowCollider>().m_TransformParent.gameObject);
             }
         }
         // Then, return a list of gameobjects equal to all the shadow colliders below the player when called
         return transferPlatforms;
     }
 
-    IEnumerator CameraPanIn(Vector3 start, Vector3 target, Vector3 cameraOffset)
+    IEnumerator ShiftPlayerIn(Vector3 start, Vector3 target, Vector3 cameraOffset)
     {
         m_CurrentPlayerState = PLAYERSTATE.SHIFTING;
 
@@ -334,7 +348,7 @@ public class PlayerShadowInteraction : MonoBehaviour
         FinishShiftIn();
     }
 
-    IEnumerator CameraPanOut(Vector3 start, Vector3 target, bool finish)
+    IEnumerator ShiftPlayerOut(Vector3 start, Vector3 target, bool finish)
     {
         if (m_ShadowShiftFollowObject == null)
             m_ShadowShiftFollowObject = Instantiate(m_ShadowShiftFollowPrefab, start, Quaternion.identity);
@@ -354,8 +368,21 @@ public class PlayerShadowInteraction : MonoBehaviour
     void FinishShiftIn()
     {
         // After the transition is finished, perform final steps
-        m_PlayerShadow.transform.position = m_ShadowShiftFollowObject.transform.position;
-
+        switch(m_LightSourceAligned.GetComponent<LightSourceControl>().m_CurrentFacingDirection)
+        {
+            case LightSourceControl.FacingDirection.North:
+                m_PlayerShadow.transform.position = new Vector3(m_ShadowShiftFollowObject.transform.position.x, m_ShadowShiftFollowObject.transform.position.y, LightingMasterControl.m_NorthFloorTransform.position.z);
+                break;
+            case LightSourceControl.FacingDirection.East:
+                m_PlayerShadow.transform.position = new Vector3(LightingMasterControl.m_EastFloorTransform.position.x, m_ShadowShiftFollowObject.transform.position.y, m_ShadowShiftFollowObject.transform.position.z);
+                break;
+            case LightSourceControl.FacingDirection.South:
+                m_PlayerShadow.transform.position = new Vector3(m_ShadowShiftFollowObject.transform.position.x, m_ShadowShiftFollowObject.transform.position.y, LightingMasterControl.m_SouthFloorTransform.position.z);
+                break;
+            case LightSourceControl.FacingDirection.West:
+                m_PlayerShadow.transform.position = new Vector3(LightingMasterControl.m_WestFloorTransform.position.x, m_ShadowShiftFollowObject.transform.position.y, m_ShadowShiftFollowObject.transform.position.z);
+                break;
+        }
         m_PlayerShadow.GetComponent<CharacterController>().enabled = true;
         PlayerController.m_CharacterController = m_PlayerShadow.GetComponent<CharacterController>();
         GetComponent<CharacterController>().enabled = false;

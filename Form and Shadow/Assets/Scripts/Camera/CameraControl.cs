@@ -243,7 +243,7 @@ public class CameraControl : MonoBehaviour
     {
         m_Camera.orthographic = false;
         m_Camera.clearFlags = CameraClearFlags.Skybox;
-        transform.LookAt(m_CameraTarget.GetComponentInParent<PlayerShadowInteraction>().m_ShadowShiftFollowObject.transform);
+        transform.LookAt(PlayerShadowInteraction.m_ShadowShiftFollowObject.transform.position);
     }
 
     public struct ClipPlanePoints

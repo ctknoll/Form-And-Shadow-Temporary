@@ -9,7 +9,7 @@ public class PlayerMotor : MonoBehaviour
     [Range(1, 5)][SerializeField] float m_BackwardSpeed = 1f;
     [Range(2, 10)][SerializeField] float m_StrafingSpeed = 4f;
     [Range(2, 10)][SerializeField] float m_2DMovementSpeed = 4f;
-    [Range(1, 5)][SerializeField] float m_GrabbingMovementSpeed = 1f;
+    [Range(.25f, 1)][SerializeField] float m_GrabbingMovementSpeed = 0.25f;
     [Range(2, 7)][SerializeField] float m_SlideSpeed = 10f;
     [Range(4, 10)][SerializeField] float m_JumpSpeed = 6f;
     [Range(15, 25)] public float m_Gravity = 21f;
@@ -44,13 +44,12 @@ public class PlayerMotor : MonoBehaviour
                 PlayerFollowShadow();
                 break;
             case PlayerShadowInteraction.PLAYERSTATE.GRABBING:
-                SnapAlignCharacterWithGrabbedObject();
                 ProcessGrabbingMotion();
                 ShadowFollowPlayer();
                 break;
-            default:
+            case PlayerShadowInteraction.PLAYERSTATE.SHIFTING:
+                PlayerFollowShiftingObject();
                 break;
-
         }
 	}
 #region Motion Processing Methods
@@ -222,7 +221,9 @@ public class PlayerMotor : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(-Camera.main.transform.right, Camera.main.transform.up);
     }
 
-    void SnapAlignCharacterWithGrabbedObject()
+    // Called by the PushCube.cs script to turn the player to face upon grabbing, but only once
+    // because calls repeated in Update cause issues with childing the cube to the player
+    public void SnapAlignCharacterWithGrabbedObject()
     {
         transform.rotation = Quaternion.LookRotation(Vector3.Normalize(m_GrabbedObjectTransform.position - m_GrabbedObjectPlayerSide.position), Vector3.up);
     }
@@ -231,12 +232,17 @@ public class PlayerMotor : MonoBehaviour
 #region Follow Methods
     void PlayerFollowShadow()
     {
-        transform.position = PlayerShadowInteraction.m_PlayerShadow.transform.position + -GetComponent<PlayerShadowInteraction>().m_LightSourceAligned.GetComponent<LightSourceControl>().lightSourceDirection * 4;
+        transform.position = PlayerShadowInteraction.m_PlayerShadow.transform.position + -GetComponent<PlayerShadowInteraction>().m_LightSourceAligned.GetComponent<LightSourceControl>().m_LightSourceForward * 4;
     }
 
     void ShadowFollowPlayer()
     {
         PlayerShadowInteraction.m_PlayerShadow.transform.position = transform.position + Vector3.up * 10;
     }
-#endregion
+
+    void PlayerFollowShiftingObject()
+    {
+        transform.position = PlayerShadowInteraction.m_ShadowShiftFollowObject.transform.position;
+    }
+    #endregion
 }

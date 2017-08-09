@@ -129,7 +129,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1523816093746482}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4988682997179216}
@@ -143,7 +143,7 @@ Transform:
   m_GameObject: {fileID: 1793766845158978}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 0.5, z: 4}
+  m_LocalScale: {x: 3, y: 0.5, z: 2}
   m_Children: []
   m_Father: {fileID: 4428349241892016}
   m_RootOrder: 0
@@ -168,7 +168,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1740624292258114}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4988682997179216}
@@ -181,7 +181,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1439985451363458}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.1038437, y: 0.25, z: -9.401029}
+  m_LocalPosition: {x: -7.944287, y: 4.25, z: -9.10163}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4428349241892016}
@@ -277,12 +277,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8910c1f15da9e6469c89c251ddc80b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
-    type: 2}
-  shadowType: 3
-  meshException: 0
-  shadowColliders: []
-  singleMesh: 0
+  m_CastedShadowType: 3
+  m_ShadowColliders:
+    m_NorthShadowCollider: {fileID: 0}
+    m_EastShadowCollider: {fileID: 0}
+    m_SouthShadowCollider: {fileID: 0}
+    m_WestShadowCollider: {fileID: 0}
 --- !u!114 &114961847091624096
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -294,10 +294,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d8bea517e44ba1438ef950285685a7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
-  pauseTime: 1
-  isLoop: 1
-  path:
+  m_MoveSpeed: 2
+  m_PauseTime: 1
+  m_LoopRoute: 1
+  m_PathLocations:
   - {fileID: 4871791649006160}
   - {fileID: 4463219584100820}
   - {fileID: 4940255234343708}

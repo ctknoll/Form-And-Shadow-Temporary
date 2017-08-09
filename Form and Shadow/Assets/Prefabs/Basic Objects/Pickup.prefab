@@ -75,6 +75,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!33 &33722465829531694
 MeshFilter:
@@ -150,7 +151,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -185,12 +186,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8910c1f15da9e6469c89c251ddc80b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
-    type: 2}
-  meshException: 0
-  meshType: 0
-  shadowColliders: []
-  singleMesh: 0
+  m_CastedShadowType: 0
+  m_ShadowColliders:
+    m_NorthShadowCollider: {fileID: 0}
+    m_EastShadowCollider: {fileID: 0}
+    m_SouthShadowCollider: {fileID: 0}
+    m_WestShadowCollider: {fileID: 0}
 --- !u!135 &135041188722365290
 SphereCollider:
   m_ObjectHideFlags: 1

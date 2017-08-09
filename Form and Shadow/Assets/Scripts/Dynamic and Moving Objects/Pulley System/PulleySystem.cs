@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-public class PulleySystem : MonoBehaviour {
-	public float spawnCooldown;
-	public GameObject pulleyPlatformPrefab;
-
-	private float spawnTime;
-	private float personalTime;
+public class PulleySystem : MonoBehaviour
+{
+    public GameObject m_PulleyPlatformPrefab;
+    [Range(1f, 3f)][SerializeField] float m_SpawnCooldown = 1f;
+	float spawnTime;
+	float personalTime;
 
 	void Start ()
 	{
@@ -17,13 +17,15 @@ public class PulleySystem : MonoBehaviour {
 		if(PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PLAYERSTATE.SHIFTING && !GameController.paused)
 		{
 			personalTime += Time.deltaTime;	
-			if(personalTime >= spawnTime + spawnCooldown)
+			if(personalTime >= spawnTime + m_SpawnCooldown)
 			{
 				spawnTime = personalTime;
-				GameObject pulleyPlatform = Instantiate(pulleyPlatformPrefab, transform.GetChild(0).position, transform.rotation, null) as GameObject;
-				pulleyPlatform.GetComponent<PulleySystemPlatform>().pulleyStart = transform.GetChild(0).gameObject.transform;
-				pulleyPlatform.GetComponent<PulleySystemPlatform>().pulleyEnd = transform.GetChild(1).gameObject.transform;
-			}
+				GameObject pulleyPlatform = Instantiate(m_PulleyPlatformPrefab, transform.GetChild(0).position, transform.rotation) as GameObject;
+                foreach(Transform pathNode in GetComponentInChildren<Transform>())
+                {
+                    pulleyPlatform.GetComponent<PulleyMovingPlatform>().m_PathLocations.Add(pathNode);
+                }
+            }
 		}
 	}
 }

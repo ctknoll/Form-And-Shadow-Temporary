@@ -1,24 +1,24 @@
 ﻿using UnityEngine;
 
-public class PushCube : MonoBehaviour {
-    public bool canInteract;
-    public bool grabbed;
-
-	void Start()
-	{
-	}
+public class PushCube : MonoBehaviour
+{
+    [HideInInspector] public bool m_PlayerCanInteract;
+    [HideInInspector] public bool m_Grabbed;
 
 	void Update()
 	{
         UpdateGrabbingInput();
-
-	}
+        if (m_Grabbed)
+            transform.parent = PlayerMotor.m_Instance.gameObject.transform;
+        else
+            transform.parent = null;
+    }
 
     void UpdateGrabbingInput()
     {
-        if(canInteract)
+        if(m_PlayerCanInteract)
         {
-            if(!grabbed)
+            if(!m_Grabbed)
             {
                 if (Input.GetButtonDown("Grab"))
                 {
@@ -34,14 +34,15 @@ public class PushCube : MonoBehaviour {
 
     void Grab()
     {
-        grabbed = true;
+        m_Grabbed = true;
         PlayerMotor.m_Instance.m_GrabbedObjectTransform = gameObject.transform;
+        PlayerMotor.m_Instance.SnapAlignCharacterWithGrabbedObject();
         PlayerShadowInteraction.m_CurrentPlayerState = PlayerShadowInteraction.PLAYERSTATE.GRABBING;
     }
 
     public void Release()
     {
-        grabbed = false;
+        m_Grabbed = false;
         PlayerMotor.m_Instance.m_GrabbedObjectTransform = null;
         PlayerShadowInteraction.m_CurrentPlayerState = PlayerShadowInteraction.PLAYERSTATE.FORM;
     }

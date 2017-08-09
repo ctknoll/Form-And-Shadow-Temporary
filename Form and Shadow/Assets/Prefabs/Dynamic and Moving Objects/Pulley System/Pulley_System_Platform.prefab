@@ -24,9 +24,9 @@ GameObject:
   - component: {fileID: 33221926643826800}
   - component: {fileID: 23212401306404266}
   - component: {fileID: 114435666784611448}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Pulley_Platform_Mesh
-  m_TagString: Move Platform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 4867598772199556}
   - component: {fileID: 114088834685786116}
   - component: {fileID: 65655382575734838}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Pulley_System_Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,6 +105,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!33 &33221926643826800
 MeshFilter:
@@ -148,13 +149,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e49933d07a844a143b1f6bc0ac785d17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.05
-  destroyDelayTime: 0.25
-  pulleyStart: {fileID: 0}
-  pulleyEnd: {fileID: 0}
+  m_MoveSpeed: 2
+  m_PauseTime: 0
+  m_LoopRoute: 0
+  m_PathLocations: []
+  slowValue: 1
   playerChildedIn3D: 0
-  playerChildedIn2D: 0
-  atEndOfRoute: 0
 --- !u!114 &114435666784611448
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -178,9 +178,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8910c1f15da9e6469c89c251ddc80b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
-    type: 2}
-  meshException: 0
-  meshType: 3
-  shadowColliders: []
-  singleMesh: 0
+  m_CastedShadowType: 3
+  m_ShadowColliders:
+    m_NorthShadowCollider: {fileID: 0}
+    m_EastShadowCollider: {fileID: 0}
+    m_SouthShadowCollider: {fileID: 0}
+    m_WestShadowCollider: {fileID: 0}

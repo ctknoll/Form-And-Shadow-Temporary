@@ -2,11 +2,11 @@
 
 public class PushCubeMoveReference : MonoBehaviour
 {
-	PushCube m_PushCube;
+	PushCube pushCube;
 
 	void Start()
 	{
-		m_PushCube = GetComponentInParent<PushCube>();
+		pushCube = GetComponentInParent<PushCube>();
 	}
 
 	void OnTriggerEnter(Collider other)
@@ -16,7 +16,7 @@ public class PushCubeMoveReference : MonoBehaviour
 
         if (other.gameObject.CompareTag("Player"))
 		{
-            m_PushCube.canInteract = true;
+            pushCube.m_PlayerCanInteract = true;
             PlayerMotor.m_Instance.m_GrabbedObjectPlayerSide = gameObject.transform;
         }
 	}
@@ -28,9 +28,9 @@ public class PushCubeMoveReference : MonoBehaviour
 
         if (other.gameObject.CompareTag("Player"))
         {
-            m_PushCube.canInteract = false;
+            pushCube.m_PlayerCanInteract = false;
             PlayerMotor.m_Instance.m_GrabbedObjectPlayerSide = null;
-            m_PushCube.Release();
+            pushCube.Release();
         }
     }
 }

@@ -1,210 +1,169 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 
 public class ShadowCast : MonoBehaviour {
-    public GameObject shadowColliderPrefab;
-    public enum ShadowType { NO_SHADOW, BASIC_SHADOW, SPIKES, MOVE_PLATFORM, PUSH_CUBE, PROPELLOR_PLATFORM, ENEMY_TOAD };
-    public ShadowType shadowType;
-    public bool meshException;
-    private GameObject lightReference;
-    public List<GameObject> shadowColliders = new List<GameObject>();
-    [HideInInspector]
-    public bool singleMesh;
-	private UnityEngine.Rendering.ShadowCastingMode shadowCastMode;
-    List<float> zWallReferenceNumbers = new List<float>();
-    List<float> xWallReferenceNumbers = new List<float>();
+    public enum CastedShadowType { No_Shadow, Basic_Shadow, Killzone_Shadow, Move_Platform, Propellor_Platform };
+    public CastedShadowType m_CastedShadowType;
+    private GameObject m_LightingMasterControl;
+
+    [System.Serializable] public struct ShadowColliders
+    {
+        public GameObject m_NorthShadowCollider;
+        public GameObject m_EastShadowCollider;
+        public GameObject m_SouthShadowCollider;
+        public GameObject m_WestShadowCollider;
+    }
+    public ShadowColliders m_ShadowColliders;
 
     void Start()
 	{
-        lightReference = GameObject.Find("Lighting");
-        // Used to differentiate between 3D objects with multiple mesh renderers childed under it (like spikes)
-		// and single objects with one master mesh renderer
-		singleMesh = GetComponent<MeshRenderer>();
-		if(singleMesh)
-			// Then, set the shadowCastMode for this specific object equal to the master mesh renderer
-			shadowCastMode = GetComponent<MeshRenderer>().shadowCastingMode;
-		else
-			// Or, in the case of multiple children renderers, access just one of the renderers and 
-			// set the global shadowcast mode equal to it, assuming all children follow the same shadowcast mode
-			shadowCastMode = GetComponentInChildren<MeshRenderer>().shadowCastingMode;
+        m_LightingMasterControl = GameObject.Find("Lighting_Master_Control");
 
-        if(shadowType != ShadowType.NO_SHADOW)
+        if(m_CastedShadowType != CastedShadowType.No_Shadow)
         {
-            foreach (Transform lightTransform in GameObject.Find("Lighting").GetComponentInChildren<Transform>())
+            foreach (Transform lightTransform in m_LightingMasterControl.GetComponentInChildren<Transform>())
             {
-                if (!lightTransform.gameObject.activeSelf) continue;
-                CastShadowCollider(lightTransform.transform.forward);
+                if(lightTransform.gameObject.activeSelf)
+                    CastShadowCollider(lightTransform.GetComponent<LightSourceControl>());
             }
         }
     }
 
-	void Update () 
-	{
-        UpdateShadowcastMode();
-    }
-
-    public void CastShadowCollider(Vector3 direction)
+    public void CastShadowCollider(LightSourceControl lightSourceControl)
     {
-        // Number of casts from the unit
-        float castNumber;
-
-        // Check if you are casting in the z direction (forward or backward)
-        if (direction == lightReference.transform.forward || direction == -lightReference.transform.forward)
+        RaycastHit hit;
+        Debug.DrawRay(transform.position, lightSourceControl.m_LightSourceForward, Color.red, 10f);
+        if (Physics.Raycast(transform.position, lightSourceControl.m_LightSourceForward, out hit, Mathf.Infinity, 1 << 10))
         {
-            castNumber = transform.lossyScale.x * 2;
-            List<Vector3> castPoints = new List<Vector3>();
-
-            float castPointIncrement = 0;
-            for (int i = 0; i <= castNumber; i++)
+            switch (lightSourceControl.m_CurrentFacingDirection)
             {
-                Vector3 temp = new Vector3(transform.position.x - transform.lossyScale.x / 2 + castPointIncrement, transform.position.y, transform.position.z);
-                castPoints.Add(temp);
-                castPointIncrement += 0.5f;
-            }
-
-            foreach (Vector3 castPoint in castPoints)
-            {
-                Debug.DrawRay(castPoint, direction, Color.red, 10f);
-                RaycastHit hit;
-                if (Physics.Raycast(castPoint, direction, out hit, Mathf.Infinity, 1 << 10))
-                {
-                    if(!zWallReferenceNumbers.Contains(hit.collider.gameObject.transform.position.z))
-                    {
-                        zWallReferenceNumbers.Add(hit.collider.gameObject.transform.position.z);
-                        bool lockedInZ = GetLockedAxis(direction);
-                        Vector3 transOffset = GetTransformOffset(direction, lockedInZ);
-                        GameObject shadowAdd = Instantiate(shadowColliderPrefab, hit.point + transOffset, hit.collider.gameObject.transform.rotation) as GameObject;
-                        shadowAdd.GetComponent<ShadowCollider>().transformParent = gameObject;
-                        shadowAdd.GetComponent<ShadowCollider>().transformOffset = transOffset;
-                        shadowAdd.GetComponent<ShadowCollider>().lockedInZAxis = lockedInZ;
-                        shadowAdd.GetComponent<ShadowCollider>().castDirection = direction;
-                        shadowAdd.GetComponent<ShadowCollider>().wallTransform = hit.collider.transform;
-                        shadowColliders.Add(shadowAdd);
-                    }
-                }
-            }
-        }
-        // Or if you are casting in the x direction (left or right)
-        else
-        {
-            castNumber = transform.lossyScale.z * 2;
-            List<Vector3> castPoints = new List<Vector3>();
-
-            float castPointIncrement = 0;
-            for (int i = 0; i <= castNumber; i++)
-            {
-                Vector3 temp = new Vector3(transform.position.x, transform.position.y, transform.position.z - transform.lossyScale.z / 2 + castPointIncrement);
-                castPoints.Add(temp);
-                castPointIncrement += 0.5f;
-            }
-
-            foreach (Vector3 castPoint in castPoints)
-            {
-                Debug.DrawRay(castPoint, direction, Color.red, 10f);
-                RaycastHit hit;
-                if (Physics.Raycast(castPoint, direction, out hit, Mathf.Infinity, 1 << 10))
-                {
-                    if (!xWallReferenceNumbers.Contains(hit.collider.gameObject.transform.position.x))
-                    {
-                        xWallReferenceNumbers.Add(hit.collider.gameObject.transform.position.x);
-                        bool lockedInZ = GetLockedAxis(direction);
-                        Vector3 transOffset = GetTransformOffset(direction, lockedInZ);
-                        GameObject shadowAdd = Instantiate(shadowColliderPrefab, hit.point + transOffset, hit.collider.gameObject.transform.rotation) as GameObject;
-                        shadowAdd.GetComponent<ShadowCollider>().transformParent = gameObject;
-                        shadowAdd.GetComponent<ShadowCollider>().transformOffset = transOffset;
-                        shadowAdd.GetComponent<ShadowCollider>().lockedInZAxis = lockedInZ;
-                        shadowAdd.GetComponent<ShadowCollider>().castDirection = direction;
-                        shadowAdd.GetComponent<ShadowCollider>().wallTransform = hit.collider.transform;
-                        shadowColliders.Add(shadowAdd);
-                    }
-                }
+                case LightSourceControl.FacingDirection.North:
+                    if(!m_ShadowColliders.m_NorthShadowCollider)
+                        CreateShadowCollider(lightSourceControl.m_CurrentFacingDirection);
+                    break;
+                case LightSourceControl.FacingDirection.East:
+                    if(!m_ShadowColliders.m_EastShadowCollider)
+                        CreateShadowCollider(lightSourceControl.m_CurrentFacingDirection);
+                    break;
+                case LightSourceControl.FacingDirection.South:
+                    if (!m_ShadowColliders.m_SouthShadowCollider)
+                        CreateShadowCollider(lightSourceControl.m_CurrentFacingDirection);
+                    break;
+                case LightSourceControl.FacingDirection.West:
+                    if (!m_ShadowColliders.m_WestShadowCollider)
+                        CreateShadowCollider(lightSourceControl.m_CurrentFacingDirection);
+                    break;
             }
         }
 	}
 
-    public bool GetLockedAxis(Vector3 castDir)
+    void CreateShadowCollider(LightSourceControl.FacingDirection castedFacingDirection)
     {
-        return castDir == lightReference.transform.forward || -1 * castDir == lightReference.transform.forward;
+        GameObject newShadowCollider = new GameObject();
+        newShadowCollider.AddComponent<ShadowCollider>();
+        newShadowCollider.GetComponent<ShadowCollider>().m_TransformParent = gameObject.transform;
+        Vector3 tempShadowColliderScale = gameObject.transform.lossyScale;
+        Vector3 tempShadowColliderPosition = gameObject.transform.position;
+        
+        switch(castedFacingDirection)
+        {
+            case LightSourceControl.FacingDirection.North:
+                m_ShadowColliders.m_NorthShadowCollider = newShadowCollider;
+                tempShadowColliderScale.z = 1f;
+                tempShadowColliderPosition.z = LightingMasterControl.m_NorthFloorTransform.position.z;
+                newShadowCollider.GetComponent<ShadowCollider>().m_ZAxisCast = true;
+                break;
+            case LightSourceControl.FacingDirection.East:
+                m_ShadowColliders.m_EastShadowCollider = newShadowCollider;
+                if (m_CastedShadowType == CastedShadowType.Propellor_Platform)
+                    tempShadowColliderScale.z = tempShadowColliderScale.x;
+                tempShadowColliderScale.x = 1f;
+                tempShadowColliderPosition.x = LightingMasterControl.m_EastFloorTransform.position.x;
+                newShadowCollider.GetComponent<ShadowCollider>().m_ZAxisCast = false;
+                break;
+            case LightSourceControl.FacingDirection.South:
+                m_ShadowColliders.m_SouthShadowCollider = newShadowCollider;
+                tempShadowColliderScale.z = 1f;
+                tempShadowColliderPosition.z = LightingMasterControl.m_SouthFloorTransform.position.z;
+                newShadowCollider.GetComponent<ShadowCollider>().m_ZAxisCast = true;
+                break;
+            case LightSourceControl.FacingDirection.West:
+                m_ShadowColliders.m_WestShadowCollider = newShadowCollider;
+                if (m_CastedShadowType == CastedShadowType.Propellor_Platform)
+                    tempShadowColliderScale.z = tempShadowColliderScale.x;
+                tempShadowColliderScale.x = 1f;
+                tempShadowColliderPosition.x = LightingMasterControl.m_WestFloorTransform.position.x;
+                newShadowCollider.GetComponent<ShadowCollider>().m_ZAxisCast = false;
+                break;
+        }
+
+        newShadowCollider.layer = LayerMask.NameToLayer("Shadow");
+        newShadowCollider.transform.localScale = tempShadowColliderScale;
+        newShadowCollider.transform.position = tempShadowColliderPosition;
+
+        switch(m_CastedShadowType)
+        {
+            case CastedShadowType.Basic_Shadow:
+                SetUpBasicShadowCollider(newShadowCollider);
+                break;
+            case CastedShadowType.Move_Platform:
+                SetUpMovePlatformShadowCollider(newShadowCollider);
+                break;
+            case CastedShadowType.Propellor_Platform:
+                SetUpPropellorPlatformShadowCollider(newShadowCollider);
+                break;
+            case CastedShadowType.Killzone_Shadow:
+                SetUpKillZoneShadowCollider(newShadowCollider);
+                break;
+        }
     }
 
-    public Vector3 GetTransformOffset(Vector3 castDirection, bool zLocked)
+    void SetUpBasicShadowCollider(GameObject shadowColliderObj)
     {
-        Vector3 transOffset;
-        if (zLocked)
-        {
-            if (meshException)
-                transOffset = ((GetComponent<MeshCollider>().bounds.size.z / 1.95f) * castDirection);
-            else if (shadowType == ShadowType.PROPELLOR_PLATFORM)
-                transOffset = ((transform.lossyScale.z / 1.95f) * castDirection);
-            else if (shadowType == ShadowType.SPIKES)
-                transOffset = ((GetComponent<BoxCollider>().bounds.size.z / 1.95f) * castDirection);
-            else
-                transOffset = ((transform.lossyScale.z / 1.95f) * castDirection);
-
-        }
-        else
-        {
-            if (meshException)
-                transOffset = ((GetComponent<MeshCollider>().bounds.size.x / 1.95f) * castDirection);
-            else if (shadowType == ShadowType.PROPELLOR_PLATFORM)
-                transOffset = ((transform.lossyScale.z / 1.95f) * castDirection);
-            else if (shadowType == ShadowType.SPIKES)
-                transOffset = ((GetComponent<BoxCollider>().bounds.size.x / 1.95f) * castDirection);
-            else
-                transOffset = ((transform.lossyScale.x / 1.95f) * castDirection);
-        }
-        return transOffset;
+        shadowColliderObj.name = "Basic_Shadow_Collider";
+        shadowColliderObj.AddComponent<BoxCollider>();
     }
-    
-    // Handles turning off an on Shadowcastmodes for various objects based on if they are
-    // not casting shadows (ShadowCastingMode.Off), or normally casting shadows (ShadowCastingMode.On)
-    // in 3D space, and changing their ShadowCastingMode when the player transitions into 2D.
-	public void UpdateShadowcastMode()
-	{
-        if(PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PLAYERSTATE.SHADOWMELDED)
-        {
-            if (PlayerShadowInteraction.m_CurrentPlayerState == PlayerShadowInteraction.PLAYERSTATE.SHADOW)
-            {
-                if (singleMesh)
-                {
-                    if (shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.Off)
-                        GetComponent<MeshRenderer>().enabled = false;
-                    else if (shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.On)
-                        GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-                }
-                else
-                {
-                    MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
-                    foreach (MeshRenderer meshRend in meshRenderers)
-                    {
-                        if (shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.Off)
-                            meshRend.enabled = false;
-                        else if (shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.On)
-                            meshRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-                    }
-                }
-            }
-            else
-            {
-                if (singleMesh)
-                {
-                    if (shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.Off)
-                        GetComponent<MeshRenderer>().enabled = true;
-                    else if (shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.On)
-                        GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-                }
-                else
-                {
-                    MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
-                    foreach (MeshRenderer meshRend in meshRenderers)
-                    {
-                        if (shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.Off)
-                            meshRend.enabled = true;
-                        else if (shadowCastMode == UnityEngine.Rendering.ShadowCastingMode.On)
-                            meshRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-                    }
-                }
-            }
-        }
+
+    void SetUpMovePlatformShadowCollider(GameObject shadowColliderObj)
+    {
+        // First, add a box collider to the base shadow-casting object that mimics the size and scale of its
+        // parent, the shadow-casting object
+        shadowColliderObj.name = "Move_Platform_Shadow_Collider";
+        shadowColliderObj.AddComponent<BoxCollider>();
+
+        // Then, proceed with an unnecessarily complicated method to add a moving trigger zone on top of the
+        // platform that childs the player shadow to it when within it so the player follows the platform
+        GameObject platformColliderTriggerZone = new GameObject("Move_Platform_Shadow_Collider_Trigger_Zone");
+        platformColliderTriggerZone.layer = LayerMask.NameToLayer("Shadow");
+        platformColliderTriggerZone.transform.position = shadowColliderObj.transform.position;
+        platformColliderTriggerZone.transform.rotation = shadowColliderObj.transform.rotation;
+        platformColliderTriggerZone.transform.localScale = new Vector3(shadowColliderObj.transform.lossyScale.x, 0.5f, shadowColliderObj.transform.lossyScale.z);
+        platformColliderTriggerZone.transform.parent = shadowColliderObj.transform;
+        platformColliderTriggerZone.AddComponent<BoxCollider>();
+        platformColliderTriggerZone.GetComponent<BoxCollider>().isTrigger = true;
+        platformColliderTriggerZone.GetComponent<BoxCollider>().center = new Vector3(0, transform.lossyScale.y + platformColliderTriggerZone.transform.lossyScale.y, 0);
+        platformColliderTriggerZone.AddComponent<MovingPlatformShadowCollider>();
+    }
+
+    void SetUpPropellorPlatformShadowCollider(GameObject shadowColliderObj)
+    {
+        shadowColliderObj.name = "Propellor_Collider_Shadow_Collider";
+        shadowColliderObj.AddComponent<BoxCollider>();
+        shadowColliderObj.GetComponent<BoxCollider>().isTrigger = true;
+
+        GameObject propellorShadowColliderZone = new GameObject("Propellor_Platform_Shadow_Collider_Zone");
+        propellorShadowColliderZone.transform.position = shadowColliderObj.transform.position;
+        propellorShadowColliderZone.transform.parent = shadowColliderObj.transform;
+        propellorShadowColliderZone.AddComponent<BoxCollider>();
+        propellorShadowColliderZone.AddComponent<PropellorPlatformShadowCollider>();
+        propellorShadowColliderZone.GetComponent<PropellorPlatformShadowCollider>().m_PropellorMesh = gameObject;
+    }
+
+    public void SetUpKillZoneShadowCollider(GameObject shadowColliderObj)
+    {
+        shadowColliderObj.name = "Killzone_Shadow_Collider";
+        shadowColliderObj.AddComponent<BoxCollider>();
+        shadowColliderObj.GetComponent<BoxCollider>().size = GetComponent<BoxCollider>().size;
+        shadowColliderObj.AddComponent<Killzone>();
+        shadowColliderObj.GetComponent<BoxCollider>().isTrigger = true;
     }
 }

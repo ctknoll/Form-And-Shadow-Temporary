@@ -1,83 +1,80 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class MovingPlatform : MonoBehaviour
 {
-    [SerializeField]
-    float speed = 2f;
+    [Range(1.5f, 6f)][SerializeField] float m_MoveSpeed = 2f;
+    [Range(0f, 4f)][SerializeField] float m_PauseTime = 2f;
+    [SerializeField] bool m_LoopRoute = true;
+    public List<Transform> m_PathLocations;
+    protected bool m_IsFinished = false;
 
-    [SerializeField]
-    float pauseTime = 2f;
-
-    [SerializeField]
-    bool isLoop = true;
-
-    [SerializeField]
-    Transform[] path;
-
-    private int pathIndex = 0;
-    private int pathIndexInc = +1;
-    private bool isFinished = false;
-    private bool isPause = false;
-    private float timeCounter = 0f;
+    int pathIndex = 0;
+    int pathIndexInc = +1;
+    bool isPause = false;
+    float timeCounter = 0f;
     public float slowValue = 1;
 
 
     // Use this for initialization
-    void Start()
+    protected void Start()
     {
         pathIndex = 0;
         pathIndexInc = +1;
-        isFinished = false;
+        m_IsFinished = false;
         GetComponent<BoxCollider>().size = new Vector3(gameObject.transform.GetChild(0).gameObject.GetComponent<Transform>().localScale.x, 0.5f,
             gameObject.transform.GetChild(0).gameObject.GetComponent<Transform>().localScale.z);
-        if (path.Length > 0)
+        if (m_PathLocations.Count > 0)
         {
-            transform.position = path[pathIndex].position;
+            transform.position = m_PathLocations[pathIndex].position;
         }
     }
 
-    void Update()
+    protected void Update()
     {
-        if (timeCounter > 0)
+        if (PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PLAYERSTATE.SHIFTING && !GameController.paused)
         {
-            timeCounter -= Time.deltaTime;
-            return;
-        }
-        else
-        {
-            isPause = false;
-        }
-
-        if (isPause || isFinished) { return; }
-        if (path.Length == 0) { return; }
-
-        transform.position = Vector3.MoveTowards(transform.position, path[pathIndex].position, speed * Time.fixedDeltaTime);
-        if (Vector3.Distance(transform.position, path[pathIndex].position) < speed * Time.fixedDeltaTime)
-        {
-            pathIndex += pathIndexInc;
-            if (isLoop)
+            if (timeCounter > 0)
             {
-                if (pathIndex >= path.Length || pathIndex < 0)
-                {
-                    pathIndexInc *= -1;
-                    pathIndex += pathIndexInc;
-                }
-                else
-                {
-                    timeCounter = pauseTime;
-                    isPause = true;
-                }
+                timeCounter -= Time.deltaTime;
+                return;
             }
             else
             {
-                if (pathIndex >= path.Length)
+                isPause = false;
+            }
+
+            if (isPause || m_IsFinished) { return; }
+            if (m_PathLocations.Count == 0) { return; }
+
+            transform.position = Vector3.MoveTowards(transform.position, m_PathLocations[pathIndex].position, m_MoveSpeed * Time.fixedDeltaTime);
+            if (Vector3.Distance(transform.position, m_PathLocations[pathIndex].position) < m_MoveSpeed * Time.fixedDeltaTime)
+            {
+                pathIndex += pathIndexInc;
+                if (m_LoopRoute)
                 {
-                    isFinished = true;
+                    if (pathIndex >= m_PathLocations.Count || pathIndex < 0)
+                    {
+                        pathIndexInc *= -1;
+                        pathIndex += pathIndexInc;
+                    }
+                    else
+                    {
+                        timeCounter = m_PauseTime;
+                        isPause = true;
+                    }
                 }
                 else
                 {
-                    timeCounter = pauseTime;
-                    isPause = true;
+                    if (pathIndex >= m_PathLocations.Count)
+                    {
+                        m_IsFinished = true;
+                    }
+                    else
+                    {
+                        timeCounter = m_PauseTime;
+                        isPause = true;
+                    }
                 }
             }
         }

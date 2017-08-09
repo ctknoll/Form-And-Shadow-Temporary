@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
 
 public class PropellorPlatform : MonoBehaviour {
-	public float rotationSpeed;
-    public bool rotateClockwise;
-
-    public bool playerChildedIn3D;
-	public bool playerChildedIn2D;
+	[Range(60, 120)] public float rotationSpeed = 60f;
+    [SerializeField] bool rotateClockwise = true;
 
 	void Start()
 	{
@@ -17,7 +14,6 @@ public class PropellorPlatform : MonoBehaviour {
 	{
 		if(other.gameObject.tag == "Player")
 		{
-			playerChildedIn3D = true;
 			other.gameObject.transform.parent = gameObject.transform;
 		}
 	}
@@ -26,7 +22,6 @@ public class PropellorPlatform : MonoBehaviour {
 	{
 		if(other.gameObject.tag == "Player")
 		{
-			playerChildedIn3D = false;
 			other.gameObject.transform.parent = null;
 		}
 	}
