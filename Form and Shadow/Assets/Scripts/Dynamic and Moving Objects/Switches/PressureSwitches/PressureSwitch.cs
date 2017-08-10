@@ -3,12 +3,12 @@
 public abstract class PressureSwitch : Switch
 {
 
-	new void Start ()
+	protected new void Start ()
     {
         base.Start();
     }
 	
-	new void Update ()
+	protected new void Update ()
     {
         base.Update();
 	}

@@ -9,7 +9,7 @@ public abstract class ToggleSwitch : Switch
 	protected new void Start ()
     {
         base.Start();
-        internalCooldown = .5f;
+        internalCooldown = 0.5f;
         internalCooldownStart = 0f;
     }
 	

@@ -47,18 +47,7 @@ public class LightSourceControl : MonoBehaviour
 	public void TurnLightSource(bool turnClockwise)
     {
 		float clockWiseVal = (turnClockwise ? -1 : 1);
-        Debug.Log("Got this far");
-        StartCoroutine(Turn(transform.eulerAngles, transform.eulerAngles + new Vector3(0, clockWiseVal, 0)));
-    }
-
-    IEnumerator Turn(Vector3 startRot, Vector3 endRot)
-    {
-        float panStart = Time.time;
-        while (Time.time < 0.5f)
-        {
-            transform.eulerAngles = Vector3.Slerp(startRot, endRot, (Time.time - panStart) / 0.5f);
-            yield return null;
-        }
+        transform.eulerAngles += new Vector3(0, clockWiseVal * 90, 0);
         m_LightSourceForward = transform.forward;
         CheckLightingDirection();
     }
