@@ -23,7 +23,8 @@ GameObject:
   - component: {fileID: 65239297783599028}
   - component: {fileID: 33221926643826800}
   - component: {fileID: 23212401306404266}
-  - component: {fileID: 114435666784611448}
+  - component: {fileID: 114096302005890740}
+  - component: {fileID: 114196508610853042}
   m_Layer: 12
   m_Name: Pulley_Platform_Mesh
   m_TagString: Untagged
@@ -154,8 +155,19 @@ MonoBehaviour:
   m_LoopRoute: 0
   m_PathLocations: []
   slowValue: 1
-  playerChildedIn3D: 0
---- !u!114 &114435666784611448
+  m_PlayerChildedIn3D: 0
+--- !u!114 &114096302005890740
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1078494701793338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b46498935e0d7c345a916376cfecaba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114196508610853042
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -166,7 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc6f6f985af86ce4293528b199111538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shadowMeldObjectType: 7
+  m_ShadowmeldObjectType: 1
 --- !u!114 &114656646394542690
 MonoBehaviour:
   m_ObjectHideFlags: 1

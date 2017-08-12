@@ -57,6 +57,8 @@ GameObject:
   - component: {fileID: 4027166248298622}
   - component: {fileID: 33303750166678230}
   - component: {fileID: 23655241900364476}
+  - component: {fileID: 114863795386876402}
+  - component: {fileID: 114287121987401090}
   m_Layer: 12
   m_Name: Conveyor_Belt_Mesh
   m_TagString: Untagged
@@ -98,7 +100,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1292536470420820}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.5911303, y: -7.779807e-17, z: -1.4962864}
+  m_LocalPosition: {x: 8.921341, y: -7.56626e-17, z: -1.5924597}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4027166248298622}
@@ -118,7 +120,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: d7d72377ed126824d9a0fbd9fb9f3aaa, type: 2}
+  - {fileID: 2100000, guid: 4a1f646f4374ecc48aaacac7f6137ca1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -234,3 +236,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ConveyorBeltSpeed: 2
+--- !u!114 &114287121987401090
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1931008117871310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f6f985af86ce4293528b199111538, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowmeldObjectType: 6
+--- !u!114 &114863795386876402
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1931008117871310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b46498935e0d7c345a916376cfecaba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

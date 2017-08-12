@@ -63,7 +63,7 @@ public abstract class TimerSwitch : Switch
 
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && !timerIsActive)
+        if (other.gameObject.CompareTag("Player"))
             playerCanInteract = false;
     }
 }

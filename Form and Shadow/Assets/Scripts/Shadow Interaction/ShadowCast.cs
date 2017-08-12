@@ -28,7 +28,7 @@ public class ShadowCast : MonoBehaviour {
         }
     }
 
-    public void CastShadowCollider(LightSourceControl lightSourceControl)
+    void CastShadowCollider(LightSourceControl lightSourceControl)
     {
         RaycastHit hit;
         Debug.DrawRay(transform.position, lightSourceControl.m_LightSourceForward, Color.red, 10f);

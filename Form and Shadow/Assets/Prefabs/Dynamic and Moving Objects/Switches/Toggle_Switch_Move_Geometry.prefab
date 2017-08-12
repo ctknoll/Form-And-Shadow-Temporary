@@ -55,6 +55,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4696954958782694}
   - component: {fileID: 95208481433657458}
+  - component: {fileID: 114668296286388124}
+  - component: {fileID: 114390507565689900}
   m_Layer: 12
   m_Name: Toggle_Switch_Mesh
   m_TagString: Untagged
@@ -270,6 +272,29 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114390507565689900
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1611948350957918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f6f985af86ce4293528b199111538, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowmeldObjectType: 1
+--- !u!114 &114668296286388124
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1611948350957918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b46498935e0d7c345a916376cfecaba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114865576582274746
 MonoBehaviour:
   m_ObjectHideFlags: 1

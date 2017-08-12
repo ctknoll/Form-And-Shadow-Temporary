@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMotor : MonoBehaviour
 {
@@ -49,6 +47,11 @@ public class PlayerMotor : MonoBehaviour
                 break;
             case PlayerShadowInteraction.PlayerState.Shifting:
                 PlayerFollowShiftingObject();
+                break;
+            case PlayerShadowInteraction.PlayerState.Shadowmelded:
+                SnapAlignCharacterWithCamera3D();
+                Process3DMotion();
+                ShadowFollowPlayer();
                 break;
         }
 	}
@@ -215,10 +218,8 @@ public class PlayerMotor : MonoBehaviour
 
     void SnapAlignCharacterWithCamera2D()
     {
-        if(m_MoveVector.x > 0)
-            transform.rotation = Quaternion.LookRotation(Camera.main.transform.right, Camera.main.transform.up);
-        if (m_MoveVector.x < 0)
-            transform.rotation = Quaternion.LookRotation(-Camera.main.transform.right, Camera.main.transform.up);
+        if(m_MoveVector.magnitude != 0)
+            transform.rotation = Quaternion.LookRotation(m_MoveVector, Camera.main.transform.up);
     }
 
     // Called by the PushCube.cs script to turn the player to face upon grabbing, but only once
@@ -232,7 +233,7 @@ public class PlayerMotor : MonoBehaviour
 #region Follow Methods
     void PlayerFollowShadow()
     {
-        transform.position = PlayerShadowInteraction.m_PlayerShadow.transform.position + -GetComponent<PlayerShadowInteraction>().m_LightSourceAligned.GetComponent<LightSourceControl>().m_LightSourceForward * 4;
+        transform.position = PlayerShadowInteraction.m_PlayerShadow.transform.position + -GetComponent<PlayerShadowInteraction>().m_LightSourceAligned.GetComponent<LightSourceControl>().m_LightSourceForward * 10;
     }
 
     void ShadowFollowPlayer()

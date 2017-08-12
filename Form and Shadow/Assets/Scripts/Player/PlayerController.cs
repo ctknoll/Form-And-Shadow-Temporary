@@ -31,7 +31,9 @@ public class PlayerController : MonoBehaviour
             case PlayerShadowInteraction.PlayerState.Grabbing:
                 GetGrabbingLocomotionInput();
                 break;
-            default:
+            case PlayerShadowInteraction.PlayerState.Shadowmelded:
+                Get3DLocomotionInput();
+                GetJumpInput();
                 break;
         }
         PlayerMotor.m_Instance.UpdateMovement();
@@ -62,10 +64,8 @@ public class PlayerController : MonoBehaviour
         PlayerMotor.m_Instance.m_VerticalVelocity = PlayerMotor.m_Instance.m_MoveVector.y;
         PlayerMotor.m_Instance.m_MoveVector = Vector3.zero;
 
-        if (CrossPlatformInputManager.GetAxis("Horizontal") > deadZone)
-            PlayerMotor.m_Instance.m_MoveVector += Camera.main.transform.right;
-        if (CrossPlatformInputManager.GetAxis("Horizontal") < -deadZone)
-            PlayerMotor.m_Instance.m_MoveVector += -Camera.main.transform.right;
+        if (CrossPlatformInputManager.GetAxis("Horizontal") > deadZone || CrossPlatformInputManager.GetAxis("Horizontal") < -deadZone)
+            PlayerMotor.m_Instance.m_MoveVector += CrossPlatformInputManager.GetAxis("Horizontal") * Camera.main.transform.right;
     }
 
     void GetGrabbingLocomotionInput()

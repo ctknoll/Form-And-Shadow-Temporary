@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
 {
@@ -37,6 +35,9 @@ public class PlayerAnimator : MonoBehaviour
                 break;
             case PlayerShadowInteraction.PlayerState.Grabbing:
                 UpdateGrabbingAnimationParameters();
+                break;
+            case PlayerShadowInteraction.PlayerState.Shadowmelded:
+                Update3DAnimationParameters();
                 break;
         }
 

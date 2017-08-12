@@ -10,27 +10,16 @@ public class PlayerShadowInteraction : MonoBehaviour
     public static GameObject m_PlayerShadow;
     GameObject m_LightingMaster;
     [HideInInspector] public GameObject m_LightSourceAligned;
-    //public GameController m_GameController;
 
     [Header("Shadow Shift Variables")]
     public bool m_ShadowshiftAvailable;
-    //[SerializeField] AudioClip m_ShadowshiftInAudioClip;
-    //[SerializeField] AudioClip m_ShadowShiftOutAudioClip;
     [SerializeField] GameObject m_ShadowShiftFollowPrefab;
     [SerializeField] float m_ShadowShiftDuration;
     [HideInInspector] public static GameObject m_ShadowShiftFollowObject;
     List<GameObject> m_ShadowShiftOutPlatforms;
-    int m_CurrentPlatformIndex;
-    float m_PlayerShiftInOffset;
-    Vector3 m_CameraPanInStartPosition;
-    Vector3 m_CameraRelativeDirectionOffset;
-    float m_CameraPanInRelativeDistance;
 
     [Header("Shadowmeld Variables and References")]
     public bool m_ShadowmeldAvailable;
-    //[SerializeField] AudioClip m_ShadowmeldInAudioClip;
-    //[SerializeField] AudioClip m_ShadowmeldOutAudioClip;
-    //[SerializeField] GameObject m_ShadowmeldVFX;
     [Range(0, 20)][SerializeField] float m_ShadowmeldResourceCost;
     [Range(5, 20)][SerializeField] float m_ShadowmeldResourceRegen;
     public float m_MaxShadowmeldResource;
@@ -42,14 +31,22 @@ public class PlayerShadowInteraction : MonoBehaviour
     public static Vector3 m_PlayerStartPosition;
     [HideInInspector] public bool m_ZAxisTransition;
 
+    Material playerStartMaterial;
+    int currentPlatformIndex;
+    float playerShiftInOffset;
+    Vector3 cameraPanInStartPosition;
+    Vector3 cameraRelativeDirectionOffset;
+    float cameraPanInRelativeDistance;
+
     void Start()
     {
         m_PlayerStartPosition = transform.position;
         m_CurrentPlayerState = PlayerState.Form;
         m_CurrentShadowmeldResource = m_MaxShadowmeldResource;
-        m_CurrentPlatformIndex = 0;
         m_PlayerShadow = GameObject.Find("Player_Shadow");
         m_LightingMaster = GameObject.Find("Lighting_Master_Control");
+        currentPlatformIndex = 0;
+        playerStartMaterial = GetComponentInChildren<SkinnedMeshRenderer>().material;
     }
 
     void Update()
@@ -124,7 +121,7 @@ public class PlayerShadowInteraction : MonoBehaviour
     void EnterShadowmeld()
     {
         m_CurrentPlayerState = PlayerState.Shadowmelded;
-        //m_ShadowmeldVFX.SetActive(true);
+        TogglePlayerShadowmeldAppearance(true);
         gameObject.layer = LayerMask.NameToLayer("Shadowmeld");
     }
 
@@ -135,9 +132,9 @@ public class PlayerShadowInteraction : MonoBehaviour
 
     void ExitShadowmeld()
     {
-        //m_ShadowmeldVFX.SetActive(false);
-        gameObject.layer = LayerMask.NameToLayer("Form");
         m_CurrentPlayerState = PlayerState.Form;
+        gameObject.layer = LayerMask.NameToLayer("Form");
+        TogglePlayerShadowmeldAppearance(false);
     }
 #endregion
 
@@ -168,18 +165,18 @@ public class PlayerShadowInteraction : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
         {
             Vector3 targetLocation = m_PlayerShadow.transform.position;
-            if (m_CurrentPlatformIndex + 1 < m_ShadowShiftOutPlatforms.Count)
+            if (currentPlatformIndex + 1 < m_ShadowShiftOutPlatforms.Count)
             {
-                m_CurrentPlatformIndex += 1;
+                currentPlatformIndex += 1;
                 if(m_ZAxisTransition)
                 {
-                    targetLocation.y = m_ShadowShiftOutPlatforms[m_CurrentPlatformIndex].transform.position.y;
-                    targetLocation.z = m_ShadowShiftOutPlatforms[m_CurrentPlatformIndex].transform.position.z;
+                    targetLocation.y = m_ShadowShiftOutPlatforms[currentPlatformIndex].transform.position.y;
+                    targetLocation.z = m_ShadowShiftOutPlatforms[currentPlatformIndex].transform.position.z;
                 }
                 else
                 {
-                    targetLocation.x = m_ShadowShiftOutPlatforms[m_CurrentPlatformIndex].transform.position.x;
-                    targetLocation.y = m_ShadowShiftOutPlatforms[m_CurrentPlatformIndex].transform.position.y;
+                    targetLocation.x = m_ShadowShiftOutPlatforms[currentPlatformIndex].transform.position.x;
+                    targetLocation.y = m_ShadowShiftOutPlatforms[currentPlatformIndex].transform.position.y;
                 }
 
                 StartCoroutine(ShiftPlayerOut(m_ShadowShiftFollowObject.transform.position, targetLocation, false));
@@ -188,7 +185,7 @@ public class PlayerShadowInteraction : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.W))
         {
             Vector3 targetLocation = m_PlayerShadow.transform.position;
-            if (m_CurrentPlatformIndex == 0)
+            if (currentPlatformIndex == 0)
             {
                 // If the player is at index 0 of the platforms, or the first platform, and they try to go forward,
                 // they return to the wall
@@ -197,16 +194,16 @@ public class PlayerShadowInteraction : MonoBehaviour
             }
             else
             {
-                m_CurrentPlatformIndex -= 1;
+                currentPlatformIndex -= 1;
                 if (m_ZAxisTransition)
                 {
-                    targetLocation.y = m_ShadowShiftOutPlatforms[m_CurrentPlatformIndex].transform.position.y;
-                    targetLocation.z = m_ShadowShiftOutPlatforms[m_CurrentPlatformIndex].transform.position.z;
+                    targetLocation.y = m_ShadowShiftOutPlatforms[currentPlatformIndex].transform.position.y;
+                    targetLocation.z = m_ShadowShiftOutPlatforms[currentPlatformIndex].transform.position.z;
                 }
                 else
                 {
-                    targetLocation.x = m_ShadowShiftOutPlatforms[m_CurrentPlatformIndex].transform.position.x;
-                    targetLocation.y = m_ShadowShiftOutPlatforms[m_CurrentPlatformIndex].transform.position.y;
+                    targetLocation.x = m_ShadowShiftOutPlatforms[currentPlatformIndex].transform.position.x;
+                    targetLocation.y = m_ShadowShiftOutPlatforms[currentPlatformIndex].transform.position.y;
                 }
                 StartCoroutine(ShiftPlayerOut(m_ShadowShiftFollowObject.transform.position, targetLocation, false));
             }
@@ -246,9 +243,9 @@ public class PlayerShadowInteraction : MonoBehaviour
                 m_LightSourceAligned.GetComponent<LightSourceControl>().m_LightSourceForward, out shadowWallHit, 1 << 10))
             {
                 if (m_ZAxisTransition)
-                    m_PlayerShiftInOffset = transform.position.z;
+                    playerShiftInOffset = transform.position.z;
                 else
-                    m_PlayerShiftInOffset = transform.position.x;
+                    playerShiftInOffset = transform.position.x;
                 // Shift in
                 TogglePlayerMeshVisibility(true);
                 StartCoroutine(ShiftPlayerIn(transform.position, shadowWallHit.point + m_LightSourceAligned.GetComponent<LightSourceControl>().m_LightSourceForward,
@@ -268,7 +265,7 @@ public class PlayerShadowInteraction : MonoBehaviour
             switch (m_ShadowShiftOutPlatforms.Count)
             {
                 case 0:
-                    targetLocation.z = m_PlayerShiftInOffset;
+                    targetLocation.z = playerShiftInOffset;
                     break;
                 default:
                     targetLocation.z = m_ShadowShiftOutPlatforms[0].transform.position.z;
@@ -280,7 +277,7 @@ public class PlayerShadowInteraction : MonoBehaviour
             switch (m_ShadowShiftOutPlatforms.Count)
             {
                 case 0:
-                    targetLocation.x = m_PlayerShiftInOffset;
+                    targetLocation.x = playerShiftInOffset;
                     break;
                 default:
                     targetLocation.x = m_ShadowShiftOutPlatforms[0].transform.position.x;
@@ -334,15 +331,15 @@ public class PlayerShadowInteraction : MonoBehaviour
         if (m_ShadowShiftFollowObject == null)
             m_ShadowShiftFollowObject = Instantiate(m_ShadowShiftFollowPrefab, start, Quaternion.identity);
 
-        m_CameraPanInStartPosition = Camera.main.transform.position;
-        m_CameraRelativeDirectionOffset = (m_CameraPanInStartPosition - transform.position).normalized;
+        cameraPanInStartPosition = Camera.main.transform.position;
+        cameraRelativeDirectionOffset = (cameraPanInStartPosition - transform.position).normalized;
 
         float panStart = Time.time;
 
         while(Time.time < panStart + m_ShadowShiftDuration)
         {
             m_ShadowShiftFollowObject.transform.position = Vector3.Lerp(start, target, (Time.time - panStart) / m_ShadowShiftDuration);
-            Camera.main.transform.position = Vector3.Lerp(m_CameraPanInStartPosition, target + cameraOffset, (Time.time - panStart) / m_ShadowShiftDuration);
+            Camera.main.transform.position = Vector3.Lerp(cameraPanInStartPosition, target + cameraOffset, (Time.time - panStart) / m_ShadowShiftDuration);
             yield return null;
         }
         FinishShiftIn();
@@ -358,7 +355,7 @@ public class PlayerShadowInteraction : MonoBehaviour
         while (Time.time < panStart + m_ShadowShiftDuration)
         {
             m_ShadowShiftFollowObject.transform.position = Vector3.Lerp(start, target, (Time.time - panStart) / m_ShadowShiftDuration);
-            Camera.main.transform.position = Vector3.Lerp(startPos, target + m_CameraRelativeDirectionOffset * Camera.main.GetComponent<CameraControl>().m_DistanceMax, (Time.time - panStart) / m_ShadowShiftDuration);
+            Camera.main.transform.position = Vector3.Lerp(startPos, target + cameraRelativeDirectionOffset * Camera.main.GetComponent<CameraControl>().m_DistanceMax, (Time.time - panStart) / m_ShadowShiftDuration);
             yield return null;
         }
         if (finish)
@@ -395,7 +392,7 @@ public class PlayerShadowInteraction : MonoBehaviour
 
     void FinishShiftingOut()
     {
-        m_CurrentPlatformIndex = 0;
+        currentPlatformIndex = 0;
         transform.position = m_ShadowShiftFollowObject.transform.position;
 
         m_PlayerShadow.GetComponent<CharacterController>().enabled = false;
@@ -433,14 +430,31 @@ public class PlayerShadowInteraction : MonoBehaviour
     #endregion
 
 #region Utility Methods
-    void TogglePlayerMeshVisibility(bool form)
+    void TogglePlayerMeshVisibility(bool on)
     {
         foreach (SkinnedMeshRenderer meshRend in GetComponentsInChildren<SkinnedMeshRenderer>())
         {
-            if (form)
+            if (on)
                 meshRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
             else
                 meshRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+        }
+    }
+
+    void TogglePlayerShadowmeldAppearance(bool on)
+    {
+        foreach(SkinnedMeshRenderer meshRend in GetComponentsInChildren<SkinnedMeshRenderer>())
+        {
+            if (on)
+            {
+                meshRend.material = Resources.Load("Shadowmeld_Player_Material") as Material;
+                meshRend.gameObject.layer = LayerMask.NameToLayer("Shadowmeld");
+            }
+            else
+            {
+                meshRend.material = playerStartMaterial;
+                meshRend.gameObject.layer = LayerMask.NameToLayer("Form");
+            }
         }
     }
 #endregion

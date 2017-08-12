@@ -90,7 +90,8 @@ GameObject:
   - component: {fileID: 33641894910814122}
   - component: {fileID: 23595063722814332}
   - component: {fileID: 114970202119306320}
-  - component: {fileID: 114194939325323816}
+  - component: {fileID: 114350154622236036}
+  - component: {fileID: 114696946841387146}
   m_Layer: 12
   m_Name: Push_Cube_Mesh
   m_TagString: Push Cube
@@ -335,7 +336,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b60160a618e92af4dba4a376e336ca76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114194939325323816
+--- !u!114 &114350154622236036
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1973689023981100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b46498935e0d7c345a916376cfecaba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114696946841387146
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -346,7 +358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc6f6f985af86ce4293528b199111538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shadowMeldObjectType: 7
+  m_ShadowmeldObjectType: 1
 --- !u!114 &114738650236221674
 MonoBehaviour:
   m_ObjectHideFlags: 1

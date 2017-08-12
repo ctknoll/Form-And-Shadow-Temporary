@@ -55,6 +55,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4537750690917474}
   - component: {fileID: 95861806525486266}
+  - component: {fileID: 114412093173702742}
+  - component: {fileID: 114375811500292570}
   m_Layer: 12
   m_Name: Pressure_Switch_Mesh
   m_TagString: Untagged
@@ -269,3 +271,26 @@ MonoBehaviour:
   m_Pressed: 0
   m_PlatformSlowValue: 0.5
   m_TargetPlatforms: []
+--- !u!114 &114375811500292570
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1818308833083502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f6f985af86ce4293528b199111538, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowmeldObjectType: 1
+--- !u!114 &114412093173702742
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1818308833083502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b46498935e0d7c345a916376cfecaba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

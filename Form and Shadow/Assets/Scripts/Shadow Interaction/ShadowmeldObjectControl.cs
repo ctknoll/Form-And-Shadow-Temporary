@@ -1,170 +1,134 @@
 ﻿using UnityEngine;
 
-public class ShadowmeldObjectControl : MonoBehaviour {
-    public enum ShadowMeldObjectType {GLASS, WATER, FLAT_SPIKES, SPIKES, ACID_POOL, CONVEYOR_BELT, ENEMY_TOAD, NON_INTERACTIVE};
-    public ShadowMeldObjectType shadowMeldObjectType;
-    private LayerMask startingLayer;
-    private bool switched;
+public class ShadowmeldObjectControl : MonoBehaviour
+{
+    public enum ShadowMeldObjectType {Level_Geometry, Static, Glass, Water, Flat_Spikes, Spikes, Conveyor_Belt};
+    public ShadowMeldObjectType m_ShadowmeldObjectType;
 
-    private Object shadowmeldCollideObjectVFX;
-    private Object shadowmeldInvisibleObjectVFX;
-    private Object shadowmeldDeathObjectVFX;
-    private GameObject currentShadowmeldVFX;
-
-
-    void Start ()
+    public struct ShadowmeldObjectChildData
     {
-        startingLayer = gameObject.layer;
-        shadowmeldCollideObjectVFX = Resources.Load("ShadowmeldCollideObjectVFX");
-        shadowmeldInvisibleObjectVFX = Resources.Load("ShadowmeldInvisibleObjectVFX");
-        shadowmeldDeathObjectVFX = Resources.Load("ShadowmeldDeathObjectVFX");
-        currentShadowmeldVFX = null;
+        public GameObject childObject;
+        public LayerMask childStartingLayer;
+        public Material childStartingMaterial;
+    }
+
+    ShadowmeldObjectChildData[] childData;
+    Object collideMaterial;
+    Object ignoreMaterial;
+    Object deathMaterial;
+    bool layerCollisionTurnedOn;
+
+    void Awake ()
+    {
+        collideMaterial = Resources.Load("Shadowmeld_Collide_Material");
+        ignoreMaterial = Resources.Load("Shadowmeld_Ignore_Material");
+        deathMaterial = Resources.Load("Shadowmeld_Death_Material");
+
+        int i = 0;
+        childData = new ShadowmeldObjectChildData[GetComponentsInChildren<MeshRenderer>().Length];
+        foreach(Transform transformChild in GetComponentsInChildren<Transform>())
+        {
+            if (!transformChild.gameObject.GetComponent<MeshRenderer>())
+                continue;
+            childData[i].childObject = transformChild.gameObject;
+            childData[i].childStartingLayer = transformChild.gameObject.layer;
+            childData[i].childStartingMaterial = transformChild.GetComponent<MeshRenderer>().material;
+            i++;
+        }
     }
 	
-	// Update is called once per frame
 	void Update ()
     {
-        if (PlayerShadowInteraction.m_CurrentPlayerState == PlayerShadowInteraction.PlayerState.Shadowmelded)
+        switch (PlayerShadowInteraction.m_CurrentPlayerState)
         {
-            if(!switched)
-            {
-                TurnOnShadowmeldLayerandCollision();
-                switched = true;
-            }
+            case PlayerShadowInteraction.PlayerState.Shadowmelded:
+                if(!layerCollisionTurnedOn)
+                {
+                    TurnOnShadowmeldLayerandCollision();
+                    layerCollisionTurnedOn = true;
+                }
+                break;
+            default:
+                if(layerCollisionTurnedOn)
+                {
+                    TurnOffShadowmeldLayerandCollision();
+                    layerCollisionTurnedOn = false;
+                }
+                break;
         }
-        else
-        {
-            if (switched)
-            {
-                TurnOffShadowmeldLayerandCollision();
-                switched = false;
-            }
-        }
-
-        UpdateShadowmeldVFX();
     }
 
-    public void TurnOnShadowmeldLayerandCollision()
+    void TurnOnShadowmeldLayerandCollision()
     {
-        switch (shadowMeldObjectType)
+        switch (m_ShadowmeldObjectType)
         {
-            case ShadowMeldObjectType.GLASS:
-                gameObject.layer = LayerMask.NameToLayer("Shadowmeld Ignore");
+            case ShadowMeldObjectType.Level_Geometry:
+                TurnOnShadowmeldIgnore();
                 break;
-            case ShadowMeldObjectType.WATER:
-                gameObject.layer = LayerMask.NameToLayer("Shadowmeld Ignore");
+            case ShadowMeldObjectType.Static:
+                TurnOnShadowmeldCollide();
                 break;
-            case ShadowMeldObjectType.ACID_POOL:
-                gameObject.layer = LayerMask.NameToLayer("Shadowmeld Ignore");
+            case ShadowMeldObjectType.Glass:
+                TurnOnShadowmeldIgnore();
                 break;
-            case ShadowMeldObjectType.CONVEYOR_BELT:
-                gameObject.layer = LayerMask.NameToLayer("Shadowmeld Ignore");
+            case ShadowMeldObjectType.Water:
+                TurnOnShadowmeldIgnore();
                 break;
-            case ShadowMeldObjectType.FLAT_SPIKES:
-                gameObject.layer = LayerMask.NameToLayer("Shadowmeld Collide");
+            case ShadowMeldObjectType.Conveyor_Belt:
+                TurnOnShadowmeldIgnore();
+                break;
+            case ShadowMeldObjectType.Flat_Spikes:
+                TurnOnShadowmeldCollide();
                 GetComponent<BoxCollider>().isTrigger = false;
                 break;
-            case ShadowMeldObjectType.NON_INTERACTIVE:
-                gameObject.layer = LayerMask.NameToLayer("Shadowmeld Collide");
-                break;
-            case ShadowMeldObjectType.ENEMY_TOAD:
-                gameObject.layer = LayerMask.NameToLayer("Shadowmeld Death");
-                GetComponent<MeshCollider>().convex = true;
-                GetComponent<MeshCollider>().isTrigger = true;
-                gameObject.AddComponent<Killzone>();
-                break;
-            case ShadowMeldObjectType.SPIKES:
-                gameObject.layer = LayerMask.NameToLayer("Shadowmeld Death");
-                break;
-            default:
+            case ShadowMeldObjectType.Spikes:
+                TurnOnShadowmeldDeath();
                 break;
         }
     }
 
-    public void TurnOffShadowmeldLayerandCollision()
+    void TurnOffShadowmeldLayerandCollision()
     {
-        gameObject.layer = startingLayer;
-        switch (shadowMeldObjectType)
+        foreach (ShadowmeldObjectChildData child in childData)
         {
-            case ShadowMeldObjectType.FLAT_SPIKES:
+            child.childObject.layer = child.childStartingLayer;
+            child.childObject.GetComponent<MeshRenderer>().material = child.childStartingMaterial;
+        }
+
+        switch (m_ShadowmeldObjectType)
+        {
+            case ShadowMeldObjectType.Flat_Spikes:
                 GetComponent<BoxCollider>().isTrigger = true;
                 break;
-            case ShadowMeldObjectType.ENEMY_TOAD:
-                GetComponent<MeshCollider>().isTrigger = false;
-                GetComponent<MeshCollider>().convex = false;
-                Destroy(GetComponent<Killzone>());
-                break;
             default:
                 break;
         }
     }
 
-    //public void UpdateShadowmeldRenderMode()
-    //{
-    //    if (PlayerShadowInteraction.m_CurrentPlayerState == PlayerShadowInteraction.PLAYERSTATE.SHADOWMELDED)
-    //    {
-    //        if (gameObject.layer == LayerMask.NameToLayer("Shadowmeld Ignore") || gameObject.layer == LayerMask.NameToLayer("Shadowmeld Collide"))
-    //        {
-    //            if (GetComponent<ShadowCast>().singleMesh)
-    //            {
-    //                GetComponent<MeshRenderer>().enabled = false;
-    //            }
-    //            else
-    //            {
-    //                MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
-    //                foreach (MeshRenderer meshRend in meshRenderers)
-    //                {
-    //                    meshRend.enabled = false;
-    //                }
-    //            }
-    //        }
-    //    }
-    //    else
-    //    {
-    //        if (GetComponent<ShadowCast>().singleMesh)
-    //        {
-    //            GetComponent<MeshRenderer>().enabled = true;
-    //        }
-    //        else
-    //        {
-    //            MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
-    //            foreach (MeshRenderer meshRend in meshRenderers)
-    //            {
-    //                meshRend.enabled = true;
-    //            }
-    //        }
-    //    }
-    //}
-
-    public void UpdateShadowmeldVFX()
+    void TurnOnShadowmeldCollide()
     {
-        if (PlayerShadowInteraction.m_CurrentPlayerState == PlayerShadowInteraction.PlayerState.Shadowmelded)
+        foreach(ShadowmeldObjectChildData child in childData)
         {
-            if (currentShadowmeldVFX == null)
-            {
-                if (gameObject.layer == LayerMask.NameToLayer("Shadowmeld Ignore"))
-                {
-                    currentShadowmeldVFX = Instantiate(shadowmeldInvisibleObjectVFX, gameObject.transform) as GameObject;
-                }
-                else if (gameObject.layer == LayerMask.NameToLayer("Shadowmeld Collide"))
-                {
-                    currentShadowmeldVFX = Instantiate(shadowmeldCollideObjectVFX, gameObject.transform) as GameObject;
-                }
-                else if (gameObject.layer == LayerMask.NameToLayer("Shadowmeld Death"))
-                {
-                    currentShadowmeldVFX = Instantiate(shadowmeldDeathObjectVFX, gameObject.transform) as GameObject;
-                }
-            }
-            else
-                currentShadowmeldVFX.GetComponent<ParticleSystem>().Play();
+            child.childObject.layer = LayerMask.NameToLayer("Shadowmeld Collide");
+            child.childObject.GetComponent<MeshRenderer>().material = collideMaterial as Material;
         }
-        else
+    }
+
+    void TurnOnShadowmeldIgnore()
+    {
+        foreach (ShadowmeldObjectChildData child in childData)
         {
-            if(currentShadowmeldVFX != null)
-            {
-                currentShadowmeldVFX.GetComponent<ParticleSystem>().Clear();
-                currentShadowmeldVFX.GetComponent<ParticleSystem>().Pause();
-            }
+            child.childObject.layer = LayerMask.NameToLayer("Shadowmeld Ignore");
+            child.childObject.GetComponent<MeshRenderer>().material = ignoreMaterial as Material;
+        }
+    }
+
+    void TurnOnShadowmeldDeath()
+    {
+        foreach (ShadowmeldObjectChildData child in childData)
+        {
+            child.childObject.layer = LayerMask.NameToLayer("Shadowmeld Death");
+            child.childObject.GetComponent<MeshRenderer>().material = deathMaterial as Material;
         }
     }
 }

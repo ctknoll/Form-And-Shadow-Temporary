@@ -153,7 +153,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1012437891636774}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -192,7 +192,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294891519
+    m_Bits: 4294833663
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0
@@ -242,7 +242,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294891519
+    m_Bits: 4294834175
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0
@@ -292,7 +292,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294891519
+    m_Bits: 4294833663
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0
@@ -342,7 +342,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294891519
+    m_Bits: 4294834175
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0
@@ -375,10 +375,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4a0a6ec5a85e2d42be5a5a26c92a5f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightSourceStartRotation: {x: 0, y: 0, z: 0, w: 0}
-  lightSourceDirection: {x: 0, y: 0, z: 0}
-  zAxisMovement: 0
-  xAxisMovement: 0
+  m_LightSourceForward: {x: 0, y: 0, z: 0}
+  m_CurrentFacingDirection: 0
 --- !u!114 &114162236973769484
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -390,10 +388,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4a0a6ec5a85e2d42be5a5a26c92a5f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightSourceStartRotation: {x: 0, y: 0, z: 0, w: 0}
-  lightSourceDirection: {x: 0, y: 0, z: 0}
-  zAxisMovement: 0
-  xAxisMovement: 0
+  m_LightSourceForward: {x: 0, y: 0, z: 0}
+  m_CurrentFacingDirection: 0
 --- !u!114 &114290954197674296
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -405,10 +401,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4a0a6ec5a85e2d42be5a5a26c92a5f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightSourceStartRotation: {x: 0, y: 0, z: 0, w: 0}
-  lightSourceDirection: {x: 0, y: 0, z: 0}
-  zAxisMovement: 0
-  xAxisMovement: 0
+  m_LightSourceForward: {x: 0, y: 0, z: 0}
+  m_CurrentFacingDirection: 0
 --- !u!114 &114328371102064114
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -420,10 +414,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4a0a6ec5a85e2d42be5a5a26c92a5f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightSourceStartRotation: {x: 0, y: 0, z: 0, w: 0}
-  lightSourceDirection: {x: 0, y: 0, z: 0}
-  zAxisMovement: 0
-  xAxisMovement: 0
+  m_LightSourceForward: {x: 0, y: 0, z: 0}
+  m_CurrentFacingDirection: 0
 --- !u!114 &114547017830352176
 MonoBehaviour:
   m_ObjectHideFlags: 1

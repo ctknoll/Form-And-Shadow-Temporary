@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 33449175050222386}
   - component: {fileID: 23339513781292868}
   - component: {fileID: 65827961902193682}
-  - component: {fileID: 114001057118956374}
   - component: {fileID: 114356643928682068}
+  - component: {fileID: 114410158570415478}
   m_Layer: 12
   m_Name: Basic_Distorted_Glass_Cube_Mesh
   m_TagString: Untagged
@@ -103,6 +103,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!33 &33449175050222386
 MeshFilter:
@@ -123,23 +124,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114001057118956374
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1168096385506434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8910c1f15da9e6469c89c251ddc80b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shadowColliderPrefab: {fileID: 1834574077855246, guid: 438cb68a5924358468b430090dd837e4,
-    type: 2}
-  meshException: 0
-  meshType: 0
-  shadowColliders: []
-  singleMesh: 0
 --- !u!114 &114356643928682068
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -151,4 +135,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc6f6f985af86ce4293528b199111538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shadowMeldObjectType: 0
+  m_ShadowmeldObjectType: 2
+--- !u!114 &114410158570415478
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1168096385506434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b46498935e0d7c345a916376cfecaba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -971,8 +971,8 @@ GameObject:
   - component: {fileID: 114887775966163842}
   - component: {fileID: 114979961169422724}
   - component: {fileID: 114816037303390134}
-  - component: {fileID: 114912118614624670}
   - component: {fileID: 54057091217161284}
+  - component: {fileID: 114205569232080432}
   m_Layer: 12
   m_Name: Player
   m_TagString: Player
@@ -2113,6 +2113,28 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114205569232080432
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1881295065437644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b574224f4bd158428e230c020740a0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LightSourceAligned: {fileID: 0}
+  m_ShadowshiftAvailable: 1
+  m_ShadowShiftFollowPrefab: {fileID: 1506101941598320, guid: 96f053d07a717d64d8dc4a6db0ea4a06,
+    type: 2}
+  m_ShadowShiftDuration: 1
+  m_ShadowmeldAvailable: 1
+  m_ShadowmeldResourceCost: 0
+  m_ShadowmeldResourceRegen: 0
+  m_MaxShadowmeldResource: 100
+  m_CurrentShadowmeldResource: 0
+  m_ZAxisTransition: 0
 --- !u!114 &114816037303390134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2150,28 +2172,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 525465bea2100cc42ac61dabb9cd3428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114912118614624670
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1881295065437644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9adfa2004ab86be4d84e7369bd1b84d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_LightSourceAligned: {fileID: 0}
-  m_ShadowshiftAvailable: 1
-  m_ShadowShiftFollowPrefab: {fileID: 1506101941598320, guid: 96f053d07a717d64d8dc4a6db0ea4a06,
-    type: 2}
-  m_ShadowShiftDuration: 1
-  m_ShadowmeldAvailable: 0
-  m_ShadowmeldResourceCost: 0
-  m_ShadowmeldResourceRegen: 0
-  m_MaxShadowmeldResource: 0
-  m_CurrentShadowmeldResource: 0
-  m_ZAxisTransition: 0
 --- !u!114 &114979961169422724
 MonoBehaviour:
   m_ObjectHideFlags: 1
