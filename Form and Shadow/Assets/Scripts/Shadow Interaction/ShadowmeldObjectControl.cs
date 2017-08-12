@@ -10,22 +10,26 @@ public class ShadowmeldObjectControl : MonoBehaviour
         public GameObject childObject;
         public LayerMask childStartingLayer;
         public Material childStartingMaterial;
+        public Material[] childMaterialReferences;
     }
 
     ShadowmeldObjectChildData[] childData;
     Object collideMaterial;
     Object ignoreMaterial;
+    Object geometryMaterial;
     Object deathMaterial;
     bool layerCollisionTurnedOn;
 
     void Awake ()
     {
         collideMaterial = Resources.Load("Shadowmeld_Collide_Material");
+        geometryMaterial = Resources.Load("Shadowmeld_Geometry_Material");
         ignoreMaterial = Resources.Load("Shadowmeld_Ignore_Material");
         deathMaterial = Resources.Load("Shadowmeld_Death_Material");
 
         int i = 0;
         childData = new ShadowmeldObjectChildData[GetComponentsInChildren<MeshRenderer>().Length];
+
         foreach(Transform transformChild in GetComponentsInChildren<Transform>())
         {
             if (!transformChild.gameObject.GetComponent<MeshRenderer>())
@@ -33,6 +37,7 @@ public class ShadowmeldObjectControl : MonoBehaviour
             childData[i].childObject = transformChild.gameObject;
             childData[i].childStartingLayer = transformChild.gameObject.layer;
             childData[i].childStartingMaterial = transformChild.GetComponent<MeshRenderer>().material;
+            childData[i].childMaterialReferences = transformChild.GetComponent<MeshRenderer>().materials;
             i++;
         }
     }
@@ -63,7 +68,7 @@ public class ShadowmeldObjectControl : MonoBehaviour
         switch (m_ShadowmeldObjectType)
         {
             case ShadowMeldObjectType.Level_Geometry:
-                TurnOnShadowmeldIgnore();
+                TurnOnShadowmeldGeometry();
                 break;
             case ShadowMeldObjectType.Static:
                 TurnOnShadowmeldCollide();
@@ -92,7 +97,13 @@ public class ShadowmeldObjectControl : MonoBehaviour
         foreach (ShadowmeldObjectChildData child in childData)
         {
             child.childObject.layer = child.childStartingLayer;
-            child.childObject.GetComponent<MeshRenderer>().material = child.childStartingMaterial;
+            int i = 0;
+            foreach (Material rendererMaterial in child.childMaterialReferences)
+            {
+                child.childMaterialReferences[i] = child.childStartingMaterial as Material;
+                i++;
+            }
+            child.childObject.GetComponent<MeshRenderer>().materials = child.childMaterialReferences;
         }
 
         switch (m_ShadowmeldObjectType)
@@ -107,10 +118,31 @@ public class ShadowmeldObjectControl : MonoBehaviour
 
     void TurnOnShadowmeldCollide()
     {
-        foreach(ShadowmeldObjectChildData child in childData)
+        foreach (ShadowmeldObjectChildData child in childData)
         {
             child.childObject.layer = LayerMask.NameToLayer("Shadowmeld Collide");
-            child.childObject.GetComponent<MeshRenderer>().material = collideMaterial as Material;
+            int i = 0;
+            foreach(Material mat in child.childMaterialReferences)
+            {
+                child.childMaterialReferences[i] = collideMaterial as Material;
+                i++;
+            }
+            child.childObject.GetComponent<MeshRenderer>().materials = child.childMaterialReferences;
+        }
+    }
+
+    void TurnOnShadowmeldGeometry()
+    {
+        foreach (ShadowmeldObjectChildData child in childData)
+        {
+            child.childObject.layer = LayerMask.NameToLayer("Shadowmeld Collide");
+            int i = 0;
+            foreach (Material mat in child.childMaterialReferences)
+            {
+                child.childMaterialReferences[i] = geometryMaterial as Material;
+                i++;
+            }
+            child.childObject.GetComponent<MeshRenderer>().materials = child.childMaterialReferences;
         }
     }
 
@@ -119,7 +151,13 @@ public class ShadowmeldObjectControl : MonoBehaviour
         foreach (ShadowmeldObjectChildData child in childData)
         {
             child.childObject.layer = LayerMask.NameToLayer("Shadowmeld Ignore");
-            child.childObject.GetComponent<MeshRenderer>().material = ignoreMaterial as Material;
+            int i = 0;
+            foreach (Material mat in child.childMaterialReferences)
+            {
+                child.childMaterialReferences[i] = ignoreMaterial as Material;
+                i++;
+            }
+            child.childObject.GetComponent<MeshRenderer>().materials = child.childMaterialReferences;
         }
     }
 
@@ -128,7 +166,13 @@ public class ShadowmeldObjectControl : MonoBehaviour
         foreach (ShadowmeldObjectChildData child in childData)
         {
             child.childObject.layer = LayerMask.NameToLayer("Shadowmeld Death");
-            child.childObject.GetComponent<MeshRenderer>().material = deathMaterial as Material;
+            int i = 0;
+            foreach (Material mat in child.childMaterialReferences)
+            {
+                child.childMaterialReferences[i] = deathMaterial as Material;
+                i++;
+            }
+            child.childObject.GetComponent<MeshRenderer>().materials = child.childMaterialReferences;
         }
     }
 }

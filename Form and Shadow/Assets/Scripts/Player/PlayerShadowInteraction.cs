@@ -170,13 +170,13 @@ public class PlayerShadowInteraction : MonoBehaviour
                 currentPlatformIndex += 1;
                 if(m_ZAxisTransition)
                 {
-                    targetLocation.y = m_ShadowShiftOutPlatforms[currentPlatformIndex].transform.position.y;
+                    targetLocation.y = m_ShadowShiftOutPlatforms[currentPlatformIndex].transform.position.y + PlayerController.m_CharacterController.height / 2;
                     targetLocation.z = m_ShadowShiftOutPlatforms[currentPlatformIndex].transform.position.z;
                 }
                 else
                 {
                     targetLocation.x = m_ShadowShiftOutPlatforms[currentPlatformIndex].transform.position.x;
-                    targetLocation.y = m_ShadowShiftOutPlatforms[currentPlatformIndex].transform.position.y;
+                    targetLocation.y = m_ShadowShiftOutPlatforms[currentPlatformIndex].transform.position.y + PlayerController.m_CharacterController.height / 2;
                 }
 
                 StartCoroutine(ShiftPlayerOut(m_ShadowShiftFollowObject.transform.position, targetLocation, false));
@@ -197,13 +197,13 @@ public class PlayerShadowInteraction : MonoBehaviour
                 currentPlatformIndex -= 1;
                 if (m_ZAxisTransition)
                 {
-                    targetLocation.y = m_ShadowShiftOutPlatforms[currentPlatformIndex].transform.position.y;
+                    targetLocation.y = m_ShadowShiftOutPlatforms[currentPlatformIndex].transform.position.y + PlayerController.m_CharacterController.height;
                     targetLocation.z = m_ShadowShiftOutPlatforms[currentPlatformIndex].transform.position.z;
                 }
                 else
                 {
                     targetLocation.x = m_ShadowShiftOutPlatforms[currentPlatformIndex].transform.position.x;
-                    targetLocation.y = m_ShadowShiftOutPlatforms[currentPlatformIndex].transform.position.y;
+                    targetLocation.y = m_ShadowShiftOutPlatforms[currentPlatformIndex].transform.position.y + PlayerController.m_CharacterController.height;
                 }
                 StartCoroutine(ShiftPlayerOut(m_ShadowShiftFollowObject.transform.position, targetLocation, false));
             }
@@ -268,6 +268,7 @@ public class PlayerShadowInteraction : MonoBehaviour
                     targetLocation.z = playerShiftInOffset;
                     break;
                 default:
+                    targetLocation.y = m_ShadowShiftOutPlatforms[0].transform.position.y + PlayerController.m_CharacterController.height / 2;
                     targetLocation.z = m_ShadowShiftOutPlatforms[0].transform.position.z;
                     break;
             }
@@ -281,14 +282,20 @@ public class PlayerShadowInteraction : MonoBehaviour
                     break;
                 default:
                     targetLocation.x = m_ShadowShiftOutPlatforms[0].transform.position.x;
+                    targetLocation.y = m_ShadowShiftOutPlatforms[0].transform.position.y + PlayerController.m_CharacterController.height / 2;
                     break;
             }
         }
 
+        Ray ray = new Ray(m_PlayerShadow.transform.position, -m_LightSourceAligned.GetComponent<LightSourceControl>().m_LightSourceForward);
+        RaycastHit hit;
+        Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << 10);
+
+        Vector3 startLocation = hit.point;
         if (m_ShadowShiftOutPlatforms.Count == 0 || m_ShadowShiftOutPlatforms.Count == 1)
-            StartCoroutine(ShiftPlayerOut(m_PlayerShadow.transform.position, targetLocation, true));
+            StartCoroutine(ShiftPlayerOut(startLocation, targetLocation, true));
         else
-            StartCoroutine(ShiftPlayerOut(m_PlayerShadow.transform.position, targetLocation, false));
+            StartCoroutine(ShiftPlayerOut(startLocation, targetLocation, false));
     }
 
     void SetupShadowShiftOut()

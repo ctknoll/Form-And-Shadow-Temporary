@@ -180,22 +180,22 @@ public class CameraControl : MonoBehaviour
         Debug.DrawLine(clipPlanePoints.lowerRight, clipPlanePoints.lowerLeft);
         Debug.DrawLine(clipPlanePoints.lowerLeft, clipPlanePoints.upperLeft);
 
-        if (Physics.Linecast(from, clipPlanePoints.upperLeft, out hitInfo) && !hitInfo.collider.CompareTag("Player"))
+        if (Physics.Linecast(from, clipPlanePoints.upperLeft, out hitInfo) && !hitInfo.collider.CompareTag("Player") && hitInfo.collider.gameObject.layer != LayerMask.NameToLayer("Shadowmeld Ignore"))
             nearestDistance = hitInfo.distance;
 
-        if (Physics.Linecast(from, clipPlanePoints.lowerLeft, out hitInfo) && !hitInfo.collider.CompareTag("Player"))
+        if (Physics.Linecast(from, clipPlanePoints.lowerLeft, out hitInfo) && !hitInfo.collider.CompareTag("Player") && hitInfo.collider.gameObject.layer != LayerMask.NameToLayer("Shadowmeld Ignore"))
             if(hitInfo.distance < nearestDistance || nearestDistance == -1)
                 nearestDistance = hitInfo.distance;
 
-        if (Physics.Linecast(from, clipPlanePoints.upperRight, out hitInfo) && !hitInfo.collider.CompareTag("Player"))
+        if (Physics.Linecast(from, clipPlanePoints.upperRight, out hitInfo) && !hitInfo.collider.CompareTag("Player") && hitInfo.collider.gameObject.layer != LayerMask.NameToLayer("Shadowmeld Ignore"))
             if (hitInfo.distance < nearestDistance || nearestDistance == -1)
                 nearestDistance = hitInfo.distance;
 
-        if (Physics.Linecast(from, clipPlanePoints.lowerRight, out hitInfo) && !hitInfo.collider.CompareTag("Player"))
+        if (Physics.Linecast(from, clipPlanePoints.lowerRight, out hitInfo) && !hitInfo.collider.CompareTag("Player") && hitInfo.collider.gameObject.layer != LayerMask.NameToLayer("Shadowmeld Ignore"))
             if (hitInfo.distance < nearestDistance || nearestDistance == -1)
                 nearestDistance = hitInfo.distance;
 
-        if (Physics.Linecast(from, to + transform.forward * -m_Camera.nearClipPlane, out hitInfo) && !hitInfo.collider.CompareTag("Player"))
+        if (Physics.Linecast(from, to + transform.forward * -m_Camera.nearClipPlane, out hitInfo) && !hitInfo.collider.CompareTag("Player") && hitInfo.collider.gameObject.layer != LayerMask.NameToLayer("Shadowmeld Ignore"))
             if (hitInfo.distance < nearestDistance || nearestDistance == -1)
                 nearestDistance = hitInfo.distance;
 

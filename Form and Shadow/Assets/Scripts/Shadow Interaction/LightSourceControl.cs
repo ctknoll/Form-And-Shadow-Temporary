@@ -16,7 +16,7 @@ public class LightSourceControl : MonoBehaviour
 	//The variables defining whether a light is shining along the
 	//X axis or the Z axis. Useful for casting shadows
     public enum FacingDirection { North, East, South, West };
-    public FacingDirection m_CurrentFacingDirection;
+    [HideInInspector] public FacingDirection m_CurrentFacingDirection;
 
     GameObject m_LightingMasterControl;
 

@@ -233,7 +233,11 @@ public class PlayerMotor : MonoBehaviour
 #region Follow Methods
     void PlayerFollowShadow()
     {
-        transform.position = PlayerShadowInteraction.m_PlayerShadow.transform.position + -GetComponent<PlayerShadowInteraction>().m_LightSourceAligned.GetComponent<LightSourceControl>().m_LightSourceForward * 10;
+        Ray ray = new Ray(PlayerShadowInteraction.m_PlayerShadow.transform.position, -GetComponent<PlayerShadowInteraction>().m_LightSourceAligned.GetComponent<LightSourceControl>().m_LightSourceForward);
+        RaycastHit hit;
+        Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << 10);
+
+        transform.position = hit.point + -GetComponent<PlayerShadowInteraction>().m_LightSourceAligned.GetComponent<LightSourceControl>().m_LightSourceForward * 1;
     }
 
     void ShadowFollowPlayer()
