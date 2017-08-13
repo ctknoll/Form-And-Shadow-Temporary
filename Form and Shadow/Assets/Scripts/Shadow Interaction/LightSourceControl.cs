@@ -29,6 +29,19 @@ public class LightSourceControl : MonoBehaviour
 		CheckLightingDirection();
 	}
 
+    void Update()
+    {
+        switch (PlayerShadowInteraction.m_CurrentPlayerState)
+        {
+            case PlayerShadowInteraction.PlayerState.Shadowmelded:
+                GetComponent<Light>().enabled = false;
+                break;
+            default:
+                GetComponent<Light>().enabled = true;
+                break;
+        }
+    }
+
 	//Checks the light's direction relative to the master lighting reference (true forward)
 	public void CheckLightingDirection()
 	{

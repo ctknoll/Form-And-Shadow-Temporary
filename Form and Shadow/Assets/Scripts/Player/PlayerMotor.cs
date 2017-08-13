@@ -142,8 +142,6 @@ public class PlayerMotor : MonoBehaviour
 
         RaycastHit hitInfo;
 
-        Debug.DrawRay(PlayerController.m_CharacterController.transform.position + Vector3.up, Vector3.down, Color.red);
-
         if (Physics.Raycast(PlayerController.m_CharacterController.transform.position + Vector3.up, Vector3.down, out hitInfo))
         {
             if(hitInfo.normal.y < m_SlideThreshold)

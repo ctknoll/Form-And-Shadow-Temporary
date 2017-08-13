@@ -1,6 +1,4 @@
-﻿//*******************UPDATED*******************
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -249,7 +247,7 @@ public class PlayerShadowInteraction : MonoBehaviour
                 // Shift in
                 TogglePlayerMeshVisibility(true);
                 StartCoroutine(ShiftPlayerIn(transform.position, shadowWallHit.point + m_LightSourceAligned.GetComponent<LightSourceControl>().m_LightSourceForward,
-                    -m_LightSourceAligned.GetComponent<LightSourceControl>().m_LightSourceForward * Camera.main.GetComponent<CameraControl>().m_DistanceToPlayer2D));
+                    -m_LightSourceAligned.GetComponent<LightSourceControl>().m_LightSourceForward * 8));
             }
         }
     }
@@ -260,6 +258,7 @@ public class PlayerShadowInteraction : MonoBehaviour
         m_CurrentPlayerState = PlayerState.Shifting;
 
         Vector3 targetLocation = m_PlayerShadow.transform.position;
+        Debug.Log(m_ShadowShiftOutPlatforms.Count);
         if (m_ZAxisTransition)
         {
             switch (m_ShadowShiftOutPlatforms.Count)
@@ -301,7 +300,6 @@ public class PlayerShadowInteraction : MonoBehaviour
     void SetupShadowShiftOut()
     {
         m_ShadowShiftOutPlatforms = GetTransferPlatforms();
-
         if (m_ShadowShiftOutPlatforms.Count != 0)
         {
             m_ShadowShiftOutPlatforms.Sort(delegate (GameObject t1, GameObject t2) {
@@ -315,14 +313,15 @@ public class PlayerShadowInteraction : MonoBehaviour
         List<GameObject> transferPlatforms = new List<GameObject>();
         // Cast a ray down from the player shadow and store all shadow colliders hit in an array of RaycastHits
         RaycastHit firstPlatformHit;
-        if (Physics.SphereCast(m_PlayerShadow.transform.position, 0.5f, Vector3.down, out firstPlatformHit, m_PlayerShadow.transform.position.y, 1 << 11, QueryTriggerInteraction.Collide))
+        Debug.DrawRay(m_PlayerShadow.transform.position, Vector3.down, Color.red, 10f);
+        if (Physics.SphereCast(m_PlayerShadow.transform.position + new Vector3(0, 1, 0), 0.5f, Vector3.down, out firstPlatformHit, m_PlayerShadow.transform.position.y, 1 << 11))
         {
             RaycastHit[] hits;
-            hits = Physics.SphereCastAll(firstPlatformHit.point - new Vector3(0, 0.5f, 0), 0.5f, Vector3.down, GetComponent<CharacterController>().height / 2, 1 << 11, QueryTriggerInteraction.Collide);
+            hits = Physics.SphereCastAll(firstPlatformHit.point - new Vector3(0, 0.5f, 0), 0.5f, Vector3.down, GetComponent<CharacterController>().height / 2, 1 << 11);
             // Then, create a list of gameobjects and for each RaycastHit in hits, add the hit collider's gameobject to the list of transferPlatforms
             foreach (RaycastHit hit in hits)
             {
-                // Prevent spikes from being added as shadow collider objects
+                // Prevent killzone colliders from being added as shadow collider objects
                 if (hit.collider.GetComponentInParent<ShadowCollider>().m_TransformParent.GetComponent<ShadowCast>().m_CastedShadowType != ShadowCast.CastedShadowType.Killzone_Shadow)
                     transferPlatforms.Add(hit.collider.gameObject.GetComponentInParent<ShadowCollider>().m_TransformParent.gameObject);
             }

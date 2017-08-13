@@ -6,10 +6,6 @@ TagManager:
   tags:
   - Shadow Wall
   - Push Cube
-  - Move Platform
-  - MainCameraReference
-  - Conveyor Belt
-  - Test
   layers:
   - Default
   - TransparentFX
@@ -28,7 +24,7 @@ TagManager:
   - Shadowmeld Collide
   - Shadowmeld Ignore
   - Shadowmeld Death
-  - Invisible Shadow
+  - 
   - 
   - 
   - 

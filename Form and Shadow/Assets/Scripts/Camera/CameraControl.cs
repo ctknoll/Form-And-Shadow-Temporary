@@ -41,7 +41,7 @@ public class CameraControl : MonoBehaviour
     float preOccludedDistance = 0f;
 
     [Header("2D Camera Variables")]
-    [Range(4, 6)] public float m_DistanceToPlayer2D;
+    [Range(1, 2)] public float m_DistanceToPlayer2D;
     [Range(0.1f, 0.2f)][SerializeField] float m_CameraSmoothSpeed2D;
 
     public static bool cameraIsPanning;
