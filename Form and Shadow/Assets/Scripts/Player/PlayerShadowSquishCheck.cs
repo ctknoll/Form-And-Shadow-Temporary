@@ -2,19 +2,14 @@
 
 public class PlayerShadowSquishCheck : MonoBehaviour
 {
-    public bool squished2D;
-    GameController gameController;
-
-    void Awake()
-    {
-        
-    }
+    public bool m_Squished;
 
     void Update()
     {
-        if(squished2D)
+        if(m_Squished)
         {
-            Debug.Log("squished");
+            GameController.m_Instance.ResetLevel();
+            m_Squished = false;
         }
     }
 
@@ -24,7 +19,7 @@ public class PlayerShadowSquishCheck : MonoBehaviour
         {
             if (other.gameObject.tag != "Player" && !other.isTrigger)
             {
-                squished2D = true;
+                m_Squished = true;
             }
         }
     }

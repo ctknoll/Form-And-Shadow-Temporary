@@ -142,6 +142,8 @@ GameObject:
   - component: {fileID: 4145498533319674}
   - component: {fileID: 65116632386130816}
   - component: {fileID: 114130401182618720}
+  - component: {fileID: 114130338823925854}
+  - component: {fileID: 114995341485678026}
   m_Layer: 12
   m_Name: Toggle_Switch_Light_Source
   m_TagString: Untagged
@@ -209,8 +211,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1568408720895034}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.24, y: 0, z: -16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4772518984798936}
@@ -401,7 +403,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: fec4a3f423d06d04fa5350eff92850a7, type: 2}
+  - {fileID: 2100000, guid: 3e9117c22cb16664a9dad34c86011c69, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -821,6 +823,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShadowmeldObjectType: 1
+--- !u!114 &114130338823925854
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1568408720895034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b46498935e0d7c345a916376cfecaba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114130401182618720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -847,3 +860,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b46498935e0d7c345a916376cfecaba7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114995341485678026
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1568408720895034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f6f985af86ce4293528b199111538, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowmeldObjectType: 1

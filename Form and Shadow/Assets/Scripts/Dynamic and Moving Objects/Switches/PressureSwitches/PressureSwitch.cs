@@ -15,13 +15,13 @@ public abstract class PressureSwitch : Switch
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Push_Cube"))
+        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Push Cube"))
             m_Pressed = true;
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") || other.gameObject.CompareTag("Push_Cube"))
+        if (other.CompareTag("Player") || other.gameObject.CompareTag("Push Cube"))
             m_Pressed = false;
     }
 }

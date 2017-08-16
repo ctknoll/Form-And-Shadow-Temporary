@@ -26,7 +26,7 @@ public class Checkpoint : MonoBehaviour {
         {
             if(!triggered)
             {
-                PlayerShadowInteraction.m_PlayerStartPosition = transform.position;
+                PlayerShadowInteraction.m_PlayerRespawnPosition = transform.position;
                 triggered = true;
                 StartCoroutine(RaiseFlag());
             }
@@ -35,7 +35,7 @@ public class Checkpoint : MonoBehaviour {
 
     IEnumerator RaiseFlag()
     {
-        float panStart = GameController.masterTimer;
+        float panStart = GameController.m_MasterTimer;
         float personalTimer = panStart;
         Vector3 startPos = checkPointFlag.transform.position;
 

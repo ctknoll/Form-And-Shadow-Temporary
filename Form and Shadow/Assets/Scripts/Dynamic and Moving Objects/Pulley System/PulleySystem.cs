@@ -14,7 +14,7 @@ public class PulleySystem : MonoBehaviour
 	
 	void Update ()
 	{
-		if(PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PlayerState.Shifting && !GameController.paused)
+		if(PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PlayerState.Shifting && !GameController.m_Paused)
 		{
 			personalTime += Time.deltaTime;	
 			if(personalTime >= spawnTime + m_SpawnCooldown)

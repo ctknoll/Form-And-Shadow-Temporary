@@ -15,15 +15,12 @@ public class MovingPlatform : MonoBehaviour
     bool isPause = false;
     float timeCounter = 0f;
 
-
-    // Use this for initialization
     protected void Start()
     {
         pathIndex = 0;
         pathIndexInc = +1;
         m_IsFinished = false;
-        GetComponent<BoxCollider>().size = new Vector3(gameObject.transform.GetChild(0).gameObject.GetComponent<Transform>().localScale.x, 0.5f,
-            gameObject.transform.GetChild(0).gameObject.GetComponent<Transform>().localScale.z);
+
         if (m_PathLocations.Count > 0)
         {
             transform.position = m_PathLocations[pathIndex].position;
@@ -32,7 +29,7 @@ public class MovingPlatform : MonoBehaviour
 
     protected void Update()
     {
-        if (PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PlayerState.Shifting && !GameController.paused)
+        if (PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PlayerState.Shifting && !GameController.m_Paused)
         {
             if (timeCounter > 0)
             {
@@ -77,22 +74,6 @@ public class MovingPlatform : MonoBehaviour
                     }
                 }
             }
-        }
-    }
-
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            other.gameObject.transform.parent = gameObject.transform;
-        }
-    }
-
-    public void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            other.gameObject.transform.parent = null;
         }
     }
 }

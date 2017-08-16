@@ -39,6 +39,8 @@ GameObject:
   - component: {fileID: 4823474664920634}
   - component: {fileID: 65425958565211094}
   - component: {fileID: 114198424870924790}
+  - component: {fileID: 114117557344124866}
+  - component: {fileID: 114674357353614234}
   m_Layer: 12
   m_Name: Pressure_Switch_Move_Geometry
   m_TagString: Untagged
@@ -55,8 +57,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4133113875209442}
   - component: {fileID: 95696541569447954}
-  - component: {fileID: 114759488626065832}
-  - component: {fileID: 114393325415497414}
   m_Layer: 12
   m_Name: Pressure_Switch_Mesh
   m_TagString: Untagged
@@ -128,8 +128,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1499089289773092}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.907981, y: 7.875439e-17, z: -8.5467825}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -15, y: 0, z: -16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4133113875209442}
@@ -257,6 +257,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114117557344124866
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1499089289773092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b46498935e0d7c345a916376cfecaba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114198424870924790
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -269,27 +280,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Pressed: 0
-  m_TargetGeometry: []
---- !u!114 &114393325415497414
+  m_TargetGeometry:
+  - geometryGameObject: {fileID: 0}
+    geometryMoveSpeed: 2
+    geometryMoveDirection: {x: 0, y: 5, z: 0}
+    geometryStartPosition: {x: 0, y: 0, z: 0}
+    geometryEndPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &114674357353614234
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1799778055369914}
+  m_GameObject: {fileID: 1499089289773092}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc6f6f985af86ce4293528b199111538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShadowmeldObjectType: 1
---- !u!114 &114759488626065832
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1799778055369914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b46498935e0d7c345a916376cfecaba7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

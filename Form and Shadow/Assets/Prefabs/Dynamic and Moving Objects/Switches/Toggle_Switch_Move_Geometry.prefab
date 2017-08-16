@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4863429054444542}
   - component: {fileID: 65710945805521028}
   - component: {fileID: 114865576582274746}
+  - component: {fileID: 114394116491576610}
+  - component: {fileID: 114820751019913664}
   m_Layer: 12
   m_Name: Toggle_Switch_Move_Geometry
   m_TagString: Untagged
@@ -55,8 +57,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4696954958782694}
   - component: {fileID: 95208481433657458}
-  - component: {fileID: 114668296286388124}
-  - component: {fileID: 114390507565689900}
   m_Layer: 12
   m_Name: Toggle_Switch_Mesh
   m_TagString: Untagged
@@ -103,8 +103,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1412736831317928}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.8275919, y: 8.068492e-17, z: 1.3662746}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5.32, y: 0, z: -16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4696954958782694}
@@ -272,24 +272,24 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114390507565689900
+--- !u!114 &114394116491576610
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1611948350957918}
+  m_GameObject: {fileID: 1412736831317928}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc6f6f985af86ce4293528b199111538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShadowmeldObjectType: 1
---- !u!114 &114668296286388124
+--- !u!114 &114820751019913664
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1611948350957918}
+  m_GameObject: {fileID: 1412736831317928}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b46498935e0d7c345a916376cfecaba7, type: 3}
@@ -307,4 +307,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Pressed: 0
-  m_TargetGeometry: []
+  m_TargetGeometry:
+  - geometryGameObject: {fileID: 0}
+    geometryMoveSpeed: 2
+    geometryMoveDirection: {x: 0, y: 5, z: 0}
+    geometryStartPosition: {x: 0, y: 0, z: 0}
+    geometryEndPosition: {x: 0, y: 0, z: 0}

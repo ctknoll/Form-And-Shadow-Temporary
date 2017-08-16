@@ -11,7 +11,7 @@ public class PushCubeMoveReference : MonoBehaviour
 
 	void OnTriggerEnter(Collider other)
 	{
-        if (PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PlayerState.Form || GameController.paused)
+        if (PlayerShadowInteraction.m_CurrentPlayerState != PlayerShadowInteraction.PlayerState.Form || GameController.m_Paused)
             return;
 
         if (other.gameObject.CompareTag("Player"))
@@ -23,13 +23,12 @@ public class PushCubeMoveReference : MonoBehaviour
 
 	void OnTriggerExit(Collider other)
 	{
-        if (GameController.paused)
+        if (GameController.m_Paused)
             return;
 
         if (other.gameObject.CompareTag("Player"))
         {
             pushCube.m_PlayerCanInteract = false;
-            PlayerMotor.m_Instance.m_GrabbedObjectPlayerSide = null;
             pushCube.Release();
         }
     }

@@ -64,9 +64,6 @@ public class PlayerMotor : MonoBehaviour
         if (m_MoveVector.magnitude > 1) 
             m_MoveVector = m_MoveVector.normalized;
 
-        // Apply sliding if applicable
-        ApplySlide();
-
         // Multiply normalized MoveVector by MoveSpeed;
         m_MoveVector *= MoveSpeed();
 
@@ -85,9 +82,6 @@ public class PlayerMotor : MonoBehaviour
         // Normalize MoveVector if Magnitude > 1
         if (m_MoveVector.magnitude > 1)
             m_MoveVector = m_MoveVector.normalized;
-
-        // Apply sliding if applicable
-        ApplySlide();
 
         // Multiply normalized MoveVector by 2D Movement speed;
         m_MoveVector *= m_2DMovementSpeed;
@@ -129,33 +123,6 @@ public class PlayerMotor : MonoBehaviour
 
         if(PlayerController.m_CharacterController.isGrounded && m_MoveVector.y < -1)
             m_MoveVector = new Vector3(m_MoveVector.x, -1, m_MoveVector.z);
-    }
-
-    void ApplySlide()
-    {
-        if (!PlayerController.m_CharacterController.isGrounded)
-        {
-            return;
-        }
-
-        m_SlideDirection = Vector3.zero;
-
-        RaycastHit hitInfo;
-
-        if (Physics.Raycast(PlayerController.m_CharacterController.transform.position + Vector3.up, Vector3.down, out hitInfo))
-        {
-            if(hitInfo.normal.y < m_SlideThreshold)
-            {
-                m_SlideDirection = new Vector3(hitInfo.normal.x, -hitInfo.normal.y, hitInfo.normal.z);
-            }
-        }
-
-        if (m_SlideDirection.magnitude < m_MaxControllableSlideMagnitude)
-            m_MoveVector += m_SlideDirection;
-        else
-        {
-            m_MoveVector = m_SlideDirection;
-        }
     }
 
     public void Jump()

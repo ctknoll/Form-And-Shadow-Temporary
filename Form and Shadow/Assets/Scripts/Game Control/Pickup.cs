@@ -16,7 +16,7 @@ public class Pickup : MonoBehaviour
         GetComponent<ShadowCast>().enabled = false;
         GetComponent<MeshRenderer>().enabled = false;
         GetComponent<Collider>().enabled = false;
-        GameObject.Find("Game_Controller").GetComponent<GameController>().ScoreIncrement(100);
+        //GameObject.Find("Game_Controller").GetComponent<GameController>().ScoreIncrement(100);
         yield return new WaitForSeconds(GetComponent<AudioSource>().clip.length);
         Destroy(gameObject);
     }

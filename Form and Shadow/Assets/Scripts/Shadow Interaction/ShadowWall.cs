@@ -4,7 +4,6 @@ public class ShadowWall : MonoBehaviour
 {
     public bool isLit;
 	
-	// Update is called once per frame
 	void Update ()
     {
         bool lighting = false;

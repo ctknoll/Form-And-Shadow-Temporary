@@ -4,27 +4,12 @@ using System.Collections.Generic;
 
 public class PulleyMovingPlatform : MovingPlatform
 {
-	[HideInInspector] public bool m_PlayerChildedIn3D;
+    new void Start()
+    {
+        base.Start();
+    }
 
-	new void OnTriggerEnter(Collider other)
-	{
-        base.OnTriggerEnter(other);
-		if(other.gameObject.tag == "Player")
-		{
-			m_PlayerChildedIn3D = true;
-		}
-	}
-
-	new void OnTriggerExit(Collider other)
-	{
-        base.OnTriggerExit(other);
-		if(other.gameObject.tag == "Player")
-		{
-			m_PlayerChildedIn3D = false;
-		}
-	}
-
-	new void Update () 
+    new void Update () 
 	{
         base.Update();
         if (m_IsFinished)
@@ -36,7 +21,7 @@ public class PulleyMovingPlatform : MovingPlatform
 	public IEnumerator DestroyPlatform()
 	{
 		yield return new WaitForSeconds(0.5f);
-        if(m_PlayerChildedIn3D)
+        if(GetComponentInChildren<MovingPlatformTriggerZone>().m_PlayerChilded)
 		    GameObject.Find("Player").transform.parent = null;
 
         List<GameObject> platformShadowColliders = new List<GameObject>();
@@ -51,7 +36,7 @@ public class PulleyMovingPlatform : MovingPlatform
 
         foreach (GameObject pulleyShadowCollider in platformShadowColliders)
         {
-            if (pulleyShadowCollider.GetComponentInChildren<MovingPlatformShadowCollider>().m_PlayerChildedIn2D)
+            if (pulleyShadowCollider.GetComponentInChildren<MovingPlatformTriggerZone>().m_PlayerChilded)
             {
                 GameObject.Find("Player_Shadow").transform.parent = null;
             }

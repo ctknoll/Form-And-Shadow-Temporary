@@ -5,38 +5,37 @@
 public class ConveyorBelt : MonoBehaviour
 {
     [SerializeField] float m_ConveyorBeltSpeed;
-    Vector3 m_MoveDirection;
-    Rigidbody m_Body;
-    GameObject m_Player;
-    bool m_PlayerInTrigger;
+    Vector3 moveDirection;
+    Rigidbody body;
+    GameObject player;
+    bool playerInTrigger;
 
-    // Use this for initialization
     void Start()
     {
-        m_MoveDirection = transform.forward;
-        m_Body = GetComponent<Rigidbody>();
-        m_Player = GameObject.FindGameObjectWithTag("Player");
+        moveDirection = transform.forward;
+        body = GetComponent<Rigidbody>();
+        player = GameObject.Find("Player");
     }
 
     void Update()
     {
-        if(m_PlayerInTrigger)
+        if(playerInTrigger)
         {
-            m_Player.transform.position += m_MoveDirection * m_ConveyorBeltSpeed * Time.deltaTime;
+            player.transform.position += moveDirection * m_ConveyorBeltSpeed * Time.deltaTime;
         }
     }
 
     void FixedUpdate()
     {
-        m_Body.position -= m_MoveDirection * m_ConveyorBeltSpeed * Time.fixedDeltaTime;
-        m_Body.MovePosition(m_Body.position + m_MoveDirection * m_ConveyorBeltSpeed * Time.fixedDeltaTime);
+        body.position -= moveDirection * m_ConveyorBeltSpeed * Time.fixedDeltaTime;
+        body.MovePosition(body.position + moveDirection * m_ConveyorBeltSpeed * Time.fixedDeltaTime);
     }
 
     void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            m_PlayerInTrigger = true;
+            playerInTrigger = true;
         }
     }
 
@@ -44,7 +43,7 @@ public class ConveyorBelt : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            m_PlayerInTrigger = false;
+            playerInTrigger = false;
         }
     }
 }

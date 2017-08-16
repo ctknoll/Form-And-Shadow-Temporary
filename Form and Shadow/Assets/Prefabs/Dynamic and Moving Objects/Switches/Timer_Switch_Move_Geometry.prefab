@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4579688763857390}
   - component: {fileID: 65991004457393126}
   - component: {fileID: 114487319934330812}
+  - component: {fileID: 114880581874003854}
+  - component: {fileID: 114969252767097824}
   m_Layer: 12
   m_Name: Timer_Switch_Move_Geometry
   m_TagString: Untagged
@@ -37,8 +39,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4996646289439876}
   - component: {fileID: 95617591095514990}
-  - component: {fileID: 114333704180608264}
-  - component: {fileID: 114116222875948032}
   m_Layer: 12
   m_Name: Timer_Switch_Move_Geometry
   m_TagString: Untagged
@@ -101,8 +101,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1139708289010954}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.68, y: -1.09316524e-16, z: -12}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.68, y: 0, z: -16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4996646289439876}
@@ -272,29 +272,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114116222875948032
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1470521643778496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc6f6f985af86ce4293528b199111538, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShadowmeldObjectType: 1
---- !u!114 &114333704180608264
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1470521643778496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b46498935e0d7c345a916376cfecaba7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114487319934330812
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -308,9 +285,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Pressed: 0
   m_TimerDuration: 2
-  m_TargetGeometry:
-  - geometryGameObject: {fileID: 0}
-    geometryMoveSpeed: 2
-    geometryMoveDirection: {x: 0, y: 5, z: 0}
-    geometryStartPosition: {x: 0, y: 0, z: 0}
-    geometryEndPosition: {x: 0, y: 0, z: 0}
+  m_TargetGeometry: []
+--- !u!114 &114880581874003854
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1139708289010954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc6f6f985af86ce4293528b199111538, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowmeldObjectType: 1
+--- !u!114 &114969252767097824
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1139708289010954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b46498935e0d7c345a916376cfecaba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

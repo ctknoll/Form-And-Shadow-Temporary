@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class PlayerShadowInteraction : MonoBehaviour
 {
+    public static PlayerShadowInteraction m_Instance;
     [Header("Master References")]
     public static GameObject m_PlayerShadow;
     GameObject m_LightingMaster;
@@ -26,7 +27,7 @@ public class PlayerShadowInteraction : MonoBehaviour
     public enum PlayerState {Form, Shadow, Grabbing, Shifting, Shadowmelded};
     [Header("Player State and Respawn")]
     public static PlayerState m_CurrentPlayerState;
-    public static Vector3 m_PlayerStartPosition;
+    public static Vector3 m_PlayerRespawnPosition;
     [HideInInspector] public bool m_ZAxisTransition;
 
     Material playerStartMaterial;
@@ -38,18 +39,20 @@ public class PlayerShadowInteraction : MonoBehaviour
 
     void Start()
     {
-        m_PlayerStartPosition = transform.position;
+        m_Instance = this;
+        m_PlayerRespawnPosition = transform.position;
         m_CurrentPlayerState = PlayerState.Form;
         m_CurrentShadowmeldResource = m_MaxShadowmeldResource;
         m_PlayerShadow = GameObject.Find("Player_Shadow");
         m_LightingMaster = GameObject.Find("Lighting_Master_Control");
         currentPlatformIndex = 0;
         playerStartMaterial = GetComponentInChildren<SkinnedMeshRenderer>().material;
+        m_PlayerShadow.GetComponentInChildren<PlayerShadowSquishCheck>().enabled = false;
     }
 
     void Update()
     {
-        if(!GameController.resetting && !GameController.paused)
+        if(!GameController.m_Resetting && !GameController.m_Paused)
         {
             switch(m_CurrentPlayerState)
             {
@@ -128,7 +131,7 @@ public class PlayerShadowInteraction : MonoBehaviour
         ExitShadowmeld();
     }
 
-    void ExitShadowmeld()
+    public void ExitShadowmeld()
     {
         m_CurrentPlayerState = PlayerState.Form;
         gameObject.layer = LayerMask.NameToLayer("Form");
@@ -237,17 +240,19 @@ public class PlayerShadowInteraction : MonoBehaviour
             }
             // Cast a sphere in the direction of the most aligned light source on the
             // shadow wall layer
-            if (Physics.SphereCast(transform.position, 0.2f,
-                m_LightSourceAligned.GetComponent<LightSourceControl>().m_LightSourceForward, out shadowWallHit, 1 << 10))
+            if (Physics.SphereCast(transform.position + new Vector3(0, 0.6f, 0), 0.2f, m_LightSourceAligned.GetComponent<LightSourceControl>().m_LightSourceForward, out shadowWallHit, 1 << 10))
             {
-                if (m_ZAxisTransition)
-                    playerShiftInOffset = transform.position.z;
-                else
-                    playerShiftInOffset = transform.position.x;
-                // Shift in
-                TogglePlayerMeshVisibility(true);
-                StartCoroutine(ShiftPlayerIn(transform.position, shadowWallHit.point + m_LightSourceAligned.GetComponent<LightSourceControl>().m_LightSourceForward,
-                    -m_LightSourceAligned.GetComponent<LightSourceControl>().m_LightSourceForward * 8));
+                RaycastHit hit;
+                if(!Physics.Raycast(shadowWallHit.point, m_LightSourceAligned.GetComponent<LightSourceControl>().m_LightSourceForward, out hit, Mathf.Infinity, 1 << 11))
+                {
+                    if (m_ZAxisTransition)
+                        playerShiftInOffset = transform.position.z;
+                    else
+                        playerShiftInOffset = transform.position.x;
+                    TogglePlayerMeshVisibility(true);
+                    StartCoroutine(ShiftPlayerIn(transform.position, shadowWallHit.point - new Vector3(0, 0.6f, 0) + m_LightSourceAligned.GetComponent<LightSourceControl>().m_LightSourceForward,
+                        -m_LightSourceAligned.GetComponent<LightSourceControl>().m_LightSourceForward * 8));
+                }
             }
         }
     }
@@ -258,7 +263,6 @@ public class PlayerShadowInteraction : MonoBehaviour
         m_CurrentPlayerState = PlayerState.Shifting;
 
         Vector3 targetLocation = m_PlayerShadow.transform.position;
-        Debug.Log(m_ShadowShiftOutPlatforms.Count);
         if (m_ZAxisTransition)
         {
             switch (m_ShadowShiftOutPlatforms.Count)
@@ -322,7 +326,8 @@ public class PlayerShadowInteraction : MonoBehaviour
             foreach (RaycastHit hit in hits)
             {
                 // Prevent killzone colliders from being added as shadow collider objects
-                if (hit.collider.GetComponentInParent<ShadowCollider>().m_TransformParent.GetComponent<ShadowCast>().m_CastedShadowType != ShadowCast.CastedShadowType.Killzone_Shadow)
+                if (hit.collider.GetComponentInParent<ShadowCollider>().m_TransformParent.GetComponent<ShadowCast>().m_CastedShadowType != ShadowCast.CastedShadowType.Killzone_Shadow
+                    && hit.collider.GetComponentInParent<ShadowCollider>().m_TransformParent.GetComponent<ShadowmeldObjectControl>().m_ShadowmeldObjectType != ShadowmeldObjectControl.ShadowMeldObjectType.Flat_Spikes)
                     transferPlatforms.Add(hit.collider.gameObject.GetComponentInParent<ShadowCollider>().m_TransformParent.gameObject);
             }
         }
@@ -333,6 +338,7 @@ public class PlayerShadowInteraction : MonoBehaviour
     IEnumerator ShiftPlayerIn(Vector3 start, Vector3 target, Vector3 cameraOffset)
     {
         m_CurrentPlayerState = PlayerState.Shifting;
+        CameraControl.cameraIsPanning = true;
 
         if (m_ShadowShiftFollowObject == null)
             m_ShadowShiftFollowObject = Instantiate(m_ShadowShiftFollowPrefab, start, Quaternion.identity);
@@ -348,11 +354,14 @@ public class PlayerShadowInteraction : MonoBehaviour
             Camera.main.transform.position = Vector3.Lerp(cameraPanInStartPosition, target + cameraOffset, (Time.time - panStart) / m_ShadowShiftDuration);
             yield return null;
         }
+        CameraControl.cameraIsPanning = false;
         FinishShiftIn();
     }
 
     IEnumerator ShiftPlayerOut(Vector3 start, Vector3 target, bool finish)
     {
+        CameraControl.cameraIsPanning = true;
+
         if (m_ShadowShiftFollowObject == null)
             m_ShadowShiftFollowObject = Instantiate(m_ShadowShiftFollowPrefab, start, Quaternion.identity);
 
@@ -364,6 +373,9 @@ public class PlayerShadowInteraction : MonoBehaviour
             Camera.main.transform.position = Vector3.Lerp(startPos, target + cameraRelativeDirectionOffset * Camera.main.GetComponent<CameraControl>().m_DistanceMax, (Time.time - panStart) / m_ShadowShiftDuration);
             yield return null;
         }
+
+        CameraControl.cameraIsPanning = false;
+
         if (finish)
             FinishShiftingOut();
     }
@@ -386,6 +398,8 @@ public class PlayerShadowInteraction : MonoBehaviour
                 m_PlayerShadow.transform.position = new Vector3(LightingMasterControl.m_WestFloorTransform.position.x, m_ShadowShiftFollowObject.transform.position.y, m_ShadowShiftFollowObject.transform.position.z);
                 break;
         }
+
+        m_PlayerShadow.GetComponentInChildren<PlayerShadowSquishCheck>().enabled = true;
         m_PlayerShadow.GetComponent<CharacterController>().enabled = true;
         PlayerController.m_CharacterController = m_PlayerShadow.GetComponent<CharacterController>();
         GetComponent<CharacterController>().enabled = false;
@@ -396,17 +410,22 @@ public class PlayerShadowInteraction : MonoBehaviour
         m_CurrentPlayerState = PlayerState.Shadow;
     }
 
-    void FinishShiftingOut()
+    public void FinishShiftingOut()
     {
         currentPlatformIndex = 0;
-        transform.position = m_ShadowShiftFollowObject.transform.position;
 
+        if (m_ShadowShiftFollowObject)
+        {
+            Destroy(m_ShadowShiftFollowObject);
+            transform.position = m_ShadowShiftFollowObject.transform.position;
+        }
+
+        m_PlayerShadow.GetComponentInChildren<PlayerShadowSquishCheck>().enabled = false;
         m_PlayerShadow.GetComponent<CharacterController>().enabled = false;
         PlayerController.m_CharacterController = GetComponent<CharacterController>();
         GetComponent<CharacterController>().enabled = true;
         TogglePlayerMeshVisibility(false);
 
-        Destroy(m_ShadowShiftFollowObject);
         transform.parent = null;
         m_PlayerShadow.transform.parent = null;
         m_CurrentPlayerState = PlayerState.Form;
